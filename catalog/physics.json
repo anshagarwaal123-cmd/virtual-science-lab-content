@@ -1,33 +1,313 @@
 {
   "schemaVersion": 1,
   "subject": "Physics",
+  "catalogueVersion": "1.0.0",
+  "classes": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
   "experiments": [
     {
-      "id": "ohms-law-playground",
-      "title": "Ohm's Law Playground",
-      "class": 10,
+      "id": "class-05-light-and-shadows",
+      "title": "Light and Shadows",
+      "class": 5,
+      "chapter": "Light and Shadows",
+      "description": "Move a light source and objects to explore how shadows form and change.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-05-simple-machines",
+      "title": "Simple Machines",
+      "class": 5,
+      "chapter": "Simple Machines",
+      "description": "Explore levers, pulleys and inclined planes by changing effort and load.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-05-sound",
+      "title": "Sound",
+      "class": 5,
+      "chapter": "Sound and Vibrations",
+      "description": "Change vibration and observe how sound is produced and travels.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "electric-circuit-builder",
+      "title": "Electricity and Circuits",
+      "class": 6,
       "chapter": "Electricity",
-      "description": "Change voltage and resistance and observe electric current.",
-      "simulationType": "2D",
-      "status": "available"
+      "description": "Connect cells, wires, switches and bulbs to build a working circuit.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-06-magnets",
+      "title": "Magnets",
+      "class": 6,
+      "chapter": "Fun with Magnets",
+      "description": "Move magnets and objects to investigate attraction and repulsion.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-06-measurement-of-length",
+      "title": "Measurement of Length",
+      "class": 6,
+      "chapter": "Measurement",
+      "description": "Use a virtual ruler and measuring scale to measure objects accurately.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-06-motion-and-measurement",
+      "title": "Motion and Measurement",
+      "class": 6,
+      "chapter": "Motion",
+      "description": "Change distance and time to compare speed and types of motion.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-06-temperature-and-its-measurement",
+      "title": "Temperature and Its Measurement",
+      "class": 6,
+      "chapter": "Temperature",
+      "description": "Use a virtual thermometer and compare temperatures on a scale.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-06-light-shadows-and-reflections",
+      "title": "Light, Shadows and Reflections",
+      "class": 6,
+      "chapter": "Light",
+      "description": "Change the position of a light source, object and screen to explore shadows and reflection.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-06-fun-with-magnets",
+      "title": "Fun with Magnets",
+      "class": 6,
+      "chapter": "Magnets",
+      "description": "Experiment with magnetic poles, compass direction and magnetic materials.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-06-materials-and-their-properties",
+      "title": "Materials and Their Properties",
+      "class": 6,
+      "chapter": "Materials",
+      "description": "Compare material properties such as transparency, flexibility and magnetism.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-07-heat-transfer-and-conduction",
+      "title": "Heat Transfer and Conduction",
+      "class": 7,
+      "chapter": "Heat",
+      "description": "Compare heat transfer through different materials in a virtual setup.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-07-measurement-of-time-period-of-pendulum",
+      "title": "Measurement of Time Period of Pendulum",
+      "class": 7,
+      "chapter": "Motion and Time",
+      "description": "Adjust pendulum length and measure its time period.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-07-electric-current-and-electromagnets",
+      "title": "Electric Current and Electromagnets",
+      "class": 7,
+      "chapter": "Electric Current and Its Effects",
+      "description": "Change coil turns and current to explore an electromagnet.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-07-reflection-of-light-plane-mirror",
+      "title": "Reflection of Light (Plane Mirror)",
+      "class": 7,
+      "chapter": "Light",
+      "description": "Change the angle of incidence and observe the reflected ray in a plane mirror.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-08-friction-and-surfaces",
+      "title": "Friction and Surfaces",
+      "class": 8,
+      "chapter": "Force and Pressure",
+      "description": "Change surface type and applied force to compare friction.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-08-sound-propagation-and-medium",
+      "title": "Sound Propagation and Medium",
+      "class": 8,
+      "chapter": "Sound",
+      "description": "Explore how sound travels through solids, liquids and gases.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-08-laws-of-reflection",
+      "title": "Laws of Reflection",
+      "class": 8,
+      "chapter": "Light",
+      "description": "Move a ray and mirror and compare the angles of incidence and reflection.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-08-pressure-in-fluids",
+      "title": "Pressure in Fluids",
+      "class": 8,
+      "chapter": "Force and Pressure",
+      "description": "Change depth and fluid density to observe pressure in a liquid.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-08-refraction-and-dispersion-of-light",
+      "title": "Refraction and Dispersion of Light",
+      "class": 8,
+      "chapter": "Light",
+      "description": "Direct a light beam through transparent materials and explore refraction and dispersion.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-08-lenses",
+      "title": "Lenses",
+      "class": 8,
+      "chapter": "Light",
+      "description": "Move an object and screen around convex and concave lenses to explore images.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-09-newtons-laws-of-motion",
+      "title": "Newton's Laws of Motion",
+      "class": 9,
+      "chapter": "Motion",
+      "description": "Apply forces to objects and observe changes in motion and acceleration.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-09-density-and-archimedes-principle",
+      "title": "Density and Archimedes Principle",
+      "class": 9,
+      "chapter": "Matter and Buoyancy",
+      "description": "Change object volume and mass, then observe floating and sinking in a fluid.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-09-laws-of-reflection-of-sound",
+      "title": "Laws of Reflection of Sound",
+      "class": 9,
+      "chapter": "Sound",
+      "description": "Explore reflection of sound using a virtual source and reflecting surface.",
+      "simulationType": "2D"
     },
     {
       "id": "light-reflection-playground",
       "title": "Light Reflection Playground",
       "class": 10,
       "chapter": "Light - Reflection",
-      "description": "Move a light ray and mirror to explore reflection.",
-      "simulationType": "3D",
-      "status": "planned"
+      "description": "Move an object, mirror and light rays to investigate image formation. Curriculum topic: Image formation by mirror.",
+      "simulationType": "2D"
     },
     {
-      "id": "electric-circuit-builder",
-      "title": "Electric Circuit Builder",
-      "class": 8,
+      "id": "class-10-image-formation-by-lenses",
+      "title": "Image formation by lenses",
+      "class": 10,
+      "chapter": "Light - Refraction",
+      "description": "Change object distance and focal length to observe image formation by lenses.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-10-refraction-through-a-glass-prism",
+      "title": "Refraction Through a Glass Prism",
+      "class": 10,
+      "chapter": "Light - Refraction",
+      "description": "Rotate a prism and observe how a light ray bends and disperses.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "ohms-law-playground",
+      "title": "Ohm's Law Playground",
+      "class": 10,
       "chapter": "Electricity",
-      "description": "Connect batteries, wires, switches and bulbs.",
-      "simulationType": "3D",
-      "status": "planned"
+      "description": "Adjust voltage and resistance and observe current, power and the voltage-current relationship.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-10-series-and-parallel-resistors",
+      "title": "Series and Parallel Resistors",
+      "class": 10,
+      "chapter": "Electricity",
+      "description": "Rearrange resistors in series and parallel and compare equivalent resistance and current.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-vernier-calipers-and-screw-gauge",
+      "title": "Vernier Calipers and Screw Gauge",
+      "class": 11,
+      "chapter": "Measurements",
+      "description": "Move the scales and jaws to take readings and calculate least count.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-11-hookes-law-using-spring-balance",
+      "title": "Hooke's Law using Spring Balance",
+      "class": 11,
+      "chapter": "Mechanical Properties of Solids",
+      "description": "Add loads to a spring and observe extension within the elastic limit.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-surface-tension-of-water",
+      "title": "Surface Tension of Water",
+      "class": 11,
+      "chapter": "Mechanical Properties of Fluids",
+      "description": "Explore surface tension using virtual droplets and capillary effects.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-11-friction-and-inclined-plane",
+      "title": "Friction and Inclined Plane",
+      "class": 11,
+      "chapter": "Laws of Motion",
+      "description": "Change the slope and surface to explore the forces on a block.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-resistivity-using-meter-bridge",
+      "title": "Resistivity Using Meter Bridge",
+      "class": 12,
+      "chapter": "Current Electricity",
+      "description": "Move the jockey along the bridge wire and explore the balance point and resistivity calculation.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-focal-length-of-convex-lens-u-v-method",
+      "title": "Focal Length of Convex Lens (u-v method)",
+      "class": 12,
+      "chapter": "Ray Optics",
+      "description": "Move the object and screen to find the focal length using object and image distances.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-12-pn-junction-diode-characteristics",
+      "title": "PN Junction Diode Characteristics",
+      "class": 12,
+      "chapter": "Semiconductor Electronics",
+      "description": "Adjust forward and reverse bias and observe the diode current-voltage characteristics.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-12-angle-of-minimum-deviation-for-prism",
+      "title": "Angle of Minimum Deviation for Prism",
+      "class": 12,
+      "chapter": "Ray Optics",
+      "description": "Rotate the prism and investigate the angle of minimum deviation.",
+      "simulationType": "3D"
     }
   ]
 }
