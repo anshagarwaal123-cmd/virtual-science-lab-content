@@ -1,4 +1,3 @@
-
 {
   "schemaVersion": 1,
   "subject": "Physics",
@@ -10,7 +9,7 @@
       "chapter": "Electricity",
       "description": "Change voltage and resistance and observe electric current.",
       "simulationType": "2D",
-      "status": "planned"
+      "status": "available"
     },
     {
       "id": "light-reflection-playground",
