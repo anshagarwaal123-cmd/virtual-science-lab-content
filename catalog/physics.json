@@ -1,0 +1,34 @@
+
+{
+  "schemaVersion": 1,
+  "subject": "Physics",
+  "experiments": [
+    {
+      "id": "ohms-law-playground",
+      "title": "Ohm's Law Playground",
+      "class": 10,
+      "chapter": "Electricity",
+      "description": "Change voltage and resistance and observe electric current.",
+      "simulationType": "2D",
+      "status": "planned"
+    },
+    {
+      "id": "light-reflection-playground",
+      "title": "Light Reflection Playground",
+      "class": 10,
+      "chapter": "Light - Reflection",
+      "description": "Move a light ray and mirror to explore reflection.",
+      "simulationType": "3D",
+      "status": "planned"
+    },
+    {
+      "id": "electric-circuit-builder",
+      "title": "Electric Circuit Builder",
+      "class": 8,
+      "chapter": "Electricity",
+      "description": "Connect batteries, wires, switches and bulbs.",
+      "simulationType": "3D",
+      "status": "planned"
+    }
+  ]
+}
