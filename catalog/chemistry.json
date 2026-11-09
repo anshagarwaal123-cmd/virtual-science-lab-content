@@ -1,34 +1,233 @@
-
 {
   "schemaVersion": 1,
   "subject": "Chemistry",
+  "catalogueVersion": "1.0.0",
+  "classes": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
   "experiments": [
+    {
+      "id": "class-05-materials-around-us",
+      "title": "Materials Around Us",
+      "class": 5,
+      "chapter": "Materials",
+      "description": "Compare everyday materials by their visible properties and suitable uses.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "states-of-matter",
+      "title": "States of Matter Playground",
+      "class": 5,
+      "chapter": "Solids, Liquids and Gases",
+      "description": "Heat or cool a model substance and observe changes between solid, liquid and gas. Curriculum topic: Solids, Liquids and Gases.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-05-changes-around-us",
+      "title": "Changes Around Us",
+      "class": 5,
+      "chapter": "Changes in Materials",
+      "description": "Classify everyday changes and explore which changes can be reversed.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-06-separation-of-substances-filtration-evaporation",
+      "title": "Separation of Substances (Filtration & Evaporation)",
+      "class": 6,
+      "chapter": "Separation of Substances",
+      "description": "Choose a separation method and observe filtration or evaporation in a virtual setup.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-06-sorting-soluble-and-insoluble-materials",
+      "title": "Sorting Soluble and Insoluble Materials",
+      "class": 6,
+      "chapter": "Materials and Their Properties",
+      "description": "Add sample materials to water and compare which dissolve.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-06-reversible-and-irreversible-changes",
+      "title": "Reversible and Irreversible Changes",
+      "class": 6,
+      "chapter": "Changes Around Us",
+      "description": "Explore model changes and classify them as reversible or irreversible.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-07-natural-indicators-litmus-turmeric-china-rose",
+      "title": "Natural Indicators (Litmus, Turmeric, China Rose)",
+      "class": 7,
+      "chapter": "Acids, Bases and Salts",
+      "description": "Test virtual samples with natural indicators and observe colour changes.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-07-physical-vs-chemical-changes-rusting-magnesium",
+      "title": "Physical vs Chemical Changes (Rusting & Magnesium)",
+      "class": 7,
+      "chapter": "Physical and Chemical Changes",
+      "description": "Compare model examples of physical changes and chemical reactions.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-07-neutralisation-reactions-in-everyday-life",
+      "title": "Neutralisation Reactions in Everyday Life",
+      "class": 7,
+      "chapter": "Acids, Bases and Salts",
+      "description": "Combine measured virtual acid and base samples to explore neutralisation.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-08-combustion-and-flame-zones",
+      "title": "Combustion and Flame Zones",
+      "class": 8,
+      "chapter": "Combustion and Flame",
+      "description": "Explore a labelled virtual flame and compare its different zones safely.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-08-ignition-temperature-and-conditions",
+      "title": "Ignition Temperature and Conditions",
+      "class": 8,
+      "chapter": "Combustion and Flame",
+      "description": "Change model conditions to investigate what is needed for ignition.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-08-properties-of-metals-and-non-metals",
+      "title": "Properties of Metals and Non-metals",
+      "class": 8,
+      "chapter": "Materials: Metals and Non-metals",
+      "description": "Compare model samples by conductivity, lustre, malleability and other properties.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-09-true-solutions-suspensions-and-colloids",
+      "title": "True Solutions, Suspensions and Colloids",
+      "class": 9,
+      "chapter": "Is Matter Around Us Pure?",
+      "description": "Mix model particles in a liquid and compare solution, suspension and colloid behaviour.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-09-separation-techniques-sublimation-chromatography",
+      "title": "Separation Techniques (Sublimation & Chromatography)",
+      "class": 9,
+      "chapter": "Is Matter Around Us Pure?",
+      "description": "Choose a separation technique and observe a virtual separation process.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-09-law-of-conservation-of-mass",
+      "title": "Law of Conservation of Mass",
+      "class": 9,
+      "chapter": "Atoms and Molecules",
+      "description": "Compare total mass before and after a closed-system model reaction.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-10-types-of-chemical-reactions",
+      "title": "Types of Chemical Reactions",
+      "class": 10,
+      "chapter": "Chemical Reactions and Equations",
+      "description": "Combine virtual reactants and identify modelled reaction patterns and observations.",
+      "simulationType": "3D"
+    },
     {
       "id": "ph-playground",
       "title": "pH Playground",
       "class": 10,
       "chapter": "Acids, Bases and Salts",
-      "description": "Test solutions and observe indicator colour and pH.",
-      "simulationType": "2D",
-      "status": "planned"
+      "description": "Select virtual solutions, test with indicators and compare their pH. Curriculum topic: pH of Solutions using Indicator.",
+      "simulationType": "2D"
     },
     {
-      "id": "concentration-playground",
-      "title": "Concentration Playground",
+      "id": "class-10-properties-of-acids-and-bases",
+      "title": "Properties of Acids and Bases",
+      "class": 10,
+      "chapter": "Acids, Bases and Salts",
+      "description": "Explore virtual acid and base properties using safe simulated tests.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-10-reactivity-series-of-metals",
+      "title": "Reactivity Series of Metals",
+      "class": 10,
+      "chapter": "Metals and Non-metals",
+      "description": "Compare model metal reactivity using a virtual displacement activity.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-11-acid-base-titration-oxalic-acid-mohrs-salt",
+      "title": "Acid-Base Titration (Oxalic Acid / Mohr's Salt)",
       "class": 11,
-      "chapter": "Solutions",
-      "description": "Mix solute and water to explore concentration.",
-      "simulationType": "3D",
-      "status": "planned"
+      "chapter": "Equilibrium and Practical Chemistry",
+      "description": "Operate a virtual burette and flask to explore titration readings and the end point.",
+      "simulationType": "3D"
     },
     {
-      "id": "states-of-matter",
-      "title": "States of Matter Playground",
-      "class": 8,
-      "chapter": "Matter",
-      "description": "Explore solids, liquids and gases using temperature controls.",
-      "simulationType": "3D",
-      "status": "planned"
+      "id": "class-11-basic-laboratory-techniques",
+      "title": "Basic Laboratory Techniques",
+      "class": 11,
+      "chapter": "Practical Chemistry",
+      "description": "Practise virtual measurement, transfer, filtration and laboratory apparatus selection.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-11-detection-of-elements-lassaignes-test",
+      "title": "Detection of Elements (Lassaigne's Test)",
+      "class": 11,
+      "chapter": "Organic Chemistry: Basic Principles",
+      "description": "Explore a guided virtual model of qualitative element detection and observations.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-11-qualitative-salt-analysis-basics",
+      "title": "Qualitative Salt Analysis Basics",
+      "class": 11,
+      "chapter": "Practical Chemistry",
+      "description": "Use a guided virtual decision flow to interpret common salt-analysis observations.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-12-redox-titration-kmno4-vs-mohrs-salt",
+      "title": "Redox Titration (KMnO4 vs Mohr's Salt)",
+      "class": 12,
+      "chapter": "Electrochemistry and Redox",
+      "description": "Perform a simulated redox titration and inspect the end point and calculated result.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-paper-chromatography-of-plant-pigments",
+      "title": "Paper Chromatography of Plant Pigments",
+      "class": 12,
+      "chapter": "Biomolecules and Practical Chemistry",
+      "description": "Change solvent and sample settings to observe pigment separation on paper.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-organic-functional-group-analysis",
+      "title": "Organic Functional Group Analysis",
+      "class": 12,
+      "chapter": "Organic Chemistry",
+      "description": "Explore virtual tests and identify common organic functional groups from observations.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-comprehensive-salt-analysis",
+      "title": "Comprehensive Salt Analysis",
+      "class": 12,
+      "chapter": "Practical Chemistry",
+      "description": "Follow a virtual qualitative analysis workflow and interpret the simulated observations.",
+      "simulationType": "3D"
     }
   ]
 }
