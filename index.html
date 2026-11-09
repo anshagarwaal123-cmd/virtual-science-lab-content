@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Science Lab</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            background: #101827;
+            color: white;
+        }
+        main { max-width: 850px; margin: auto; }
+        h1 { font-size: 36px; }
+        .subtitle { color: #aab8cc; line-height: 1.6; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 30px;
+        }
+        .card {
+            display: block;
+            padding: 25px;
+            border: 1px solid #33445e;
+            border-radius: 16px;
+            background: #1b2940;
+            color: white;
+            text-decoration: none;
+        }
+        .card h2 { margin-top: 0; }
+        .card p { color: #b8c5d8; }
+        .status { color: #65d6a5; margin-top: 30px; }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Virtual Science Lab</h1>
+    <p class="subtitle">
+        Interactive Physics and Chemistry experiments
+        for students of Classes 5 to 12.
+    </p>
+
+    <div class="cards">
+        <a class="card" href="catalog/physics.json">
+            <h2>⚛ Physics Playground</h2>
+            <p>Explore interactive Physics experiments.</p>
+        </a>
+
+        <a class="card" href="catalog/chemistry.json">
+            <h2>🧪 Chemistry Playground</h2>
+            <p>Explore interactive Chemistry experiments.</p>
+        </a>
+    </div>
+
+    <p class="status">Online experiment catalogue is being prepared.</p>
+</main>
+</body>
+</html>
