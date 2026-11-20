@@ -1,0 +1,509 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#edf8f0">
+<title>Ohm's Law Playground | Virtual Science Lab</title>
+
+<style>
+:root {
+  color-scheme: light;
+  --bg:#f1f8f3;
+  --card:#fff;
+  --ink:#183b29;
+  --muted:#687d6e;
+  --line:#dce9df;
+  --blue:#397cf5;
+  --green:#16865a;
+  --shadow:0 12px 32px rgba(30,75,44,.08);
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:radial-gradient(circle at 8% 0,#e1f4e7,transparent 30%),var(--bg);
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+button,input {font:inherit}
+button {cursor:pointer}
+.page {width:min(1180px,calc(100% - 32px));margin:auto;padding-bottom:40px}
+.topbar {
+  height:68px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);gap:12px
+}
+.back {color:#376b4a;text-decoration:none;font-size:13px;font-weight:800}
+.top-actions {display:flex;align-items:center;gap:8px}
+.pill {
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border-radius:30px;background:#e5f5eb;color:#287448;
+  font-size:10px;font-weight:900;letter-spacing:.8px
+}
+.dot {width:7px;height:7px;border-radius:50%;background:#20b56b}
+.icon-btn,.secondary-btn,.primary-btn {
+  border:1px solid var(--line);border-radius:12px;padding:10px 13px;
+  background:#fff;color:var(--ink);font-weight:800;font-size:12px
+}
+.icon-btn {width:40px;height:40px;padding:0;font-size:17px}
+.primary-btn {background:#16784f;color:#fff;border-color:#16784f}
+.heading {
+  padding:25px 0 18px;display:flex;align-items:flex-end;
+  justify-content:space-between;gap:16px
+}
+.eyebrow {font-size:10px;letter-spacing:1.8px;font-weight:900;color:#16865a}
+.heading h1 {margin:8px 0 6px;font-size:clamp(27px,4vw,39px);letter-spacing:-1.2px}
+.heading p {margin:0;color:var(--muted);font-size:14px;line-height:1.6;max-width:650px}
+.level {
+  white-space:nowrap;border:1px solid #cfe5d5;background:#fff;border-radius:13px;
+  padding:10px 13px;color:#4e7058;font-size:11px;font-weight:800
+}
+.workspace {
+  display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.85fr);
+  gap:17px;align-items:start
+}
+.panel {background:var(--card);border:1px solid var(--line);border-radius:19px;box-shadow:var(--shadow)}
+.panel-head {
+  padding:16px 18px 12px;display:flex;align-items:center;
+  justify-content:space-between;gap:10px
+}
+.panel-title {font-size:13px;font-weight:900}
+.subtle {font-size:11px;color:var(--muted)}
+.circuit-stage {
+  margin:0 14px 14px;min-height:320px;border:1px solid #e2eee5;
+  border-radius:15px;background:linear-gradient(145deg,#fbfefb,#f1f8f3);
+  overflow:hidden;display:grid;place-items:center
+}
+.circuit-stage svg {width:100%;height:auto;max-height:370px}
+.wire {
+  fill:none;stroke:#73917c;stroke-width:5;
+  stroke-linecap:round;stroke-linejoin:round
+}
+.component {fill:#fff;stroke:#456c52;stroke-width:4}
+.component-label {fill:#365641;font-size:16px;font-weight:800}
+.small-label {fill:#6f8877;font-size:12px;font-weight:700}
+.switch-lever {stroke:#16865a;stroke-width:7;stroke-linecap:round;transition:all .2s}
+.node {fill:#16865a}
+.meter-letter {fill:#24573a;font-size:24px;font-weight:900;text-anchor:middle;dominant-baseline:middle}
+.flow-dot {fill:#1dbb71;opacity:.95}
+.circuit-stage.is-off .flow-dot {opacity:0}
+.circuit-stage.is-off .wire {stroke:#a5b7aa}
+.circuit-stage.is-off .switch-lever {stroke:#d18a45}
+.resistor-core {fill:#fff7e8;stroke:#ca8b36;stroke-width:4}
+.readings {display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:0 14px 15px}
+.reading {background:#f5faf6;border:1px solid #e2eee5;border-radius:13px;padding:12px}
+.reading span {display:block;color:var(--muted);font-size:10px;font-weight:800}
+.reading strong {display:block;margin-top:5px;font-size:19px;letter-spacing:-.4px}
+.reading small {font-size:10px;color:var(--muted)}
+.controls {padding:16px 17px}
+.control-row {margin-bottom:19px}
+.control-head {display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.control-head label {font-size:12px;font-weight:900}
+.control-value {font-size:13px;font-weight:900;color:#16784f;background:#e8f6ed;padding:5px 9px;border-radius:8px}
+.range {width:100%;accent-color:#16865a;cursor:pointer}
+.range-ends {display:flex;justify-content:space-between;color:#819286;font-size:10px;margin-top:5px}
+.control-actions {display:flex;gap:8px;flex-wrap:wrap}
+.switch-btn {flex:1;min-width:130px}
+.formula {margin-top:15px;padding:13px;border-radius:12px;background:#f2f8f3;border:1px solid #e0ebe2}
+.formula-title {font-size:10px;font-weight:900;color:#68806d;letter-spacing:.8px}
+.formula-main {margin-top:7px;font-size:20px;font-weight:900;color:#1a6842}
+.formula-detail {margin-top:5px;font-size:11px;color:#667c6d;line-height:1.5}
+.lower-grid {display:grid;grid-template-columns:1.15fr .85fr;gap:17px;margin-top:17px}
+.graph-wrap {padding:0 15px 14px}
+.graph {width:100%;height:auto;display:block;background:#fbfefb;border:1px solid #e4eee6;border-radius:13px}
+.grid-line {stroke:#e2ece4;stroke-width:1}
+.axis {stroke:#718a78;stroke-width:2}
+.graph-line {fill:none;stroke:#397cf5;stroke-width:4;stroke-linecap:round}
+.graph-dot {fill:#16865a;stroke:#fff;stroke-width:3}
+.axis-label {fill:#698071;font-size:12px;font-weight:700}
+.tick-label {fill:#87988b;font-size:10px}
+.insight {padding:17px}
+.insight h3,.challenge h3 {margin:0 0 9px;font-size:13px}
+.insight p,.challenge p {margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+.insight .tip {margin-top:12px;padding:11px 12px;background:#eaf6ed;border-radius:11px;color:#376848;font-size:11px;line-height:1.6}
+.challenge {margin-top:17px;padding:17px}
+.challenge button {margin-top:12px}
+.footer-note {text-align:center;color:#819185;font-size:10px;padding:22px 8px 0}
+@media(max-width:820px) {
+  .workspace,.lower-grid {grid-template-columns:1fr}
+  .circuit-stage {min-height:260px}
+  .heading {align-items:flex-start;flex-direction:column}
+  .level {white-space:normal}
+}
+@media(max-width:480px) {
+  .page {width:calc(100% - 22px)}
+  .topbar {height:60px}
+  .pill {font-size:8px;padding:7px 9px}
+  .back {font-size:11px}
+  .heading {padding-top:20px}
+  .heading p {font-size:12px}
+  .circuit-stage {margin:0 9px 10px;min-height:205px}
+  .circuit-stage svg {min-width:560px;transform:scale(.88);transform-origin:center}
+  .readings {padding:0 9px 10px;gap:6px}
+  .reading {padding:9px}
+  .reading strong {font-size:16px}
+  .reading span {font-size:9px}
+  .panel-head {padding:13px}
+  .controls {padding:14px}
+  .lower-grid {gap:12px}
+}
+@media(prefers-reduced-motion:reduce) {
+  * {animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header class="topbar">
+  <a class="back" href="../../../index.html?subject=physics">← Physics Playground</a>
+  <div class="top-actions">
+    <span class="pill"><span class="dot"></span> INTERACTIVE LAB</span>
+    <button class="icon-btn" id="fullscreenBtn" aria-label="Toggle fullscreen">⛶</button>
+  </div>
+</header>
+
+<section class="heading">
+  <div>
+    <div class="eyebrow">ELECTRICITY · CLASS 10</div>
+    <h1>Ohm's Law Playground</h1>
+    <p>Build a simple circuit, adjust voltage and resistance, and discover how electric current changes. Every control updates the circuit readings and graph live.</p>
+  </div>
+  <div class="level">🧪 Virtual experiment · 2D</div>
+</section>
+
+<section class="workspace">
+
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Circuit workspace</div>
+        <div class="subtle">Battery · Switch · Resistor · Meters</div>
+      </div>
+      <span class="pill" id="circuitStatus"><span class="dot"></span> CIRCUIT ON</span>
+    </div>
+
+    <div class="circuit-stage" id="circuitStage">
+      <svg viewBox="0 0 760 390" role="img" aria-label="Circuit diagram with battery, switch, resistor, ammeter and voltmeter">
+
+        <path class="wire" d="M145 95 H250 M330 95 H405 M525 95 H650 V315 H425 M355 315 H145 V230 M145 150 V95"/>
+        <path class="wire" d="M405 95 V200 H435 M495 200 H525 V95"/>
+
+        <circle cx="250" cy="95" r="7" class="node"/>
+        <circle cx="330" cy="95" r="7" class="node"/>
+
+        <line id="switchLever" class="switch-lever" x1="250" y1="95" x2="330" y2="95"/>
+        <text x="250" y="55" class="component-label">Switch</text>
+        <text x="250" y="74" class="small-label" id="switchSvgLabel">Closed</text>
+
+        <path class="resistor-core" d="M405 95 L420 77 L440 113 L460 77 L480 113 L500 77 L525 95"/>
+        <text x="465" y="48" text-anchor="middle" class="component-label">Resistor</text>
+        <text x="465" y="137" text-anchor="middle" class="small-label" id="resistorSvgValue">10 Ω</text>
+
+        <line x1="112" y1="165" x2="178" y2="165" stroke="#397cf5" stroke-width="7" stroke-linecap="round"/>
+        <line x1="125" y1="198" x2="165" y2="198" stroke="#397cf5" stroke-width="7" stroke-linecap="round"/>
+        <text x="188" y="169" class="component-label">+</text>
+        <text x="173" y="202" class="component-label">−</text>
+        <text x="60" y="258" class="component-label">Battery</text>
+        <text x="60" y="278" class="small-label" id="batterySvgValue">6 V</text>
+
+        <circle cx="390" cy="315" r="35" class="component"/>
+        <text x="390" y="315" class="meter-letter">A</text>
+        <text x="390" y="365" text-anchor="middle" class="small-label">Ammeter</text>
+
+        <circle cx="465" cy="200" r="30" class="component"/>
+        <text x="465" y="200" class="meter-letter">V</text>
+        <text x="465" y="250" text-anchor="middle" class="small-label">Voltmeter</text>
+
+        <circle class="flow-dot">
+          <animateMotion dur="3s" repeatCount="indefinite" path="M145 230 L145 315 L650 315 L650 95 L525 95 L405 95 L330 95 L250 95 L145 95 L145 150"/>
+        </circle>
+        <circle class="flow-dot">
+          <animateMotion begin="-1s" dur="3s" repeatCount="indefinite" path="M145 230 L145 315 L650 315 L650 95 L525 95 L405 95 L330 95 L250 95 L145 95 L145 150"/>
+        </circle>
+        <text x="615" y="65" class="small-label">Conventional current</text>
+      </svg>
+    </div>
+
+    <div class="readings">
+      <div class="reading">
+        <span>VOLTAGE</span>
+        <strong id="voltageReading">6.0 V</strong>
+        <small>Across resistor</small>
+      </div>
+      <div class="reading">
+        <span>CURRENT</span>
+        <strong id="currentReading">0.600 A</strong>
+        <small>Through circuit</small>
+      </div>
+      <div class="reading">
+        <span>POWER</span>
+        <strong id="powerReading">3.60 W</strong>
+        <small>Electrical power</small>
+      </div>
+    </div>
+  </div>
+
+  <aside class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Experiment controls</div>
+        <div class="subtle">Change a value and observe</div>
+      </div>
+      <span>🎛️</span>
+    </div>
+
+    <div class="controls">
+      <div class="control-row">
+        <div class="control-head">
+          <label for="voltageSlider">🔋 Battery voltage</label>
+          <output class="control-value" id="voltageValue">6.0 V</output>
+        </div>
+        <input class="range" id="voltageSlider" type="range" min="1" max="12" step="0.5" value="6"/>
+        <div class="range-ends"><span>1 V</span><span>12 V</span></div>
+      </div>
+
+      <div class="control-row">
+        <div class="control-head">
+          <label for="resistanceSlider">▱ Resistance</label>
+          <output class="control-value" id="resistanceValue">10 Ω</output>
+        </div>
+        <input class="range" id="resistanceSlider" type="range" min="1" max="100" step="1" value="10"/>
+        <div class="range-ends"><span>1 Ω</span><span>100 Ω</span></div>
+      </div>
+
+      <div class="control-actions">
+        <button class="primary-btn switch-btn" id="switchBtn" type="button">⏻ Turn circuit OFF</button>
+        <button class="secondary-btn" id="resetBtn" type="button">↺ Reset</button>
+      </div>
+
+      <div class="formula">
+        <div class="formula-title">OHM'S LAW</div>
+        <div class="formula-main">I = V ÷ R</div>
+        <div class="formula-detail" id="formulaDetail">I = 6.0 ÷ 10 = 0.600 A</div>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="lower-grid">
+  <div class="panel">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Live voltage–current graph</div>
+        <div class="subtle">Current plotted against voltage for selected resistance</div>
+      </div>
+      <span class="type-badge">I–V GRAPH</span>
+    </div>
+
+    <div class="graph-wrap">
+      <svg class="graph" viewBox="0 0 620 270" role="img" aria-label="Live graph of current against voltage">
+        <g id="graphGrid"></g>
+        <line class="axis" x1="72" y1="220" x2="580" y2="220"/>
+        <line class="axis" x1="72" y1="220" x2="72" y2="28"/>
+        <path id="graphLine" class="graph-line" d="M72 220 L570 40"/>
+        <circle id="graphPoint" class="graph-dot" cx="321" cy="130" r="7"/>
+        <text class="axis-label" x="320" y="257" text-anchor="middle">Voltage (V)</text>
+        <text class="axis-label" x="18" y="22">Current (A)</text>
+        <text class="tick-label" x="69" y="238">0</text>
+        <text class="tick-label" x="570" y="238" text-anchor="end">12</text>
+        <text class="tick-label" id="graphMaxLabel" x="60" y="34" text-anchor="end">1.20</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="panel insight">
+    <h3>🔍 What should you discover?</h3>
+    <p>Keep resistance fixed and increase voltage. Current increases in the same proportion. Now keep voltage fixed and increase resistance. Current decreases.</p>
+    <div class="tip" id="observationText">Try doubling the voltage while keeping resistance unchanged. What happens to the current?</div>
+  </div>
+</section>
+
+<section class="panel challenge">
+  <h3>🎯 Quick challenge</h3>
+  <p>Set the voltage to <strong>6 V</strong> and resistance to <strong>10 Ω</strong>. Note the current. Now increase resistance to <strong>20 Ω</strong> without changing voltage. Compare the two readings.</p>
+  <button class="secondary-btn" id="challengeBtn" type="button">Set challenge values</button>
+</section>
+
+<div class="footer-note">Virtual Science Lab · Modelled low-voltage circuit · Learn by changing one variable at a time.</div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const initial = { voltage: 6, resistance: 10, on: true };
+  const state = { ...initial };
+  const $ = id => document.getElementById(id);
+
+  const el = {
+    voltageSlider: $("voltageSlider"),
+    resistanceSlider: $("resistanceSlider"),
+    voltageValue: $("voltageValue"),
+    resistanceValue: $("resistanceValue"),
+    voltageReading: $("voltageReading"),
+    currentReading: $("currentReading"),
+    powerReading: $("powerReading"),
+    switchBtn: $("switchBtn"),
+    switchStatus: $("circuitStatus"),
+    switchLever: $("switchLever"),
+    switchSvgLabel: $("switchSvgLabel"),
+    stage: $("circuitStage"),
+    batterySvgValue: $("batterySvgValue"),
+    resistorSvgValue: $("resistorSvgValue"),
+    formulaDetail: $("formulaDetail"),
+    graphLine: $("graphLine"),
+    graphPoint: $("graphPoint"),
+    graphMaxLabel: $("graphMaxLabel"),
+    observationText: $("observationText")
+  };
+
+  function fmt(value, digits = 2) {
+    return Number(value).toFixed(digits);
+  }
+
+  function calculate() {
+    const current = state.on
+      ? state.voltage / state.resistance
+      : 0;
+
+    const power = state.on
+      ? state.voltage * current
+      : 0;
+
+    return {
+      current,
+      power,
+      measuredVoltage: state.on ? state.voltage : 0
+    };
+  }
+
+  function drawGraph(current) {
+    const left = 72;
+    const right = 570;
+    const top = 40;
+    const bottom = 220;
+
+    const x = left + (state.voltage / 12) * (right - left);
+    const maxCurrent = 12 / state.resistance;
+
+    const y = state.on
+      ? bottom - (current / maxCurrent) * (bottom - top)
+      : bottom;
+
+    el.graphLine.setAttribute(
+      "d",
+      state.on
+        ? `M ${left} ${bottom} L ${right} ${top}`
+        : `M ${left} ${bottom} L ${right} ${bottom}`
+    );
+
+    el.graphPoint.setAttribute("cx", x.toFixed(1));
+    el.graphPoint.setAttribute("cy", y.toFixed(1));
+    el.graphMaxLabel.textContent = fmt(maxCurrent, 2);
+
+    const grid = $("graphGrid");
+
+    if (!grid.dataset.built) {
+      let markup = "";
+
+      for (let i = 1; i <= 4; i++) {
+        const gx = left + i * (right - left) / 4;
+        const gy = bottom - i * (bottom - top) / 4;
+
+        markup += `<line class="grid-line" x1="${gx}" y1="${top}" x2="${gx}" y2="${bottom}"/>`;
+        markup += `<line class="grid-line" x1="${left}" y1="${gy}" x2="${right}" y2="${gy}"/>`;
+        markup += `<text class="tick-label" x="${gx}" y="238" text-anchor="middle">${i * 3}</text>`;
+      }
+
+      grid.innerHTML = markup;
+      grid.dataset.built = "true";
+    }
+  }
+
+  function render() {
+    const { current, power, measuredVoltage } = calculate();
+
+    el.voltageSlider.value = state.voltage;
+    el.resistanceSlider.value = state.resistance;
+
+    el.voltageValue.textContent = `${fmt(state.voltage, 1)} V`;
+    el.resistanceValue.textContent = `${state.resistance} Ω`;
+
+    el.voltageReading.textContent = `${fmt(measuredVoltage, 1)} V`;
+    el.currentReading.textContent = `${fmt(current, 3)} A`;
+    el.powerReading.textContent = `${fmt(power, 2)} W`;
+
+    el.batterySvgValue.textContent = `${fmt(state.voltage, 1)} V`;
+    el.resistorSvgValue.textContent = `${state.resistance} Ω`;
+
+    el.formulaDetail.textContent = state.on
+      ? `I = ${fmt(state.voltage, 1)} ÷ ${state.resistance} = ${fmt(current, 3)} A`
+      : "Switch is open: I = 0 A (no closed path)";
+
+    el.stage.classList.toggle("is-off", !state.on);
+
+    el.switchStatus.innerHTML = state.on
+      ? '<span class="dot"></span> CIRCUIT ON'
+      : '<span class="dot" style="background:#d18a45"></span> CIRCUIT OFF';
+
+    el.switchBtn.textContent = state.on
+      ? "⏻ Turn circuit OFF"
+      : "⏻ Turn circuit ON";
+
+    el.switchLever.setAttribute("x2", state.on ? "330" : "315");
+    el.switchLever.setAttribute("y2", state.on ? "95" : "66");
+    el.switchSvgLabel.textContent = state.on ? "Closed" : "Open";
+
+    el.observationText.textContent = !state.on
+      ? "The switch is open. The circuit path is broken, so the current is zero even though the battery has voltage."
+      : `At ${fmt(state.voltage, 1)} V and ${state.resistance} Ω, the current is ${fmt(current, 3)} A. Change one control to observe how the reading responds.`;
+
+    drawGraph(current);
+  }
+
+  el.voltageSlider.addEventListener("input", event => {
+    state.voltage = Number(event.target.value);
+    render();
+  });
+
+  el.resistanceSlider.addEventListener("input", event => {
+    state.resistance = Number(event.target.value);
+    render();
+  });
+
+  el.switchBtn.addEventListener("click", () => {
+    state.on = !state.on;
+    render();
+  });
+
+  $("resetBtn").addEventListener("click", () => {
+    Object.assign(state, initial);
+    render();
+  });
+
+  $("challengeBtn").addEventListener("click", () => {
+    state.voltage = 6;
+    state.resistance = 20;
+    state.on = true;
+    render();
+  });
+
+  $("fullscreenBtn").addEventListener("click", async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (error) {
+      alert("Fullscreen is not available in this browser. You can still use the simulation in landscape mode.");
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
