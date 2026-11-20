@@ -256,7 +256,7 @@
       "chapterNumber": 11,
       "chapter": "Electricity",
       "description": "Adjust voltage and resistance, build series and parallel circuits, and observe current, voltage and power.",
-      "simulationType": "2D"
+      "simulationType": "2D",
       "simulationPath": "simulations/physics/ohms-law/"
     },
     {
