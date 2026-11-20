@@ -977,6 +977,173 @@ html[data-subject="physics"] {
 
 /* TEXT SELECTION */
 
+/* ===== FORCE PREMIUM LIGHT THEME ===== */
+
+:root {
+    color-scheme: light !important;
+    --bg: #F1FAF3 !important;
+    --surface: #FFFFFF !important;
+    --surface-light: #E5F4E9 !important;
+    --border: #D5E9DA !important;
+    --text: #193D2A !important;
+    --muted: #687B6D !important;
+}
+
+body {
+    background: linear-gradient(135deg, #F2FAF4, #EAF5EE) !important;
+    color: #193D2A !important;
+}
+
+.topbar {
+    border-color: #D9E9DD !important;
+}
+
+.brand,
+.brand strong {
+    color: #193D2A !important;
+}
+
+.brand small {
+    color: #728477 !important;
+}
+
+.online-label {
+    background: #E5F5E9 !important;
+    color: #287448 !important;
+    border-color: #CBE6D2 !important;
+}
+
+.hero {
+    background: linear-gradient(120deg, #DDF3E3, #E7F5EB, #DDF2E9) !important;
+    border-color: #C9E5D1 !important;
+    box-shadow: 0 15px 35px rgba(38, 100, 55, .08) !important;
+}
+
+.hero h1 {
+    color: #193D2A !important;
+}
+
+.hero p {
+    color: #52705B !important;
+}
+
+.hero .eyebrow,
+.section-heading .eyebrow {
+    color: #23834B !important;
+}
+
+.hero-stats strong {
+    color: #193D2A !important;
+}
+
+.hero-stats span {
+    color: #647B6A !important;
+}
+
+.orbit {
+    border-color: rgba(36, 127, 72, .35) !important;
+}
+
+.orbit-core {
+    background: linear-gradient(135deg, #8BE2A5, #35A968) !important;
+    box-shadow: 0 0 40px rgba(53, 169, 104, .25) !important;
+}
+
+.section-heading h2,
+.filter-section h3 {
+    color: #254A32 !important;
+}
+
+.search-box {
+    background: #FFFFFF !important;
+    border-color: #D5E8DA !important;
+}
+
+.search-box input {
+    color: #193D2A !important;
+}
+
+.search-box input::placeholder {
+    color: #87998B !important;
+}
+
+.search-box span {
+    color: #65806B !important;
+}
+
+.filter-chip {
+    background: #FFFFFF !important;
+    border-color: #D6E8DB !important;
+    color: #58705F !important;
+}
+
+.filter-chip.active {
+    background: #DDF2E3 !important;
+    color: #216B3D !important;
+    border-color: #65B77E !important;
+}
+
+.experiment-card {
+    background: #FFFFFF !important;
+    border-color: #DCEBE0 !important;
+    box-shadow: 0 7px 22px rgba(38, 91, 54, .06) !important;
+}
+
+.experiment-card h3 {
+    color: #193D2A !important;
+}
+
+.experiment-card p,
+.card-meta {
+    color: #687B6D !important;
+}
+
+.experiment-icon {
+    background: #E5F4E9 !important;
+}
+
+.type-badge {
+    background: #E3F4E8 !important;
+}
+
+.class-badge {
+    background: #EEF6F0 !important;
+    color: #41694D !important;
+}
+
+.card-footer {
+    border-color: #E2EDE5 !important;
+}
+
+.catalogue-message {
+    background: #FFFFFF !important;
+    color: #607566 !important;
+    border-color: #DCEBE0 !important;
+}
+
+.empty-state,
+.error-state {
+    background: #FFFFFF !important;
+    color: #607566 !important;
+}
+
+.empty-state strong,
+.error-state strong {
+    color: #193D2A !important;
+}
+
+.footer {
+    border-color: #DCEBE0 !important;
+}
+
+.footer strong {
+    color: #31533A !important;
+}
+
+.footer p {
+    color: #718476 !important;
+}
+
 ::selection {
     background: #BDE8C9;
     color: #173D2A;
