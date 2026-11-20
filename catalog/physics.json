@@ -257,6 +257,7 @@
       "chapter": "Electricity",
       "description": "Adjust voltage and resistance, build series and parallel circuits, and observe current, voltage and power.",
       "simulationType": "2D"
+      "simulationPath": "simulations/physics/ohms-law/"
     },
     {
       "id": "class-10-magnetic-effects-of-electric-current",
