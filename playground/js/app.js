@@ -2,17 +2,23 @@
 /* =========================================================
    VIRTUAL SCIENCE LAB
    Dynamic Physics & Chemistry Experiment Catalogue
+
+   ADD NEW EXPERIMENT:
+   1. Create its simulation page in playground/simulations/
+   2. Add simulationPath to its experiment in catalog/*.json
+   3. No app.js changes needed again.
    ========================================================= */
 
 (() => {
     "use strict";
 
-    // Catalogue URLs relative to playground/index.html
+    // Catalogue files
     const CATALOGUE_URLS = {
         physics: "../catalog/physics.json",
         chemistry: "../catalog/chemistry.json"
     };
 
+    // Subject appearance
     const SUBJECT_CONFIG = {
         physics: {
             title: "Physics Playground",
@@ -31,6 +37,7 @@
         }
     };
 
+    // App state
     const state = {
         subject: "physics",
         experiments: [],
@@ -79,7 +86,8 @@
 
         if (required.length > 0) {
             throw new Error(
-                "Missing HTML elements: " + required.join(", ")
+                "Missing HTML elements: " +
+                required.join(", ")
             );
         }
     }
@@ -97,7 +105,7 @@
             params.get("subject") || "physics"
         ).toLowerCase();
 
-        return Object.hasOwn(
+        return Object.prototype.hasOwnProperty.call(
             CATALOGUE_URLS,
             subject
         ) ? subject : "physics";
@@ -128,7 +136,7 @@
     }
 
     /* -----------------------------------------------------
-       SAFE TEXT
+       SAFE TEXT + MESSAGES
     ----------------------------------------------------- */
 
     function escapeHtml(value) {
@@ -191,7 +199,7 @@
         elements.classFilters.replaceChildren();
         elements.modeFilters.replaceChildren();
 
-        // All Classes + Class 5 to 12
+        // Class filters
         const classOptions = [
             { label: "All Classes", value: "all" }
         ];
@@ -218,7 +226,7 @@
             elements.classFilters.appendChild(button);
         });
 
-        // Simulation type filters
+        // 2D / 3D filters
         const modeOptions = [
             { label: "All Types", value: "all" },
             { label: "2D", value: "2D" },
@@ -242,7 +250,7 @@
     }
 
     /* -----------------------------------------------------
-       FILTER EXPERIMENTS
+       FILTER + SORT EXPERIMENTS
     ----------------------------------------------------- */
 
     function getFilteredExperiments() {
@@ -250,7 +258,6 @@
 
         return state.experiments
             .filter(experiment => {
-
                 const matchesClass =
                     state.selectedClass === "all" ||
                     String(experiment.class) ===
@@ -308,7 +315,8 @@
 
     function getExperimentIcon(experiment) {
         const text = (
-            experiment.title + " " + experiment.chapter
+            String(experiment.title || "") + " " +
+            String(experiment.chapter || "")
         ).toLowerCase();
 
         if (/wave|sound|frequency|vibration/.test(text))
@@ -345,6 +353,71 @@
     }
 
     /* -----------------------------------------------------
+       SIMULATION ROUTE SYSTEM
+
+       The experiment's JSON object can contain:
+
+       "simulationPath": "simulations/physics/ohms-law/"
+
+       Path is relative to the Playground folder.
+       External or unsafe paths are rejected.
+    ----------------------------------------------------- */
+
+    function getSimulationUrl(experiment) {
+        const rawPath =
+            typeof experiment.simulationPath === "string"
+                ? experiment.simulationPath.trim()
+                : "";
+
+        if (!rawPath) {
+            return null;
+        }
+
+        const path = rawPath.replace(/^\.\/+/, "");
+
+        // Only safe relative paths are accepted.
+        if (
+            path.startsWith("/") ||
+            path.includes("..") ||
+            /[?#\\\s]/.test(path) ||
+            !/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(path)
+        ) {
+            console.warn(
+                "Invalid simulationPath for:",
+                experiment.id
+            );
+
+            return null;
+        }
+
+        try {
+            const playgroundBase = new URL(
+                "./",
+                window.location.href
+            );
+
+            const target = new URL(
+                path,
+                playgroundBase
+            );
+
+            if (target.origin !== window.location.origin) {
+                return null;
+            }
+
+            return target.href;
+
+        } catch (error) {
+            console.warn(
+                "Could not build simulation URL:",
+                error
+            );
+
+            return null;
+        }
+    }
+
+    /* -----------------------------------------------------
        EXPERIMENT CARD
     ----------------------------------------------------- */
 
@@ -354,6 +427,7 @@
         card.className = "experiment-card";
 
         const title = escapeHtml(experiment.title);
+
         const description = escapeHtml(
             experiment.description ||
             "Explore this science topic through an interactive experiment."
@@ -377,10 +451,36 @@
             getExperimentIcon(experiment)
         );
 
+        // Automatically check whether this experiment is ready.
+        const simulationUrl =
+            getSimulationUrl(experiment);
+
+        const actionHtml = simulationUrl
+            ? `
+                <button
+                    class="card-action"
+                    type="button"
+                    data-open-simulation>
+                    Open Lab →
+                </button>
+            `
+            : `
+                <button
+                    class="card-action"
+                    type="button"
+                    disabled
+                    aria-disabled="true">
+                    In development
+                </button>
+            `;
+
         card.innerHTML = `
             <div class="card-top">
-                <span class="experiment-icon"
-                      aria-hidden="true">${icon}</span>
+                <span
+                    class="experiment-icon"
+                    aria-hidden="true">
+                    ${icon}
+                </span>
 
                 <span class="type-badge">
                     ${simulationType}
@@ -406,15 +506,19 @@
                     Interactive experiment
                 </span>
 
-                <button
-                    class="card-action"
-                    type="button"
-                    disabled
-                    aria-disabled="true">
-                    In development
-                </button>
+                ${actionHtml}
             </div>
         `;
+
+        // Open the experiment page on click.
+        if (simulationUrl) {
+            const launchButton =
+                card.querySelector("[data-open-simulation]");
+
+            launchButton.addEventListener("click", () => {
+                window.location.assign(simulationUrl);
+            });
+        }
 
         return card;
     }
@@ -436,10 +540,14 @@
 
             empty.className = "empty-state";
 
-            empty.innerHTML = `
-                <strong>No experiments found</strong>
-                Try another search or choose a different filter.
-            `;
+            const heading = document.createElement("strong");
+            heading.textContent = "No experiments found";
+
+            const message = document.createElement("p");
+            message.textContent =
+                "Try another search or choose a different filter.";
+
+            empty.append(heading, message);
 
             elements.experimentGrid.appendChild(empty);
 
@@ -472,7 +580,7 @@
     }
 
     /* -----------------------------------------------------
-       LOAD ONLINE JSON
+       LOAD ONLINE JSON CATALOGUE
     ----------------------------------------------------- */
 
     async function loadCatalogue() {
@@ -547,12 +655,12 @@
 
             errorCard.className = "error-state";
 
-            errorCard.innerHTML = `
-                <strong>Unable to load experiments</strong>
-                <p>
-                    Check your internet connection and try again.
-                </p>
-            `;
+            const heading = document.createElement("strong");
+            heading.textContent = "Unable to load experiments";
+
+            const message = document.createElement("p");
+            message.textContent =
+                "Check your internet connection and try again.";
 
             const retryButton =
                 document.createElement("button");
@@ -565,7 +673,11 @@
                 loadCatalogue
             );
 
-            errorCard.appendChild(retryButton);
+            errorCard.append(
+                heading,
+                message,
+                retryButton
+            );
 
             elements.experimentGrid.replaceChildren(
                 errorCard
@@ -614,4 +726,3 @@
     }
 
 })();
-
