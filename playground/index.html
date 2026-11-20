@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+
+    <title>Virtual Science Lab | Playground</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <header class="topbar">
+        <a class="brand" href="../index.html">
+            <span class="brand-icon">⚛</span>
+            <span>
+                <strong>VIRTUAL SCIENCE LAB</strong>
+                <small>INTERACTIVE PLAYGROUND</small>
+            </span>
+        </a>
+
+        <span class="online-label">
+            <span class="online-dot"></span>
+            ONLINE LAB
+        </span>
+    </header>
+
+    <main>
+
+        <section class="hero" id="hero">
+            <div class="hero-content">
+                <span class="eyebrow" id="subjectEyebrow">
+                    INTERACTIVE LEARNING EXPERIENCE
+                </span>
+
+                <h1 id="pageTitle">Science Playground</h1>
+
+                <p id="pageSubtitle">
+                    Explore science by experimenting, discovering
+                    and learning through interactive simulations.
+                </p>
+
+                <div class="hero-stats">
+                    <div>
+                        <strong id="experimentCount">--</strong>
+                        <span>Experiments</span>
+                    </div>
+
+                    <div>
+                        <strong>5–12</strong>
+                        <span>Classes</span>
+                    </div>
+
+                    <div>
+                        <strong>2D + 3D</strong>
+                        <span>Experiences</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-art" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="orbit-core">✦</div>
+            </div>
+        </section>
+
+        <section class="catalogue-section">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">DISCOVER AND EXPLORE</span>
+                    <h2>Choose Your Experiment</h2>
+                </div>
+            </div>
+
+            <label class="search-box">
+                <span aria-hidden="true">⌕</span>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search experiments or chapters..."
+                    aria-label="Search experiments">
+            </label>
+
+            <div class="filter-section">
+                <h3>Choose Class</h3>
+                <div id="classFilters" class="filter-list"></div>
+            </div>
+
+            <div class="filter-section">
+                <h3>Simulation Type</h3>
+                <div id="modeFilters" class="filter-list"></div>
+            </div>
+
+            <div id="catalogueMessage" class="catalogue-message"
+                 role="status" aria-live="polite">
+                Preparing your virtual laboratory...
+            </div>
+
+            <div id="experimentGrid" class="experiment-grid"></div>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <strong>VIRTUAL SCIENCE LAB</strong>
+        <p>Discover • Experiment • Understand</p>
+    </footer>
+
+</div>
+
+<script src="./js/app.js" defer></script>
+
+</body>
+</html>
