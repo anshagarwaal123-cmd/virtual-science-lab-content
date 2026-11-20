@@ -1,7 +1,9 @@
 {
   "schemaVersion": 1,
   "subject": "Chemistry",
-  "catalogueVersion": "1.0.0",
+  "catalogueVersion": "2.0.0",
+  "curriculumSession": "2026-27",
+  "curriculumBasis": "Curated chapter-level simulations based on NCERT/CBSE 2026-27 topics. Classes 6-9 follow the current NCERT science series; Classes 11-12 follow CBSE Chemistry 2026-27. Class 5 entries are foundational app activities. Practical modules and a small number of established supplementary activities are retained.",
   "classes": [
     5,
     6,
@@ -17,216 +19,441 @@
       "id": "class-05-materials-around-us",
       "title": "Materials Around Us",
       "class": 5,
+      "chapterNumber": 1,
       "chapter": "Materials",
-      "description": "Compare everyday materials by their visible properties and suitable uses.",
+      "description": "Compare everyday materials by visible properties and suitable uses.",
       "simulationType": "3D"
     },
     {
       "id": "states-of-matter",
-      "title": "States of Matter Playground",
+      "title": "States of Matter",
       "class": 5,
+      "chapterNumber": 2,
       "chapter": "Solids, Liquids and Gases",
-      "description": "Heat or cool a model substance and observe changes between solid, liquid and gas. Curriculum topic: Solids, Liquids and Gases.",
+      "description": "Heat or cool a model substance and observe changes between solid, liquid and gas.",
       "simulationType": "3D"
     },
     {
       "id": "class-05-changes-around-us",
       "title": "Changes Around Us",
       "class": 5,
+      "chapterNumber": 3,
       "chapter": "Changes in Materials",
       "description": "Classify everyday changes and explore which changes can be reversed.",
       "simulationType": "2D"
     },
     {
-      "id": "class-06-separation-of-substances-filtration-evaporation",
-      "title": "Separation of Substances (Filtration & Evaporation)",
-      "class": 6,
-      "chapter": "Separation of Substances",
-      "description": "Choose a separation method and observe filtration or evaporation in a virtual setup.",
-      "simulationType": "3D"
-    },
-    {
       "id": "class-06-sorting-soluble-and-insoluble-materials",
-      "title": "Sorting Soluble and Insoluble Materials",
+      "title": "Materials Around Us: Solubility and Properties",
       "class": 6,
-      "chapter": "Materials and Their Properties",
-      "description": "Add sample materials to water and compare which dissolve.",
-      "simulationType": "3D"
-    },
-    {
-      "id": "class-06-reversible-and-irreversible-changes",
-      "title": "Reversible and Irreversible Changes",
-      "class": 6,
-      "chapter": "Changes Around Us",
-      "description": "Explore model changes and classify them as reversible or irreversible.",
+      "chapterNumber": 6,
+      "chapter": "Materials Around Us",
+      "description": "Test everyday materials for properties such as solubility, transparency and flexibility.",
       "simulationType": "2D"
     },
     {
+      "id": "class-06-states-of-water",
+      "title": "A Journey Through States of Water",
+      "class": 6,
+      "chapterNumber": 8,
+      "chapter": "A Journey Through States of Water",
+      "description": "Change heating and cooling conditions to explore melting, freezing, evaporation and condensation.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-06-separation-of-substances-filtration-evaporation",
+      "title": "Methods of Separation in Everyday Life",
+      "class": 6,
+      "chapterNumber": 9,
+      "chapter": "Methods of Separation in Everyday Life",
+      "description": "Choose suitable methods such as filtration, sieving, sedimentation and evaporation for different mixtures.",
+      "simulationType": "3D"
+    },
+    {
       "id": "class-07-natural-indicators-litmus-turmeric-china-rose",
-      "title": "Natural Indicators (Litmus, Turmeric, China Rose)",
+      "title": "Exploring Substances: Acidic, Basic and Neutral",
       "class": 7,
-      "chapter": "Acids, Bases and Salts",
-      "description": "Test virtual samples with natural indicators and observe colour changes.",
-      "simulationType": "3D"
-    },
-    {
-      "id": "class-07-physical-vs-chemical-changes-rusting-magnesium",
-      "title": "Physical vs Chemical Changes (Rusting & Magnesium)",
-      "class": 7,
-      "chapter": "Physical and Chemical Changes",
-      "description": "Compare model examples of physical changes and chemical reactions.",
-      "simulationType": "3D"
-    },
-    {
-      "id": "class-07-neutralisation-reactions-in-everyday-life",
-      "title": "Neutralisation Reactions in Everyday Life",
-      "class": 7,
-      "chapter": "Acids, Bases and Salts",
-      "description": "Combine measured virtual acid and base samples to explore neutralisation.",
-      "simulationType": "3D"
-    },
-    {
-      "id": "class-08-combustion-and-flame-zones",
-      "title": "Combustion and Flame Zones",
-      "class": 8,
-      "chapter": "Combustion and Flame",
-      "description": "Explore a labelled virtual flame and compare its different zones safely.",
-      "simulationType": "3D"
-    },
-    {
-      "id": "class-08-ignition-temperature-and-conditions",
-      "title": "Ignition Temperature and Conditions",
-      "class": 8,
-      "chapter": "Combustion and Flame",
-      "description": "Change model conditions to investigate what is needed for ignition.",
+      "chapterNumber": 2,
+      "chapter": "Exploring Substances: Acidic, Basic and Neutral",
+      "description": "Test virtual samples with natural indicators and compare acidic, basic and neutral behaviour.",
       "simulationType": "3D"
     },
     {
       "id": "class-08-properties-of-metals-and-non-metals",
-      "title": "Properties of Metals and Non-metals",
-      "class": 8,
-      "chapter": "Materials: Metals and Non-metals",
-      "description": "Compare model samples by conductivity, lustre, malleability and other properties.",
+      "title": "The World of Metals and Non-metals",
+      "class": 7,
+      "chapterNumber": 4,
+      "chapter": "The World of Metals and Non-metals",
+      "description": "Compare metal and non-metal properties and explore conductivity, reactivity and material uses.",
       "simulationType": "3D"
     },
     {
-      "id": "class-09-true-solutions-suspensions-and-colloids",
-      "title": "True Solutions, Suspensions and Colloids",
-      "class": 9,
-      "chapter": "Is Matter Around Us Pure?",
-      "description": "Mix model particles in a liquid and compare solution, suspension and colloid behaviour.",
+      "id": "class-07-physical-vs-chemical-changes-rusting-magnesium",
+      "title": "Changes Around Us: Physical and Chemical",
+      "class": 7,
+      "chapterNumber": 5,
+      "chapter": "Changes Around Us: Physical and Chemical",
+      "description": "Compare physical changes with chemical reactions and identify evidence of a new substance.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-07-neutralisation-reactions-in-everyday-life",
+      "title": "Neutralisation Reactions",
+      "class": 7,
+      "chapterNumber": 2,
+      "chapter": "Exploring Substances: Acidic, Basic and Neutral",
+      "description": "Mix measured virtual acid and base samples to explore neutralisation and indicator changes.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-08-particulate-nature-of-matter",
+      "title": "Particulate Nature of Matter",
+      "class": 8,
+      "chapterNumber": 7,
+      "chapter": "Particulate Nature of Matter",
+      "description": "Explore particles, spacing, motion and temperature in solids, liquids and gases.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-08-elements-compounds-and-mixtures",
+      "title": "Elements, Compounds and Mixtures",
+      "class": 8,
+      "chapterNumber": 8,
+      "chapter": "Nature of Matter: Elements, Compounds and Mixtures",
+      "description": "Build and compare elements, compounds and mixtures using particle-level models.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-08-solutes-solvents-and-solutions",
+      "title": "The World of Solutes, Solvents and Solutions",
+      "class": 8,
+      "chapterNumber": 9,
+      "chapter": "The Amazing World of Solutes, Solvents and Solutions",
+      "description": "Change solute, solvent and temperature to explore dissolving, solubility and concentration.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-08-combustion-and-flame-zones",
+      "title": "Combustion, Flame and Ignition",
+      "class": 8,
+      "chapterNumber": 0,
+      "chapter": "Supplementary: Combustion and Flame",
+      "description": "Explore the conditions for combustion and compare flame zones in a safe virtual model.",
       "simulationType": "3D"
     },
     {
       "id": "class-09-separation-techniques-sublimation-chromatography",
-      "title": "Separation Techniques (Sublimation & Chromatography)",
+      "title": "Exploring Mixtures and Their Separation",
       "class": 9,
-      "chapter": "Is Matter Around Us Pure?",
-      "description": "Choose a separation technique and observe a virtual separation process.",
+      "chapterNumber": 5,
+      "chapter": "Exploring Mixtures and Their Separation",
+      "description": "Compare solutions, suspensions and colloids and select suitable methods to separate mixture components.",
       "simulationType": "3D"
     },
     {
-      "id": "class-09-law-of-conservation-of-mass",
-      "title": "Law of Conservation of Mass",
+      "id": "class-09-journey-inside-the-atom",
+      "title": "Journey Inside the Atom",
       "class": 9,
-      "chapter": "Atoms and Molecules",
-      "description": "Compare total mass before and after a closed-system model reaction.",
+      "chapterNumber": 8,
+      "chapter": "Journey Inside the Atom",
+      "description": "Explore subatomic particles, atomic models, atomic number and mass number.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-09-law-of-conservation-of-mass",
+      "title": "Atomic Foundations of Matter",
+      "class": 9,
+      "chapterNumber": 9,
+      "chapter": "Atomic Foundations of Matter",
+      "description": "Use particle models and balanced reactions to explore atoms, molecules, formulae and conservation of mass.",
       "simulationType": "2D"
     },
     {
       "id": "class-10-types-of-chemical-reactions",
-      "title": "Types of Chemical Reactions",
+      "title": "Chemical Reactions and Equations",
       "class": 10,
+      "chapterNumber": 1,
       "chapter": "Chemical Reactions and Equations",
-      "description": "Combine virtual reactants and identify modelled reaction patterns and observations.",
-      "simulationType": "3D"
-    },
-    {
-      "id": "ph-playground",
-      "title": "pH Playground",
-      "class": 10,
-      "chapter": "Acids, Bases and Salts",
-      "description": "Select virtual solutions, test with indicators and compare their pH. Curriculum topic: pH of Solutions using Indicator.",
+      "description": "Build and balance equations and explore combination, decomposition, displacement and double displacement reactions.",
       "simulationType": "2D"
     },
     {
-      "id": "class-10-properties-of-acids-and-bases",
-      "title": "Properties of Acids and Bases",
+      "id": "ph-playground",
+      "title": "Acids, Bases and Salts: pH Playground",
       "class": 10,
+      "chapterNumber": 2,
       "chapter": "Acids, Bases and Salts",
-      "description": "Explore virtual acid and base properties using safe simulated tests.",
-      "simulationType": "3D"
+      "description": "Test virtual solutions, use indicators and explore pH, neutralisation and everyday salts.",
+      "simulationType": "2D"
     },
     {
       "id": "class-10-reactivity-series-of-metals",
-      "title": "Reactivity Series of Metals",
+      "title": "Metals and Non-metals",
       "class": 10,
+      "chapterNumber": 3,
       "chapter": "Metals and Non-metals",
-      "description": "Compare model metal reactivity using a virtual displacement activity.",
+      "description": "Compare reactivity, displacement reactions, ionic compounds and corrosion using virtual metals.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-10-carbon-and-its-compounds",
+      "title": "Carbon and Its Compounds",
+      "class": 10,
+      "chapterNumber": 4,
+      "chapter": "Carbon and Its Compounds",
+      "description": "Build simple carbon structures and explore covalent bonding, functional groups and common reactions.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-10-periodic-classification-of-elements",
+      "title": "Periodic Classification of Elements",
+      "class": 10,
+      "chapterNumber": 5,
+      "chapter": "Periodic Classification of Elements",
+      "description": "Arrange elements and explore groups, periods and trends in a visual periodic table.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-some-basic-concepts-of-chemistry",
+      "title": "Some Basic Concepts of Chemistry",
+      "class": 11,
+      "chapterNumber": 1,
+      "chapter": "Some Basic Concepts of Chemistry",
+      "description": "Explore the mole concept, molar mass, concentration and stoichiometric calculations.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-structure-of-atom",
+      "title": "Structure of Atom",
+      "class": 11,
+      "chapterNumber": 2,
+      "chapter": "Structure of Atom",
+      "description": "Explore atomic models, electron configurations, quantum numbers and electronic transitions.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-classification-elements-periodicity",
+      "title": "Classification of Elements and Periodicity in Properties",
+      "class": 11,
+      "chapterNumber": 3,
+      "chapter": "Classification of Elements and Periodicity in Properties",
+      "description": "Explore the periodic table and compare atomic size, ionisation tendency and other periodic trends.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-chemical-bonding-molecular-structure",
+      "title": "Chemical Bonding and Molecular Structure",
+      "class": 11,
+      "chapterNumber": 4,
+      "chapter": "Chemical Bonding and Molecular Structure",
+      "description": "Build molecules and explore ionic bonding, covalent bonding, VSEPR shapes and hybridisation.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-11-chemical-thermodynamics",
+      "title": "Chemical Thermodynamics",
+      "class": 11,
+      "chapterNumber": 5,
+      "chapter": "Chemical Thermodynamics",
+      "description": "Explore heat, work, internal energy and enthalpy changes in model chemical processes.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-equilibrium",
+      "title": "Equilibrium",
+      "class": 11,
+      "chapterNumber": 6,
+      "chapter": "Equilibrium",
+      "description": "Change concentration, pressure and temperature to explore chemical equilibrium and Le Chatelier's principle.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-redox-reactions",
+      "title": "Redox Reactions",
+      "class": 11,
+      "chapterNumber": 7,
+      "chapter": "Redox Reactions",
+      "description": "Track electron transfer, oxidation numbers and balancing of redox reactions.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-11-organic-chemistry-basic-principles-techniques",
+      "title": "Organic Chemistry: Basic Principles and Techniques",
+      "class": 11,
+      "chapterNumber": 8,
+      "chapter": "Organic Chemistry: Some Basic Principles and Techniques",
+      "description": "Explore organic structures, functional groups, purification and qualitative identification.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-11-hydrocarbons",
+      "title": "Hydrocarbons",
+      "class": 11,
+      "chapterNumber": 9,
+      "chapter": "Hydrocarbons",
+      "description": "Build alkane, alkene and alkyne models and compare structure, isomerism and reactions.",
       "simulationType": "3D"
     },
     {
       "id": "class-11-acid-base-titration-oxalic-acid-mohrs-salt",
-      "title": "Acid-Base Titration (Oxalic Acid / Mohr's Salt)",
+      "title": "Virtual Titration Lab",
       "class": 11,
-      "chapter": "Equilibrium and Practical Chemistry",
-      "description": "Operate a virtual burette and flask to explore titration readings and the end point.",
+      "chapterNumber": 0,
+      "chapter": "Practical Chemistry",
+      "description": "Operate a virtual burette and flask, record readings and determine a titration end point.",
       "simulationType": "3D"
     },
     {
       "id": "class-11-basic-laboratory-techniques",
       "title": "Basic Laboratory Techniques",
       "class": 11,
+      "chapterNumber": 0,
       "chapter": "Practical Chemistry",
-      "description": "Practise virtual measurement, transfer, filtration and laboratory apparatus selection.",
+      "description": "Practise virtual measurement, transfer, filtration and selection of laboratory apparatus.",
       "simulationType": "3D"
     },
     {
       "id": "class-11-detection-of-elements-lassaignes-test",
-      "title": "Detection of Elements (Lassaigne's Test)",
+      "title": "Detection of Elements: Lassaigne's Test",
       "class": 11,
-      "chapter": "Organic Chemistry: Basic Principles",
-      "description": "Explore a guided virtual model of qualitative element detection and observations.",
+      "chapterNumber": 0,
+      "chapter": "Practical Chemistry",
+      "description": "Follow a guided virtual qualitative test to interpret observations for common elements in organic compounds.",
       "simulationType": "3D"
     },
     {
       "id": "class-11-qualitative-salt-analysis-basics",
-      "title": "Qualitative Salt Analysis Basics",
+      "title": "Qualitative Salt Analysis",
       "class": 11,
+      "chapterNumber": 0,
       "chapter": "Practical Chemistry",
-      "description": "Use a guided virtual decision flow to interpret common salt-analysis observations.",
+      "description": "Use a guided virtual test sequence to identify common cations and anions from observations.",
       "simulationType": "2D"
     },
     {
-      "id": "class-12-redox-titration-kmno4-vs-mohrs-salt",
-      "title": "Redox Titration (KMnO4 vs Mohr's Salt)",
+      "id": "class-12-solutions",
+      "title": "Solutions",
       "class": 12,
-      "chapter": "Electrochemistry and Redox",
-      "description": "Perform a simulated redox titration and inspect the end point and calculated result.",
+      "chapterNumber": 1,
+      "chapter": "Solutions",
+      "description": "Prepare virtual solutions and change concentration, solubility and colligative-property variables.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-12-electrochemistry",
+      "title": "Electrochemistry",
+      "class": 12,
+      "chapterNumber": 2,
+      "chapter": "Electrochemistry",
+      "description": "Build galvanic and electrolytic cells and explore cell potential, conductance and electrolysis.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-chemical-kinetics",
+      "title": "Chemical Kinetics",
+      "class": 12,
+      "chapterNumber": 3,
+      "chapter": "Chemical Kinetics",
+      "description": "Change concentration, temperature and catalysts to investigate reaction rate and rate laws.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-12-d-and-f-block-elements",
+      "title": "d- and f-Block Elements",
+      "class": 12,
+      "chapterNumber": 4,
+      "chapter": "d- and f-Block Elements",
+      "description": "Explore transition-metal configurations, oxidation states, colours and periodic trends.",
+      "simulationType": "2D"
+    },
+    {
+      "id": "class-12-coordination-compounds",
+      "title": "Coordination Compounds",
+      "class": 12,
+      "chapterNumber": 5,
+      "chapter": "Coordination Compounds",
+      "description": "Build coordination complexes and explore ligands, coordination number, geometry and isomerism.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-haloalkanes-and-haloarenes",
+      "title": "Haloalkanes and Haloarenes",
+      "class": 12,
+      "chapterNumber": 6,
+      "chapter": "Haloalkanes and Haloarenes",
+      "description": "Build molecular structures and explore substitution and elimination reaction pathways.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-alcohols-phenols-and-ethers",
+      "title": "Alcohols, Phenols and Ethers",
+      "class": 12,
+      "chapterNumber": 7,
+      "chapter": "Alcohols, Phenols and Ethers",
+      "description": "Compare structures and explore selected reactions of alcohols, phenols and ethers.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-aldehydes-ketones-carboxylic-acids",
+      "title": "Aldehydes, Ketones and Carboxylic Acids",
+      "class": 12,
+      "chapterNumber": 8,
+      "chapter": "Aldehydes, Ketones and Carboxylic Acids",
+      "description": "Build carbonyl compounds and explore characteristic reactions and functional-group tests.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-amines",
+      "title": "Amines",
+      "class": 12,
+      "chapterNumber": 9,
+      "chapter": "Amines",
+      "description": "Explore amine structures, basicity and selected reactions using interactive molecular models.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-biomolecules",
+      "title": "Biomolecules",
+      "class": 12,
+      "chapterNumber": 10,
+      "chapter": "Biomolecules",
+      "description": "Explore the structures and building blocks of carbohydrates, proteins, lipids and nucleic acids.",
+      "simulationType": "3D"
+    },
+    {
+      "id": "class-12-redox-titration-kmno4-vs-mohrs-salt",
+      "title": "Redox Titration",
+      "class": 12,
+      "chapterNumber": 0,
+      "chapter": "Practical Chemistry",
+      "description": "Perform a virtual redox titration and inspect the end point, readings and calculated result.",
       "simulationType": "3D"
     },
     {
       "id": "class-12-paper-chromatography-of-plant-pigments",
       "title": "Paper Chromatography of Plant Pigments",
       "class": 12,
-      "chapter": "Biomolecules and Practical Chemistry",
-      "description": "Change solvent and sample settings to observe pigment separation on paper.",
+      "chapterNumber": 0,
+      "chapter": "Practical Chemistry",
+      "description": "Change solvent and sample settings to observe pigment separation on chromatography paper.",
       "simulationType": "3D"
     },
     {
       "id": "class-12-organic-functional-group-analysis",
       "title": "Organic Functional Group Analysis",
       "class": 12,
-      "chapter": "Organic Chemistry",
-      "description": "Explore virtual tests and identify common organic functional groups from observations.",
+      "chapterNumber": 0,
+      "chapter": "Practical Chemistry",
+      "description": "Use simulated observations from common functional-group tests to identify an unknown organic sample.",
       "simulationType": "3D"
     },
     {
       "id": "class-12-comprehensive-salt-analysis",
       "title": "Comprehensive Salt Analysis",
       "class": 12,
+      "chapterNumber": 0,
       "chapter": "Practical Chemistry",
-      "description": "Follow a virtual qualitative analysis workflow and interpret the simulated observations.",
+      "description": "Follow a virtual qualitative-analysis workflow and interpret observations for salt identification.",
       "simulationType": "3D"
     }
   ]
