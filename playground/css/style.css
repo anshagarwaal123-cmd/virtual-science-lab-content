@@ -677,3 +677,307 @@ a:focus-visible {
         transition-duration: .01ms !important;
     }
 }
+
+/* =====================================================
+   VIRTUAL SCIENCE LAB — PREMIUM LIGHT MINT THEME
+   Append this block at the END of style.css
+   ===================================================== */
+
+:root {
+    color-scheme: light;
+
+    --bg: #F3FAF5;
+    --surface: #FFFFFF;
+    --surface-light: #E8F5EC;
+    --border: #DCEBE0;
+
+    --text: #193325;
+    --muted: #66796D;
+
+    --physics: #397CF5;
+    --chemistry: #15967C;
+
+    --accent: var(--physics);
+
+    --shadow: 0 12px 35px rgba(36, 85, 54, 0.08);
+}
+
+body {
+    background:
+        radial-gradient(circle at 10% 5%, #E1F5E6, transparent 32%),
+        radial-gradient(circle at 90% 25%, #E4F2FF, transparent 30%),
+        var(--bg);
+    color: var(--text);
+}
+
+/* NAVIGATION */
+
+.topbar {
+    border-bottom-color: #DFEAE2;
+}
+
+.brand {
+    color: #193325;
+}
+
+.brand small {
+    color: #748579;
+}
+
+.online-label {
+    background: #E8F6EC;
+    border-color: #CFE8D6;
+    color: #32764B;
+}
+
+.online-dot {
+    background: #1EB978;
+    box-shadow: 0 0 10px rgba(30,185,120,.35);
+}
+
+/* HERO */
+
+.hero {
+    border: 1px solid #CBE7D2;
+    background: linear-gradient(
+        115deg,
+        #DCF4E3 0%,
+        #E7F6EC 58%,
+        #DDEFE8 100%
+    );
+    box-shadow: 0 16px 38px rgba(42,112,66,.09);
+}
+
+.hero::before {
+    background: rgba(76, 180, 117, .16);
+}
+
+.hero h1 {
+    color: #173D2A;
+}
+
+.hero p {
+    color: #526F5B;
+}
+
+.hero .eyebrow {
+    color: #27834B;
+}
+
+.hero-stats strong {
+    color: #193D2A;
+}
+
+.hero-stats span {
+    color: #66806D;
+}
+
+.orbit {
+    border-color: rgba(45, 139, 83, .35);
+}
+
+.orbit-core {
+    background: radial-gradient(
+        circle at 35% 30%,
+        #A9EDBE,
+        #42B86F 65%,
+        #25864F
+    );
+    box-shadow: 0 0 45px rgba(52, 174, 103, .3);
+}
+
+/* HEADINGS */
+
+.section-heading h2 {
+    color: #193D2A;
+}
+
+.section-heading .eyebrow {
+    color: var(--accent);
+}
+
+/* SEARCH */
+
+.search-box {
+    background: #FFFFFF;
+    border-color: #D5E6D9;
+    box-shadow: 0 5px 18px rgba(38, 91, 54, .035);
+}
+
+.search-box:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px
+        color-mix(in srgb, var(--accent) 13%, transparent);
+}
+
+.search-box span {
+    color: #64816D;
+}
+
+.search-box input {
+    color: #193325;
+    color-scheme: light;
+}
+
+.search-box input::placeholder {
+    color: #8A9B8F;
+}
+
+/* FILTERS */
+
+.filter-section h3 {
+    color: #335440;
+}
+
+.filter-chip {
+    background: #FFFFFF;
+    border-color: #D8E8DC;
+    color: #64776A;
+}
+
+.filter-chip:hover {
+    background: #EDF8F0;
+    border-color: var(--accent);
+    color: #193D2A;
+}
+
+.filter-chip.active {
+    background: color-mix(
+        in srgb,
+        var(--accent) 12%,
+        white
+    );
+    border-color: var(--accent);
+    color: color-mix(
+        in srgb,
+        var(--accent) 75%,
+        #193325
+    );
+    box-shadow: 0 4px 13px
+        color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* EXPERIMENT CARDS */
+
+.experiment-card {
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #F9FDF9
+    );
+    border-color: #DCEBE0;
+    box-shadow: 0 7px 22px rgba(42, 91, 55, .045);
+}
+
+.experiment-card:hover {
+    border-color: color-mix(
+        in srgb,
+        var(--accent) 48%,
+        white
+    );
+    box-shadow: 0 14px 30px rgba(42, 91, 55, .10);
+}
+
+.experiment-card h3 {
+    color: #1D3B2A;
+}
+
+.experiment-card p {
+    color: #65786B;
+}
+
+.experiment-icon {
+    background: color-mix(
+        in srgb,
+        var(--accent) 11%,
+        white
+    );
+    color: var(--accent);
+}
+
+.type-badge {
+    background: color-mix(
+        in srgb,
+        var(--accent) 11%,
+        white
+    );
+    color: var(--accent);
+}
+
+.class-badge {
+    background: #EAF4ED;
+    color: #4D7259;
+}
+
+.card-meta {
+    color: #718276;
+}
+
+.card-footer {
+    border-top-color: #E6EFE8;
+}
+
+.card-note {
+    color: #708174;
+}
+
+.card-action {
+    color: var(--accent);
+}
+
+/* MESSAGES */
+
+.catalogue-message {
+    background: #FFFFFF;
+    border-color: #DDEBE0;
+    color: #64776A;
+}
+
+.empty-state,
+.error-state {
+    background: #FFFFFF;
+    border-color: #D4E5D8;
+    color: #66796D;
+}
+
+.empty-state strong,
+.error-state strong {
+    color: #193D2A;
+}
+
+.error-state button {
+    color: #FFFFFF;
+}
+
+/* FOOTER */
+
+.footer {
+    border-top-color: #DBE8DE;
+}
+
+.footer strong {
+    color: #294A34;
+}
+
+.footer p {
+    color: #738477;
+}
+
+/* CHEMISTRY SUBJECT ACCENT */
+
+html[data-subject="chemistry"] {
+    --accent: var(--chemistry);
+}
+
+/* PHYSICS SUBJECT ACCENT */
+
+html[data-subject="physics"] {
+    --accent: var(--physics);
+}
+
+/* TEXT SELECTION */
+
+::selection {
+    background: #BDE8C9;
+    color: #173D2A;
+}
