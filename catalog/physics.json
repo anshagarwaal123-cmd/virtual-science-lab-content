@@ -238,7 +238,7 @@
       "chapterNumber": 9,
       "chapter": "Light: Reflection and Refraction",
       "description": "Explore plane and spherical mirrors, lenses, image formation, refraction and prism-based dispersion in one optics workspace.",
-      "simulationType": "2D"
+      "simulationType": "2D",
       "simulationPath": "simulations/physics/light-reflection/"
     },
     {
