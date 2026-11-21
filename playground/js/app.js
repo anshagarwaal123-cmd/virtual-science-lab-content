@@ -1,196 +1,150 @@
-
 /* =========================================================
    VIRTUAL SCIENCE LAB
    Dynamic Physics & Chemistry Experiment Catalogue
 
-   ADD NEW EXPERIMENT:
-   1. Create its simulation page in playground/simulations/
-   2. Add simulationPath to its experiment in catalog/*.json
-   3. No app.js changes needed again.
+   AUTOMATIC SIMULATION WORKFLOW:
+   1. Add the experiment entry to the subject JSON catalogue.
+   2. Create its folder and index.html.
+
+   Physics:
+   playground/simulations/physics/<experiment-id>/index.html
+
+   Chemistry:
+   playground/simulations/chemistry/<experiment-id>/index.html
+
+   The launcher checks if index.html exists before enabling
+   the Open Lab button.
+
+   Existing simulationPath values in JSON are still supported.
    ========================================================= */
 
 (() => {
     "use strict";
 
-    // Catalogue files
     const CATALOGUE_URLS = {
         physics: "../catalog/physics.json",
         chemistry: "../catalog/chemistry.json"
     };
 
-    // Subject appearance
     const SUBJECT_CONFIG = {
         physics: {
             title: "Physics Playground",
-            subtitle:
-                "Explore motion, waves, light, electricity and the laws of the physical world.",
+            subtitle: "Explore motion, waves, light, electricity and the laws of the physical world.",
             eyebrow: "FORCE • LIGHT • ENERGY • WAVES",
             accent: "#5795ff"
         },
-
         chemistry: {
             title: "Chemistry Playground",
-            subtitle:
-                "Explore matter, atoms, reactions, solutions and the chemistry around you.",
+            subtitle: "Explore matter, atoms, reactions, solutions and the chemistry around you.",
             eyebrow: "ATOMS • BONDS • REACTIONS • MATTER",
             accent: "#31d6ae"
         }
     };
 
-    // App state
+    /*
+       Compatibility paths for existing folders whose names
+       are different from their experiment IDs.
+    */
+    const LEGACY_SIMULATION_PATHS = {
+        "class-10-solenoid-electromagnet":
+            "simulations/physics/solenoid-electromagnet/"
+    };
+
     const state = {
         subject: "physics",
         experiments: [],
         selectedClass: "all",
         selectedMode: "all",
-        search: ""
+        search: "",
+        routeObserver: null,
+        routeChecks: new Map()
     };
 
     const elements = {};
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        HTML ELEMENTS
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     function getElements() {
-        elements.subjectEyebrow =
-            document.getElementById("subjectEyebrow");
-
-        elements.pageTitle =
-            document.getElementById("pageTitle");
-
-        elements.pageSubtitle =
-            document.getElementById("pageSubtitle");
-
-        elements.experimentCount =
-            document.getElementById("experimentCount");
-
-        elements.searchInput =
-            document.getElementById("searchInput");
-
-        elements.classFilters =
-            document.getElementById("classFilters");
-
-        elements.modeFilters =
-            document.getElementById("modeFilters");
-
-        elements.catalogueMessage =
-            document.getElementById("catalogueMessage");
-
-        elements.experimentGrid =
-            document.getElementById("experimentGrid");
+        elements.subjectEyebrow = document.getElementById("subjectEyebrow");
+        elements.pageTitle = document.getElementById("pageTitle");
+        elements.pageSubtitle = document.getElementById("pageSubtitle");
+        elements.experimentCount = document.getElementById("experimentCount");
+        elements.searchInput = document.getElementById("searchInput");
+        elements.classFilters = document.getElementById("classFilters");
+        elements.modeFilters = document.getElementById("modeFilters");
+        elements.catalogueMessage = document.getElementById("catalogueMessage");
+        elements.experimentGrid = document.getElementById("experimentGrid");
 
         const required = Object.entries(elements)
             .filter(([, element]) => !element)
             .map(([name]) => name);
 
-        if (required.length > 0) {
-            throw new Error(
-                "Missing HTML elements: " +
-                required.join(", ")
-            );
+        if (required.length) {
+            throw new Error("Missing HTML elements: " + required.join(", "));
         }
     }
 
-    /* -----------------------------------------------------
-       SUBJECT SELECTION
-    ----------------------------------------------------- */
+    /* ---------------------------------------------------------
+       SUBJECT SELECTION + THEME
+    --------------------------------------------------------- */
 
     function getSubjectFromUrl() {
-        const params = new URLSearchParams(
-            window.location.search
-        );
+        const params = new URLSearchParams(window.location.search);
+        const subject = (params.get("subject") || "physics").toLowerCase();
 
-        const subject = (
-            params.get("subject") || "physics"
-        ).toLowerCase();
-
-        return Object.prototype.hasOwnProperty.call(
-            CATALOGUE_URLS,
-            subject
-        ) ? subject : "physics";
+        return Object.prototype.hasOwnProperty.call(CATALOGUE_URLS, subject)
+            ? subject
+            : "physics";
     }
 
     function applySubjectTheme() {
         const config = SUBJECT_CONFIG[state.subject];
 
-        document.documentElement.style.setProperty(
-            "--accent",
-            config.accent
-        );
+        document.documentElement.style.setProperty("--accent", config.accent);
+        document.documentElement.dataset.subject = state.subject;
 
-        document.documentElement.dataset.subject =
-            state.subject;
+        elements.subjectEyebrow.textContent = config.eyebrow;
+        elements.pageTitle.textContent = config.title;
+        elements.pageSubtitle.textContent = config.subtitle;
 
-        elements.subjectEyebrow.textContent =
-            config.eyebrow;
-
-        elements.pageTitle.textContent =
-            config.title;
-
-        elements.pageSubtitle.textContent =
-            config.subtitle;
-
-        document.title =
-            config.title + " | Virtual Science Lab";
+        document.title = config.title + " | Virtual Science Lab";
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        SAFE TEXT + MESSAGES
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     function escapeHtml(value) {
-        return String(value ?? "").replace(
-            /[&<>"']/g,
-            character => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            })[character]
-        );
+        return String(value ?? "").replace(/[&<>"']/g, character => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[character]);
     }
 
     function setMessage(message, type = "info") {
-        elements.catalogueMessage.className =
-            "catalogue-message " + type;
-
-        elements.catalogueMessage.textContent =
-            message;
-
-        elements.catalogueMessage.hidden =
-            !message;
+        elements.catalogueMessage.className = "catalogue-message " + type;
+        elements.catalogueMessage.textContent = message;
+        elements.catalogueMessage.hidden = !message;
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        FILTER BUTTONS
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
-    function createFilterButton(
-        label,
-        value,
-        selected,
-        onClick
-    ) {
+    function createFilterButton(label, value, selected, onClick) {
         const button = document.createElement("button");
 
         button.type = "button";
-
-        button.className =
-            "filter-chip" +
-            (selected ? " active" : "");
-
+        button.className = "filter-chip" + (selected ? " active" : "");
         button.textContent = label;
+        button.setAttribute("aria-pressed", selected ? "true" : "false");
 
-        button.setAttribute(
-            "aria-pressed",
-            selected ? "true" : "false"
-        );
-
-        button.addEventListener("click", () => {
-            onClick(value);
-        });
+        button.addEventListener("click", () => onClick(value));
 
         return button;
     }
@@ -199,7 +153,6 @@
         elements.classFilters.replaceChildren();
         elements.modeFilters.replaceChildren();
 
-        // Class filters
         const classOptions = [
             { label: "All Classes", value: "all" }
         ];
@@ -212,21 +165,20 @@
         }
 
         classOptions.forEach(option => {
-            const button = createFilterButton(
-                option.label,
-                option.value,
-                state.selectedClass === option.value,
-                value => {
-                    state.selectedClass = value;
-                    buildFilters();
-                    renderExperiments();
-                }
+            elements.classFilters.appendChild(
+                createFilterButton(
+                    option.label,
+                    option.value,
+                    state.selectedClass === option.value,
+                    value => {
+                        state.selectedClass = value;
+                        buildFilters();
+                        renderExperiments();
+                    }
+                )
             );
-
-            elements.classFilters.appendChild(button);
         });
 
-        // 2D / 3D filters
         const modeOptions = [
             { label: "All Types", value: "all" },
             { label: "2D", value: "2D" },
@@ -234,24 +186,24 @@
         ];
 
         modeOptions.forEach(option => {
-            const button = createFilterButton(
-                option.label,
-                option.value,
-                state.selectedMode === option.value,
-                value => {
-                    state.selectedMode = value;
-                    buildFilters();
-                    renderExperiments();
-                }
+            elements.modeFilters.appendChild(
+                createFilterButton(
+                    option.label,
+                    option.value,
+                    state.selectedMode === option.value,
+                    value => {
+                        state.selectedMode = value;
+                        buildFilters();
+                        renderExperiments();
+                    }
+                )
             );
-
-            elements.modeFilters.appendChild(button);
         });
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        FILTER + SORT EXPERIMENTS
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     function getFilteredExperiments() {
         const query = state.search.trim().toLowerCase();
@@ -260,13 +212,11 @@
             .filter(experiment => {
                 const matchesClass =
                     state.selectedClass === "all" ||
-                    String(experiment.class) ===
-                    state.selectedClass;
+                    String(experiment.class) === state.selectedClass;
 
                 const matchesMode =
                     state.selectedMode === "all" ||
-                    String(experiment.simulationType || "")
-                        .toUpperCase() ===
+                    String(experiment.simulationType || "").toUpperCase() ===
                     state.selectedMode;
 
                 const searchableText = [
@@ -278,40 +228,31 @@
                 ].join(" ").toLowerCase();
 
                 const matchesSearch =
-                    !query ||
-                    searchableText.includes(query);
+                    !query || searchableText.includes(query);
 
-                return (
-                    matchesClass &&
-                    matchesMode &&
-                    matchesSearch
-                );
+                return matchesClass && matchesMode && matchesSearch;
             })
             .sort((a, b) => {
                 const classDifference =
-                    Number(a.class || 0) -
-                    Number(b.class || 0);
+                    Number(a.class || 0) - Number(b.class || 0);
 
-                if (classDifference !== 0) {
-                    return classDifference;
-                }
+                if (classDifference !== 0) return classDifference;
 
                 const chapterDifference =
                     Number(a.chapterNumber || 0) -
                     Number(b.chapterNumber || 0);
 
-                if (chapterDifference !== 0) {
-                    return chapterDifference;
-                }
+                if (chapterDifference !== 0) return chapterDifference;
 
-                return String(a.title || "")
-                    .localeCompare(String(b.title || ""));
+                return String(a.title || "").localeCompare(
+                    String(b.title || "")
+                );
             });
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        EXPERIMENT ICON
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     function getExperimentIcon(experiment) {
         const text = (
@@ -319,85 +260,92 @@
             String(experiment.chapter || "")
         ).toLowerCase();
 
-        if (/wave|sound|frequency|vibration/.test(text))
-            return "〰";
-
-        if (/light|mirror|lens|optics|prism/.test(text))
-            return "◉";
-
-        if (/electric|circuit|current|voltage|resistance|magnet/.test(text))
-            return "ϟ";
-
-        if (/motion|force|friction|projectile|gravity/.test(text))
-            return "↗";
-
-        if (/heat|temperature|thermo/.test(text))
-            return "♨";
-
-        if (/acid|base|ph|indicator/.test(text))
-            return "◒";
-
-        if (/atom|element|periodic|electron/.test(text))
-            return "⚛";
-
-        if (/solution|concentration|mixture/.test(text))
-            return "◌";
-
-        if (/reaction|chemical|redox/.test(text))
-            return "✧";
-
-        if (/gas|solid|liquid|matter/.test(text))
-            return "◈";
+        if (/wave|sound|frequency|vibration/.test(text)) return "〰";
+        if (/light|mirror|lens|optics|prism/.test(text)) return "◉";
+        if (/electric|circuit|current|voltage|resistance|magnet/.test(text)) return "ϟ";
+        if (/motion|force|friction|projectile|gravity/.test(text)) return "↗";
+        if (/heat|temperature|thermo/.test(text)) return "♨";
+        if (/acid|base|ph|indicator/.test(text)) return "◒";
+        if (/atom|element|periodic|electron/.test(text)) return "⚛";
+        if (/solution|concentration|mixture/.test(text)) return "◌";
+        if (/reaction|chemical|redox/.test(text)) return "✧";
+        if (/gas|solid|liquid|matter/.test(text)) return "◈";
 
         return state.subject === "physics" ? "✦" : "⚗";
     }
 
-    /* -----------------------------------------------------
-       SIMULATION ROUTE SYSTEM
+    /* ---------------------------------------------------------
+       AUTOMATIC SIMULATION ROUTES
 
-       The experiment's JSON object can contain:
+       Priority:
+       1. simulationPath written in JSON.
+       2. Legacy folder compatibility path.
+       3. Automatic folder from subject + experiment ID.
 
-       "simulationPath": "simulations/physics/ohms-law/"
+       Automatic paths:
+       simulations/physics/<experiment-id>/
+       simulations/chemistry/<experiment-id>/
+    --------------------------------------------------------- */
 
-       Path is relative to the Playground folder.
-       External or unsafe paths are rejected.
-    ----------------------------------------------------- */
+    function isSafeRelativePath(path) {
+        return typeof path === "string" &&
+            path.length > 0 &&
+            !path.startsWith("/") &&
+            !path.includes("..") &&
+            !/[?#\\\s]/.test(path) &&
+            /^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(path);
+    }
 
     function getSimulationUrl(experiment) {
-        const rawPath =
-            typeof experiment.simulationPath === "string"
-                ? experiment.simulationPath.trim()
-                : "";
+        let path = "";
 
-        if (!rawPath) {
-            return null;
+        /*
+           Existing explicit JSON paths are supported.
+        */
+        if (
+            typeof experiment.simulationPath === "string" &&
+            experiment.simulationPath.trim()
+        ) {
+            path = experiment.simulationPath
+                .trim()
+                .replace(/^\.\/+/, "");
         }
 
-        const path = rawPath.replace(/^\.\/+/, "");
+        /*
+           Old folder names are supported through aliases.
+        */
+        else if (LEGACY_SIMULATION_PATHS[experiment.id]) {
+            path = LEGACY_SIMULATION_PATHS[experiment.id];
+        }
 
-        // Only safe relative paths are accepted.
-        if (
-            path.startsWith("/") ||
-            path.includes("..") ||
-            /[?#\\\s]/.test(path) ||
-            !/^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/.test(path)
-        ) {
-            console.warn(
-                "Invalid simulationPath for:",
-                experiment.id
-            );
+        /*
+           New experiments use automatic ID-based folders.
+        */
+        else {
+            const id = String(experiment.id || "").trim();
 
+            if (!/^[a-zA-Z0-9][a-zA-Z0-9-]*$/.test(id)) {
+                return null;
+            }
+
+            path =
+                "simulations/" +
+                state.subject +
+                "/" +
+                id +
+                "/";
+        }
+
+        if (!isSafeRelativePath(path)) {
+            console.warn("Unsafe simulation path:", experiment.id);
             return null;
         }
 
         try {
-            const playgroundBase = new URL(
-                "./",
-                window.location.href
-            );
+            const playgroundBase = new URL("./", window.location.href);
 
             const target = new URL(
-                path,
+                path.endsWith("/") ? path : path + "/",
                 playgroundBase
             );
 
@@ -406,20 +354,150 @@
             }
 
             return target.href;
-
         } catch (error) {
-            console.warn(
-                "Could not build simulation URL:",
-                error
-            );
-
+            console.warn("Could not build simulation URL:", error);
             return null;
         }
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
+       CHECK IF SIMULATION FILE EXISTS
+    --------------------------------------------------------- */
+
+    async function checkSimulationExists(simulationUrl) {
+        if (state.routeChecks.has(simulationUrl)) {
+            return state.routeChecks.get(simulationUrl);
+        }
+
+        const checkPromise = (async () => {
+            try {
+                const indexUrl =
+                    new URL("index.html", simulationUrl).href;
+
+                let response = await fetch(indexUrl, {
+                    method: "HEAD",
+                    cache: "no-store"
+                });
+
+                /*
+                   Some hosts do not support HEAD requests.
+                   Try GET in that case.
+                */
+                if (
+                    response.status === 405 ||
+                    response.status === 501
+                ) {
+                    response = await fetch(indexUrl, {
+                        method: "GET",
+                        cache: "no-store",
+                        headers: { Range: "bytes=0-0" }
+                    });
+                }
+
+                return response.ok;
+            } catch (error) {
+                console.warn(
+                    "Simulation availability check failed:",
+                    simulationUrl,
+                    error
+                );
+
+                return false;
+            }
+        })();
+
+        state.routeChecks.set(simulationUrl, checkPromise);
+
+        return checkPromise;
+    }
+
+    /* ---------------------------------------------------------
+       UPDATE CARD BUTTON
+    --------------------------------------------------------- */
+
+    function setCardRouteState(card, simulationUrl, exists) {
+        if (!card.isConnected) return;
+
+        const button = card.querySelector("[data-open-simulation]");
+
+        if (!button) return;
+
+        if (exists) {
+            button.disabled = false;
+            button.removeAttribute("aria-disabled");
+            button.textContent = "Open Lab →";
+            button.classList.add("ready");
+
+            button.addEventListener(
+                "click",
+                () => {
+                    window.location.assign(simulationUrl);
+                },
+                { once: true }
+            );
+        } else {
+            button.disabled = true;
+            button.setAttribute("aria-disabled", "true");
+            button.textContent = "In development";
+            button.classList.remove("ready");
+        }
+    }
+
+    async function verifyCardRoute(card, simulationUrl) {
+        const button = card.querySelector("[data-open-simulation]");
+
+        if (!button) return;
+
+        button.textContent = "Checking…";
+        button.disabled = true;
+        button.setAttribute("aria-disabled", "true");
+
+        const exists = await checkSimulationExists(simulationUrl);
+
+        setCardRouteState(card, simulationUrl, exists);
+    }
+
+    /* ---------------------------------------------------------
+       OBSERVE VISIBLE CARDS
+    --------------------------------------------------------- */
+
+    function createRouteObserver() {
+        if (state.routeObserver) {
+            state.routeObserver.disconnect();
+        }
+
+        if (!("IntersectionObserver" in window)) {
+            state.routeObserver = null;
+            return;
+        }
+
+        state.routeObserver = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+
+                    const card = entry.target;
+
+                    state.routeObserver.unobserve(card);
+
+                    const url = card.dataset.routeUrl;
+
+                    if (url) {
+                        verifyCardRoute(card, url);
+                    }
+                });
+            },
+            {
+                root: null,
+                rootMargin: "300px 0px",
+                threshold: 0.01
+            }
+        );
+    }
+
+    /* ---------------------------------------------------------
        EXPERIMENT CARD
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     function createExperimentCard(experiment) {
         const card = document.createElement("article");
@@ -447,44 +525,14 @@
             String(experiment.simulationType || "2D").toUpperCase()
         );
 
-        const icon = escapeHtml(
-            getExperimentIcon(experiment)
-        );
+        const icon = escapeHtml(getExperimentIcon(experiment));
 
-        // Automatically check whether this experiment is ready.
-        const simulationUrl =
-            getSimulationUrl(experiment);
-
-        const actionHtml = simulationUrl
-            ? `
-                <button
-                    class="card-action"
-                    type="button"
-                    data-open-simulation>
-                    Open Lab →
-                </button>
-            `
-            : `
-                <button
-                    class="card-action"
-                    type="button"
-                    disabled
-                    aria-disabled="true">
-                    In development
-                </button>
-            `;
+        const simulationUrl = getSimulationUrl(experiment);
 
         card.innerHTML = `
             <div class="card-top">
-                <span
-                    class="experiment-icon"
-                    aria-hidden="true">
-                    ${icon}
-                </span>
-
-                <span class="type-badge">
-                    ${simulationType}
-                </span>
+                <span class="experiment-icon" aria-hidden="true">${icon}</span>
+                <span class="type-badge">${simulationType}</span>
             </div>
 
             <h3>${title}</h3>
@@ -492,58 +540,62 @@
             <p>${description}</p>
 
             <div class="card-meta">
-                <span class="class-badge">
-                    Class ${classNumber}
-                </span>
-
+                <span class="class-badge">Class ${classNumber}</span>
                 <span>${chapterNumber}</span>
-
                 <span>${chapter}</span>
             </div>
 
             <div class="card-footer">
-                <span class="card-note">
-                    Interactive experiment
-                </span>
+                <span class="card-note">Interactive experiment</span>
 
-                ${actionHtml}
+                <button
+                    class="card-action"
+                    type="button"
+                    data-open-simulation
+                    disabled
+                    aria-disabled="true"
+                >
+                    ${simulationUrl ? "Checking…" : "In development"}
+                </button>
             </div>
         `;
 
-        // Open the experiment page on click.
         if (simulationUrl) {
-            const launchButton =
-                card.querySelector("[data-open-simulation]");
-
-            launchButton.addEventListener("click", () => {
-                window.location.assign(simulationUrl);
-            });
+            card.dataset.routeUrl = simulationUrl;
         }
 
         return card;
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        DISPLAY EXPERIMENTS
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     function renderExperiments() {
         const filtered = getFilteredExperiments();
+
+        if (state.routeObserver) {
+            state.routeObserver.disconnect();
+        }
+
+        createRouteObserver();
 
         elements.experimentGrid.replaceChildren();
 
         elements.experimentCount.textContent =
             String(filtered.length);
 
-        if (filtered.length === 0) {
+        if (!filtered.length) {
             const empty = document.createElement("div");
 
             empty.className = "empty-state";
 
             const heading = document.createElement("strong");
+
             heading.textContent = "No experiments found";
 
             const message = document.createElement("p");
+
             message.textContent =
                 "Try another search or choose a different filter.";
 
@@ -568,6 +620,23 @@
 
         elements.experimentGrid.appendChild(fragment);
 
+        /*
+           Only check cards after they are attached to the page.
+        */
+        elements.experimentGrid
+            .querySelectorAll(".experiment-card")
+            .forEach(card => {
+                const url = card.dataset.routeUrl;
+
+                if (!url) return;
+
+                if (state.routeObserver) {
+                    state.routeObserver.observe(card);
+                } else {
+                    verifyCardRoute(card, url);
+                }
+            });
+
         setMessage(
             "Showing " +
             filtered.length +
@@ -579,9 +648,9 @@
         );
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        LOAD ONLINE JSON CATALOGUE
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     async function loadCatalogue() {
         setMessage("Loading experiment catalogue...");
@@ -612,29 +681,25 @@
                 !catalogue ||
                 !Array.isArray(catalogue.experiments)
             ) {
-                throw new Error(
-                    "Invalid catalogue format."
-                );
+                throw new Error("Invalid catalogue format.");
             }
 
             state.experiments =
-                catalogue.experiments.filter(item => {
-                    return (
-                        item &&
-                        item.id &&
-                        item.title &&
-                        Number.isFinite(Number(item.class))
-                    );
-                });
+                catalogue.experiments.filter(item => (
+                    item &&
+                    item.id &&
+                    item.title &&
+                    Number.isFinite(Number(item.class))
+                ));
 
-            if (state.experiments.length === 0) {
-                throw new Error(
-                    "No valid experiments found."
-                );
+            if (!state.experiments.length) {
+                throw new Error("No valid experiments found.");
             }
 
             state.selectedClass = "all";
             state.selectedMode = "all";
+
+            state.routeChecks.clear();
 
             buildFilters();
             renderExperiments();
@@ -650,20 +715,20 @@
                 "error-state"
             );
 
-            const errorCard =
-                document.createElement("div");
+            const errorCard = document.createElement("div");
 
             errorCard.className = "error-state";
 
             const heading = document.createElement("strong");
+
             heading.textContent = "Unable to load experiments";
 
             const message = document.createElement("p");
+
             message.textContent =
                 "Check your internet connection and try again.";
 
-            const retryButton =
-                document.createElement("button");
+            const retryButton = document.createElement("button");
 
             retryButton.type = "button";
             retryButton.textContent = "Retry";
@@ -679,15 +744,13 @@
                 retryButton
             );
 
-            elements.experimentGrid.replaceChildren(
-                errorCard
-            );
+            elements.experimentGrid.replaceChildren(errorCard);
         }
     }
 
-    /* -----------------------------------------------------
+    /* ---------------------------------------------------------
        START APP
-    ----------------------------------------------------- */
+    --------------------------------------------------------- */
 
     function init() {
         try {
