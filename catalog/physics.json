@@ -262,7 +262,8 @@
   "chapterNumber": 10,
   "chapter": "The Human Eye and the Colourful World",
   "description": "Explore eye accommodation, image formation on the retina, myopia, hypermetropia and corrective lenses.",
-  "simulationType": "2D"
+  "simulationType": "2D",
+  "simulationPath": "simulations/physics/human-eye-vision/"
 },
 {
   "id": "class-10-dispersion-prism",
