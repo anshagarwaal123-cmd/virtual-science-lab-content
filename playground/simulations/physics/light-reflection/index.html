@@ -1,0 +1,1657 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f1faf6">
+<title>Law of Reflection | Virtual Science Lab</title>
+
+<style>
+:root {
+    --bg: #f2f8f5;
+    --panel: #ffffff;
+    --ink: #18352d;
+    --muted: #71847d;
+    --green: #16896b;
+    --green-light: #e1f5ed;
+    --blue: #2788dc;
+    --orange: #f08b36;
+    --border: #dfebe5;
+    --shadow: 0 12px 35px rgba(29, 76, 57, .07);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, system-ui, Arial, sans-serif;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.topbar {
+    min-height: 68px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 5%;
+    background: rgba(255,255,255,.94);
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-weight: 800;
+}
+
+.brand-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 22px;
+}
+
+.brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.top-actions {
+    display: flex;
+    gap: 9px;
+}
+
+.secondary-btn,
+.primary-btn {
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 10px 14px;
+    background: white;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.primary-btn {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+}
+
+.secondary-btn:hover {
+    background: var(--green-light);
+}
+
+.primary-btn:hover {
+    background: #107456;
+}
+
+.back-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.back-link:hover {
+    color: var(--green);
+}
+
+main {
+    width: min(1420px, 94%);
+    margin: 28px auto 45px;
+}
+
+.hero {
+    margin-bottom: 23px;
+}
+
+.eyebrow {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    margin: 8px 0;
+    font-size: clamp(26px, 4vw, 38px);
+    letter-spacing: -1.2px;
+}
+
+.hero p {
+    max-width: 750px;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    gap: 20px;
+    align-items: start;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 19px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+.panel-heading h2 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.live-indicator {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #26bd83;
+    box-shadow: 0 0 0 4px #e5f8ee;
+}
+
+.scene-wrap {
+    position: relative;
+    padding: 12px;
+    background:
+        radial-gradient(circle at 50% 35%, #ffffff 0%, #f3faf6 75%);
+}
+
+#diagram {
+    width: 100%;
+    height: auto;
+    display: block;
+    min-height: 320px;
+    touch-action: none;
+    user-select: none;
+}
+
+.scene-hint {
+    padding: 11px 17px;
+    color: var(--muted);
+    font-size: 12px;
+    background: #fbfdfc;
+    border-top: 1px solid var(--border);
+    line-height: 1.5;
+}
+
+.scene-hint strong {
+    color: var(--green);
+}
+
+.draggable {
+    cursor: grab;
+}
+
+.draggable:active {
+    cursor: grabbing;
+}
+
+.control-panel {
+    padding-bottom: 18px;
+}
+
+.mode-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.mode-btn {
+    padding: 10px;
+    background: #f4f8f6;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--muted);
+}
+
+.mode-btn.active {
+    background: var(--green-light);
+    border-color: #bde6d5;
+    color: var(--green);
+}
+
+.control-section {
+    padding: 16px 18px 3px;
+}
+
+.control-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 11px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.control-value {
+    min-width: 54px;
+    padding: 5px 8px;
+    border-radius: 8px;
+    color: var(--green);
+    background: var(--green-light);
+    text-align: center;
+    font-weight: 900;
+    font-size: 12px;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--green);
+    cursor: pointer;
+}
+
+.range-scale {
+    display: flex;
+    justify-content: space-between;
+    color: #93a39c;
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+.control-description {
+    font-size: 11px;
+    color: var(--muted);
+    margin: 7px 0 0;
+    line-height: 1.45;
+}
+
+.readings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    padding: 16px 18px;
+}
+
+.reading-card {
+    padding: 12px;
+    border: 1px solid var(--border);
+    background: #fbfdfc;
+    border-radius: 12px;
+}
+
+.reading-card small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.reading-card strong {
+    font-size: 23px;
+    letter-spacing: -.7px;
+}
+
+.reading-card span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.law-result {
+    margin: 0 18px;
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--green-light);
+    color: #176c53;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.visibility-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 15px 18px 3px;
+}
+
+.visibility-options label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.visibility-options input {
+    accent-color: var(--green);
+}
+
+.guide-box {
+    margin: 16px 18px 0;
+    padding: 14px;
+    background: #fff9ee;
+    border: 1px solid #f6e8c9;
+    border-radius: 12px;
+}
+
+.guide-box h3 {
+    margin: 0 0 7px;
+    font-size: 13px;
+}
+
+.guide-box p {
+    margin: 0;
+    color: #816b43;
+    line-height: 1.55;
+    font-size: 11px;
+}
+
+.guide-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.step-count {
+    color: #927a4f;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.guide-bottom button {
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 11px;
+    background: #f2e2bd;
+    color: #755b2a;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.observation {
+    margin-top: 20px;
+    padding: 18px 20px;
+}
+
+.observation h2 {
+    margin: 0 0 9px;
+    font-size: 16px;
+}
+
+.observation p {
+    margin: 0;
+    line-height: 1.7;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.formula {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: var(--green-light);
+    color: #126d51;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 900;
+}
+
+.footer-note {
+    margin-top: 20px;
+    text-align: center;
+    color: #91a29a;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    .workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .control-panel {
+        max-width: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .topbar {
+        padding: 11px 4%;
+    }
+
+    .brand small {
+        display: none;
+    }
+
+    .back-link {
+        display: none;
+    }
+
+    .top-actions button {
+        padding: 9px;
+        font-size: 11px;
+    }
+
+    main {
+        width: 94%;
+        margin-top: 22px;
+    }
+
+    .scene-wrap {
+        padding: 4px;
+    }
+
+    #diagram {
+        min-height: 250px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-icon">光</div>
+        <div>
+            Virtual Science Lab
+            <small>INTERACTIVE PHYSICS LAB</small>
+        </div>
+    </div>
+
+    <div class="top-actions">
+        <a class="back-link"
+           href="../../../index.html?subject=physics">
+            ← Physics Playground
+        </a>
+
+        <button class="secondary-btn" id="fullscreenBtn">
+            ⛶ Fullscreen
+        </button>
+
+        <button class="primary-btn" id="resetBtn">
+            ↻ Reset
+        </button>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="eyebrow">CLASS 10 · LIGHT · OPTICS</div>
+        <h1>Law of Reflection</h1>
+        <p>
+            Investigate how light reflects from a plane mirror.
+            Move the light source, rotate the mirror and observe
+            how the angles of incidence and reflection change.
+        </p>
+    </section>
+
+    <div class="workspace">
+
+        <!-- SIMULATION SCENE -->
+        <section class="panel">
+            <div class="panel-heading">
+                <h2>Interactive Ray Diagram</h2>
+                <div class="live-indicator">
+                    <span class="live-dot"></span>
+                    LIVE SIMULATION
+                </div>
+            </div>
+
+            <div class="scene-wrap">
+
+                <svg id="diagram"
+                     viewBox="0 0 800 540"
+                     role="img"
+                     aria-label="Interactive plane mirror reflection experiment">
+
+                    <defs>
+                        <pattern id="grid"
+                                 width="32"
+                                 height="32"
+                                 patternUnits="userSpaceOnUse">
+                            <path d="M 32 0 L 0 0 0 32"
+                                  fill="none"
+                                  stroke="#e1eee7"
+                                  stroke-width="1"/>
+                        </pattern>
+
+                        <linearGradient id="mirrorGradient"
+                                        x1="0" y1="0"
+                                        x2="0" y2="1">
+                            <stop offset="0%"
+                                  stop-color="#a8c1bb"/>
+                            <stop offset="50%"
+                                  stop-color="#dce8e3"/>
+                            <stop offset="100%"
+                                  stop-color="#8ca9a0"/>
+                        </linearGradient>
+
+                        <marker id="incidentArrow"
+                                markerWidth="9"
+                                markerHeight="9"
+                                refX="7"
+                                refY="3"
+                                orient="auto"
+                                markerUnits="userSpaceOnUse">
+                            <path d="M0,0 L0,6 L8,3 Z"
+                                  fill="#2788dc"/>
+                        </marker>
+
+                        <marker id="reflectedArrow"
+                                markerWidth="9"
+                                markerHeight="9"
+                                refX="7"
+                                refY="3"
+                                orient="auto"
+                                markerUnits="userSpaceOnUse">
+                            <path d="M0,0 L0,6 L8,3 Z"
+                                  fill="#f08b36"/>
+                        </marker>
+
+                        <filter id="softGlow">
+                            <feGaussianBlur stdDeviation="5"
+                                            result="blur"/>
+                            <feMerge>
+                                <feMergeNode in="blur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <rect width="800"
+                          height="540"
+                          rx="12"
+                          fill="#f8fcf9"/>
+
+                    <rect width="800"
+                          height="540"
+                          fill="url(#grid)"/>
+
+                    <!-- NORMAL -->
+                    <line id="normalLine"
+                          x1="400" y1="150"
+                          x2="400" y2="440"
+                          stroke="#82958d"
+                          stroke-width="2"
+                          stroke-dasharray="8 7"/>
+
+                    <text id="normalLabel"
+                          x="412" y="164"
+                          fill="#71847d"
+                          font-size="13"
+                          font-weight="700">
+                        NORMAL
+                    </text>
+
+                    <!-- MIRROR BODY -->
+                    <line id="mirrorBody"
+                          x1="110" y1="360"
+                          x2="690" y2="360"
+                          stroke="url(#mirrorGradient)"
+                          stroke-width="24"
+                          stroke-linecap="round"/>
+
+                    <line id="mirrorSurface"
+                          x1="110" y1="360"
+                          x2="690" y2="360"
+                          stroke="#66877d"
+                          stroke-width="3"
+                          stroke-linecap="round"/>
+
+                    <text id="mirrorLabel"
+                          x="640" y="393"
+                          fill="#5c786e"
+                          font-size="13"
+                          font-weight="800"
+                          text-anchor="middle">
+                        PLANE MIRROR
+                    </text>
+
+                    <!-- INCIDENT RAY -->
+                    <line id="incidentRay"
+                          x1="560" y1="180"
+                          x2="400" y2="360"
+                          stroke="#2788dc"
+                          stroke-width="4"
+                          stroke-linecap="round"
+                          marker-end="url(#incidentArrow)"
+                          filter="url(#softGlow)"/>
+
+                    <!-- REFLECTED RAY -->
+                    <line id="reflectedRay"
+                          x1="400" y1="360"
+                          x2="240" y2="180"
+                          stroke="#f08b36"
+                          stroke-width="4"
+                          stroke-linecap="round"
+                          marker-end="url(#reflectedArrow)"
+                          filter="url(#softGlow)"/>
+
+                    <!-- ANGLE ARCS -->
+                    <path id="incidentArc"
+                          fill="none"
+                          stroke="#2788dc"
+                          stroke-width="3"/>
+
+                    <path id="reflectedArc"
+                          fill="none"
+                          stroke="#f08b36"
+                          stroke-width="3"/>
+
+                    <text id="incidentAngleText"
+                          fill="#1877c3"
+                          font-size="16"
+                          font-weight="900">
+                        i = 35°
+                    </text>
+
+                    <text id="reflectedAngleText"
+                          fill="#d87723"
+                          font-size="16"
+                          font-weight="900">
+                        r = 35°
+                    </text>
+
+                    <!-- LIGHT SOURCE HANDLE -->
+                    <g id="sourceHandle"
+                       class="draggable"
+                       data-drag="source">
+
+                        <circle r="27"
+                                fill="#fff0bb"
+                                stroke="#e5a52e"
+                                stroke-width="3"/>
+
+                        <circle r="12"
+                                fill="#ffca55"
+                                stroke="#e29b19"
+                                stroke-width="2"/>
+
+                        <path d="M0 -34 V-43
+                                 M34 0 H43
+                                 M-34 0 H-43
+                                 M24 -24 L31 -31
+                                 M-24 -24 L-31 -31"
+                              stroke="#e29b19"
+                              stroke-width="3"
+                              stroke-linecap="round"/>
+                    </g>
+
+                    <text id="sourceLabel"
+                          x="560" y="140"
+                          fill="#986d19"
+                          font-size="13"
+                          font-weight="800"
+                          text-anchor="middle">
+                        LIGHT SOURCE
+                    </text>
+
+                    <!-- INCIDENCE POINT -->
+                    <g id="incidenceHandle"
+                       class="draggable"
+                       data-drag="point">
+
+                        <circle r="13"
+                                fill="#ffffff"
+                                stroke="#16896b"
+                                stroke-width="3"/>
+
+                        <circle r="5"
+                                fill="#16896b"/>
+                    </g>
+
+                    <text id="pointLabel"
+                          x="418" y="388"
+                          fill="#16896b"
+                          font-size="12"
+                          font-weight="900">
+                        POINT OF INCIDENCE
+                    </text>
+
+                    <text x="26" y="35"
+                          fill="#93a39b"
+                          font-size="12"
+                          font-weight="700">
+                        DRAG THE LIGHT SOURCE OR INCIDENCE POINT
+                    </text>
+
+                    <g transform="translate(28 486)">
+                        <line x1="0" y1="0"
+                              x2="30" y2="0"
+                              stroke="#2788dc"
+                              stroke-width="4"/>
+                        <text x="40" y="5"
+                              fill="#627b70"
+                              font-size="12"
+                              font-weight="700">
+                            Incident ray
+                        </text>
+
+                        <line x1="155" y1="0"
+                              x2="185" y2="0"
+                              stroke="#f08b36"
+                              stroke-width="4"/>
+                        <text x="195" y="5"
+                              fill="#627b70"
+                              font-size="12"
+                              font-weight="700">
+                            Reflected ray
+                        </text>
+                    </g>
+
+                </svg>
+            </div>
+
+            <div class="scene-hint">
+                <strong>Try it:</strong>
+                Drag the yellow light source to change the
+                angle of incidence. Drag the green point to
+                move the point of incidence along the mirror.
+            </div>
+        </section>
+
+        <!-- CONTROL PANEL -->
+        <aside class="panel control-panel">
+
+            <div class="panel-heading">
+                <h2>Experiment Controls</h2>
+                <span class="eyebrow">LAB PANEL</span>
+            </div>
+
+            <div class="mode-switch">
+                <button class="mode-btn active"
+                        id="guidedMode">
+                    Guided Lab
+                </button>
+
+                <button class="mode-btn"
+                        id="freeMode">
+                    Free Explore
+                </button>
+            </div>
+
+            <!-- ANGLE CONTROL -->
+            <div class="control-section">
+                <div class="control-title">
+                    Angle of Incidence
+                    <span class="control-value"
+                          id="angleValue">35°</span>
+                </div>
+
+                <input id="angleSlider"
+                       type="range"
+                       min="0"
+                       max="80"
+                       step="1"
+                       value="35">
+
+                <div class="range-scale">
+                    <span>0°</span>
+                    <span>40°</span>
+                    <span>80°</span>
+                </div>
+
+                <p class="control-description">
+                    Change the angle between the incident ray
+                    and the normal.
+                </p>
+            </div>
+
+            <!-- MIRROR CONTROL -->
+            <div class="control-section">
+                <div class="control-title">
+                    Mirror Rotation
+                    <span class="control-value"
+                          id="mirrorValue">0°</span>
+                </div>
+
+                <input id="mirrorSlider"
+                       type="range"
+                       min="-25"
+                       max="25"
+                       step="1"
+                       value="0">
+
+                <div class="range-scale">
+                    <span>-25°</span>
+                    <span>0°</span>
+                    <span>+25°</span>
+                </div>
+
+                <p class="control-description">
+                    Rotate the plane mirror. The normal
+                    and both rays update automatically.
+                </p>
+            </div>
+
+            <!-- INCIDENCE POINT CONTROL -->
+            <div class="control-section">
+                <div class="control-title">
+                    Point Position
+                    <span class="control-value"
+                          id="positionValue">0</span>
+                </div>
+
+                <input id="positionSlider"
+                       type="range"
+                       min="-140"
+                       max="140"
+                       step="1"
+                       value="0">
+
+                <div class="range-scale">
+                    <span>Left</span>
+                    <span>Centre</span>
+                    <span>Right</span>
+                </div>
+            </div>
+
+            <!-- LIVE READINGS -->
+            <div class="readings">
+
+                <div class="reading-card">
+                    <small>ANGLE OF INCIDENCE</small>
+                    <strong id="incidenceReading">35°</strong>
+                    <span>i</span>
+                </div>
+
+                <div class="reading-card">
+                    <small>ANGLE OF REFLECTION</small>
+                    <strong id="reflectionReading">35°</strong>
+                    <span>r</span>
+                </div>
+
+            </div>
+
+            <div class="law-result"
+                 id="lawResult"
+                 aria-live="polite">
+                Law verified: angle of incidence equals
+                angle of reflection.
+            </div>
+
+            <!-- DISPLAY OPTIONS -->
+            <div class="visibility-options">
+
+                <label>
+                    <input type="checkbox"
+                           id="showNormal"
+                           checked>
+                    Show normal
+                </label>
+
+                <label>
+                    <input type="checkbox"
+                           id="showAngles"
+                           checked>
+                    Show angles
+                </label>
+
+            </div>
+
+            <!-- GUIDED TASK -->
+            <div class="guide-box" id="guideBox">
+
+                <h3>Guided Experiment</h3>
+
+                <p id="guideText">
+                    Step 1: Set the angle of incidence to
+                    20°. Observe the incident and reflected rays.
+                </p>
+
+                <div class="guide-bottom">
+                    <span class="step-count"
+                          id="stepCount">
+                        STEP 1 OF 3
+                    </span>
+
+                    <button id="nextStep">
+                        Next Step →
+                    </button>
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- OBSERVATION / THEORY -->
+    <section class="panel observation">
+
+        <h2>What are you observing?</h2>
+
+        <p>
+            When a light ray strikes a plane mirror, it
+            reflects from the surface. The angle of incidence
+            and angle of reflection are measured from the
+            normal, which is perpendicular to the mirror
+            at the point where the light ray strikes it.
+            In this ideal plane-mirror model, these two
+            angles are always equal.
+        </p>
+
+        <div class="formula">
+            Angle of incidence = Angle of reflection
+        </div>
+
+    </section>
+
+    <div class="footer-note">
+        Virtual Science Lab · Interactive Physics Experiment<br>
+        Ideal plane-mirror model · All angles are measured
+        from the normal.
+    </div>
+
+</main>
+
+<script>
+(() => {
+    "use strict";
+
+    /* -----------------------------------------------
+       DEFAULT VALUES
+    ----------------------------------------------- */
+
+    const DEFAULTS = {
+        angle: 35,
+        mirror: 0,
+        position: 0
+    };
+
+    const state = {
+        angle: DEFAULTS.angle,
+        mirror: DEFAULTS.mirror,
+        position: DEFAULTS.position,
+        showNormal: true,
+        showAngles: true,
+        mode: "guided",
+        step: 0
+    };
+
+    const GUIDE_STEPS = [
+        "Step 1: Set the angle of incidence to 20°. Observe the incident and reflected rays.",
+
+        "Step 2: Change the angle of incidence to 40°. Compare the two angle readings.",
+
+        "Step 3: Set the angle to 60°. Notice that the angle of reflection changes by the same amount."
+    ];
+
+    const $ = id => document.getElementById(id);
+
+    const svg = $("diagram");
+
+    /* -----------------------------------------------
+       SVG GEOMETRY HELPERS
+    ----------------------------------------------- */
+
+    function radians(degrees) {
+        return degrees * Math.PI / 180;
+    }
+
+    function degrees(radiansValue) {
+        return radiansValue * 180 / Math.PI;
+    }
+
+    function setLine(id, a, b) {
+        const line = $(id);
+
+        line.setAttribute("x1", a.x);
+        line.setAttribute("y1", a.y);
+        line.setAttribute("x2", b.x);
+        line.setAttribute("y2", b.y);
+    }
+
+    function setTranslate(id, point) {
+        $(id).setAttribute(
+            "transform",
+            `translate(${point.x} ${point.y})`
+        );
+    }
+
+    function pointAt(center, angle, radius) {
+        const a = radians(angle);
+
+        return {
+            x: center.x + Math.cos(a) * radius,
+            y: center.y + Math.sin(a) * radius
+        };
+    }
+
+    function arcPath(center, radius, startAngle, endAngle) {
+        const start = pointAt(
+            center,
+            startAngle,
+            radius
+        );
+
+        const end = pointAt(
+            center,
+            endAngle,
+            radius
+        );
+
+        const sweep = endAngle >= startAngle ? 1 : 0;
+
+        return [
+            `M ${start.x} ${start.y}`,
+            `A ${radius} ${radius} 0 0 ${sweep}`,
+            `${end.x} ${end.y}`
+        ].join(" ");
+    }
+
+    /* -----------------------------------------------
+       MAIN SIMULATION UPDATE
+    ----------------------------------------------- */
+
+    function updateSimulation() {
+        const theta = radians(state.angle);
+        const phi = radians(state.mirror);
+
+        // Tangent direction along the mirror.
+        const tangent = {
+            x: Math.cos(phi),
+            y: Math.sin(phi)
+        };
+
+        // Normal points away from the mirror.
+        const normal = {
+            x: Math.sin(phi),
+            y: -Math.cos(phi)
+        };
+
+        // Point of incidence.
+        const incidence = {
+            x: 400 + state.position * tangent.x,
+            y: 360 + state.position * tangent.y
+        };
+
+        const rayLength = 205;
+
+        /*
+         * Source position:
+         * normal component = cos(theta)
+         * tangent component = sin(theta)
+         */
+        const source = {
+            x: incidence.x + rayLength *
+                (
+                    Math.sin(theta) * tangent.x +
+                    Math.cos(theta) * normal.x
+                ),
+
+            y: incidence.y + rayLength *
+                (
+                    Math.sin(theta) * tangent.y +
+                    Math.cos(theta) * normal.y
+                )
+        };
+
+        /*
+         * Reflected ray:
+         * Tangential component remains unchanged.
+         * Normal component reverses direction.
+         */
+        const reflected = {
+            x: incidence.x + rayLength *
+                (
+                    -Math.sin(theta) * tangent.x +
+                    Math.cos(theta) * normal.x
+                ),
+
+            y: incidence.y + rayLength *
+                (
+                    -Math.sin(theta) * tangent.y +
+                    Math.cos(theta) * normal.y
+                )
+        };
+
+        // Mirror endpoints.
+        const mirrorA = {
+            x: incidence.x - 290 * tangent.x,
+            y: incidence.y - 290 * tangent.y
+        };
+
+        const mirrorB = {
+            x: incidence.x + 290 * tangent.x,
+            y: incidence.y + 290 * tangent.y
+        };
+
+        // Normal line.
+        const normalA = {
+            x: incidence.x + 195 * normal.x,
+            y: incidence.y + 195 * normal.y
+        };
+
+        const normalB = {
+            x: incidence.x - 75 * normal.x,
+            y: incidence.y - 75 * normal.y
+        };
+
+        // Draw mirror.
+        setLine("mirrorBody", mirrorA, mirrorB);
+        setLine("mirrorSurface", mirrorA, mirrorB);
+
+        // Draw normal.
+        setLine("normalLine", normalA, normalB);
+
+        // Draw rays.
+        setLine("incidentRay", source, incidence);
+        setLine("reflectedRay", incidence, reflected);
+
+        // Move source and point handles.
+        setTranslate("sourceHandle", source);
+        setTranslate("incidenceHandle", incidence);
+
+        // Label positions.
+        const sourceLabel = $("sourceLabel");
+
+        sourceLabel.setAttribute("x", source.x);
+        sourceLabel.setAttribute("y", source.y - 39);
+
+        const pointLabel = $("pointLabel");
+
+        pointLabel.setAttribute(
+            "x",
+            incidence.x + 17
+        );
+
+        pointLabel.setAttribute(
+            "y",
+            incidence.y + 27
+        );
+
+        const normalLabel = $("normalLabel");
+
+        normalLabel.setAttribute(
+            "x",
+            normalA.x + 12
+        );
+
+        normalLabel.setAttribute(
+            "y",
+            normalA.y + 12
+        );
+
+        // Mirror label.
+        const mirrorLabel = $("mirrorLabel");
+
+        mirrorLabel.setAttribute(
+            "x",
+            mirrorB.x - 35 * tangent.x
+        );
+
+        mirrorLabel.setAttribute(
+            "y",
+            mirrorB.y + 34
+        );
+
+        /*
+         * The normal angle is the reference direction.
+         * Incident and reflected angles are symmetric
+         * around this normal.
+         */
+        const normalAngle = degrees(
+            Math.atan2(normal.y, normal.x)
+        );
+
+        // Draw angle arcs.
+        $("incidentArc").setAttribute(
+            "d",
+            arcPath(
+                incidence,
+                65,
+                normalAngle,
+                normalAngle + state.angle
+            )
+        );
+
+        $("reflectedArc").setAttribute(
+            "d",
+            arcPath(
+                incidence,
+                65,
+                normalAngle,
+                normalAngle - state.angle
+            )
+        );
+
+        // Angle text positions.
+        const incidentTextPoint = pointAt(
+            incidence,
+            normalAngle + state.angle / 2,
+            91
+        );
+
+        const reflectedTextPoint = pointAt(
+            incidence,
+            normalAngle - state.angle / 2,
+            91
+        );
+
+        $("incidentAngleText").setAttribute(
+            "x",
+            incidentTextPoint.x - 15
+        );
+
+        $("incidentAngleText").setAttribute(
+            "y",
+            incidentTextPoint.y
+        );
+
+        $("incidentAngleText").textContent =
+            `i = ${state.angle}°`;
+
+        $("reflectedAngleText").setAttribute(
+            "x",
+            reflectedTextPoint.x - 15
+        );
+
+        $("reflectedAngleText").setAttribute(
+            "y",
+            reflectedTextPoint.y
+        );
+
+        $("reflectedAngleText").textContent =
+            `r = ${state.angle}°`;
+
+        // Visibility controls.
+        $("normalLine").style.display =
+            state.showNormal ? "" : "none";
+
+        $("normalLabel").style.display =
+            state.showNormal ? "" : "none";
+
+        $("incidentArc").style.display =
+            state.showAngles ? "" : "none";
+
+        $("reflectedArc").style.display =
+            state.showAngles ? "" : "none";
+
+        $("incidentAngleText").style.display =
+            state.showAngles ? "" : "none";
+
+        $("reflectedAngleText").style.display =
+            state.showAngles ? "" : "none";
+
+        // Update controls and readings.
+        $("angleSlider").value = state.angle;
+        $("mirrorSlider").value = state.mirror;
+        $("positionSlider").value = state.position;
+
+        $("angleValue").textContent =
+            `${state.angle}°`;
+
+        $("mirrorValue").textContent =
+            `${state.mirror}°`;
+
+        $("positionValue").textContent =
+            String(state.position);
+
+        $("incidenceReading").textContent =
+            `${state.angle}°`;
+
+        $("reflectionReading").textContent =
+            `${state.angle}°`;
+
+        $("lawResult").textContent =
+            `Law verified: ${state.angle}° = ${state.angle}°. The angle of incidence equals the angle of reflection.`;
+    }
+
+    /* -----------------------------------------------
+       RANGE SLIDERS
+    ----------------------------------------------- */
+
+    $("angleSlider").addEventListener(
+        "input",
+        event => {
+            state.angle = Number(event.target.value);
+            updateSimulation();
+        }
+    );
+
+    $("mirrorSlider").addEventListener(
+        "input",
+        event => {
+            state.mirror = Number(event.target.value);
+            updateSimulation();
+        }
+    );
+
+    $("positionSlider").addEventListener(
+        "input",
+        event => {
+            state.position = Number(event.target.value);
+            updateSimulation();
+        }
+    );
+
+    /* -----------------------------------------------
+       VISIBILITY CONTROLS
+    ----------------------------------------------- */
+
+    $("showNormal").addEventListener(
+        "change",
+        event => {
+            state.showNormal = event.target.checked;
+            updateSimulation();
+        }
+    );
+
+    $("showAngles").addEventListener(
+        "change",
+        event => {
+            state.showAngles = event.target.checked;
+            updateSimulation();
+        }
+    );
+
+    /* -----------------------------------------------
+       DRAG AND TOUCH INTERACTION
+    ----------------------------------------------- */
+
+    let dragging = null;
+
+    function pointerPosition(event) {
+        const point = svg.createSVGPoint();
+
+        point.x = event.clientX;
+        point.y = event.clientY;
+
+        const matrix = svg.getScreenCTM();
+
+        if (!matrix) {
+            return null;
+        }
+
+        return point.matrixTransform(
+            matrix.inverse()
+        );
+    }
+
+    function currentDirections() {
+        const phi = radians(state.mirror);
+
+        return {
+            tangent: {
+                x: Math.cos(phi),
+                y: Math.sin(phi)
+            },
+
+            normal: {
+                x: Math.sin(phi),
+                y: -Math.cos(phi)
+            },
+
+            incidence: {
+                x: 400 + state.position * Math.cos(phi),
+                y: 360 + state.position * Math.sin(phi)
+            }
+        };
+    }
+
+    svg.addEventListener(
+        "pointerdown",
+        event => {
+            const target = event.target.closest("[data-drag]");
+
+            if (!target) {
+                return;
+            }
+
+            dragging = target.dataset.drag;
+
+            svg.setPointerCapture(event.pointerId);
+
+            event.preventDefault();
+        }
+    );
+
+    svg.addEventListener(
+        "pointermove",
+        event => {
+            if (!dragging) {
+                return;
+            }
+
+            const point = pointerPosition(event);
+
+            if (!point) {
+                return;
+            }
+
+            const directions = currentDirections();
+
+            if (dragging === "source") {
+                const dx =
+                    point.x - directions.incidence.x;
+
+                const dy =
+                    point.y - directions.incidence.y;
+
+                const alongTangent =
+                    dx * directions.tangent.x +
+                    dy * directions.tangent.y;
+
+                const alongNormal =
+                    dx * directions.normal.x +
+                    dy * directions.normal.y;
+
+                let angle = degrees(
+                    Math.atan2(
+                        alongTangent,
+                        alongNormal
+                    )
+                );
+
+                // Keep the source on the incident side.
+                angle = Math.max(
+                    0,
+                    Math.min(80, angle)
+                );
+
+                state.angle = Math.round(angle);
+            }
+
+            if (dragging === "point") {
+                const dx = point.x - 400;
+                const dy = point.y - 360;
+
+                const position =
+                    dx * directions.tangent.x +
+                    dy * directions.tangent.y;
+
+                state.position = Math.round(
+                    Math.max(
+                        -140,
+                        Math.min(140, position)
+                    )
+                );
+            }
+
+            updateSimulation();
+        }
+    );
+
+    function stopDragging() {
+        dragging = null;
+    }
+
+    svg.addEventListener("pointerup", stopDragging);
+    svg.addEventListener("pointercancel", stopDragging);
+    svg.addEventListener("lostpointercapture", stopDragging);
+
+    /* -----------------------------------------------
+       GUIDED AND FREE EXPLORE MODES
+    ----------------------------------------------- */
+
+    function setMode(mode) {
+        state.mode = mode;
+
+        $("guidedMode").classList.toggle(
+            "active",
+            mode === "guided"
+        );
+
+        $("freeMode").classList.toggle(
+            "active",
+            mode === "free"
+        );
+
+        $("guideBox").hidden =
+            mode !== "guided";
+    }
+
+    $("guidedMode").addEventListener(
+        "click",
+        () => setMode("guided")
+    );
+
+    $("freeMode").addEventListener(
+        "click",
+        () => setMode("free")
+    );
+
+    $("nextStep").addEventListener(
+        "click",
+        () => {
+            state.step++;
+
+            if (state.step >= GUIDE_STEPS.length) {
+                state.step = 0;
+            }
+
+            $("guideText").textContent =
+                GUIDE_STEPS[state.step];
+
+            $("stepCount").textContent =
+                `STEP ${state.step + 1} OF ${GUIDE_STEPS.length}`;
+        }
+    );
+
+    /* -----------------------------------------------
+       RESET
+    ----------------------------------------------- */
+
+    function resetExperiment() {
+        state.angle = DEFAULTS.angle;
+        state.mirror = DEFAULTS.mirror;
+        state.position = DEFAULTS.position;
+
+        state.showNormal = true;
+        state.showAngles = true;
+        state.step = 0;
+
+        $("showNormal").checked = true;
+        $("showAngles").checked = true;
+
+        $("guideText").textContent =
+            GUIDE_STEPS[0];
+
+        $("stepCount").textContent =
+            `STEP 1 OF ${GUIDE_STEPS.length}`;
+
+        setMode("guided");
+
+        updateSimulation();
+    }
+
+    $("resetBtn").addEventListener(
+        "click",
+        resetExperiment
+    );
+
+    /* -----------------------------------------------
+       FULLSCREEN
+    ----------------------------------------------- */
+
+    $("fullscreenBtn").addEventListener(
+        "click",
+        async () => {
+            try {
+                if (!document.fullscreenElement) {
+                    await document.documentElement.requestFullscreen();
+                } else {
+                    await document.exitFullscreen();
+                }
+            } catch (error) {
+                console.error(
+                    "Fullscreen is not available:",
+                    error
+                );
+            }
+        }
+    );
+
+    document.addEventListener(
+        "fullscreenchange",
+        () => {
+            $("fullscreenBtn").textContent =
+                document.fullscreenElement
+                    ? "✕ Exit Fullscreen"
+                    : "⛶ Fullscreen";
+        }
+    );
+
+    /* -----------------------------------------------
+       START
+    ----------------------------------------------- */
+
+    updateSimulation();
+
+})();
+</script>
+
+</body>
+</html>
