@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Force on a Current-Carrying Conductor | Virtual Science Lab</title>
+
+<style>
+:root{
+  --bg:#f3f8f7;
+  --card:#fff;
+  --ink:#173332;
+  --muted:#68817e;
+  --line:#dceae6;
+  --teal:#087e75;
+  --teal2:#dff5ef;
+  --blue:#3477ce;
+  --orange:#e58b26;
+  --red:#d84b55;
+  --shadow:0 10px 30px rgba(24,70,63,.08);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,system-ui,Arial,sans-serif;
+}
+button,input{font:inherit}
+.topbar{
+  padding:16px 22px;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:42px;height:42px;border-radius:13px;
+  background:var(--teal2);
+  display:grid;place-items:center;
+  color:var(--teal);font-size:23px;font-weight:800;
+}
+.brand h1{font-size:17px;margin:0 0 3px}
+.brand p{margin:0;color:var(--muted);font-size:12px}
+.live{
+  font-size:10px;font-weight:800;letter-spacing:.07em;
+  color:#087e58;background:#e4f8ed;padding:8px 11px;
+  border-radius:30px;
+}
+main{max-width:1250px;margin:22px auto;padding:0 16px 35px}
+.intro{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:18px;margin-bottom:17px;
+}
+.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}
+.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.tag{
+  font-size:11px;font-weight:800;color:var(--teal);
+  background:var(--teal2);padding:8px 11px;border-radius:20px;
+  white-space:nowrap;
+}
+.workspace{
+  display:grid;
+  grid-template-columns:minmax(0,1.5fr) minmax(300px,.85fr);
+  gap:17px;align-items:start;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.cardhead{
+  padding:15px 17px;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.cardhead h3{margin:0;font-size:15px}
+.small{font-size:11px;color:var(--muted)}
+.canvas-wrap{padding:10px 12px 2px}
+#labCanvas{
+  width:100%;height:425px;display:block;
+  border-radius:12px;
+  background:linear-gradient(180deg,#fbfefd,#f4faf9);
+}
+.legend{
+  display:flex;gap:13px;flex-wrap:wrap;
+  padding:8px 16px 15px;color:var(--muted);font-size:11px;
+}
+.dot{
+  display:inline-block;width:9px;height:9px;border-radius:50%;
+  margin-right:5px;background:var(--blue);
+}
+.dot.orange{background:var(--orange)}
+.dot.teal{background:var(--teal)}
+.dot.red{background:var(--red)}
+.controls{padding:15px 17px}
+.control{margin-bottom:16px}
+.control-top{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:8px;margin-bottom:7px;
+}
+.control label{font-size:13px;font-weight:700}
+.value{
+  font-size:13px;color:var(--teal);font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}
+.scale{
+  display:flex;justify-content:space-between;
+  color:#8aa19d;font-size:10px;margin-top:3px;
+}
+.switchrow{display:flex;gap:8px;margin:8px 0 17px}
+.switchbtn{
+  flex:1;border:1px solid #b7dcd3;
+  background:#effaf6;color:#087568;
+  padding:11px 8px;border-radius:11px;font-weight:800;cursor:pointer;
+}
+.switchbtn.active{
+  background:#fff3e5;border-color:#f0d0a3;color:#a76715;
+}
+.metrics{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:9px;margin-top:15px;
+}
+.metric{
+  background:#f5faf8;border:1px solid var(--line);
+  border-radius:13px;padding:11px 8px;
+}
+.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.4}
+.metric strong{
+  display:block;font-size:19px;margin-top:6px;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.direction-box{
+  margin-top:11px;padding:12px;border-radius:12px;
+  background:#f0f7ff;border:1px solid #d9e8ff;
+}
+.direction-box b{font-size:11px;color:#285a9a}
+.direction-box strong{
+  display:block;font-size:14px;color:#285a9a;margin-top:6px;
+}
+.formula{
+  margin-top:11px;padding:12px;border-radius:12px;
+  background:#f0f7ff;border:1px solid #d9e8ff;
+}
+.formula b{font-size:11px;color:#285a9a}
+.formula div{
+  font-family:Georgia,serif;font-size:19px;
+  text-align:center;margin:9px 0;color:#1f4675;
+}
+.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.btn{
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  padding:9px 12px;border-radius:10px;font-size:12px;
+  font-weight:750;cursor:pointer;transition:.15s;
+}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}
+.btn.danger{color:#b8444b}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}
+.graphbox{padding:8px 14px 14px}
+#graphCanvas{width:100%;height:210px;display:block}
+.graph-note{color:var(--muted);font-size:11px;margin:0 3px 5px;line-height:1.45}
+.guide{padding:15px 17px}
+.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}
+.guide strong{color:var(--ink)}
+.guide-step{
+  background:#f2faf7;border:1px solid #d6eee5;
+  border-radius:12px;padding:12px;margin:12px 0;
+}
+.guide-step .count{
+  font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em;
+}
+.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}
+.guide-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modebar{display:flex;gap:7px}
+.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}
+.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}
+.answers{display:flex;flex-wrap:wrap;gap:7px}
+.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}
+.table-wrap{overflow-x:auto;padding:0 15px 15px}
+table{width:100%;border-collapse:collapse;min-width:600px;font-size:11px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:750;background:#f7fbfa}
+td{font-variant-numeric:tabular-nums}
+.empty{text-align:center;color:#91a6a2;padding:20px}
+.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:880px){
+  .workspace{grid-template-columns:1fr}
+  .lower{grid-template-columns:1fr}
+  #labCanvas{height:370px}
+}
+@media(max-width:520px){
+  .topbar{padding:12px}
+  .brand p{font-size:10px}
+  .live{font-size:9px;padding:7px}
+  main{padding:0 10px 25px;margin-top:15px}
+  .intro{align-items:flex-start;flex-direction:column;gap:10px}
+  #labCanvas{height:310px}
+  .metrics{gap:6px}
+  .metric{padding:9px 6px}
+  .metric strong{font-size:15px}
+  .cardhead{padding:13px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">ϟ</div>
+    <div>
+      <h1>Virtual Science Lab</h1>
+      <p>Physics · Interactive Experiment</p>
+    </div>
+  </div>
+  <div class="live">● LIVE SIMULATION</div>
+</header>
+
+<main>
+  <section class="intro">
+    <div>
+      <h2>Force on a Current-Carrying Conductor</h2>
+      <p>Place a current-carrying wire in a magnetic field. Investigate force, direction and Fleming's Left Hand Rule.</p>
+    </div>
+    <div class="tag">CLASS 10 · MAGNETIC EFFECTS</div>
+  </section>
+
+  <section class="workspace">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Magnetic force laboratory</h3>
+        <span class="small">Motor effect · 2D model</span>
+      </div>
+
+      <div class="canvas-wrap">
+        <canvas id="labCanvas"></canvas>
+      </div>
+
+      <div class="legend">
+        <span><i class="dot"></i>Magnetic field B</span>
+        <span><i class="dot teal"></i>Conductor</span>
+        <span><i class="dot orange"></i>Current I</span>
+        <span><i class="dot red"></i>Force F</span>
+        <span>⊙ Out of screen</span>
+        <span>⊗ Into screen</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Experiment controls</h3>
+        <span class="small">Change the setup</span>
+      </div>
+
+      <div class="controls">
+
+        <div class="switchrow">
+          <button class="switchbtn" id="currentDirectionBtn">
+            ↻ Reverse current
+          </button>
+          <button class="switchbtn" id="fieldDirectionBtn">
+            ⇄ Reverse field
+          </button>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="magneticField">Magnetic field (B)</label>
+            <span class="value" id="magneticFieldVal">0.5 T</span>
+          </div>
+          <input id="magneticField" type="range" min="0.05" max="1.00" step="0.05" value="0.5">
+          <div class="scale"><span>0.05 T</span><span>1.00 T</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="current">Current (I)</label>
+            <span class="value" id="currentVal">2.0 A</span>
+          </div>
+          <input id="current" type="range" min="0.1" max="5" step="0.1" value="2">
+          <div class="scale"><span>0.1 A</span><span>5 A</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="length">Length inside field (L)</label>
+            <span class="value" id="lengthVal">20 cm</span>
+          </div>
+          <input id="length" type="range" min="5" max="50" step="1" value="20">
+          <div class="scale"><span>5 cm</span><span>50 cm</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="angle">Angle between current and field (θ)</label>
+            <span class="value" id="angleVal">90°</span>
+          </div>
+          <input id="angle" type="range" min="0" max="180" step="1" value="90">
+          <div class="scale"><span>0° · Parallel</span><span>90° · Perpendicular</span><span>180°</span></div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>Magnetic force</span>
+            <strong id="forceValue">0.200</strong>
+            <small>N</small>
+          </div>
+          <div class="metric">
+            <span>Maximum force</span>
+            <strong id="maxForce">0.200</strong>
+            <small>N at 90°</small>
+          </div>
+          <div class="metric">
+            <span>Force direction</span>
+            <strong id="forceSymbol">⊗</strong>
+            <small id="forceDirection">Into screen</small>
+          </div>
+        </div>
+
+        <div class="direction-box">
+          <b>FLEMING'S LEFT HAND RULE</b>
+          <strong id="ruleResult">Thumb = Force · First finger = Field · Middle finger = Current</strong>
+        </div>
+
+        <div class="formula">
+          <b>FORCE ON A CURRENT-CARRYING CONDUCTOR</b>
+          <div>F = B I L sin θ</div>
+          <p>B = magnetic flux density (T), I = current (A), L = length in field (m), θ = angle between current and magnetic field.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="recordBtn">＋ Record reading</button>
+          <button class="btn" id="resetBtn">↻ Reset experiment</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Force vs angle graph</h3>
+        <span class="small">Live graph</span>
+      </div>
+      <div class="graphbox">
+        <p class="graph-note">Observe how the force changes as the angle between current and magnetic field changes.</p>
+        <canvas id="graphCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Guided practical</h3>
+        <div class="modebar">
+          <button class="btn active" id="guidedBtn">Guided</button>
+          <button class="btn" id="exploreBtn">Explore</button>
+        </div>
+      </div>
+
+      <div class="guide" id="guidedPanel">
+        <strong id="guideTitle">Task 1 — Maximum magnetic force</strong>
+        <div class="guide-step">
+          <div class="count" id="guideCount">TASK 1 OF 4</div>
+          <div id="guideText">Set angle to 90°. Observe the force when current and magnetic field are perpendicular.</div>
+        </div>
+        <p id="guideHint">Keep B, I and L fixed while you compare different angles.</p>
+        <div class="guide-actions">
+          <button class="btn primary" id="applyGuide">Apply task setup</button>
+          <button class="btn" id="nextGuide">Next task →</button>
+        </div>
+      </div>
+
+      <div class="guide" id="explorePanel" hidden>
+        <strong>Free exploration</strong>
+        <p>Change the magnetic field, current, conductor length and angle in any order. Reverse the current or magnetic field to investigate the change in force direction.</p>
+        <p><strong>Investigate:</strong> At which angle is the force maximum? What happens when current is reversed? What happens when the wire is parallel to the field?</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Prediction challenge</h3>
+        <span class="tag">TEST YOURSELF</span>
+      </div>
+
+      <div class="challenge">
+        <strong>A conductor is perpendicular to a magnetic field. What happens to the force if the current is doubled while everything else stays fixed?</strong>
+        <p>Choose your answer:</p>
+        <div class="answers">
+          <button class="btn" data-answer="half">Force becomes half</button>
+          <button class="btn" data-answer="same">Force stays the same</button>
+          <button class="btn" data-answer="double">Force becomes double</button>
+        </div>
+        <div class="feedback" id="challengeFeedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Observation record</h3>
+        <button class="btn danger" id="clearRecords">Clear records</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>B</th>
+              <th>I</th>
+              <th>L</th>
+              <th>Angle</th>
+              <th>Force</th>
+              <th>Direction</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody">
+            <tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">
+    Scientific model note: This experiment calculates the magnetic force on a straight conductor in a uniform magnetic field using F = BIL sin θ. The display uses a simplified 2D projection: the conductor and magnetic field lie in the screen plane, while the force is represented into or out of the screen. Real laboratory setups may also involve contact forces, gravity and circuit effects, which are not included here.
+  </p>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+
+  const controls = {
+    magneticField: $("magneticField"),
+    current: $("current"),
+    length: $("length"),
+    angle: $("angle")
+  };
+
+  let currentSign = 1;
+  let fieldSign = 1;
+  let records = [];
+  let guideStep = 0;
+
+  const guideTasks = [
+    {
+      title: "Task 1 — Maximum magnetic force",
+      count: "TASK 1 OF 4",
+      text: "Set the angle to 90°. Observe the force when current and magnetic field are perpendicular.",
+      hint: "For this angle, sin 90° = 1, so the force reaches its maximum value.",
+      values: {magneticField:0.5,current:2,length:20,angle:90}
+    },
+    {
+      title: "Task 2 — Parallel conductor",
+      count: "TASK 2 OF 4",
+      text: "Change the angle to 0°. The conductor is parallel to the magnetic field.",
+      hint: "When current is parallel to the magnetic field, the magnetic force is zero.",
+      values: {magneticField:0.5,current:2,length:20,angle:0}
+    },
+    {
+      title: "Task 3 — Double the current",
+      count: "TASK 3 OF 4",
+      text: "Set the angle to 90° and increase current from 2 A to 4 A. Compare the force.",
+      hint: "With all other values fixed, doubling current doubles the force.",
+      values: {magneticField:0.5,current:4,length:20,angle:90}
+    },
+    {
+      title: "Task 4 — Reverse the current",
+      count: "TASK 4 OF 4",
+      text: "Keep the conductor perpendicular to the field and reverse the current direction. Observe the force direction.",
+      hint: "Reversing current reverses force direction, but the magnitude remains unchanged.",
+      values: {magneticField:0.5,current:2,length:20,angle:90}
+    }
+  ];
+
+  function values() {
+    return {
+      B: Number(controls.magneticField.value),
+      I: Number(controls.current.value),
+      Lcm: Number(controls.length.value),
+      angle: Number(controls.angle.value),
+      currentSign,
+      fieldSign
+    };
+  }
+
+  function forceMagnitude(v) {
+    const L = v.Lcm / 100;
+    const theta = v.angle * Math.PI / 180;
+    return v.B * v.I * L * Math.abs(Math.sin(theta));
+  }
+
+  function forceOutOfScreen(v) {
+    const theta = v.angle * Math.PI / 180;
+    const crossValue =
+      -v.currentSign * v.fieldSign * Math.sin(theta);
+
+    if (Math.abs(crossValue) < 1e-8) return null;
+    return crossValue > 0;
+  }
+
+  function directionText(out) {
+    if (out === null) return "No magnetic force";
+    return out ? "Out of screen" : "Into screen";
+  }
+
+  function updateLabels(v) {
+    $("magneticFieldVal").textContent = v.B.toFixed(2) + " T";
+    $("currentVal").textContent = v.I.toFixed(1) + " A";
+    $("lengthVal").textContent = v.Lcm.toFixed(0) + " cm";
+    $("angleVal").textContent = v.angle.toFixed(0) + "°";
+
+    $("currentDirectionBtn").classList.toggle("active", currentSign < 0);
+    $("currentDirectionBtn").textContent =
+      currentSign > 0 ? "↻ Reverse current" : "↺ Restore current";
+
+    $("fieldDirectionBtn").classList.toggle("active", fieldSign < 0);
+    $("fieldDirectionBtn").textContent =
+      fieldSign > 0 ? "⇄ Reverse field" : "⇆ Restore field";
+  }
+
+  function updateReadings(v) {
+    const force = forceMagnitude(v);
+    const maxForce = v.B * v.I * (v.Lcm / 100);
+    const out = forceOutOfScreen(v);
+
+    $("forceValue").textContent = force.toFixed(4);
+    $("maxForce").textContent = maxForce.toFixed(4);
+    $("forceSymbol").textContent =
+      out === null ? "—" : (out ? "⊙" : "⊗");
+    $("forceDirection").textContent = directionText(out);
+
+    if (out === null) {
+      $("ruleResult").textContent =
+        "Current is parallel to the field · Force = 0";
+    } else {
+      $("ruleResult").textContent =
+        (out ? "Force is out of screen" : "Force is into screen") +
+        " · Reverse current or field to reverse force";
+    }
+  }
+
+  function drawArrow(ctx,x1,y1,x2,y2,color,size=7) {
+    const a = Math.atan2(y2-y1,x2-x1);
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x2,y2);
+    ctx.lineTo(
+      x2-size*Math.cos(a-Math.PI/6),
+      y2-size*Math.sin(a-Math.PI/6)
+    );
+    ctx.lineTo(
+      x2-size*Math.cos(a+Math.PI/6),
+      y2-size*Math.sin(a+Math.PI/6)
+    );
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawDotSymbol(ctx,x,y,out) {
+    ctx.beginPath();
+    ctx.arc(x,y,20,0,Math.PI*2);
+    ctx.fillStyle="#fff";
+    ctx.fill();
+    ctx.strokeStyle="#d84b55";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    ctx.strokeStyle="#d84b55";
+    ctx.fillStyle="#d84b55";
+    ctx.lineWidth=3;
+
+    if (out) {
+      ctx.beginPath();
+      ctx.arc(x,y,5,0,Math.PI*2);
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(x-7,y-7);
+      ctx.lineTo(x+7,y+7);
+      ctx.moveTo(x+7,y-7);
+      ctx.lineTo(x-7,y+7);
+      ctx.stroke();
+    }
+  }
+
+  function drawLab() {
+    const canvas = $("labCanvas");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    const dpr = window.devicePixelRatio || 1;
+
+    if (canvas.width !== Math.round(w*dpr) ||
+        canvas.height !== Math.round(h*dpr)) {
+      canvas.width = Math.round(w*dpr);
+      canvas.height = Math.round(h*dpr);
+    }
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    const v = values();
+    const cx = w/2;
+    const cy = h*0.53;
+    const leftMagnet = Math.max(16,w*0.055);
+    const rightMagnet = w-leftMagnet;
+    const gap = rightMagnet-leftMagnet;
+    const top = h*0.23;
+    const bottom = h*0.78;
+
+    // Background grid
+    ctx.strokeStyle="#eaf2f0";
+    ctx.lineWidth=1;
+
+    for(let x=0;x<w;x+=28){
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
+    }
+    for(let y=0;y<h;y+=28){
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
+    }
+
+    // Magnet blocks
+    const leftPole = fieldSign > 0 ? "N" : "S";
+    const rightPole = fieldSign > 0 ? "S" : "N";
+
+    const leftGradient = ctx.createLinearGradient(0,top,0,bottom);
+    leftGradient.addColorStop(0,"#e77c82");
+    leftGradient.addColorStop(1,"#bf454e");
+
+    ctx.fillStyle=leftGradient;
+    ctx.beginPath();
+    ctx.roundRect(8,top,leftMagnet-8,bottom-top,9);
+    ctx.fill();
+
+    const rightGradient = ctx.createLinearGradient(0,top,0,bottom);
+    rightGradient.addColorStop(0,"#638ed4");
+    rightGradient.addColorStop(1,"#2e5ca1");
+
+    ctx.fillStyle=rightGradient;
+    ctx.beginPath();
+    ctx.roundRect(rightMagnet,top,w-rightMagnet-8,bottom-top,9);
+    ctx.fill();
+
+    ctx.fillStyle="#fff";
+    ctx.font="800 23px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText(leftPole,leftMagnet/2,cy+8);
+    ctx.fillText(rightPole,(rightMagnet+w)/2,cy+8);
+
+    ctx.fillStyle="#fff";
+    ctx.font="10px system-ui";
+    ctx.fillText("MAGNET",(leftMagnet/2),bottom+14);
+    ctx.fillText("MAGNET",((rightMagnet+w)/2),bottom+14);
+
+    // Magnetic field lines through the gap
+    const fieldArrowColor = "#3477ce";
+    const lineCount = 6;
+
+    for(let i=0;i<lineCount;i++){
+      const y = top+35+(bottom-top-70)*i/(lineCount-1);
+      const start = fieldSign > 0 ? leftMagnet+10 : rightMagnet-10;
+      const end = fieldSign > 0 ? rightMagnet-10 : leftMagnet+10;
+
+      ctx.strokeStyle="#83a9df";
+      ctx.lineWidth=1.2;
+      ctx.globalAlpha=.85;
+      ctx.beginPath();
+      ctx.moveTo(start,y);
+      ctx.lineTo(end,y);
+      ctx.stroke();
+      ctx.globalAlpha=1;
+
+      const mid=(start+end)/2;
+      const direction=fieldSign > 0 ? 1 : -1;
+      drawArrow(
+        ctx,
+        mid-direction*17,y,
+        mid+direction*17,y,
+        fieldArrowColor,6
+      );
+    }
+
+    // B label
+    ctx.fillStyle="#285a9a";
+    ctx.font="700 12px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText(
+      fieldSign > 0 ? "B →" : "← B",
+      cx,
+      top-12
+    );
+
+    // Conductor angle and direction
+    const theta = v.angle*Math.PI/180;
+    const dx = Math.cos(theta);
+    const dy = -Math.sin(theta);
+    const wireLength = Math.min(gap*.40,h*.27);
+    const x1 = cx-dx*wireLength;
+    const y1 = cy-dy*wireLength;
+    const x2 = cx+dx*wireLength;
+    const y2 = cy+dy*wireLength;
+
+    ctx.strokeStyle="#087e75";
+    ctx.lineWidth=9;
+    ctx.lineCap="round";
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+
+    ctx.strokeStyle="#baf4e6";
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+
+    // Current direction arrow on conductor
+    const arrowSign = currentSign;
+    const ax = cx+dx*arrowSign*wireLength*.38;
+    const ay = cy+dy*arrowSign*wireLength*.38;
+    const bx = cx+dx*arrowSign*wireLength*.11;
+    const by = cy+dy*arrowSign*wireLength*.11;
+
+    drawArrow(ctx,bx,by,ax,ay,"#e58b26",10);
+
+    ctx.fillStyle="#a76715";
+    ctx.font="700 12px system-ui";
+    ctx.textAlign="left";
+    ctx.fillText("I",ax+7,ay-7);
+
+    // Angle arc relative to positive magnetic field direction
+    if (v.angle > 2 && v.angle < 178) {
+      ctx.beginPath();
+      ctx.arc(cx,cy,35,0,-theta,true);
+      ctx.strokeStyle="#e58b26";
+      ctx.lineWidth=1.8;
+      ctx.stroke();
+
+      ctx.fillStyle="#a76715";
+      ctx.font="11px system-ui";
+      ctx.textAlign="left";
+      ctx.fillText("θ = "+v.angle+"°",cx+39,cy-20);
+    }
+
+    // Force indication
+    const forceOut = forceOutOfScreen(v);
+    const force = forceMagnitude(v);
+
+    if (forceOut !== null && force > 0) {
+      drawDotSymbol(ctx,cx,cy,forceOut);
+
+      ctx.fillStyle="#b33e48";
+      ctx.font="800 12px system-ui";
+      ctx.textAlign="center";
+      ctx.fillText(
+        forceOut ? "Force out of screen" : "Force into screen",
+        cx,
+        cy+48
+      );
+    } else {
+      ctx.beginPath();
+      ctx.arc(cx,cy,19,0,Math.PI*2);
+      ctx.fillStyle="#fff";
+      ctx.fill();
+      ctx.strokeStyle="#9aadaa";
+      ctx.lineWidth=1.5;
+      ctx.stroke();
+
+      ctx.fillStyle="#718982";
+      ctx.font="800 14px system-ui";
+      ctx.textAlign="center";
+      ctx.fillText("0",cx,cy+5);
+
+      ctx.fillStyle="#718982";
+      ctx.font="11px system-ui";
+      ctx.fillText("No magnetic force",cx,cy+48);
+    }
+
+    // Length and setup captions
+    ctx.fillStyle="#607d78";
+    ctx.font="10px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText("Current-carrying conductor",cx,bottom+30);
+
+    ctx.textAlign="right";
+    ctx.fillStyle="#607d78";
+    ctx.fillText(
+      "B = "+v.B.toFixed(2)+" T · I = "+v.I.toFixed(1)+" A",
+      w-12,
+      h-12
+    );
+  }
+
+  function drawGraph() {
+    const canvas=$("graphCanvas");
+    const ctx=canvas.getContext("2d");
+    const w=canvas.clientWidth;
+    const h=canvas.clientHeight;
+    const dpr=window.devicePixelRatio||1;
+
+    if(canvas.width!==Math.round(w*dpr) ||
+       canvas.height!==Math.round(h*dpr)){
+      canvas.width=Math.round(w*dpr);
+      canvas.height=Math.round(h*dpr);
+    }
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    const v=values();
+    const left=48,right=13,top=13,bottom=34;
+    const gw=w-left-right,gh=h-top-bottom;
+
+    const maxForce=v.B*v.I*(v.Lcm/100);
+    const maxY=Math.max(.001,maxForce*1.12);
+
+    const px=angle=>left+angle/180*gw;
+    const py=force=>top+gh-force/maxY*gh;
+
+    ctx.strokeStyle="#e3eeeb";
+    ctx.lineWidth=1;
+    ctx.fillStyle="#78908b";
+    ctx.font="10px system-ui";
+    ctx.textAlign="right";
+
+    for(let i=0;i<=4;i++){
+      const y=top+gh*i/4;
+      ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke();
+      ctx.fillText((maxY*(1-i/4)).toFixed(3),left-7,y+3);
+    }
+
+    ctx.textAlign="center";
+    for(let angle=0;angle<=180;angle+=30){
+      const x=px(angle);
+      ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+gh);ctx.stroke();
+      ctx.fillText(angle+"°",x,h-17);
+    }
+
+    ctx.strokeStyle="#829994";
+    ctx.lineWidth=1.2;
+    ctx.beginPath();
+    ctx.moveTo(left,top);
+    ctx.lineTo(left,top+gh);
+    ctx.lineTo(w-right,top+gh);
+    ctx.stroke();
+
+    // Force curve
+    ctx.strokeStyle="#3477ce";
+    ctx.lineWidth=2.6;
+    ctx.beginPath();
+
+    for(let angle=0;angle<=180;angle++){
+      const theta=angle*Math.PI/180;
+      const F=v.B*v.I*(v.Lcm/100)*Math.sin(theta);
+
+      if(angle===0)ctx.moveTo(px(angle),py(F));
+      else ctx.lineTo(px(angle),py(F));
+    }
+
+    ctx.stroke();
+
+    // Selected angle marker
+    const selectedForce=forceMagnitude(v);
+
+    ctx.beginPath();
+    ctx.arc(px(v.angle),py(selectedForce),5.5,0,Math.PI*2);
+    ctx.fillStyle="#e58b26";
+    ctx.fill();
+    ctx.strokeStyle="#fff";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    ctx.fillStyle="#58716c";
+    ctx.textAlign="center";
+    ctx.fillText("Angle between current and field (°)",left+gw/2,h-2);
+
+    ctx.save();
+    ctx.translate(12,top+gh/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText("Force (N)",0,0);
+    ctx.restore();
+  }
+
+  function render(){
+    const v=values();
+    updateLabels(v);
+    updateReadings(v);
+    drawLab();
+    drawGraph();
+  }
+
+  Object.values(controls).forEach(input=>{
+    input.addEventListener("input",render);
+    input.addEventListener("change",render);
+  });
+
+  $("currentDirectionBtn").addEventListener("click",()=>{
+    currentSign*=-1;
+    render();
+  });
+
+  $("fieldDirectionBtn").addEventListener("click",()=>{
+    fieldSign*=-1;
+    render();
+  });
+
+  $("recordBtn").addEventListener("click",()=>{
+    const v=values();
+    const out=forceOutOfScreen(v);
+
+    records.push({
+      B:v.B,I:v.I,L:v.Lcm,angle:v.angle,
+      F:forceMagnitude(v),
+      direction:directionText(out)
+    });
+
+    renderRecords();
+  });
+
+  function renderRecords(){
+    const body=$("recordsBody");
+
+    if(!records.length){
+      body.innerHTML=
+        '<tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>';
+      return;
+    }
+
+    body.innerHTML=records.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td>${r.B.toFixed(2)} T</td>
+        <td>${r.I.toFixed(1)} A</td>
+        <td>${r.L.toFixed(0)} cm</td>
+        <td>${r.angle}°</td>
+        <td>${r.F.toFixed(4)} N</td>
+        <td>${r.direction}</td>
+      </tr>
+    `).join("");
+  }
+
+  $("clearRecords").addEventListener("click",()=>{
+    records=[];
+    renderRecords();
+  });
+
+  $("resetBtn").addEventListener("click",()=>{
+    controls.magneticField.value=0.5;
+    controls.current.value=2;
+    controls.length.value=20;
+    controls.angle.value=90;
+
+    currentSign=1;
+    fieldSign=1;
+
+    $("challengeFeedback").textContent="";
+    render();
+  });
+
+  function showGuide(){
+    const task=guideTasks[guideStep];
+
+    $("guideTitle").textContent=task.title;
+    $("guideCount").textContent=task.count;
+    $("guideText").textContent=task.text;
+    $("guideHint").textContent=task.hint;
+
+    $("nextGuide").textContent=
+      guideStep===guideTasks.length-1
+      ? "Restart tasks ↺"
+      : "Next task →";
+  }
+
+  $("applyGuide").addEventListener("click",()=>{
+    const preset=guideTasks[guideStep].values;
+
+    Object.keys(preset).forEach(key=>{
+      if(controls[key])controls[key].value=preset[key];
+    });
+
+    if(guideStep===3){
+      currentSign=-1;
+      fieldSign=1;
+    }else{
+      currentSign=1;
+      fieldSign=1;
+    }
+
+    render();
+  });
+
+  $("nextGuide").addEventListener("click",()=>{
+    guideStep=(guideStep+1)%guideTasks.length;
+    showGuide();
+  });
+
+  $("guidedBtn").addEventListener("click",()=>{
+    $("guidedBtn").classList.add("active");
+    $("exploreBtn").classList.remove("active");
+    $("guidedPanel").hidden=false;
+    $("explorePanel").hidden=true;
+  });
+
+  $("exploreBtn").addEventListener("click",()=>{
+    $("exploreBtn").classList.add("active");
+    $("guidedBtn").classList.remove("active");
+    $("guidedPanel").hidden=true;
+    $("explorePanel").hidden=false;
+  });
+
+  document.querySelectorAll("[data-answer]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const feedback=$("challengeFeedback");
+
+      if(button.dataset.answer==="double"){
+        feedback.textContent=
+          "✓ Correct! F = BIL sin θ. When current doubles and all other values stay fixed, force also doubles.";
+        feedback.style.color="#087e58";
+      }else{
+        feedback.textContent=
+          "Not quite. At 90°, sin θ = 1. Since force is directly proportional to current, doubling current doubles the force.";
+        feedback.style.color="#bd5960";
+      }
+    });
+  });
+
+  if("ResizeObserver" in window){
+    const observer=new ResizeObserver(render);
+    observer.observe($("labCanvas"));
+    observer.observe($("graphCanvas"));
+  }else{
+    window.addEventListener("resize",render);
+  }
+
+  showGuide();
+  render();
+})();
+</script>
+
+</body>
+</html>
