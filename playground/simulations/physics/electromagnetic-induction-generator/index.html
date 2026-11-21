@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f8f7">
+<title>Electromagnetic Induction and Electric Generator | Virtual Science Lab</title>
+<style>
+:root{--bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;--line:#dceae6;--teal:#087e75;--teal2:#dff5ef;--blue:#3477ce;--orange:#e58b26;--red:#d84b55;--shadow:0 10px 30px rgba(24,70,63,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
+.topbar{padding:16px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:23px;font-weight:800}.brand h1{font-size:17px;margin:0 0 3px}.brand p{margin:0;color:var(--muted);font-size:12px}.topright{display:flex;align-items:center;gap:8px}.live{font-size:10px;font-weight:800;letter-spacing:.07em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1260px;margin:22px auto;padding:0 16px 35px}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);gap:17px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.cardhead h3{margin:0;font-size:15px}.small{font-size:11px;color:var(--muted)}.canvas-wrap{padding:10px 12px 2px}#generatorCanvas{width:100%;height:430px;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--blue)}.dot.orange{background:var(--orange)}.dot.teal{background:var(--teal)}.dot.red{background:var(--red)}
+.controls{padding:15px 17px}.switchrow{display:flex;gap:8px;margin:8px 0 16px}.switchbtn{flex:1;border:1px solid #b7dcd3;background:#effaf6;color:#087568;padding:11px 8px;border-radius:11px;font-weight:800;cursor:pointer}.switchbtn.on{background:#e2f8ed;border-color:#8cd3b1;color:#08764b}.switchbtn.off{background:#fff2f2;border-color:#edc4c6;color:#b8444b}.control{margin-bottom:15px}.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}.control label{font-size:13px;font-weight:700}.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}select{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:#fbfefd;color:var(--ink);font-weight:650}.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}.metric{background:#f5faf8;border:1px solid var(--line);border-radius:13px;padding:11px 8px}.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.35}.metric strong{display:block;font-size:18px;margin-top:6px;color:var(--ink);font-variant-numeric:tabular-nums}.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.statebox{margin-top:11px;padding:11px 12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.statebox b{font-size:11px;color:#285a9a}.statebox strong{display:block;font-size:13px;color:#285a9a;margin-top:5px;line-height:1.4}.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.formula b{font-size:11px;color:#285a9a}.formula div{font-family:Georgia,serif;font-size:18px;text-align:center;margin:8px 0;color:#1f4675}.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}.btn:hover{filter:brightness(.97);transform:translateY(-1px)}.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}.btn.danger{color:#b8444b}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}.graphbox{padding:8px 14px 14px}#graphCanvas{width:100%;height:215px;display:block}.graph-note{color:var(--muted);font-size:11px;margin:0 3px 5px;line-height:1.45}.guide{padding:15px 17px}.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}.guide strong{color:var(--ink)}.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}.guide-actions{display:flex;gap:8px;flex-wrap:wrap}.modebar{display:flex;gap:7px}.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}.answers{display:flex;flex-wrap:wrap;gap:7px}.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}.table-wrap{overflow-x:auto;padding:0 15px 15px}table{width:100%;border-collapse:collapse;min-width:640px;font-size:11px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-weight:750;background:#f7fbfa}td{font-variant-numeric:tabular-nums}.empty{text-align:center;color:#91a6a2;padding:20px}.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:880px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#generatorCanvas{height:370px}}@media(max-width:520px){.topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}.topright .btn{display:none}main{padding:0 10px 25px;margin-top:15px}.intro{align-items:flex-start;flex-direction:column;gap:10px}#generatorCanvas{height:315px}.metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}.cardhead{padding:13px}}
+</style>
+</head>
+<body>
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-10-electromagnetic-induction-generator",
+  "title": "Electromagnetic Induction and Electric Generator (Enrichment)",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Rotate a coil in a magnetic field to investigate changing magnetic flux, induced EMF, current direction, AC output and a split-ring DC output model.",
+  "simulationType": "2D"
+}
+</script>
+<header class="topbar">
+  <div class="brand"><div class="logo">ϟ</div><div><h1>Virtual Science Lab</h1><p>Physics · Interactive Experiment</p></div></div>
+  <div class="topright"><div class="live" id="liveStatus">● GENERATOR READY</div><button class="btn" id="fullscreenBtn">⛶ Fullscreen</button></div>
+</header>
+<main>
+  <section class="intro"><div><h2>Electromagnetic Induction and Electric Generator</h2><p>Rotate a coil between magnetic poles. Observe magnetic flux, induced EMF and current, and compare AC generator and split-ring DC output.</p></div><div class="tag">CLASS 10 · MAGNETIC EFFECTS</div></section>
+  <section class="workspace">
+    <div class="card"><div class="cardhead"><h3>Inside the generator</h3><span class="small">Rotating coil · Magnetic field</span></div><div class="canvas-wrap"><canvas id="generatorCanvas"></canvas></div><div class="legend"><span><i class="dot"></i>Magnetic field B</span><span><i class="dot teal"></i>Rotating coil</span><span><i class="dot orange"></i>Crank / rotation</span><span><i class="dot red"></i>Induced current</span></div></div>
+    <div class="card"><div class="cardhead"><h3>Generator controls</h3><span class="small">Change the setup</span></div><div class="controls">
+      <div class="switchrow"><button class="switchbtn on" id="driveBtn">⏻ Rotation ON</button><button class="switchbtn" id="reverseBtn">↻ Reverse rotation</button></div>
+      <div class="control"><div class="control-top"><label for="speed">Rotation speed</label><span class="value" id="speedVal">120 rpm</span></div><input id="speed" type="range" min="0" max="300" step="5" value="120"><div class="scale"><span>0 rpm · stopped</span><span>300 rpm</span></div></div>
+      <div class="control"><div class="control-top"><label for="field">Magnetic field strength (B)</label><span class="value" id="fieldVal">0.30 T</span></div><input id="field" type="range" min="0.05" max="1.00" step="0.05" value="0.30"><div class="scale"><span>0.05 T</span><span>1.00 T</span></div></div>
+      <div class="control"><div class="control-top"><label for="turns">Number of coil turns (N)</label><span class="value" id="turnsVal">100</span></div><input id="turns" type="range" min="20" max="300" step="10" value="100"><div class="scale"><span>20 turns</span><span>300 turns</span></div></div>
+      <div class="control"><div class="control-top"><label for="area">Coil area (A)</label><span class="value" id="areaVal">25 cm²</span></div><input id="area" type="range" min="10" max="100" step="5" value="25"><div class="scale"><span>10 cm²</span><span>100 cm²</span></div></div>
+      <div class="control"><div class="control-top"><label for="resistance">External load resistance</label><span class="value" id="resistanceVal">10 Ω</span></div><input id="resistance" type="range" min="2" max="50" step="1" value="10"><div class="scale"><span>2 Ω</span><span>50 Ω</span></div></div>
+      <div class="control"><div class="control-top"><label for="mode">Generator connection</label></div><select id="mode"><option value="ac">AC generator · Slip rings</option><option value="dc">DC dynamo model · Split-ring commutator</option></select></div>
+      <div class="switchrow"><button class="switchbtn on" id="circuitBtn">◎ Load circuit CLOSED</button><button class="switchbtn" id="pauseBtn">Ⅱ Pause</button></div>
+      <div class="metrics">
+        <div class="metric"><span>Magnetic flux / turn</span><strong id="fluxValue">0.00075</strong><small>Wb</small></div>
+        <div class="metric"><span>Induced EMF</span><strong id="emfValue">0.00</strong><small>V · instantaneous</small></div>
+        <div class="metric"><span>Induced current</span><strong id="currentValue">0.00</strong><small>A · load closed</small></div>
+      </div>
+      <div class="metrics">
+        <div class="metric"><span>Peak EMF</span><strong id="peakValue">0.94</strong><small>V · ideal model</small></div>
+        <div class="metric"><span>Frequency</span><strong id="frequencyValue">2.00</strong><small>Hz</small></div>
+        <div class="metric"><span>Output</span><strong id="outputValue">AC</strong><small id="outputNote">Alternating polarity</small></div>
+      </div>
+      <div class="statebox"><b>FARADAY'S LAW OF ELECTROMAGNETIC INDUCTION</b><strong id="stateText">As the coil rotates, magnetic flux linked with it changes. This induces an EMF across the coil.</strong></div>
+      <div class="formula"><b>FLUX AND INDUCED EMF</b><div>Φ = B A cos θ &nbsp; | &nbsp; ε = −N dΦ/dt</div><p>For uniform B and constant angular speed: ε = N B A ω sin θ. θ is the angle between the coil's normal and the magnetic field. The sign indicates polarity; the DC model rectifies the output using a split-ring commutator.</p></div>
+      <div class="actions"><button class="btn" id="resetBtn">↻ Reset generator</button><button class="btn primary" id="recordBtn">＋ Record reading</button></div>
+    </div></div>
+  </section>
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Output voltage vs rotor angle</h3><span class="small" id="graphModeLabel">AC output · one cycle</span></div><div class="graphbox"><p class="graph-note">The moving marker shows the current rotor angle. Compare the alternating AC waveform with the unidirectional pulsating DC model.</p><canvas id="graphCanvas"></canvas></div></div>
+    <div class="card"><div class="cardhead"><h3>Guided practical</h3><div class="modebar"><button class="btn active" id="guidedBtn">Guided</button><button class="btn" id="exploreBtn">Explore</button></div></div>
+      <div class="guide" id="guidedPanel"><strong id="guideTitle">Task 1 — Observe induction</strong><div class="guide-step"><div class="count" id="guideCount">TASK 1 OF 4</div><div id="guideText">Start the coil rotating at 120 rpm. Observe the changing flux and induced EMF.</div></div><p id="guideHint">When the coil is stationary, its flux is not changing, so the induced EMF is zero.</p><div class="guide-actions"><button class="btn primary" id="applyGuide">Apply task setup</button><button class="btn" id="nextGuide">Next task →</button></div></div>
+      <div class="guide" id="explorePanel" hidden><strong>Free exploration</strong><p>Change speed, magnetic field, number of turns and coil area. Switch between AC slip rings and the split-ring DC dynamo model. Open or close the external load circuit to inspect current.</p><p><strong>Investigate:</strong> What happens to peak EMF when speed doubles? Why does induced current reverse every half-turn in an AC generator? What changes in the split-ring output?</p></div>
+    </div>
+  </section>
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Prediction challenge</h3><span class="tag">TEST YOURSELF</span></div><div class="challenge"><strong>If the rotation speed of the coil is doubled while the other settings remain unchanged, what happens to the peak induced EMF?</strong><p>Choose your answer:</p><div class="answers"><button class="btn" data-answer="half">It becomes half</button><button class="btn" data-answer="same">It stays the same</button><button class="btn" data-answer="double">It becomes double</button></div><div class="feedback" id="challengeFeedback"></div></div></div>
+    <div class="card"><div class="cardhead"><h3>Observation record</h3><button class="btn danger" id="clearRecords">Clear records</button></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Mode</th><th>Speed</th><th>B</th><th>Turns</th><th>Peak EMF</th><th>Instant EMF</th><th>Current</th></tr></thead><tbody id="recordsBody"><tr><td colspan="8" class="empty">No readings recorded yet.</td></tr></tbody></table></div></div>
+  </section>
+  <p class="note">Scientific model note: This ideal generator uses Faraday's law for a single rotating coil in a uniform magnetic field, with constant angular speed. The AC mode represents slip-ring connections. The DC mode is an ideal full-polarity reversal by a split-ring commutator, giving a pulsating unidirectional output; it is not a smoothed DC supply. Coil resistance, brush losses, magnetic non-uniformity, inductance and mechanical drag are not included. The load current is calculated using an ideal resistive load and is zero when the external circuit is open.</p>
+</main>
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const controls = {speed:$('speed'),field:$('field'),turns:$('turns'),area:$('area'),resistance:$('resistance'),mode:$('mode')};
+  const S = {running:true,drive:true,direction:1,circuit:true,angle:0,lastTime:0,paused:false,records:[],guideStep:0};
+  const guides = [
+    {title:'Task 1 — Observe induction',count:'TASK 1 OF 4',text:'Start the coil rotating at 120 rpm. Observe the changing flux and induced EMF.',hint:'When the coil is stationary, its flux is not changing, so the induced EMF is zero.',v:{speed:120,field:.3,turns:100,area:25,resistance:10,mode:'ac',direction:1,circuit:true}},
+    {title:'Task 2 — Increase rotation speed',count:'TASK 2 OF 4',text:'Increase the rotation speed from 120 rpm to 240 rpm while keeping the other settings fixed.',hint:'The peak induced EMF is directly proportional to angular speed.',v:{speed:240,field:.3,turns:100,area:25,resistance:10,mode:'ac',direction:1,circuit:true}},
+    {title:'Task 3 — Increase coil turns',count:'TASK 3 OF 4',text:'Return to 120 rpm and increase the number of turns from 100 to 200.',hint:'More turns mean a greater change in flux linkage and a larger induced EMF.',v:{speed:120,field:.3,turns:200,area:25,resistance:10,mode:'ac',direction:1,circuit:true}},
+    {title:'Task 4 — Compare AC and DC output',count:'TASK 4 OF 4',text:'Switch the generator connection from AC slip rings to the split-ring DC dynamo model.',hint:'The split-ring commutator reverses coil connections every half-turn, making output polarity unidirectional but pulsating.',v:{speed:120,field:.3,turns:100,area:25,resistance:10,mode:'dc',direction:1,circuit:true}}
+  ];
+  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+  function vals(){return {rpm:+controls.speed.value,B:+controls.field.value,N:+controls.turns.value,Acm2:+controls.area.value,R:+controls.resistance.value,mode:controls.mode.value};}
+  function omega(v){return v.rpm*2*Math.PI/60;}
+  function areaM2(v){return v.Acm2/10000;}
+  function peakEmf(v){return v.N*v.B*areaM2(v)*omega(v);}
+  function phase(v){return S.angle;}
+  function flux(v){return v.B*areaM2(v)*Math.cos(phase(v));}
+  function rawEmf(v){return peakEmf(v)*Math.sin(phase(v))*S.direction;}
+  function outputEmf(v){const e=rawEmf(v);return v.mode==='dc'?Math.abs(e):e;}
+  function inducedCurrent(v){return S.circuit?outputEmf(v)/v.R:0;}
+  function updateLabels(v){
+    const phi=flux(v),e=outputEmf(v),i=inducedCurrent(v),peak=peakEmf(v),freq=(v.mode==='dc'?2:1)*v.rpm/60;
+    $('speedVal').textContent=v.rpm+' rpm';$('fieldVal').textContent=v.B.toFixed(2)+' T';$('turnsVal').textContent=v.N;$('areaVal').textContent=v.Acm2+' cm²';$('resistanceVal').textContent=v.R+' Ω';
+    $('driveBtn').textContent=S.drive?'⏻ Rotation ON':'⏻ Rotation OFF';$('driveBtn').classList.toggle('on',S.drive);$('driveBtn').classList.toggle('off',!S.drive);
+    $('reverseBtn').textContent=S.direction>0?'↻ Reverse rotation':'↺ Restore direction';$('circuitBtn').textContent=S.circuit?'◎ Load circuit CLOSED':'○ Load circuit OPEN';$('circuitBtn').classList.toggle('on',S.circuit);$('circuitBtn').classList.toggle('off',!S.circuit);$('pauseBtn').textContent=S.paused?'▶ Resume':'Ⅱ Pause';
+    $('liveStatus').textContent=S.drive&&v.rpm>0&&!S.paused?'● GENERATOR RUNNING':'● GENERATOR IDLE';$('liveStatus').style.color=S.drive&&v.rpm>0&&!S.paused?'#087e58':'#b8444b';$('liveStatus').style.background=S.drive&&v.rpm>0&&!S.paused?'#e4f8ed':'#fff0f0';
+    $('fluxValue').textContent=phi.toFixed(5);$('emfValue').textContent=e.toFixed(3);$('currentValue').textContent=i.toFixed(3);$('peakValue').textContent=peak.toFixed(3);$('frequencyValue').textContent=freq.toFixed(2);$('outputValue').textContent=v.mode==='ac'?'AC':'PULSATING DC';$('outputNote').textContent=v.mode==='ac'?'Alternating polarity':'One polarity · pulsating';$('graphModeLabel').textContent=v.mode==='ac'?'AC output · one cycle':'Rectified DC output · one cycle';
+    if(!S.drive||S.paused||v.rpm===0){$('stateText').textContent='The coil is stationary. Magnetic flux is not changing with time, so the induced EMF and load current are zero.';}
+    else if(!S.circuit){$('stateText').textContent='The coil rotates and an EMF is induced, but the external circuit is open. The induced EMF exists while the load current is zero.';}
+    else if(Math.abs(e)<.015){$('stateText').textContent='At this rotor position the instantaneous EMF is approximately zero. The rate of change of flux is momentarily zero.';}
+    else{$('stateText').textContent=v.mode==='ac'?'The rotating coil changes magnetic flux linkage. An EMF is induced and current flows through the closed load; its direction alternates every half-turn.':'The rotating coil induces an EMF. The split-ring commutator reverses its coil connections each half-turn, producing a unidirectional pulsating output.';}
+  }
+  function arrow(ctx,x1,y1,x2,y2,color,size=7){const a=Math.atan2(y2-y1,x2-x1);ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-size*Math.cos(a-Math.PI/6),y2-size*Math.sin(a-Math.PI/6));ctx.lineTo(x2-size*Math.cos(a+Math.PI/6),y2-size*Math.sin(a+Math.PI/6));ctx.closePath();ctx.fill();}
+  function drawGenerator(){
+    const canvas=$('generatorCanvas'),ctx=canvas.getContext('2d'),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+    if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    const v=vals(),cx=w*.5,cy=h*.43,top=h*.19,bottom=h*.70,magW=Math.max(34,w*.10),left=12,right=w-magW-12;
+    ctx.strokeStyle='#eaf2f0';ctx.lineWidth=1;for(let x=0;x<w;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const nPole=S.direction>0?'N':'S',sPole=S.direction>0?'S':'N';
+    let g=ctx.createLinearGradient(0,top,0,bottom);g.addColorStop(0,'#e77c82');g.addColorStop(1,'#b9434c');ctx.fillStyle=g;ctx.beginPath();ctx.roundRect(left,top,magW,bottom-top,9);ctx.fill();
+    g=ctx.createLinearGradient(0,top,0,bottom);g.addColorStop(0,'#638ed4');g.addColorStop(1,'#2e5ca1');ctx.fillStyle=g;ctx.beginPath();ctx.roundRect(right,top,magW,bottom-top,9);ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='800 22px system-ui';ctx.textAlign='center';ctx.fillText(nPole,left+magW/2,cy+7);ctx.fillText(sPole,right+magW/2,cy+7);ctx.font='9px system-ui';ctx.fillText('NORTH POLE',left+magW/2,bottom+13);ctx.fillText('SOUTH POLE',right+magW/2,bottom+13);
+    const bx1=left+magW+6,bx2=right-6;for(let k=0;k<6;k++){const y=top+26+k*(bottom-top-52)/5;const a=S.direction>0?bx1:bx2,b=S.direction>0?bx2:bx1;arrow(ctx,a,y,b,y,'#3477ce',6);}ctx.fillStyle='#285a9a';ctx.font='700 11px system-ui';ctx.fillText(S.direction>0?'Magnetic field B →':'← Magnetic field B',cx,top-9);
+    const theta=S.angle,apparent=Math.max(.12,Math.abs(Math.cos(theta))),coilW=Math.min(w*.48,(right-left)*.58)*(.22+.78*apparent),coilH=Math.min(h*.40,145),tilt=Math.sin(theta)*Math.min(25,coilH*.20),xL=cx-coilW/2,xR=cx+coilW/2,yT=cy-coilH/2,yB=cy+coilH/2;
+    ctx.strokeStyle='#697d77';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,h*.80);ctx.stroke();
+    ctx.strokeStyle='#087e75';ctx.lineWidth=7;ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(xL,yB);ctx.lineTo(xL+tilt,yT);ctx.lineTo(xR+tilt,yT);ctx.lineTo(xR,yB);ctx.closePath();ctx.stroke();
+    ctx.strokeStyle='#a7eadb';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(xL,yB);ctx.lineTo(xL+tilt,yT);ctx.lineTo(xR+tilt,yT);ctx.lineTo(xR,yB);ctx.closePath();ctx.stroke();
+    ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.fillStyle='#435451';ctx.fill();
+    const current=inducedCurrent(v);if(S.circuit&&Math.abs(current)>.001){ctx.strokeStyle='#d84b55';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(xL+tilt,yT);ctx.lineTo(xR+tilt,yT);ctx.stroke();ctx.fillStyle='#b33e48';ctx.font='700 10px system-ui';ctx.fillText('Induced current',cx,yT-10);}
+    ctx.fillStyle='#087e75';ctx.font='700 10px system-ui';ctx.fillText('ROTATING COIL',cx,yB+17);
+    const crankX=cx+45,crankY=h*.80,crankA=theta;ctx.strokeStyle='#e58b26';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(cx,crankY);ctx.lineTo(crankX,crankY);ctx.lineTo(crankX+Math.cos(crankA)*23,crankY+Math.sin(crankA)*23);ctx.stroke();ctx.beginPath();ctx.arc(crankX+Math.cos(crankA)*23,crankY+Math.sin(crankA)*23,6,0,Math.PI*2);ctx.fillStyle='#e58b26';ctx.fill();ctx.fillStyle='#93631e';ctx.font='9px system-ui';ctx.fillText('HAND CRANK',cx,crankY+37);
+    const ringY=h*.91,ringX=cx,ringR=22;if(v.mode==='ac'){for(let i=0;i<2;i++){ctx.beginPath();ctx.ellipse(ringX+(i?12:-12),ringY,7,13,0,0,Math.PI*2);ctx.strokeStyle=i?'#d49a43':'#b97828';ctx.lineWidth=6;ctx.stroke();}ctx.fillStyle='#718982';ctx.font='9px system-ui';ctx.fillText('SLIP RINGS',cx,ringY+25);}else{ctx.beginPath();ctx.arc(ringX,ringY,ringR,-Math.PI/2,Math.PI/2);ctx.strokeStyle='#b97828';ctx.lineWidth=7;ctx.stroke();ctx.beginPath();ctx.arc(ringX,ringY,ringR,Math.PI/2,Math.PI*1.5);ctx.strokeStyle='#e4a64c';ctx.lineWidth=7;ctx.stroke();ctx.fillStyle='#718982';ctx.font='9px system-ui';ctx.fillText('SPLIT-RING COMMUTATOR',cx,ringY+25);}
+    ctx.fillStyle='#435451';ctx.fillRect(cx-34,ringY-5,8,17);ctx.fillRect(cx+26,ringY-5,8,17);
+    const lampX=w-46,lampY=47,brightness=clamp(Math.abs(current)/Math.max(.05,peakEmf(v)/v.R),0,1);ctx.beginPath();ctx.arc(lampX,lampY,15,0,Math.PI*2);ctx.fillStyle=`rgba(255,190,60,${.12+.75*brightness})`;ctx.fill();ctx.strokeStyle='#bd8d3d';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#7d642e';ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText('LOAD',lampX,lampY+29);
+    ctx.textAlign='right';ctx.fillStyle='#607d78';ctx.font='10px system-ui';ctx.fillText(Math.round(v.rpm)+' rpm · θ '+((theta%(2*Math.PI)+2*Math.PI)%(2*Math.PI)*180/Math.PI).toFixed(0)+'°',w-10,h-9);
+  }
+  function drawGraph(){
+    const canvas=$('graphCanvas'),ctx=canvas.getContext('2d'),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    const v=vals(),left=45,right=12,top=12,bottom=33,gw=w-left-right,gh=h-top-bottom,peak=Math.max(.01,peakEmf(v)),max=peak*1.15,px=a=>left+a/360*gw,py=e=>top+gh/2-e/(2*max)*gh;
+    ctx.strokeStyle='#e3eeeb';ctx.lineWidth=1;ctx.fillStyle='#78908b';ctx.font='10px system-ui';ctx.textAlign='right';for(let j=0;j<=4;j++){const y=top+gh*j/4;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke();ctx.fillText((max*(1-2*j/4)).toFixed(1),left-6,y+3);}ctx.beginPath();ctx.moveTo(left,top+gh/2);ctx.lineTo(w-right,top+gh/2);ctx.strokeStyle='#829994';ctx.stroke();
+    ctx.textAlign='center';for(let a=0;a<=360;a+=60){const x=px(a);ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+gh);ctx.strokeStyle='#e3eeeb';ctx.stroke();ctx.fillText(a+'°',x,h-15);}ctx.strokeStyle='#829994';ctx.beginPath();ctx.moveTo(left,top);ctx.lineTo(left,top+gh);ctx.lineTo(w-right,top+gh);ctx.stroke();
+    ctx.strokeStyle='#3477ce';ctx.lineWidth=2.5;ctx.beginPath();for(let a=0;a<=360;a++){const theta=a*Math.PI/180,raw=peak*Math.sin(theta)*S.direction,out=v.mode==='dc'?Math.abs(raw):raw;if(a===0)ctx.moveTo(px(a),py(out));else ctx.lineTo(px(a),py(out));}ctx.stroke();
+    const angle=((S.angle%(2*Math.PI))+2*Math.PI)%(2*Math.PI)*180/Math.PI,instant=outputEmf(v);ctx.beginPath();ctx.arc(px(angle),py(instant),5,0,Math.PI*2);ctx.fillStyle='#e58b26';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#58716c';ctx.textAlign='center';ctx.fillText('Rotor angle (degrees)',left+gw/2,h-1);ctx.save();ctx.translate(11,top+gh/2);ctx.rotate(-Math.PI/2);ctx.fillText('Induced EMF (V)',0,0);ctx.restore();
+  }
+  function render(){const v=vals();updateLabels(v);drawGenerator();drawGraph();}
+  function animate(ts){if(!S.lastTime)S.lastTime=ts;let dt=clamp((ts-S.lastTime)/1000,0,.05);S.lastTime=ts;const v=vals();if(S.drive&&!S.paused&&v.rpm>0)S.angle+=S.direction*omega(v)*dt;render();requestAnimationFrame(animate);}
+  function record(){const v=vals();S.records.push({mode:v.mode==='ac'?'AC':'DC',rpm:v.rpm,B:v.B,N:v.N,peak:peakEmf(v),instant:outputEmf(v),current:inducedCurrent(v)});renderRecords();}
+  function renderRecords(){const body=$('recordsBody');if(!S.records.length){body.innerHTML='<tr><td colspan="8" class="empty">No readings recorded yet.</td></tr>';return;}body.innerHTML=S.records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.mode}</td><td>${r.rpm} rpm</td><td>${r.B.toFixed(2)} T</td><td>${r.N}</td><td>${r.peak.toFixed(3)} V</td><td>${r.instant.toFixed(3)} V</td><td>${r.current.toFixed(3)} A</td></tr>`).join('');}
+  function showGuide(){const t=guides[S.guideStep];$('guideTitle').textContent=t.title;$('guideCount').textContent=t.count;$('guideText').textContent=t.text;$('guideHint').textContent=t.hint;$('nextGuide').textContent=S.guideStep===guides.length-1?'Restart tasks ↺':'Next task →';}
+  $('driveBtn').addEventListener('click',()=>{S.drive=!S.drive;S.paused=false;render();});$('reverseBtn').addEventListener('click',()=>{S.direction*=-1;render();});$('circuitBtn').addEventListener('click',()=>{S.circuit=!S.circuit;render();});$('pauseBtn').addEventListener('click',()=>{S.paused=!S.paused;render();});
+  Object.values(controls).forEach(c=>c.addEventListener('input',render));$('recordBtn').addEventListener('click',record);$('clearRecords').addEventListener('click',()=>{S.records=[];renderRecords();});
+  $('resetBtn').addEventListener('click',()=>{controls.speed.value=120;controls.field.value=.3;controls.turns.value=100;controls.area.value=25;controls.resistance.value=10;controls.mode.value='ac';S.drive=true;S.direction=1;S.circuit=true;S.paused=false;S.angle=0;S.lastTime=0;$('challengeFeedback').textContent='';render();});
+  $('applyGuide').addEventListener('click',()=>{const v=guides[S.guideStep].v;Object.keys(v).forEach(k=>{if(controls[k])controls[k].value=v[k];});S.direction=v.direction;S.circuit=v.circuit;S.drive=true;S.paused=false;S.angle=0;render();});$('nextGuide').addEventListener('click',()=>{S.guideStep=(S.guideStep+1)%guides.length;showGuide();});
+  $('guidedBtn').addEventListener('click',()=>{$('guidedBtn').classList.add('active');$('exploreBtn').classList.remove('active');$('guidedPanel').hidden=false;$('explorePanel').hidden=true;});$('exploreBtn').addEventListener('click',()=>{$('exploreBtn').classList.add('active');$('guidedBtn').classList.remove('active');$('guidedPanel').hidden=true;$('explorePanel').hidden=false;});
+  document.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{const f=$('challengeFeedback');if(b.dataset.answer==='double'){f.textContent='✓ Correct! Peak EMF is proportional to angular speed: ε₀ = NBAω. Doubling speed doubles peak EMF.';f.style.color='#087e58';}else{f.textContent='Not quite. Use ε₀ = NBAω. When B, N and A stay fixed, peak EMF is directly proportional to rotation speed.';f.style.color='#bd5960';}}));
+  $('fullscreenBtn').addEventListener('click',async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}catch(e){$('fullscreenBtn').textContent='Fullscreen unavailable';}});
+  if('ResizeObserver' in window){const ro=new ResizeObserver(render);ro.observe($('generatorCanvas'));ro.observe($('graphCanvas'));}else window.addEventListener('resize',render);
+  showGuide();render();requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
