@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f8f7">
+<title>Motion in a Straight Line | Virtual Science Lab</title>
+<style>
+:root{--bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;--line:#dceae6;--teal:#087e75;--teal2:#dff5ef;--blue:#3477ce;--orange:#e58b26;--red:#d84b55;--shadow:0 10px 30px rgba(24,70,63,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
+.topbar{padding:16px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:23px;font-weight:800}.brand h1{font-size:17px;margin:0 0 3px}.brand p{margin:0;color:var(--muted);font-size:12px}.live{font-size:10px;font-weight:800;letter-spacing:.07em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1280px;margin:22px auto;padding:0 16px 35px}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.85fr);gap:17px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.cardhead h3{margin:0;font-size:15px}.small{font-size:11px;color:var(--muted)}.canvas-wrap{padding:10px 12px 2px}#motionCanvas{width:100%;height:380px;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--blue)}.dot.orange{background:var(--orange)}.dot.teal{background:var(--teal)}.dot.red{background:var(--red)}
+.controls{padding:15px 17px}.control{margin-bottom:15px}.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}.control label{font-size:13px;font-weight:700}.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fbfefd;color:var(--ink);font-weight:650}.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}.btn:hover{filter:brightness(.97);transform:translateY(-1px)}.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}.btn.danger{color:#b8444b}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.transport{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0 16px}.transport .btn{flex:1;min-width:80px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}.metric{background:#f5faf8;border:1px solid var(--line);border-radius:12px;padding:10px 8px}.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.4}.metric strong{display:block;font-size:18px;margin-top:5px;font-variant-numeric:tabular-nums}.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.statebox{margin-top:12px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.statebox b{font-size:11px;color:#285a9a}.statebox strong{display:block;font-size:13px;color:#285a9a;margin-top:5px;line-height:1.45}.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.formula b{font-size:11px;color:#285a9a}.formula div{font-family:Georgia,serif;font-size:18px;text-align:center;margin:8px 0;color:#1f4675}.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}.graphbox{padding:8px 14px 14px}#graphCanvas{width:100%;height:300px;display:block}.graph-note{color:var(--muted);font-size:11px;margin:0 3px 5px;line-height:1.45}.guide{padding:15px 17px}.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}.guide strong{color:var(--ink)}.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}.guide-actions{display:flex;gap:8px;flex-wrap:wrap}.modebar{display:flex;gap:7px}.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}.answers{display:flex;flex-wrap:wrap;gap:7px}.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}.table-wrap{overflow-x:auto;padding:0 15px 15px}table{width:100%;border-collapse:collapse;min-width:620px;font-size:11px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-weight:750;background:#f7fbfa}td{font-variant-numeric:tabular-nums}.empty{text-align:center;color:#91a6a2;padding:20px}.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#motionCanvas{height:350px}}
+@media(max-width:520px){.topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}main{padding:0 10px 25px;margin-top:15px}.intro{align-items:flex-start;flex-direction:column;gap:10px}#motionCanvas{height:300px}.metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}.cardhead{padding:13px}}
+</style>
+</head>
+<body>
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-11-motion-in-a-straight-line",
+  "title": "Motion in a Straight Line",
+  "class": 11,
+  "chapterNumber": 2,
+  "chapter": "Kinematics",
+  "description": "Change initial position, velocity and acceleration to investigate one-dimensional motion, displacement, velocity and acceleration-time relationships with live position-time and velocity-time graphs.",
+  "simulationType": "2D"
+}
+</script>
+<header class="topbar">
+  <div class="brand"><div class="logo">↔</div><div><h1>Virtual Science Lab</h1><p>Physics · Interactive Experiment</p></div></div>
+  <div class="live" id="liveStatus">● READY TO MOVE</div>
+</header>
+<main>
+  <section class="intro">
+    <div><h2>Motion in a Straight Line</h2><p>Explore one-dimensional motion. Change initial velocity and acceleration, move the object and read its motion graphs in real time.</p></div>
+    <div class="tag">CLASS 11 · KINEMATICS</div>
+  </section>
+  <section class="workspace">
+    <div class="card">
+      <div class="cardhead"><h3>One-dimensional motion track</h3><span class="small">Position and direction</span></div>
+      <div class="canvas-wrap"><canvas id="motionCanvas"></canvas></div>
+      <div class="legend"><span><i class="dot teal"></i>Moving object</span><span><i class="dot orange"></i>Velocity direction</span><span><i class="dot red"></i>Acceleration direction</span><span><i class="dot"></i>Coordinate axis</span></div>
+    </div>
+    <div class="card">
+      <div class="cardhead"><h3>Motion controls</h3><span class="small">SI units</span></div>
+      <div class="controls">
+        <div class="control"><div class="control-top"><label for="preset">Motion preset</label></div><select id="preset"><option value="custom">Custom motion</option><option value="uniform">Uniform velocity</option><option value="accelerated">Positive acceleration</option><option value="braking">Retardation / braking</option><option value="reverse">Negative direction</option></select></div>
+        <div class="control"><div class="control-top"><label for="x0">Initial position (x₀)</label><span class="value" id="x0Val">0.0 m</span></div><input id="x0" type="range" min="-20" max="20" step="1" value="0"><div class="scale"><span>−20 m</span><span>0</span><span>+20 m</span></div></div>
+        <div class="control"><div class="control-top"><label for="u">Initial velocity (u)</label><span class="value" id="uVal">4.0 m/s</span></div><input id="u" type="range" min="-10" max="10" step="0.5" value="4"><div class="scale"><span>−10 m/s</span><span>0</span><span>+10 m/s</span></div></div>
+        <div class="control"><div class="control-top"><label for="a">Acceleration (a)</label><span class="value" id="aVal">0.0 m/s²</span></div><input id="a" type="range" min="-4" max="4" step="0.2" value="0"><div class="scale"><span>−4 m/s²</span><span>0</span><span>+4 m/s²</span></div></div>
+        <div class="control"><div class="control-top"><label for="duration">Observation duration</label><span class="value" id="durationVal">10.0 s</span></div><input id="duration" type="range" min="2" max="20" step="1" value="10"><div class="scale"><span>2 s</span><span>20 s</span></div></div>
+        <div class="control"><div class="control-top"><label for="playSpeed">Playback speed</label><span class="value" id="playSpeedVal">1.0×</span></div><input id="playSpeed" type="range" min="0.25" max="3" step="0.25" value="1"><div class="scale"><span>0.25×</span><span>3×</span></div></div>
+        <div class="transport">
+          <button class="btn primary" id="playBtn">▶ Play</button>
+          <button class="btn" id="pauseBtn">Ⅱ Pause</button>
+          <button class="btn" id="stepBtn">+0.5 s Step</button>
+          <button class="btn" id="resetBtn">↻ Reset</button>
+        </div>
+        <div class="control">
+          <div class="control-top"><label for="timeScrub">Simulation time</label><span class="value" id="timeVal">0.00 s</span></div>
+          <input id="timeScrub" type="range" min="0" max="10" step="0.01" value="0">
+          <div class="scale"><span>0 s</span><span id="timeEndLabel">10 s</span></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span>Position (x)</span><strong id="positionValue">0.00</strong><small>m</small></div>
+          <div class="metric"><span>Displacement (Δx)</span><strong id="displacementValue">0.00</strong><small>m</small></div>
+          <div class="metric"><span>Velocity (v)</span><strong id="velocityValue">4.00</strong><small>m/s</small></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span>Acceleration</span><strong id="accelerationValue">0.00</strong><small>m/s²</small></div>
+          <div class="metric"><span>Distance travelled</span><strong id="distanceValue">0.00</strong><small>m · calculated</small></div>
+          <div class="metric"><span>Direction</span><strong id="directionValue">+x</strong><small id="directionNote">Positive direction</small></div>
+        </div>
+        <div class="statebox"><b>INSTANTANEOUS MOTION</b><strong id="motionState">The object moves in the positive direction at constant velocity. Acceleration is zero.</strong></div>
+        <div class="formula"><b>EQUATIONS OF MOTION · CONSTANT ACCELERATION</b><div>v = u + at &nbsp; · &nbsp; x = x₀ + ut + ½at²</div><div>v² = u² + 2a(x − x₀)</div><p>These equations apply when acceleration is constant. Displacement is x − x₀; distance travelled is the total path length and is never negative.</p></div>
+        <div class="actions"><button class="btn primary" id="recordBtn">＋ Record current reading</button><button class="btn" id="clearRecords">Clear records</button></div>
+      </div>
+    </div>
+  </section>
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Position–time and velocity–time graphs</h3><span class="small">Live data curves</span></div><div class="graphbox"><p class="graph-note">The vertical marker shows the current simulation time. Change u and a to see how the shape and slope of each graph change.</p><canvas id="graphCanvas"></canvas></div></div>
+    <div class="card"><div class="cardhead"><h3>Guided practical</h3><div class="modebar"><button class="btn active" id="guidedBtn">Guided</button><button class="btn" id="exploreBtn">Explore</button></div></div>
+      <div class="guide" id="guidedPanel"><strong id="guideTitle">Task 1 — Uniform velocity</strong><div class="guide-step"><div class="count" id="guideCount">TASK 1 OF 4</div><div id="guideText">Set u = 4 m/s and a = 0 m/s². Run the object and observe the straight-line position–time graph.</div></div><p id="guideHint">At constant velocity, equal time intervals produce equal displacements. The velocity–time graph is horizontal.</p><div class="guide-actions"><button class="btn primary" id="applyGuide">Apply task setup</button><button class="btn" id="nextGuide">Next task →</button></div></div>
+      <div class="guide" id="explorePanel" hidden><strong>Free exploration</strong><p>Choose any initial position, velocity and acceleration. Run, pause, step through time and scrub the timeline. Record readings at selected instants.</p><p><strong>Investigate:</strong> When does a moving object stop momentarily? Can velocity be negative while acceleration is positive? How does the area under a velocity–time graph relate to displacement?</p></div>
+    </div>
+  </section>
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Prediction challenge</h3><span class="tag">TEST YOURSELF</span></div><div class="challenge"><strong>An object starts from rest and accelerates uniformly at 2 m/s². What is its velocity after 5 seconds?</strong><p>Choose your answer:</p><div class="answers"><button class="btn" data-answer="5">5 m/s</button><button class="btn" data-answer="10">10 m/s</button><button class="btn" data-answer="20">20 m/s</button></div><div class="feedback" id="challengeFeedback"></div></div></div>
+    <div class="card"><div class="cardhead"><h3>Observation record</h3><button class="btn danger" id="downloadRecords">↓ Export CSV</button></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Time</th><th>Position</th><th>Displacement</th><th>Velocity</th><th>Acceleration</th><th>Distance</th></tr></thead><tbody id="recordsBody"><tr><td colspan="7" class="empty">No readings recorded yet.</td></tr></tbody></table></div></div>
+  </section>
+  <p class="note">Scientific model note: The simulation uses one-dimensional motion with constant acceleration and the standard kinematic equations. Distance travelled is calculated by accounting for a possible reversal at the instant velocity becomes zero. The track is a visual representation; the numerical values and graphs are calculated in SI units. The model does not include friction or air resistance unless represented by a chosen constant acceleration.</p>
+</main>
+<script>
+(() => {
+ "use strict";
+ const $=id=>document.getElementById(id);
+ const controls={x0:$('x0'),u:$('u'),a:$('a'),duration:$('duration'),playSpeed:$('playSpeed')};
+ const S={t:0,running:false,last:0,records:[],guideStep:0};
+ const guides=[
+  {title:'Task 1 — Uniform velocity',count:'TASK 1 OF 4',text:'Set u = 4 m/s and a = 0 m/s². Run the object and observe the straight-line position–time graph.',hint:'At constant velocity, equal time intervals produce equal displacements. The velocity–time graph is horizontal.',v:{x0:0,u:4,a:0,duration:10}},
+  {title:'Task 2 — Positive acceleration',count:'TASK 2 OF 4',text:'Set u = 2 m/s and a = +1 m/s². Observe how velocity increases uniformly and the position–time graph curves upward.',hint:'The slope of the position–time graph is velocity. Its slope gets steeper as the object speeds up.',v:{x0:0,u:2,a:1,duration:10}},
+  {title:'Task 3 — Retardation and stopping',count:'TASK 3 OF 4',text:'Set u = 8 m/s and a = −1.5 m/s². Find when velocity becomes zero and observe the object reverse direction if the simulation continues.',hint:'At the stopping instant v = 0. Negative acceleration does not always mean slowing down; it depends on the velocity direction.',v:{x0:0,u:8,a:-1.5,duration:10}},
+  {title:'Task 4 — Motion in negative direction',count:'TASK 4 OF 4',text:'Set u = −5 m/s and a = 0. Observe the object moving in the negative x-direction.',hint:'A negative velocity means motion in the chosen negative direction; it does not mean the object is slowing down.',v:{x0:10,u:-5,a:0,duration:10}}
+ ];
+ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+ function vals(){return {x0:+controls.x0.value,u:+controls.u.value,a:+controls.a.value,duration:+controls.duration.value,speed:+controls.playSpeed.value};}
+ function position(t,v){return v.x0+v.u*t+.5*v.a*t*t;}
+ function velocity(t,v){return v.u+v.a*t;}
+ function displacement(t,v){return position(t,v)-v.x0;}
+ function travelled(t,v){
+  if(t<=0)return 0;
+  if(Math.abs(v.a)<1e-10)return Math.abs(v.u*t);
+  const stop=-v.u/v.a;
+  if(stop<=0||stop>=t)return Math.abs(displacement(t,v));
+  return Math.abs(displacement(stop,v))+Math.abs(position(t,v)-position(stop,v));
+ }
+ function extrema(v){
+  const points=[position(0,v),position(v.duration,v)];
+  if(Math.abs(v.a)>1e-10){const stop=-v.u/v.a;if(stop>0&&stop<v.duration)points.push(position(stop,v));}
+  return {min:Math.min(...points),max:Math.max(...points)};
+ }
+ function updateScrubber(){
+  const duration=vals().duration;
+  const scrub=$('timeScrub');scrub.max=duration;
+  scrub.value=clamp(S.t,0,duration);
+  $('timeEndLabel').textContent=duration.toFixed(0)+' s';
+ }
+ function statusText(v,x,vel){
+  if(Math.abs(vel)<.015&&Math.abs(v.a)>.0001)return 'The object is momentarily at rest. Its acceleration is not zero, so its velocity will change immediately.';
+  if(Math.abs(v.a)<.0001)return vel>0?'The object moves in the positive direction at constant velocity. Acceleration is zero.':vel<0?'The object moves in the negative direction at constant velocity. Acceleration is zero.':'The object remains at rest because both velocity and acceleration are zero.';
+  if(vel*v.a>0)return 'The magnitude of velocity is increasing. The object is speeding up in its current direction.';
+  if(vel*v.a<0)return 'The magnitude of velocity is decreasing. The object is slowing down.';
+  return 'The object has acceleration and its velocity is changing with time.';
+ }
+ function renderLabels(){
+  const v=vals(),x=position(S.t,v),vel=velocity(S.t,v),disp=displacement(S.t,v),dist=travelled(S.t,v);
+  $('x0Val').textContent=v.x0.toFixed(1)+' m';$('uVal').textContent=v.u.toFixed(1)+' m/s';$('aVal').textContent=v.a.toFixed(1)+' m/s²';$('durationVal').textContent=v.duration.toFixed(1)+' s';$('playSpeedVal').textContent=v.speed.toFixed(2)+'×';
+  $('timeVal').textContent=S.t.toFixed(2)+' s';$('positionValue').textContent=x.toFixed(2);$('displacementValue').textContent=disp.toFixed(2);$('velocityValue').textContent=vel.toFixed(2);$('accelerationValue').textContent=v.a.toFixed(2);$('distanceValue').textContent=dist.toFixed(2);
+  $('directionValue').textContent=vel>0.001?'+x':vel<-.001?'−x':'REST';$('directionNote').textContent=vel>0.001?'Positive direction':vel<-.001?'Negative direction':'Instantaneously at rest';$('motionState').textContent=statusText(v,x,vel);
+  $('playBtn').disabled=S.running||S.t>=v.duration-1e-9;$('pauseBtn').disabled=!S.running;$('stepBtn').disabled=S.running||S.t>=v.duration-1e-9;
+  $('liveStatus').textContent=S.running?'● MOTION RUNNING':S.t>=v.duration?'● OBSERVATION COMPLETE':'● READY / PAUSED';$('liveStatus').style.color=S.running?'#087e58':'#87601b';$('liveStatus').style.background=S.running?'#e4f8ed':'#fff8e8';
+  updateScrubber();
+ }
+ function arrow(ctx,x1,y1,x2,y2,color,size=8){const a=Math.atan2(y2-y1,x2-x1);ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2.6;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-size*Math.cos(a-Math.PI/6),y2-size*Math.sin(a-Math.PI/6));ctx.lineTo(x2-size*Math.cos(a+Math.PI/6),y2-size*Math.sin(a+Math.PI/6));ctx.closePath();ctx.fill();}
+ function drawMotion(){
+  const canvas=$('motionCanvas'),ctx=canvas.getContext('2d'),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+  const v=vals(),x=position(S.t,v),vel=velocity(S.t,v),acc=v.a,range=extrema(v),span=Math.max(20,range.max-range.min),lo=range.min-span*.18-2,hi=range.max+span*.18+2;
+  const left=35,right=w-30,trackY=h*.55,trackW=right-left,mapX=value=>left+(value-lo)/(hi-lo)*trackW;
+  ctx.strokeStyle='#eaf2f0';ctx.lineWidth=1;for(let gx=0;gx<w;gx+=28){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,h);ctx.stroke();}for(let gy=0;gy<h;gy+=28){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(w,gy);ctx.stroke();}
+  ctx.lineWidth=7;ctx.strokeStyle='#d9e7e3';ctx.beginPath();ctx.moveTo(left,trackY);ctx.lineTo(right,trackY);ctx.stroke();ctx.lineWidth=2;ctx.strokeStyle='#879e98';ctx.beginPath();ctx.moveTo(left,trackY+27);ctx.lineTo(right,trackY+27);ctx.stroke();
+  const tickStep=span>65?10:span>30?5:2;const first=Math.ceil(lo/tickStep)*tickStep;
+  ctx.font='10px system-ui';ctx.fillStyle='#607d78';ctx.textAlign='center';
+  for(let p=first;p<=hi;p+=tickStep){const px=mapX(p);ctx.strokeStyle='#819a93';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(px,trackY+21);ctx.lineTo(px,trackY+33);ctx.stroke();ctx.fillText(p.toFixed(0)+' m',px,trackY+48);}
+  const originX=mapX(0);ctx.strokeStyle='#3477ce';ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(originX,trackY-66);ctx.lineTo(originX,trackY+19);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#3477ce';ctx.fillText('Origin (0 m)',originX,trackY-73);
+  const initialX=mapX(v.x0);ctx.strokeStyle='#087e75';ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(initialX,trackY-35);ctx.lineTo(initialX,trackY+18);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#087e75';ctx.fillText('x₀',initialX,trackY-42);
+  const px=mapX(clamp(x,lo,hi)),py=trackY-4;
+  ctx.save();ctx.translate(px,py);ctx.fillStyle='#087e75';ctx.strokeStyle='#05665f';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(-18,-19,36,24,7);ctx.fill();ctx.stroke();ctx.fillStyle='#e8fffa';ctx.beginPath();ctx.arc(-9,7,5,0,Math.PI*2);ctx.arc(10,7,5,0,Math.PI*2);ctx.fill();ctx.restore();
+  if(Math.abs(vel)>.03){const len=clamp(Math.abs(vel)*4,22,85);arrow(ctx,px,trackY-37,px+Math.sign(vel)*len,trackY-37,'#e58b26',8);ctx.fillStyle='#a76715';ctx.font='700 11px system-ui';ctx.textAlign='center';ctx.fillText('v = '+vel.toFixed(2)+' m/s',clamp(px+Math.sign(vel)*len*.5,left+30,right-30),trackY-51);}
+  if(Math.abs(acc)>.03){const len=clamp(Math.abs(acc)*10,18,55);arrow(ctx,px,trackY+67,px+Math.sign(acc)*len,trackY+67,'#d84b55',7);ctx.fillStyle='#b43f48';ctx.font='700 10px system-ui';ctx.fillText('a = '+acc.toFixed(1)+' m/s²',clamp(px+Math.sign(acc)*len*.5,left+35,right-35),trackY+85);}
+  ctx.textAlign='left';ctx.fillStyle='#607d78';ctx.font='10px system-ui';ctx.fillText('Time: '+S.t.toFixed(2)+' s',12,18);ctx.textAlign='right';ctx.fillText('Actual position: '+x.toFixed(2)+' m',w-12,18);
+  if(x<lo||x>hi){ctx.fillStyle='#b8444b';ctx.textAlign='center';ctx.font='700 10px system-ui';ctx.fillText('Object beyond visible track scale',w/2,h-12);}
+ }
+ function drawGraph(){
+  const canvas=$('graphCanvas'),ctx=canvas.getContext('2d'),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+  const v=vals(),left=48,right=13,top=15,bottom=24,gap=28,panelH=(h-top-bottom-gap)/2,gw=w-left-right,xpos=t=>left+t/v.duration*gw;
+  const xVals=Array.from({length:121},(_,i)=>position(v.duration*i/120,v)),velVals=Array.from({length:121},(_,i)=>velocity(v.duration*i/120,v));
+  function panel(y0,values,label,color,selected){
+   const min=Math.min(...values),max=Math.max(...values),span=Math.max(1,max-min),pad=span*.16+0.2,lo=min-pad,hi=max+pad;
+   const ymap=value=>y0+panelH-(value-lo)/(hi-lo)*panelH;
+   ctx.strokeStyle='#e5eeeb';ctx.lineWidth=1;ctx.fillStyle='#7d9690';ctx.font='9px system-ui';ctx.textAlign='right';
+   for(let j=0;j<=4;j++){const y=y0+panelH*j/4;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke();ctx.fillText((hi-(hi-lo)*j/4).toFixed(1),left-6,y+3);}
+   ctx.strokeStyle='#9badab';ctx.beginPath();ctx.moveTo(left,y0);ctx.lineTo(left,y0+panelH);ctx.lineTo(w-right,y0+panelH);ctx.stroke();
+   ctx.strokeStyle=color;ctx.lineWidth=2.4;ctx.beginPath();
+   for(let i=0;i<=120;i++){const t=v.duration*i/120,val=label==='x(t)'?position(t,v):velocity(t,v);if(i===0)ctx.moveTo(xpos(t),ymap(val));else ctx.lineTo(xpos(t),ymap(val));}ctx.stroke();
+   const tx=clamp(S.t,0,v.duration),ty=ymap(selected);ctx.beginPath();ctx.arc(xpos(tx),ty,5,0,Math.PI*2);ctx.fillStyle='#e58b26';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+   ctx.fillStyle=color;ctx.font='700 10px system-ui';ctx.textAlign='left';ctx.fillText(label,left+4,y0+11);
+  }
+  panel(top,xVals,'x(t) · position in m','#3477ce',position(S.t,v));
+  panel(top+panelH+gap,velVals,'v(t) · velocity in m/s','#087e75',velocity(S.t,v));
+  ctx.fillStyle='#607d78';ctx.textAlign='center';ctx.font='9px system-ui';for(let i=0;i<=4;i++){const t=v.duration*i/4;ctx.fillText(t.toFixed(1)+' s',xpos(t),h-3);}
+ }
+ function render(){renderLabels();drawMotion();drawGraph();}
+ function stop(){S.running=false;S.last=0;}
+ function play(){if(S.t>=vals().duration-1e-9)S.t=0;S.running=true;S.last=0;render();}
+ function reset(){stop();S.t=0;render();}
+ function animate(timestamp){if(S.running){if(!S.last)S.last=timestamp;const dt=clamp((timestamp-S.last)/1000,0,.05);S.last=timestamp;S.t=Math.min(vals().duration,S.t+dt*vals().speed);if(S.t>=vals().duration)stop();render();}requestAnimationFrame(animate);}
+ function renderRecords(){const body=$('recordsBody');if(!S.records.length){body.innerHTML='<tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>';return;}body.innerHTML=S.records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.t.toFixed(2)} s</td><td>${r.x.toFixed(2)} m</td><td>${r.dx.toFixed(2)} m</td><td>${r.v.toFixed(2)} m/s</td><td>${r.a.toFixed(2)} m/s²</td><td>${r.distance.toFixed(2)} m</td></tr>`).join('');}
+ function csvExport(){if(!S.records.length){alert('Record at least one reading first.');return;}const rows=[['No.','Time (s)','Position (m)','Displacement (m)','Velocity (m/s)','Acceleration (m/s2)','Distance travelled (m)'],...S.records.map((r,i)=>[i+1,r.t,r.x,r.dx,r.v,r.a,r.distance])];const csv=rows.map(row=>row.join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='motion-in-a-straight-line-observations.csv';a.click();URL.revokeObjectURL(url);}
+ function showGuide(){const task=guides[S.guideStep];$('guideTitle').textContent=task.title;$('guideCount').textContent=task.count;$('guideText').textContent=task.text;$('guideHint').textContent=task.hint;$('nextGuide').textContent=S.guideStep===guides.length-1?'Restart tasks ↺':'Next task →';}
+ function applyGuide(){const p=guides[S.guideStep].v;stop();controls.x0.value=p.x0;controls.u.value=p.u;controls.a.value=p.a;controls.duration.value=p.duration;S.t=0;$('preset').value='custom';render();}
+ Object.values(controls).forEach(input=>input.addEventListener('input',()=>{if(input===controls.duration){S.t=clamp(S.t,0,vals().duration);}if(input===controls.x0||input===controls.u||input===controls.a){$('preset').value='custom';}render();}));
+ $('preset').addEventListener('change',()=>{const presets={uniform:{x0:0,u:4,a:0},accelerated:{x0:0,u:2,a:1.5},braking:{x0:0,u:8,a:-1.5},reverse:{x0:10,u:-5,a:0}};const p=presets[$('preset').value];if(!p)return;stop();controls.x0.value=p.x0;controls.u.value=p.u;controls.a.value=p.a;S.t=0;render();});
+ $('playBtn').addEventListener('click',play);$('pauseBtn').addEventListener('click',()=>{stop();render();});$('stepBtn').addEventListener('click',()=>{stop();S.t=Math.min(vals().duration,S.t+.5);render();});$('resetBtn').addEventListener('click',reset);
+ $('timeScrub').addEventListener('input',()=>{stop();S.t=+$('timeScrub').value;render();});
+ $('recordBtn').addEventListener('click',()=>{const v=vals();S.records.push({t:S.t,x:position(S.t,v),dx:displacement(S.t,v),v:velocity(S.t,v),a:v.a,distance:travelled(S.t,v)});renderRecords();});
+ $('clearRecords').addEventListener('click',()=>{S.records=[];renderRecords();});$('downloadRecords').addEventListener('click',csvExport);
+ $('applyGuide').addEventListener('click',applyGuide);$('nextGuide').addEventListener('click',()=>{S.guideStep=(S.guideStep+1)%guides.length;showGuide();});
+ $('guidedBtn').addEventListener('click',()=>{$('guidedBtn').classList.add('active');$('exploreBtn').classList.remove('active');$('guidedPanel').hidden=false;$('explorePanel').hidden=true;});$('exploreBtn').addEventListener('click',()=>{$('exploreBtn').classList.add('active');$('guidedBtn').classList.remove('active');$('guidedPanel').hidden=true;$('explorePanel').hidden=false;});
+ document.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{const f=$('challengeFeedback');if(b.dataset.answer==='10'){f.textContent='✓ Correct! v = u + at = 0 + (2 × 5) = 10 m/s.';f.style.color='#087e58';}else{f.textContent='Not quite. Use v = u + at with u = 0, a = 2 m/s² and t = 5 s.';f.style.color='#bd5960';}}));
+ if('ResizeObserver' in window){const ro=new ResizeObserver(render);ro.observe($('motionCanvas'));ro.observe($('graphCanvas'));}else window.addEventListener('resize',render);
+ showGuide();render();requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
