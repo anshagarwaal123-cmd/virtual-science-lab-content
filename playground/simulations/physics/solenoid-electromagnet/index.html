@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solenoid and Electromagnet | Virtual Science Lab</title>
+<style>
+:root{
+  --bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;
+  --line:#dceae6;--teal:#087e75;--teal2:#dff5ef;
+  --blue:#3477ce;--orange:#e58b26;--red:#d84b55;
+  --shadow:0 10px 30px rgba(24,70,63,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}
+button,input,select{font:inherit}
+.topbar{padding:17px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:24px;font-weight:800}
+.brand h1{font-size:17px;margin:0 0 3px}
+.brand p{margin:0;color:var(--muted);font-size:12px}
+.top-actions{display:flex;align-items:center;gap:8px}
+.live{font-size:10px;font-weight:800;letter-spacing:.07em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1260px;margin:22px auto;padding:0 16px 35px}
+.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}
+.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}
+.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);gap:17px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cardhead h3{margin:0;font-size:15px}
+.small{font-size:11px;color:var(--muted)}
+.canvas-wrap{padding:10px 12px 2px}
+#labCanvas{width:100%;height:420px;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--blue)}
+.dot.orange{background:var(--orange)}.dot.teal{background:var(--teal)}.dot.grey{background:#92a6a1}
+.controls{padding:15px 17px}
+.control{margin-bottom:15px}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
+.control label{font-size:13px;font-weight:700}
+.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}
+.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}
+select{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:#fbfefd;color:var(--ink);font-weight:650}
+.switchrow{display:flex;gap:8px;margin:8px 0 15px}
+.switchbtn{flex:1;border:1px solid #b7dcd3;background:#effaf6;color:#087568;padding:11px 8px;border-radius:11px;font-weight:800;cursor:pointer}
+.switchbtn.off{border-color:#ecc6c8;background:#fff3f3;color:#b8444b}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.metric{background:#f5faf8;border:1px solid var(--line);border-radius:13px;padding:11px 9px}
+.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.35}
+.metric strong{display:block;font-size:18px;margin-top:6px;color:var(--ink);font-variant-numeric:tabular-nums}
+.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.polarity{margin-top:11px;padding:11px 12px;border-radius:12px;background:#f1f7ff;border:1px solid #dbe8f8;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.polarity span{font-size:11px;color:#58718e}
+.polarity strong{font-size:13px;color:#285a9a}
+.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}
+.formula b{font-size:11px;color:#285a9a}
+.formula div{font-family:Georgia,serif;font-size:17px;text-align:center;margin:8px 0;color:#1f4675}
+.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}
+.btn.danger{color:#b8444b}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}
+.graphbox{padding:8px 14px 14px}
+#graphCanvas{width:100%;height:210px;display:block}
+.graph-note{color:var(--muted);font-size:11px;margin:0 3px 5px;line-height:1.45}
+.guide{padding:15px 17px}
+.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}
+.guide strong{color:var(--ink)}
+.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}
+.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}
+.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}
+.guide-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modebar{display:flex;gap:7px}
+.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}
+.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}
+.answers{display:flex;flex-wrap:wrap;gap:7px}
+.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}
+.table-wrap{overflow-x:auto;padding:0 15px 15px}
+table{width:100%;border-collapse:collapse;min-width:600px;font-size:11px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:750;background:#f7fbfa}
+td{font-variant-numeric:tabular-nums}
+.empty{text-align:center;color:#91a6a2;padding:20px}
+.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:880px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#labCanvas{height:370px}}
+@media(max-width:520px){
+ .topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}
+ main{padding:0 10px 25px;margin-top:15px}
+ .intro{align-items:flex-start;flex-direction:column;gap:10px}
+ #labCanvas{height:310px}
+ .metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}
+ .cardhead{padding:13px}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">∿</div>
+    <div>
+      <h1>Virtual Science Lab</h1>
+      <p>Physics · Interactive Experiment</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <div class="live" id="liveStatus">● POWER ON</div>
+    <button class="btn" id="fullscreenBtn">⛶ Fullscreen</button>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <div>
+      <h2>Solenoid and Electromagnet</h2>
+      <p>Build a virtual electromagnet. Investigate how current, turns, coil dimensions and core material affect magnetic strength.</p>
+    </div>
+    <div class="tag">CLASS 10 · MAGNETIC EFFECTS</div>
+  </section>
+
+  <section class="workspace">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Inside the electromagnetic laboratory</h3>
+        <span class="small">Solenoid · Side view</span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="labCanvas"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="dot"></i>Magnetic field lines</span>
+        <span><i class="dot orange"></i>Compass needle</span>
+        <span><i class="dot teal"></i>Coil winding</span>
+        <span><i class="dot grey"></i>Core</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Build your electromagnet</h3>
+        <span class="small">Change the setup</span>
+      </div>
+      <div class="controls">
+        <div class="switchrow">
+          <button class="switchbtn" id="powerBtn">⏻ Power ON</button>
+          <button class="switchbtn" id="directionBtn">↺ Reverse current</button>
+        </div>
+
+        <div class="control">
+          <div class="control-top"><label for="current">Current (I)</label><span class="value" id="currentVal">2.0 A</span></div>
+          <input id="current" type="range" min="0.1" max="5" step="0.1" value="2">
+          <div class="scale"><span>0.1 A</span><span>5 A</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top"><label for="turns">Number of turns (N)</label><span class="value" id="turnsVal">400</span></div>
+          <input id="turns" type="range" min="100" max="1000" step="50" value="400">
+          <div class="scale"><span>100 turns</span><span>1000 turns</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top"><label for="length">Coil length (L)</label><span class="value" id="lengthVal">10 cm</span></div>
+          <input id="length" type="range" min="5" max="20" step="1" value="10">
+          <div class="scale"><span>5 cm</span><span>20 cm</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top"><label for="radius">Coil radius (R)</label><span class="value" id="radiusVal">2.0 cm</span></div>
+          <input id="radius" type="range" min="1" max="5" step="0.5" value="2">
+          <div class="scale"><span>1 cm</span><span>5 cm</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top"><label for="core">Core material</label></div>
+          <select id="core">
+            <option value="air">Air core (μᵣ = 1)</option>
+            <option value="iron">Soft iron core (effective μᵣ = 20)</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <div class="control-top"><label for="position">Compass position on axis</label><span class="value" id="positionVal">0 cm</span></div>
+          <input id="position" type="range" min="-15" max="15" step="0.5" value="0">
+          <div class="scale"><span>Left −15 cm</span><span>Centre 0</span><span>Right +15 cm</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top"><label for="earth">Earth's horizontal field</label><span class="value" id="earthVal">25 µT</span></div>
+          <input id="earth" type="range" min="0" max="50" step="1" value="25">
+          <div class="scale"><span>0 µT</span><span>50 µT</span></div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>Field at centre</span>
+            <strong id="centerField">10.05</strong>
+            <small>mT</small>
+          </div>
+          <div class="metric">
+            <span>Field at probe</span>
+            <strong id="probeField">10.05</strong>
+            <small>mT</small>
+          </div>
+          <div class="metric">
+            <span>Compass deflection</span>
+            <strong id="deflection">89.9°</strong>
+            <small>from Earth-field direction</small>
+          </div>
+        </div>
+
+        <div class="polarity">
+          <span>Polarity · viewed from the left end</span>
+          <strong id="polarity">N  ←  →  S</strong>
+        </div>
+
+        <div class="formula">
+          <b>FINITE SOLENOID · AXIAL FIELD</b>
+          <div>B = (μ₀ μᵣ n I / 2) × (cos θ₁ + cos θ₂)</div>
+          <p>At the centre, B = μ₀ μᵣ n I × L / √(L² + 4R²), where n = N/L and μ₀ = 4π × 10⁻⁷ T·m/A.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="recordBtn">＋ Record reading</button>
+          <button class="btn" id="resetBtn">↻ Reset experiment</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Magnetic field vs current</h3>
+        <span class="small">Selected coil setup</span>
+      </div>
+      <div class="graphbox">
+        <p class="graph-note">The graph updates with the selected turns, coil dimensions and core. The highlighted point shows the current setting.</p>
+        <canvas id="graphCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Guided practical</h3>
+        <div class="modebar">
+          <button class="btn active" id="guidedBtn">Guided</button>
+          <button class="btn" id="exploreBtn">Explore</button>
+        </div>
+      </div>
+      <div class="guide" id="guidedPanel">
+        <strong id="guideTitle">Task 1 — Make an air-core solenoid</strong>
+        <div class="guide-step">
+          <div class="count" id="guideCount">GUIDED TASK 1 OF 4</div>
+          <div id="guideText">Set the air core, 2 A current, 400 turns and 10 cm coil length. Observe the magnetic field at the centre.</div>
+        </div>
+        <p id="guideHint">Compare the field after changing only one variable at a time.</p>
+        <div class="guide-actions">
+          <button class="btn primary" id="applyGuide">Apply task setup</button>
+          <button class="btn" id="nextGuide">Next task →</button>
+        </div>
+      </div>
+      <div class="guide" id="explorePanel" hidden>
+        <strong>Free exploration</strong>
+        <p>Build different electromagnets by changing the current, number of turns, coil length, radius and core material. Reverse the current to swap the poles.</p>
+        <p><strong>Investigate:</strong> What happens when turns are doubled? Does adding a soft iron core increase the field? What changes when current direction is reversed?</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Prediction challenge</h3>
+        <span class="tag">TEST YOURSELF</span>
+      </div>
+      <div class="challenge">
+        <strong>The solenoid is powered ON. What happens to its North and South poles when the current direction is reversed?</strong>
+        <p>Choose your answer:</p>
+        <div class="answers">
+          <button class="btn" data-answer="swap">The poles swap places</button>
+          <button class="btn" data-answer="same">The poles remain the same</button>
+          <button class="btn" data-answer="zero">The magnetic field disappears permanently</button>
+        </div>
+        <div class="feedback" id="challengeFeedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Observation record</h3>
+        <button class="btn danger" id="clearRecords">Clear records</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Power</th><th>Current</th><th>Turns</th>
+              <th>Length</th><th>Core</th><th>Centre field</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody"><tr><td colspan="7" class="empty">No readings recorded yet.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">
+    Scientific model note: The axial magnetic field is calculated using the finite-length, ideal thin-solenoid formula. The field-line drawing is a 2D educational representation. For the soft iron option, the model uses an assumed effective relative permeability of 20 and a simplified 1.5 T saturation ceiling; real iron permeability varies with field strength, shape and material history. This is an educational model, not a material-design calculator.
+  </p>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const MU0 = 4 * Math.PI * 1e-7;
+  const $ = id => document.getElementById(id);
+
+  const controls = {
+    current: $("current"),
+    turns: $("turns"),
+    length: $("length"),
+    radius: $("radius"),
+    core: $("core"),
+    position: $("position"),
+    earth: $("earth")
+  };
+
+  let powerOn = true;
+  let currentSign = 1;
+  let records = [];
+  let guideStep = 0;
+
+  const guideTasks = [
+    {
+      title: "Task 1 — Make an air-core solenoid",
+      count: "GUIDED TASK 1 OF 4",
+      text: "Start with an air core, 2 A current, 400 turns and a coil length of 10 cm. Observe the centre field.",
+      hint: "This is your reference reading. Record it before changing the setup.",
+      values: {current:2, turns:400, length:10, radius:2, core:"air", position:0}
+    },
+    {
+      title: "Task 2 — Increase the current",
+      count: "GUIDED TASK 2 OF 4",
+      text: "Keep the air core, turns and dimensions fixed. Increase current from 2 A to 4 A. Compare the centre field.",
+      hint: "With other settings fixed, the field is directly proportional to current.",
+      values: {current:4, turns:400, length:10, radius:2, core:"air", position:0}
+    },
+    {
+      title: "Task 3 — Increase the number of turns",
+      count: "GUIDED TASK 3 OF 4",
+      text: "Return current to 2 A and increase the turns from 400 to 800. Keep the coil length and radius unchanged.",
+      hint: "For a fixed coil length, increasing turns increases turns per unit length.",
+      values: {current:2, turns:800, length:10, radius:2, core:"air", position:0}
+    },
+    {
+      title: "Task 4 — Insert a soft iron core",
+      count: "GUIDED TASK 4 OF 4",
+      text: "Keep the 2 A current, 400 turns and dimensions fixed. Change the core from air to soft iron.",
+      hint: "Compare the model's effective core response. Real iron does not have one constant permeability.",
+      values: {current:2, turns:400, length:10, radius:2, core:"iron", position:0}
+    }
+  ];
+
+  function values() {
+    return {
+      Iset: Number(controls.current.value),
+      N: Number(controls.turns.value),
+      Lcm: Number(controls.length.value),
+      Rcm: Number(controls.radius.value),
+      core: controls.core.value,
+      zcm: Number(controls.position.value),
+      earth: Number(controls.earth.value),
+      sign: currentSign,
+      on: powerOn
+    };
+  }
+
+  function muRelative(core) {
+    return core === "iron" ? 20 : 1;
+  }
+
+  function axialFieldTesla(v, zcm, currentOverride) {
+    if (!v.on && currentOverride === undefined) return 0;
+
+    const I = currentOverride === undefined ? v.Iset : currentOverride;
+    if (I <= 0) return 0;
+
+    const L = v.Lcm / 100;
+    const R = v.Rcm / 100;
+    const z = zcm / 100;
+    const n = v.N / L;
+    const muR = muRelative(v.core);
+
+    const upper = (z + L / 2) / Math.sqrt(R * R + Math.pow(z + L / 2, 2));
+    const lower = (z - L / 2) / Math.sqrt(R * R + Math.pow(z - L / 2, 2));
+    let B = (MU0 * muR * n * I / 2) * (upper - lower);
+
+    // Simplified educational saturation ceiling for the soft iron setting.
+    if (v.core === "iron") B = Math.min(B, 1.5);
+    return Math.max(0, B);
+  }
+
+  function updateLabels(v) {
+    $("currentVal").textContent = v.Iset.toFixed(1) + " A";
+    $("turnsVal").textContent = String(v.N);
+    $("lengthVal").textContent = v.Lcm.toFixed(0) + " cm";
+    $("radiusVal").textContent = v.Rcm.toFixed(1) + " cm";
+    $("positionVal").textContent = (v.zcm > 0 ? "+" : "") + v.zcm.toFixed(1) + " cm";
+    $("earthVal").textContent = v.earth.toFixed(0) + " µT";
+
+    $("powerBtn").textContent = powerOn ? "⏻ Power ON" : "⏻ Power OFF";
+    $("powerBtn").classList.toggle("off", !powerOn);
+    $("liveStatus").textContent = powerOn ? "● POWER ON" : "● POWER OFF";
+    $("liveStatus").style.color = powerOn ? "#087e58" : "#b8444b";
+    $("liveStatus").style.background = powerOn ? "#e4f8ed" : "#fff0f0";
+
+    $("directionBtn").textContent = currentSign > 0 ? "↺ Reverse current" : "↻ Restore direction";
+  }
+
+  function updateReadings(v) {
+    const centre = axialFieldTesla(v, 0);
+    const probe = axialFieldTesla(v, v.zcm);
+    const centreMT = centre * 1000;
+    const probeMT = probe * 1000;
+    const signedProbeUT = v.sign * probe * 1e6;
+    const angle = Math.atan2(signedProbeUT, v.earth) * 180 / Math.PI;
+
+    $("centerField").textContent = centreMT.toFixed(3);
+    $("probeField").textContent = probeMT.toFixed(3);
+    $("deflection").textContent = angle.toFixed(1) + "°";
+
+    if (!v.on || v.Iset === 0) {
+      $("polarity").textContent = "No energized poles";
+    } else if (v.sign > 0) {
+      $("polarity").textContent = "N  ←  →  S";
+    } else {
+      $("polarity").textContent = "S  ←  →  N";
+    }
+  }
+
+  function arrow(ctx, x1, y1, x2, y2, color, size = 7) {
+    const a = Math.atan2(y2 - y1, x2 - x1);
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - size * Math.cos(a - Math.PI / 6), y2 - size * Math.sin(a - Math.PI / 6));
+    ctx.lineTo(x2 - size * Math.cos(a + Math.PI / 6), y2 - size * Math.sin(a + Math.PI / 6));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function bezierPoint(p0, p1, p2, p3, t) {
+    const u = 1 - t;
+    return {
+      x: u*u*u*p0.x + 3*u*u*t*p1.x + 3*u*t*t*p2.x + t*t*t*p3.x,
+      y: u*u*u*p0.y + 3*u*u*t*p1.y + 3*u*t*t*p2.y + t*t*t*p3.y
+    };
+  }
+
+  function drawFieldLoop(ctx, leftX, rightX, cy, height, side, sign, color) {
+    const p0 = {x:leftX, y:cy};
+    const p1 = {x:leftX + (rightX-leftX)*0.23, y:cy + side*height};
+    const p2 = {x:rightX - (rightX-leftX)*0.23, y:cy + side*height};
+    const p3 = {x:rightX, y:cy};
+
+    ctx.beginPath();
+    ctx.moveTo(p0.x,p0.y);
+    ctx.bezierCurveTo(p1.x,p1.y,p2.x,p2.y,p3.x,p3.y);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = 0.88;
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    const t = 0.56;
+    const pt = bezierPoint(p0,p1,p2,p3,t);
+    const tangent = {
+      x: 3*(1-t)*(1-t)*(p1.x-p0.x) + 6*(1-t)*t*(p2.x-p1.x) + 3*t*t*(p3.x-p2.x),
+      y: 3*(1-t)*(1-t)*(p1.y-p0.y) + 6*(1-t)*t*(p2.y-p1.y) + 3*t*t*(p3.y-p2.y)
+    };
+    const direction = sign > 0 ? 1 : -1;
+    const len = Math.hypot(tangent.x,tangent.y) || 1;
+    const tx = direction*tangent.x/len*13;
+    const ty = direction*tangent.y/len*13;
+    arrow(ctx,pt.x-tx/2,pt.y-ty/2,pt.x+tx/2,pt.y+ty/2,color,6);
+  }
+
+  function drawEndView(ctx, x, y, sign) {
+    ctx.beginPath();
+    ctx.arc(x,y,23,0,Math.PI*2);
+    ctx.fillStyle="#fff";
+    ctx.fill();
+    ctx.strokeStyle="#9bb7af";
+    ctx.lineWidth=1.4;
+    ctx.stroke();
+
+    ctx.beginPath();
+    if (sign > 0) {
+      ctx.arc(x,y,14,0,Math.PI*1.7,true);
+    } else {
+      ctx.arc(x,y,14,0,Math.PI*1.7,false);
+    }
+    ctx.strokeStyle="#087e75";
+    ctx.lineWidth=2.5;
+    ctx.stroke();
+
+    const a = sign > 0 ? -Math.PI/2 : Math.PI/2;
+    const ax=x+14*Math.cos(a), ay=y+14*Math.sin(a);
+    const tangentAngle=sign>0 ? a-Math.PI/2 : a+Math.PI/2;
+    arrow(ctx,ax-4*Math.cos(tangentAngle),ay-4*Math.sin(tangentAngle),
+      ax+4*Math.cos(tangentAngle),ay+4*Math.sin(tangentAngle),"#087e75",5);
+
+    ctx.fillStyle="#526e68";
+    ctx.font="10px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText("Viewed from left",x,y+38);
+    ctx.fillText(sign>0 ? "Anticlockwise" : "Clockwise",x,y+51);
+  }
+
+  function drawLab() {
+    const canvas=$("labCanvas");
+    const ctx=canvas.getContext("2d");
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    const dpr=window.devicePixelRatio||1;
+
+    if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){
+      canvas.width=Math.round(w*dpr);
+      canvas.height=Math.round(h*dpr);
+    }
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    const v=values();
+    const cx=w*0.5, cy=h*0.52;
+    const half=Math.min(w*0.31,w*(0.20+(v.Lcm-5)/15*0.11));
+    const leftX=cx-half,rightX=cx+half;
+    const coilH=Math.min(57,27+(v.Rcm-1)*7);
+    const coreH=coilH*0.55;
+    const fieldColor=v.on?"#3477ce":"#aabbb7";
+    const isActive=v.on && v.Iset>0;
+
+    // Background grid
+    ctx.strokeStyle="#eaf2f0";
+    ctx.lineWidth=1;
+    for(let x=0;x<w;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+    for(let y=0;y<h;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+
+    // Axis line
+    ctx.save();
+    ctx.setLineDash([5,5]);
+    ctx.strokeStyle="#a2b8b2";
+    ctx.beginPath();ctx.moveTo(12,cy);ctx.lineTo(w-12,cy);ctx.stroke();
+    ctx.restore();
+
+    // External magnetic field loops
+    const loopCount= isActive ? 4 : 1;
+    for(let i=0;i<loopCount;i++){
+      const height=coilH+28+i*24;
+      drawFieldLoop(ctx,leftX,rightX,cy,height,-1,v.sign,fieldColor);
+      drawFieldLoop(ctx,leftX,rightX,cy,height,1,v.sign,fieldColor);
+    }
+
+    // Magnetic core
+    const coreGradient=ctx.createLinearGradient(0,cy-coreH,0,cy+coreH);
+    if(v.core==="iron"){
+      coreGradient.addColorStop(0,"#b7c6c5");
+      coreGradient.addColorStop(.5,"#e1e9e7");
+      coreGradient.addColorStop(1,"#9aadaa");
+    }else{
+      coreGradient.addColorStop(0,"#e7efed");
+      coreGradient.addColorStop(.5,"#f8fbfa");
+      coreGradient.addColorStop(1,"#dce9e5");
+    }
+
+    ctx.beginPath();
+    ctx.roundRect(leftX,cy-coreH,rightX-leftX,coreH*2,coreH);
+    ctx.fillStyle=coreGradient;
+    ctx.fill();
+    ctx.strokeStyle="#91aaa4";
+    ctx.lineWidth=1.2;
+    ctx.stroke();
+
+    // Windings: number shown is representative, not the literal full turn count
+    const visibleTurns=Math.max(8,Math.min(26,Math.round(8+(v.N-100)/900*18)));
+    ctx.strokeStyle="#087e75";
+    ctx.lineWidth=2.3;
+    for(let i=0;i<visibleTurns;i++){
+      const x=leftX+8+(rightX-leftX-16)*i/Math.max(1,visibleTurns-1);
+      ctx.beginPath();
+      ctx.ellipse(x,cy,5,coilH,0,0,Math.PI*2);
+      ctx.stroke();
+    }
+
+    // Field arrows inside the solenoid
+    if(isActive){
+      const insideYs=[cy-11,cy+11];
+      insideYs.forEach(y=>{
+        if(v.sign>0) arrow(ctx,rightX-16,y,leftX+16,y,"#2563a9",7);
+        else arrow(ctx,leftX+16,y,rightX-16,y,"#2563a9",7);
+      });
+      ctx.fillStyle="#275d9c";
+      ctx.font="700 10px system-ui";
+      ctx.textAlign="center";
+      ctx.fillText("B inside",cx,cy- coreH-9);
+    }else{
+      ctx.fillStyle="#829994";
+      ctx.font="11px system-ui";
+      ctx.textAlign="center";
+      ctx.fillText("Switch ON to create a magnetic field",cx,cy-coreH-12);
+    }
+
+    // Coil terminal and pole labels
+    const leftPole=isActive?(v.sign>0?"N":"S"):"—";
+    const rightPole=isActive?(v.sign>0?"S":"N"):"—";
+    ctx.fillStyle=isActive?"#b04b42":"#80918d";
+    ctx.font="800 17px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText(leftPole,leftX-2,cy-coilH-14);
+    ctx.fillText(rightPole,rightX+2,cy-coilH-14);
+
+    ctx.fillStyle="#087e75";
+    ctx.font="10px system-ui";
+    ctx.fillText("Coil winding",cx,cy+coilH+16);
+    ctx.fillStyle="#718982";
+    ctx.fillText(v.core==="iron"?"Soft iron core":"Air core",cx,cy+4);
+
+    // End-view direction key
+    drawEndView(ctx,48,53,isActive?v.sign:currentSign);
+
+    // Compass position mapped along the axis
+    const probeX=cx+(v.zcm/15)*(w*0.42);
+    const probeY=cy;
+    const B= isActive?axialFieldTesla(v,v.zcm):0;
+    const theta=Math.atan2(B*1e6,v.earth);
+    const needleDX=Math.sin(theta)*17*v.sign;
+    const needleDY=-Math.cos(theta)*17;
+
+    ctx.beginPath();
+    ctx.arc(probeX,probeY,20,0,Math.PI*2);
+    ctx.fillStyle="rgba(255,255,255,.96)";
+    ctx.fill();
+    ctx.strokeStyle="#d7a158";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    arrow(ctx,probeX-needleDX*0.7,probeY-needleDY*0.7,
+      probeX+needleDX,probeY+needleDY,"#e58b26",7);
+
+    ctx.fillStyle="#93631e";
+    ctx.font="700 10px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText("Compass probe",probeX,probeY+34);
+
+    // Earth field direction marker
+    arrow(ctx,18,h-23,18,h-67,"#d28a32",6);
+    ctx.fillStyle="#9a681f";
+    ctx.textAlign="left";
+    ctx.font="10px system-ui";
+    ctx.fillText("Earth field",29,h-48);
+
+    // Current/power caption
+    ctx.textAlign="right";
+    ctx.fillStyle=isActive?"#087e75":"#b45b60";
+    ctx.font="700 10px system-ui";
+    ctx.fillText(isActive?`I = ${v.Iset.toFixed(1)} A`:"POWER OFF",w-13,h-17);
+  }
+
+  function drawGraph() {
+    const canvas=$("graphCanvas");
+    const ctx=canvas.getContext("2d");
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    const dpr=window.devicePixelRatio||1;
+
+    if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){
+      canvas.width=Math.round(w*dpr);
+      canvas.height=Math.round(h*dpr);
+    }
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    const v=values();
+    const left=48,right=13,top=13,bottom=34;
+    const gw=w-left-right,gh=h-top-bottom;
+    const maxI=5;
+    const maxB=Math.max(0.001,axialFieldTesla({...v,on:true},0,5)*1000*1.08);
+    const px=i=>left+(i/maxI)*gw;
+    const py=b=>top+gh-(b/maxB)*gh;
+
+    ctx.strokeStyle="#e3eeeb";
+    ctx.lineWidth=1;
+    ctx.fillStyle="#78908b";
+    ctx.font="10px system-ui";
+    ctx.textAlign="right";
+
+    for(let i=0;i<=4;i++){
+      const y=top+gh*i/4;
+      ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke();
+      ctx.fillText((maxB*(1-i/4)).toFixed(2),left-7,y+3);
+    }
+
+    ctx.textAlign="center";
+    for(let i=0;i<=5;i++){
+      const x=px(i);
+      ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+gh);ctx.stroke();
+      ctx.fillText(String(i),x,h-17);
+    }
+
+    ctx.strokeStyle="#829994";
+    ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(left,top);ctx.lineTo(left,top+gh);ctx.lineTo(w-right,top+gh);ctx.stroke();
+
+    ctx.strokeStyle="#3477ce";
+    ctx.lineWidth=2.5;
+    ctx.beginPath();
+    for(let i=0;i<=100;i++){
+      const amps=maxI*i/100;
+      const b=axialFieldTesla({...v,on:true},0,amps)*1000;
+      if(i===0)ctx.moveTo(px(amps),py(b));
+      else ctx.lineTo(px(amps),py(b));
+    }
+    ctx.stroke();
+
+    const actualI=v.on?v.Iset:0;
+    const actualB=axialFieldTesla(v,0)*1000;
+    ctx.beginPath();
+    ctx.arc(px(actualI),py(actualB),5,0,Math.PI*2);
+    ctx.fillStyle="#e58b26";
+    ctx.fill();
+    ctx.strokeStyle="#fff";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    ctx.fillStyle="#58716c";
+    ctx.textAlign="center";
+    ctx.fillText("Current (A)",left+gw/2,h-2);
+    ctx.save();
+    ctx.translate(12,top+gh/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText("Centre field (mT)",0,0);
+    ctx.restore();
+  }
+
+  function render() {
+    const v=values();
+    updateLabels(v);
+    updateReadings(v);
+    drawLab();
+    drawGraph();
+  }
+
+  Object.values(controls).forEach(control=>{
+    control.addEventListener("input",render);
+    control.addEventListener("change",render);
+  });
+
+  $("powerBtn").addEventListener("click",()=>{
+    powerOn=!powerOn;
+    render();
+  });
+
+  $("directionBtn").addEventListener("click",()=>{
+    currentSign*=-1;
+    render();
+  });
+
+  $("recordBtn").addEventListener("click",()=>{
+    const v=values();
+    records.push({
+      on:v.on,
+      I:v.on?v.Iset:0,
+      N:v.N,
+      L:v.Lcm,
+      core:v.core==="iron"?"Soft iron":"Air",
+      B:axialFieldTesla(v,0)*1000
+    });
+    renderRecords();
+  });
+
+  function renderRecords(){
+    const body=$("recordsBody");
+    if(!records.length){
+      body.innerHTML='<tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>';
+      return;
+    }
+    body.innerHTML=records.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td>${r.on?"ON":"OFF"}</td>
+        <td>${r.I.toFixed(1)} A</td>
+        <td>${r.N}</td>
+        <td>${r.L} cm</td>
+        <td>${r.core}</td>
+        <td>${r.B.toFixed(3)} mT</td>
+      </tr>
+    `).join("");
+  }
+
+  $("clearRecords").addEventListener("click",()=>{
+    records=[];
+    renderRecords();
+  });
+
+  $("resetBtn").addEventListener("click",()=>{
+    controls.current.value=2;
+    controls.turns.value=400;
+    controls.length.value=10;
+    controls.radius.value=2;
+    controls.core.value="air";
+    controls.position.value=0;
+    controls.earth.value=25;
+    powerOn=true;
+    currentSign=1;
+    $("challengeFeedback").textContent="";
+    render();
+  });
+
+  function showGuide(){
+    const task=guideTasks[guideStep];
+    $("guideTitle").textContent=task.title;
+    $("guideCount").textContent=task.count;
+    $("guideText").textContent=task.text;
+    $("guideHint").textContent=task.hint;
+    $("nextGuide").textContent=guideStep===guideTasks.length-1?"Restart tasks ↺":"Next task →";
+  }
+
+  $("applyGuide").addEventListener("click",()=>{
+    const v=guideTasks[guideStep].values;
+    Object.keys(v).forEach(key=>{
+      if(controls[key])controls[key].value=v[key];
+    });
+    powerOn=true;
+    currentSign=1;
+    render();
+  });
+
+  $("nextGuide").addEventListener("click",()=>{
+    guideStep=(guideStep+1)%guideTasks.length;
+    showGuide();
+  });
+
+  $("guidedBtn").addEventListener("click",()=>{
+    $("guidedBtn").classList.add("active");
+    $("exploreBtn").classList.remove("active");
+    $("guidedPanel").hidden=false;
+    $("explorePanel").hidden=true;
+  });
+
+  $("exploreBtn").addEventListener("click",()=>{
+    $("exploreBtn").classList.add("active");
+    $("guidedBtn").classList.remove("active");
+    $("guidedPanel").hidden=true;
+    $("explorePanel").hidden=false;
+  });
+
+  document.querySelectorAll("[data-answer]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const feedback=$("challengeFeedback");
+      if(button.dataset.answer==="swap"){
+        feedback.textContent="✓ Correct! Reversing current reverses the magnetic field direction, so the North and South poles swap.";
+        feedback.style.color="#087e58";
+      }else{
+        feedback.textContent="Not quite. Use the right-hand grip rule: reversing current reverses the field direction and swaps the poles.";
+        feedback.style.color="#bd5960";
+      }
+    });
+  });
+
+  $("fullscreenBtn").addEventListener("click",async()=>{
+    try{
+      if(!document.fullscreenElement)await document.documentElement.requestFullscreen();
+      else await document.exitFullscreen();
+    }catch(error){
+      $("fullscreenBtn").textContent="Fullscreen unavailable";
+    }
+  });
+
+  if("ResizeObserver" in window){
+    const observer=new ResizeObserver(render);
+    observer.observe($("labCanvas"));
+    observer.observe($("graphCanvas"));
+  }else{
+    window.addEventListener("resize",render);
+  }
+
+  showGuide();
+  render();
+})();
+</script>
+</body>
+</html>
