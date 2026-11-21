@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f8f7">
+<title>Vernier Calipers and Screw Gauge | Virtual Science Lab</title>
+<style>
+:root{--bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;--line:#dceae6;--teal:#087e75;--teal2:#dff5ef;--blue:#3477ce;--orange:#e58b26;--red:#d84b55;--green:#26966d;--shadow:0 10px 30px rgba(24,70,63,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}button,input,select{font:inherit}
+.topbar{padding:16px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:23px;font-weight:800}.brand h1{font-size:17px;margin:0 0 3px}.brand p{margin:0;color:var(--muted);font-size:12px}.live{font-size:10px;font-weight:800;letter-spacing:.07em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1280px;margin:22px auto;padding:0 16px 35px}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.tabs{display:flex;gap:8px;margin-bottom:16px;background:#e8f1ee;padding:6px;border-radius:14px;width:max-content;max-width:100%}.tab{border:0;background:transparent;padding:11px 18px;border-radius:10px;color:#56716b;font-weight:800;cursor:pointer}.tab.active{background:#fff;color:var(--teal);box-shadow:0 3px 12px rgba(24,70,63,.08)}
+.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.85fr);gap:17px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.cardhead h3{margin:0;font-size:15px}.small{font-size:11px;color:var(--muted)}.canvas-wrap{padding:10px 12px 2px}canvas{width:100%;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}#instrumentCanvas{height:390px;touch-action:pan-y}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--blue)}.dot.orange{background:var(--orange)}.dot.teal{background:var(--teal)}.dot.red{background:var(--red)}
+.controls{padding:15px 17px}.control{margin-bottom:15px}.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}.control label{font-size:13px;font-weight:700}.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fbfefd;color:var(--ink);font-weight:650}.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}
+.instrument-panel[hidden],.guide-panel[hidden]{display:none!important}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}.metric{background:#f5faf8;border:1px solid var(--line);border-radius:12px;padding:10px 8px;min-width:0}.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.4}.metric strong{display:block;font-size:18px;margin-top:5px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.readout{margin-top:12px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.readout b{font-size:11px;color:#285a9a}.readout-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:9px}.readout-grid span{font-size:11px;color:#58718e}.readout-grid strong{display:block;font-size:14px;color:#1f4675;margin-top:2px;font-variant-numeric:tabular-nums}.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.formula b{font-size:11px;color:#285a9a}.formula div{font-family:Georgia,serif;font-size:17px;text-align:center;margin:8px 0;color:#1f4675}.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}
+.status{padding:12px;border-radius:12px;border:1px solid;margin-top:11px}.status.good{background:#edfaf2;border-color:#c8ecd5;color:#176846}.status.warn{background:#fff8e8;border-color:#f0dfad;color:#85601b}.status strong{display:block;font-size:13px}.status p{font-size:11px;line-height:1.45;margin:5px 0 0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}.btn:hover{filter:brightness(.97);transform:translateY(-1px)}.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}.btn.danger{color:#b8444b}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}.guide{padding:15px 17px}.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}.guide strong{color:var(--ink)}.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}.guide-actions{display:flex;gap:8px;flex-wrap:wrap}.modebar{display:flex;gap:7px}.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}.answers{display:flex;flex-wrap:wrap;gap:7px}.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}.table-wrap{overflow-x:auto;padding:0 15px 15px}table{width:100%;border-collapse:collapse;min-width:650px;font-size:11px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-weight:750;background:#f7fbfa}td{font-variant-numeric:tabular-nums}.empty{text-align:center;color:#91a6a2;padding:20px}.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}.drag-hint{padding:0 16px 13px;color:#68817e;font-size:11px}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#instrumentCanvas{height:350px}}
+@media(max-width:520px){.topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}main{padding:0 10px 25px;margin-top:15px}.intro{align-items:flex-start;flex-direction:column;gap:10px}#instrumentCanvas{height:300px}.metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}.cardhead{padding:13px}.tab{padding:10px 11px;font-size:12px}.readout-grid{gap:7px}}
+</style>
+</head>
+<body>
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-11-vernier-calipers-and-screw-gauge",
+  "title": "Units and Measurements: Vernier Calipers and Screw Gauge",
+  "class": 11,
+  "chapterNumber": 1,
+  "chapter": "Units and Measurements",
+  "description": "Use interactive Vernier calipers and a micrometer screw gauge to measure objects, find least count, read main and circular scales, and apply zero-error corrections.",
+  "simulationType": "2D"
+}
+</script>
+<header class="topbar">
+  <div class="brand"><div class="logo">⏚</div><div><h1>Virtual Science Lab</h1><p>Physics · Precision Measurement Lab</p></div></div>
+  <div class="live" id="liveStatus">● MEASUREMENT LAB READY</div>
+</header>
+<main>
+  <section class="intro">
+    <div><h2>Vernier Calipers and Screw Gauge</h2><p>Measure real-world dimensions in a precision lab. Read main scales, find coinciding divisions, correct zero error and record your observations.</p></div>
+    <div class="tag">CLASS 11 · UNITS & MEASUREMENTS</div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Choose measuring instrument">
+    <button class="tab active" id="vernierTab" role="tab" aria-selected="true">Vernier Calipers</button>
+    <button class="tab" id="screwTab" role="tab" aria-selected="false">Screw Gauge</button>
+  </div>
+
+  <section class="workspace">
+    <div class="card">
+      <div class="cardhead"><h3 id="instrumentTitle">Vernier calipers · external measurement</h3><span class="small" id="canvasSubTitle">Main scale + sliding vernier scale</span></div>
+      <div class="canvas-wrap"><canvas id="instrumentCanvas"></canvas></div>
+      <div class="legend" id="legend"><span><i class="dot blue"></i>Main scale</span><span><i class="dot teal"></i>Vernier scale</span><span><i class="dot orange"></i>Object / jaws</span><span><i class="dot red"></i>Coinciding mark</span></div>
+      <div class="drag-hint" id="dragHint">Try dragging the movable jaw on the drawing, or use the slider to change the reading.</div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead"><h3 id="controlsTitle">Caliper controls</h3><span class="small">Precision instrument</span></div>
+      <div class="controls">
+        <div class="instrument-panel" id="vernierPanel">
+          <div class="control"><div class="control-top"><label for="vernierObject">Object to measure</label></div><select id="vernierObject"><option value="rod">Metal rod · diameter</option><option value="coin">Coin · diameter</option><option value="block">Rectangular block · width</option><option value="tube">Tube · outer diameter</option></select></div>
+          <div class="control"><div class="control-top"><label for="jawPosition">Movable jaw position</label><span class="value" id="jawPositionVal">23.6 mm</span></div><input id="jawPosition" type="range" min="0.5" max="90" step="0.1" value="23.6"><div class="scale"><span>0.5 mm</span><span>90 mm</span></div></div>
+          <div class="control"><div class="control-top"><label for="vernierZero">Zero error calibration</label></div><select id="vernierZero"><option value="0">No zero error · 0.0 mm</option><option value="0.2">Positive zero error · +0.2 mm</option><option value="-0.2">Negative zero error · −0.2 mm</option></select></div>
+          <div class="metrics"><div class="metric"><span>Main scale reading</span><strong id="vMSR">23</strong><small>mm</small></div><div class="metric"><span>Coinciding division</span><strong id="vCoincidence">6</strong><small>division</small></div><div class="metric"><span>Least count</span><strong>0.1</strong><small>mm</small></div></div>
+          <div class="readout"><b>VERNIER READING WORKSHEET</b><div class="readout-grid"><div><span>Observed reading</span><strong id="vObserved">23.6 mm</strong></div><div><span>Zero correction</span><strong id="vCorrection">0.0 mm</strong></div><div><span>Corrected reading</span><strong id="vCorrected">23.6 mm</strong></div><div><span>Reference object size</span><strong id="vReference">Hidden</strong></div></div></div>
+          <div class="status good" id="vStatus"><strong>Jaws aligned with object</strong><p>The movable jaw is at the object's reference dimension. Read the scales and record the measurement.</p></div>
+          <div class="formula"><b>VERNIER CALIPERS FORMULA</b><div>Reading = MSR + (VC × LC)</div><p>Least count = 1 main-scale division − 1 vernier-scale division. In this instrument, 1 MSD = 1 mm and 10 VSD = 9 mm, so LC = 0.1 mm.</p></div>
+          <div class="actions"><button class="btn" id="vSetObject">Set jaws to object</button><button class="btn" id="vReveal">Reveal reference size</button></div>
+        </div>
+
+        <div class="instrument-panel" id="screwPanel" hidden>
+          <div class="control"><div class="control-top"><label for="screwObject">Object to measure</label></div><select id="screwObject"><option value="wire">Copper wire · diameter</option><option value="ball">Small steel ball · diameter</option><option value="sheet">Thin sheet stack · thickness</option><option value="pin">Metal pin · diameter</option></select></div>
+          <div class="control"><div class="control-top"><label for="spindlePosition">Spindle advancement</label><span class="value" id="spindlePositionVal">2.36 mm</span></div><input id="spindlePosition" type="range" min="0.10" max="5.00" step="0.01" value="2.36"><div class="scale"><span>0.10 mm</span><span>5.00 mm</span></div></div>
+          <div class="control"><div class="control-top"><label for="screwZero">Zero error calibration</label></div><select id="screwZero"><option value="0">No zero error · 0.00 mm</option><option value="0.02">Positive zero error · +0.02 mm</option><option value="-0.02">Negative zero error · −0.02 mm</option></select></div>
+          <div class="metrics"><div class="metric"><span>Main scale reading</span><strong id="sMSR">2.00</strong><small>mm</small></div><div class="metric"><span>Circular scale division</span><strong id="sCSR">36</strong><small>division</small></div><div class="metric"><span>Least count</span><strong>0.01</strong><small>mm</small></div></div>
+          <div class="readout"><b>SCREW GAUGE READING WORKSHEET</b><div class="readout-grid"><div><span>Observed reading</span><strong id="sObserved">2.36 mm</strong></div><div><span>Zero correction</span><strong id="sCorrection">0.00 mm</strong></div><div><span>Corrected reading</span><strong id="sCorrected">2.36 mm</strong></div><div><span>Reference object size</span><strong id="sReference">Hidden</strong></div></div></div>
+          <div class="status good" id="sStatus"><strong>Spindle aligned with object</strong><p>The spindle setting matches the selected object's reference dimension.</p></div>
+          <div class="formula"><b>MICROMETER SCREW GAUGE FORMULA</b><div>Reading = MSR + (CSR × LC)</div><p>Least count = Pitch / Number of circular-scale divisions. Here pitch = 0.5 mm and circular divisions = 50, so LC = 0.01 mm.</p></div>
+          <div class="actions"><button class="btn" id="sSetObject">Set spindle to object</button><button class="btn" id="sReveal">Reveal reference size</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Guided practical</h3><div class="modebar"><button class="btn active" id="guidedBtn">Guided</button><button class="btn" id="exploreBtn">Explore</button></div></div>
+      <div class="guide guide-panel" id="guidedPanel"><strong id="guideTitle">Task 1 — Read the Vernier scale</strong><div class="guide-step"><div class="count" id="guideCount">TASK 1 OF 3</div><div id="guideText">Use the calipers to measure the metal rod diameter. Find the main scale reading and the coinciding vernier division.</div></div><p id="guideHint">Read the last main-scale mark to the left of the vernier zero.</p><div class="guide-actions"><button class="btn primary" id="applyGuide">Apply task setup</button><button class="btn" id="nextGuide">Next task →</button></div></div>
+      <div class="guide guide-panel" id="explorePanel" hidden><strong>Free exploration</strong><p>Switch between Vernier calipers and the screw gauge. Select objects, drag the instrument scale, adjust the zero error and see the corrected measurement.</p><p><strong>Investigate:</strong> Which instrument has the smaller least count? Why does a screw gauge measure thin wires more precisely? How does zero correction affect the final result?</p></div>
+    </div>
+    <div class="card"><div class="cardhead"><h3>Precision and error concepts</h3><span class="small">Quick reference</span></div><div class="guide"><div class="guide-step"><div class="count">LEAST COUNT</div><div>The smallest measurement an instrument can resolve. A smaller least count means finer scale resolution, but does not by itself guarantee accuracy.</div></div><div class="guide-step"><div class="count">ZERO ERROR</div><div>A non-zero reading when the instrument should read zero with its jaws or spindle closed. Positive error is subtracted; negative error is added.</div></div><div class="guide-step"><div class="count">ZERO CORRECTION</div><div>Zero correction = − zero error. Corrected reading = observed reading + zero correction.</div></div></div></div>
+  </section>
+
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Prediction challenge</h3><span class="tag">TEST YOURSELF</span></div><div class="challenge"><strong>Which instrument has the smaller least count in this laboratory setup?</strong><p>Choose your answer:</p><div class="answers"><button class="btn" data-answer="v">Vernier calipers · 0.1 mm</button><button class="btn" data-answer="s">Screw gauge · 0.01 mm</button><button class="btn" data-answer="same">Both are equal</button></div><div class="feedback" id="challengeFeedback"></div></div></div>
+    <div class="card"><div class="cardhead"><h3>Observation record</h3><div class="actions" style="margin:0"><button class="btn danger" id="clearRecords">Clear</button><button class="btn" id="exportRecords">↓ Export CSV</button></div></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Instrument</th><th>Object</th><th>MSR</th><th>Coinciding division</th><th>Observed</th><th>Zero correction</th><th>Corrected</th></tr></thead><tbody id="recordsBody"><tr><td colspan="8" class="empty">No measurements recorded yet.</td></tr></tbody></table></div><div style="padding:0 15px 13px"><button class="btn primary" id="recordBtn">＋ Record current measurement</button></div></div>
+  </section>
+  <p class="note">Scientific model note: This educational lab uses a 10-division Vernier scale with 1 mm main-scale divisions and a 0.1 mm least count, and a micrometer with a 0.5 mm pitch and 50 circular divisions, giving a 0.01 mm least count. The reference objects have fixed ideal dimensions. Readings are rounded to the instrument's least count. Real instruments may have different scale layouts, calibration values, backlash, contact force and measurement uncertainty. Use a gentle ratchet force on a real micrometer; do not overtighten delicate objects.</p>
+</main>
+<script>
+(() => {
+ "use strict";
+ const $=id=>document.getElementById(id);
+ const S={instrument:"vernier",jaw:23.6,spindle:2.36,vZero:0,sZero:0,vObject:"rod",sObject:"wire",vReveal:false,sReveal:false,records:[],guideStep:0,drag:null};
+ const VOBJECTS={rod:{name:"Metal rod · diameter",size:23.6},coin:{name:"Coin · diameter",size:24.8},block:{name:"Rectangular block · width",size:37.4},tube:{name:"Tube · outer diameter",size:18.2}};
+ const SOBJECTS={wire:{name:"Copper wire · diameter",size:2.36},ball:{name:"Small steel ball · diameter",size:3.42},sheet:{name:"Thin sheet stack · thickness",size:.48},pin:{name:"Metal pin · diameter",size:1.75}};
+ const $canvas=$('instrumentCanvas');
+ const ctx=$canvas.getContext('2d');
+ const guides={vernier:[
+  {title:"Task 1 — Read the Vernier scale",count:"TASK 1 OF 3",text:"Use the calipers to measure the metal rod diameter. Find the main scale reading and the coinciding vernier division.",hint:"Read the last main-scale mark to the left of the vernier zero.",object:"rod",zero:0},
+  {title:"Task 2 — Apply positive zero correction",count:"TASK 2 OF 3",text:"Use the coin and set a positive zero error of +0.2 mm. Read the instrument, then apply the zero correction.",hint:"Positive zero error means the instrument reads too high. Subtract the zero error from the observed reading.",object:"coin",zero:.2},
+  {title:"Task 3 — Apply negative zero correction",count:"TASK 3 OF 3",text:"Choose the rectangular block and set a negative zero error of −0.2 mm.",hint:"Negative zero error means the instrument reads too low. Add the magnitude of the negative error to the observed reading.",object:"block",zero:-.2}
+ ],screw:[
+  {title:"Task 1 — Read the micrometer",count:"TASK 1 OF 3",text:"Measure the copper wire. Read the last sleeve mark visible before the thimble edge, then read the circular-scale division at the reference line.",hint:"Multiply the circular division by the least count of 0.01 mm.",object:"wire",zero:0},
+  {title:"Task 2 — Correct positive zero error",count:"TASK 2 OF 3",text:"Measure the steel ball and set a positive zero error of +0.02 mm.",hint:"Positive zero error makes the observed reading too large; subtract 0.02 mm.",object:"ball",zero:.02},
+  {title:"Task 3 — Correct negative zero error",count:"TASK 3 OF 3",text:"Measure the metal pin and set a negative zero error of −0.02 mm.",hint:"Negative zero error makes the observed reading too small; add 0.02 mm.",object:"pin",zero:-.02}
+ ]};
+ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+ function roundTo(x,step){return Math.round((x+1e-9)/step)*step;}
+ function vObject(){return VOBJECTS[S.vObject];}
+ function sObject(){return SOBJECTS[S.sObject];}
+ function vRead(){
+  const raw=roundTo(S.jaw+S.vZero,.1);
+  let msr=Math.floor(raw+1e-8);
+  let coincidence=Math.round((raw-msr)/.1);
+  if(coincidence>=10){msr+=1;coincidence=0;}
+  const observed=roundTo(msr+coincidence*.1,.1);
+  return {msr,coincidence,observed,correction:-S.vZero,corrected:roundTo(observed-S.vZero,.1)};
+ }
+ function sRead(){
+  const raw=roundTo(S.spindle+S.sZero,.01);
+  let msr=Math.floor((raw+1e-8)/.5)*.5;
+  let csr=Math.round((raw-msr)/.01);
+  if(csr>=50){msr+=.5;csr=0;}
+  const observed=roundTo(msr+csr*.01,.01);
+  return {msr,csr,observed,correction:-S.sZero,corrected:roundTo(observed-S.sZero,.01)};
+ }
+ function updateVRead(){
+  const r=vRead(),target=vObject().size;
+  $('jawPositionVal').textContent=S.jaw.toFixed(1)+" mm";
+  $('vMSR').textContent=r.msr.toFixed(0);
+  $('vCoincidence').textContent=r.coincidence;
+  $('vObserved').textContent=r.observed.toFixed(1)+" mm";
+  $('vCorrection').textContent=(r.correction>0?"+":"")+r.correction.toFixed(1)+" mm";
+  $('vCorrected').textContent=r.corrected.toFixed(1)+" mm";
+  $('vReference').textContent=S.vReveal?target.toFixed(1)+" mm":"Hidden";
+  const diff=r.corrected-target;
+  if(Math.abs(diff)<=.051){setStatus('vStatus','good','Jaws aligned with object','The corrected reading matches the reference dimension within the Vernier least count.');}
+  else if(diff<0){setStatus('vStatus','warn','Jaw is short of the object','The movable jaw has not reached the far edge of the object. Move it forward until the faces just touch.');}
+  else{setStatus('vStatus','warn','Jaw is beyond the object',"The movable jaw has passed the object's far edge. Move it back until the faces just touch.");}
+ }
+ function updateSRead(){
+  const r=sRead(),target=sObject().size;
+  $('spindlePositionVal').textContent=S.spindle.toFixed(2)+" mm";
+  $('sMSR').textContent=r.msr.toFixed(2);
+  $('sCSR').textContent=r.csr;
+  $('sObserved').textContent=r.observed.toFixed(2)+" mm";
+  $('sCorrection').textContent=(r.correction>0?"+":"")+r.correction.toFixed(2)+" mm";
+  $('sCorrected').textContent=r.corrected.toFixed(2)+" mm";
+  $('sReference').textContent=S.sReveal?target.toFixed(2)+" mm":"Hidden";
+  const diff=r.corrected-target;
+  if(Math.abs(diff)<=.006){setStatus('sStatus','good','Spindle aligned with object','The corrected micrometer reading matches the reference dimension within its least count.');}
+  else if(diff<0){setStatus('sStatus','warn','Spindle has not reached the object','Advance the spindle gently until it just contacts the object.');}
+  else{setStatus('sStatus','warn','Spindle pressure is too high',"The spindle setting exceeds the object's reference size. Back it off gently.");}
+ }
+ function setStatus(id,type,title,text){$(id).className='status '+type;$(id).querySelector('strong').textContent=title;$(id).querySelector('p').textContent=text;}
+ function updateMode(){
+  const v=S.instrument==='vernier';
+  $('vernierTab').classList.toggle('active',v);$('screwTab').classList.toggle('active',!v);
+  $('vernierTab').setAttribute('aria-selected',String(v));$('screwTab').setAttribute('aria-selected',String(!v));
+  $('vernierPanel').hidden=!v;$('screwPanel').hidden=v;
+  $('instrumentTitle').textContent=v?'Vernier calipers · external measurement':'Micrometer screw gauge · precision measurement';
+  $('canvasSubTitle').textContent=v?'Main scale + sliding vernier scale':'Sleeve scale + rotating circular scale';
+  $('dragHint').textContent=v?'Drag the movable jaw handle on the drawing, or use the slider to adjust its position.':'Drag the thimble drum in the drawing, or use the spindle slider to adjust its reading.';
+  $('liveStatus').textContent=v?'● VERNIER LAB ACTIVE':'● SCREW GAUGE LAB ACTIVE';
+  $('legend').innerHTML=v?'<span><i class="dot blue"></i>Main scale</span><span><i class="dot teal"></i>Vernier scale</span><span><i class="dot orange"></i>Object / jaws</span><span><i class="dot red"></i>Coinciding mark</span>':'<span><i class="dot blue"></i>Sleeve main scale</span><span><i class="dot teal"></i>Circular scale</span><span><i class="dot orange"></i>Object / spindle</span><span><i class="dot red"></i>Reference line</span>';
+  render();showGuide();
+ }
+ function drawGrid(w,h){ctx.strokeStyle='#eaf2f0';ctx.lineWidth=1;for(let x=0;x<w;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}}
+ function drawVernier(){
+  const canvas=$canvas,w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);drawGrid(w,h);
+  const zeroX=54,scale=Math.min(6,(w-104)/100),r=vRead(),target=vObject().size,raw=r.observed,jawX=zeroX+raw*scale,objX=zeroX+target*scale,mainY=h*.57,vernierY=h*.78;
+  ctx.fillStyle='#c8d9d4';ctx.strokeStyle='#6d928a';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(zeroX-26,mainY-115,27,190,6);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#dce9e5';ctx.beginPath();ctx.roundRect(zeroX-26,mainY-115,80,16,5);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#dce9e5';ctx.beginPath();ctx.roundRect(zeroX-26,mainY+65,80,16,5);ctx.fill();ctx.stroke();
+  const objectLeft=zeroX,objectRight=objX,objectWidth=Math.max(1,objectRight-objectLeft);
+  ctx.fillStyle='#efb35e';ctx.strokeStyle='#bd7d2d';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(objectLeft+2,mainY-62,Math.max(2,objectWidth-4),42,7);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#6d4d20';ctx.font='700 10px system-ui';ctx.textAlign='center';ctx.fillText(S.vObject==='rod'?'METAL ROD':S.vObject==='coin'?'COIN':S.vObject==='block'?'BLOCK':'TUBE',objectLeft+objectWidth/2,mainY-38);
+  ctx.fillStyle='#badbd3';ctx.strokeStyle='#087e75';ctx.lineWidth=1.6;ctx.beginPath();ctx.roundRect(jawX-5,mainY-125,13,205,5);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#dff5ef';ctx.beginPath();ctx.roundRect(jawX-5,mainY-125,55,16,5);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.roundRect(jawX-5,mainY+64,55,16,5);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#087e75';ctx.font='700 10px system-ui';ctx.textAlign='center';ctx.fillText('DRAG',jawX+22,mainY-139);
+  const scaleY=mainY+3;ctx.strokeStyle='#405e58';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(zeroX,scaleY);ctx.lineTo(zeroX+100*scale,scaleY);ctx.stroke();
+  for(let mm=0;mm<=100;mm++){
+   const x=zeroX+mm*scale;const major=mm%10===0,mid=mm%5===0;const len=major?23:mid?16:9;
+   ctx.strokeStyle='#526d67';ctx.lineWidth=major?1.4:1;ctx.beginPath();ctx.moveTo(x,scaleY);ctx.lineTo(x,scaleY+len);ctx.stroke();
+   if(major){ctx.fillStyle='#526d67';ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText(mm,x,scaleY+34);}
+  }
+  ctx.fillStyle='#536f69';ctx.font='10px system-ui';ctx.textAlign='left';ctx.fillText('MAIN SCALE (mm)',zeroX,scaleY-10);
+  const vy=vernierY;ctx.strokeStyle='#087e75';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(jawX,vy);ctx.lineTo(jawX+9*scale,vy);ctx.stroke();
+  const coincidence=r.coincidence;
+  for(let i=0;i<=10;i++){
+   const x=jawX+i*.9*scale;const aligned=i===coincidence;
+   ctx.strokeStyle=aligned?'#d84b55':'#087e75';ctx.lineWidth=aligned?2.6:1.2;ctx.beginPath();ctx.moveTo(x,vy-15);ctx.lineTo(x,vy+2);ctx.stroke();
+   if(i%2===0||aligned){ctx.fillStyle=aligned?'#b53d48':'#087e75';ctx.font=aligned?'800 10px system-ui':'9px system-ui';ctx.textAlign='center';ctx.fillText(String(i),x,vy+17);}
+  }
+  ctx.fillStyle='#087e75';ctx.font='10px system-ui';ctx.textAlign='left';ctx.fillText('VERNIER SCALE (10 VSD = 9 mm)',zeroX,vy-23);
+  const coincX=jawX+coincidence*.9*scale;ctx.strokeStyle='#d84b55';ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(coincX,vy-20);ctx.lineTo(coincX,scaleY+40);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#b53d48';ctx.font='700 10px system-ui';ctx.textAlign='right';ctx.fillText('Coinciding division: '+coincidence,w-12,18);
+  ctx.fillStyle='#607d78';ctx.textAlign='left';ctx.font='10px system-ui';ctx.fillText('0',zeroX,mainY+112);ctx.fillText('Least count = 0.1 mm',zeroX,h-12);
+ }
+ function screwGeometry(w,h){const scaleX=70,ppm=Math.min(48,(w-215)/5),main=sRead().msr,drumX=scaleX+main*ppm;return {scaleX,ppm,main,drumX};}
+ function drawScrew(){
+  const canvas=$canvas,w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);drawGrid(w,h);
+  const r=sRead(),target=sObject().size,g=screwGeometry(w,h),{scaleX,ppm,main,drumX}=g,cy=h*.47;
+  ctx.strokeStyle='#668b83';ctx.lineWidth=18;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(65,85);ctx.lineTo(65,h-55);ctx.quadraticCurveTo(65,h-25,100,h-25);ctx.lineTo(Math.min(w-35,260),h-25);ctx.stroke();
+  ctx.strokeStyle='#b7d1ca';ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(65,85);ctx.lineTo(65,h-55);ctx.quadraticCurveTo(65,h-33,100,h-33);ctx.lineTo(Math.min(w-35,260),h-33);ctx.stroke();
+  const anvilX=105,objectScale=Math.min(31,(w-210)/5),tipX=anvilX+S.spindle*objectScale,objX=anvilX+target*objectScale;
+  ctx.fillStyle='#9aadaa';ctx.strokeStyle='#607d78';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(anvilX-12,cy-34,13,68,4);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#eeb35d';ctx.strokeStyle='#bd7d2d';ctx.beginPath();ctx.roundRect(anvilX+1,cy-13,Math.max(2,target*objectScale-1),26,5);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#6d4d20';ctx.font='700 9px system-ui';ctx.textAlign='center';ctx.fillText(S.sObject==='wire'?'WIRE':S.sObject==='ball'?'BALL':S.sObject==='sheet'?'SHEETS':'PIN',anvilX+target*objectScale/2,cy+4);
+  ctx.fillStyle='#b9c9c5';ctx.strokeStyle='#607d78';ctx.beginPath();ctx.roundRect(tipX,cy-10,Math.max(5,drumX-tipX-30),20,4);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#8a9e98';ctx.fillRect(tipX-4,cy-22,5,44);
+  ctx.fillStyle='#607d78';ctx.font='9px system-ui';ctx.textAlign='left';ctx.fillText('ANVIL',anvilX-20,cy+50);ctx.fillText('SPINDLE',tipX-8,cy-31);
+  const sleeveY=h*.72,sleeveH=32;
+  ctx.fillStyle='#dce9e5';ctx.strokeStyle='#8da9a1';ctx.lineWidth=1.2;ctx.beginPath();ctx.roundRect(scaleX,sleeveY-11,Math.max(40,w-scaleX-14),sleeveH,6);ctx.fill();ctx.stroke();
+  ctx.strokeStyle='#405e58';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(scaleX,sleeveY+4);ctx.lineTo(scaleX+5*ppm,sleeveY+4);ctx.stroke();
+  for(let j=0;j<=10;j++){
+   const x=scaleX+j*.5*ppm,major=j%2===0;ctx.strokeStyle='#526d67';ctx.lineWidth=major?1.4:1;ctx.beginPath();ctx.moveTo(x,sleeveY-7);ctx.lineTo(x,sleeveY+4);ctx.stroke();
+   if(major){ctx.fillStyle='#526d67';ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText((j*.5).toFixed(1),x,sleeveY-12);}
+  }
+  ctx.fillStyle='#536f69';ctx.textAlign='left';ctx.font='9px system-ui';ctx.fillText('SLEEVE MAIN SCALE (mm)',scaleX,sleeveY+35);
+  const drumY=cy-85,drumW=82,drumH=170,refY=cy;
+  ctx.fillStyle='#cce6de';ctx.strokeStyle='#087e75';ctx.lineWidth=1.6;ctx.beginPath();ctx.roundRect(drumX,drumY,drumW,drumH,13);ctx.fill();ctx.stroke();
+  const center=refY,selected=r.csr;
+  for(let div=0;div<50;div++){
+   let offset=div-selected;if(offset>25)offset-=50;if(offset< -25)offset+=50;
+   const y=center+offset*3.0;
+   if(y<drumY+6||y>drumY+drumH-6)continue;
+   const isMajor=div%5===0,aligned=div===selected;
+   ctx.strokeStyle=aligned?'#d84b55':'#087e75';ctx.lineWidth=aligned?2.8:isMajor?1.6:1;
+   ctx.beginPath();ctx.moveTo(drumX+(isMajor?8:17),y);ctx.lineTo(drumX+drumW-7,y);ctx.stroke();
+   if(isMajor||aligned){ctx.fillStyle=aligned?'#b53d48':'#356a62';ctx.font=aligned?'800 9px system-ui':'8px system-ui';ctx.textAlign='left';ctx.fillText(String(div),drumX+20,y+3);}
+  }
+  ctx.strokeStyle='#d84b55';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(scaleX-4,refY);ctx.lineTo(drumX+drumW+5,refY);ctx.stroke();
+  ctx.fillStyle='#b53d48';ctx.font='700 9px system-ui';ctx.textAlign='right';ctx.fillText('REFERENCE LINE',w-10,refY-7);
+  ctx.fillStyle='#087e75';ctx.font='9px system-ui';ctx.textAlign='center';ctx.fillText('THIMBLE · 50 DIVISIONS',drumX+drumW/2,drumY-8);
+  ctx.fillStyle='#607d78';ctx.font='10px system-ui';ctx.textAlign='left';ctx.fillText('Pitch = 0.5 mm',scaleX,h-10);
+  ctx.textAlign='right';ctx.fillText('Circular division aligned: '+selected,w-10,18);
+ }
+ function render(){
+  if(S.instrument==='vernier'){updateVRead();drawVernier();$('liveStatus').textContent='● VERNIER LAB ACTIVE';}
+  else{updateSRead();drawScrew();$('liveStatus').textContent='● SCREW GAUGE LAB ACTIVE';}
+ }
+ function setInstrument(name){S.instrument=name;S.drag=null;updateMode();}
+ function showGuide(){const list=guides[S.instrument],t=list[S.guideStep%list.length];$('guideTitle').textContent=t.title;$('guideCount').textContent=t.count;$('guideText').textContent=t.text;$('guideHint').textContent=t.hint;$('nextGuide').textContent=S.guideStep===list.length-1?'Restart tasks ↺':'Next task →';}
+ function applyGuide(){const t=guides[S.instrument][S.guideStep%guides[S.instrument].length];if(S.instrument==='vernier'){S.vObject=t.object;S.vZero=t.zero;S.jaw=VOBJECTS[t.object].size;$('vernierObject').value=t.object;$('vernierZero').value=String(t.zero);$('jawPosition').value=S.jaw;}else{S.sObject=t.object;S.sZero=t.zero;S.spindle=SOBJECTS[t.object].size;$('screwObject').value=t.object;$('screwZero').value=String(t.zero);$('spindlePosition').value=S.spindle;}S.vReveal=false;S.sReveal=false;render();}
+ function getLocalX(e){const rect=$canvas.getBoundingClientRect();return (e.clientX-rect.left)*($canvas.clientWidth/rect.width);}
+ function getLocalY(e){const rect=$canvas.getBoundingClientRect();return (e.clientY-rect.top)*($canvas.clientHeight/rect.height);}
+ $canvas.addEventListener('pointerdown',e=>{
+  const x=getLocalX(e),y=getLocalY(e),w=$canvas.clientWidth,h=$canvas.clientHeight;
+  if(S.instrument==='vernier'){
+   const r=vRead(),zeroX=54,scale=Math.min(6,(w-104)/100),jawX=zeroX+r.observed*scale;
+   if(Math.abs(x-jawX)<35&&y>30&&y<h*.54){S.drag={kind:'vernier'};$canvas.setPointerCapture(e.pointerId);e.preventDefault();}
+  }else{
+   const g=screwGeometry(w,h),drumY=h*.47-85;
+   if(x>=g.drumX-5&&x<=g.drumX+90&&y>=drumY-5&&y<=drumY+180){S.drag={kind:'screw',startX:e.clientX,startValue:S.spindle};$canvas.setPointerCapture(e.pointerId);e.preventDefault();}
+  }
+ });
+ $canvas.addEventListener('pointermove',e=>{
+  if(!S.drag)return;
+  if(S.drag.kind==='vernier'){
+   const x=getLocalX(e),w=$canvas.clientWidth,scale=Math.min(6,(w-104)/100),next=clamp((x-54)/scale-S.vZero,.5,90);
+   S.jaw=roundTo(next,.1);$('jawPosition').value=S.jaw;render();
+  }else{
+   const w=$canvas.clientWidth,ppm=Math.min(48,(w-215)/5),delta=(e.clientX-S.drag.startX)/Math.max(10,ppm);
+   S.spindle=clamp(roundTo(S.drag.startValue+delta,.01),.1,5);$('spindlePosition').value=S.spindle;render();
+  }
+ });
+ function endDrag(){S.drag=null;}
+ $canvas.addEventListener('pointerup',endDrag);$canvas.addEventListener('pointercancel',endDrag);$canvas.addEventListener('lostpointercapture',endDrag);
+ $('vernierTab').addEventListener('click',()=>setInstrument('vernier'));
+ $('screwTab').addEventListener('click',()=>setInstrument('screw'));
+ $('vernierObject').addEventListener('change',()=>{S.vObject=$('vernierObject').value;S.jaw=VOBJECTS[S.vObject].size;$('jawPosition').value=S.jaw;S.vReveal=false;render();});
+ $('jawPosition').addEventListener('input',()=>{S.jaw=+$('jawPosition').value;render();});
+ $('vernierZero').addEventListener('change',()=>{S.vZero=+$('vernierZero').value;render();});
+ $('screwObject').addEventListener('change',()=>{S.sObject=$('screwObject').value;S.spindle=SOBJECTS[S.sObject].size;$('spindlePosition').value=S.spindle;S.sReveal=false;render();});
+ $('spindlePosition').addEventListener('input',()=>{S.spindle=+$('spindlePosition').value;render();});
+ $('screwZero').addEventListener('change',()=>{S.sZero=+$('screwZero').value;render();});
+ $('vSetObject').addEventListener('click',()=>{S.jaw=VOBJECTS[S.vObject].size;$('jawPosition').value=S.jaw;render();});
+ $('sSetObject').addEventListener('click',()=>{S.spindle=SOBJECTS[S.sObject].size;$('spindlePosition').value=S.spindle;render();});
+ $('vReveal').addEventListener('click',()=>{S.vReveal=!S.vReveal;$('vReveal').textContent=S.vReveal?'Hide reference size':'Reveal reference size';render();});
+ $('sReveal').addEventListener('click',()=>{S.sReveal=!S.sReveal;$('sReveal').textContent=S.sReveal?'Hide reference size':'Reveal reference size';render();});
+ $('guidedBtn').addEventListener('click',()=>{$('guidedBtn').classList.add('active');$('exploreBtn').classList.remove('active');$('guidedPanel').hidden=false;$('explorePanel').hidden=true;});
+ $('exploreBtn').addEventListener('click',()=>{$('exploreBtn').classList.add('active');$('guidedBtn').classList.remove('active');$('guidedPanel').hidden=true;$('explorePanel').hidden=false;});
+ $('applyGuide').addEventListener('click',applyGuide);
+ $('nextGuide').addEventListener('click',()=>{S.guideStep=(S.guideStep+1)%guides[S.instrument].length;showGuide();});
+ $('recordBtn').addEventListener('click',()=>{
+  let rec;
+  if(S.instrument==='vernier'){const r=vRead();rec={instrument:'Vernier calipers',object:vObject().name,msr:r.msr.toFixed(1)+' mm',division:r.coincidence,observed:r.observed.toFixed(1)+' mm',correction:(r.correction>=0?'+':'')+r.correction.toFixed(1)+' mm',corrected:r.corrected.toFixed(1)+' mm'};}
+  else{const r=sRead();rec={instrument:'Screw gauge',object:sObject().name,msr:r.msr.toFixed(2)+' mm',division:r.csr,observed:r.observed.toFixed(2)+' mm',correction:(r.correction>=0?'+':'')+r.correction.toFixed(2)+' mm',corrected:r.corrected.toFixed(2)+' mm'};}
+  S.records.push(rec);renderRecords();
+ });
+ function renderRecords(){const body=$('recordsBody');if(!S.records.length){body.innerHTML='<tr><td colspan="8" class="empty">No measurements recorded yet.</td></tr>';return;}body.innerHTML=S.records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.instrument}</td><td>${r.object}</td><td>${r.msr}</td><td>${r.division}</td><td>${r.observed}</td><td>${r.correction}</td><td>${r.corrected}</td></tr>`).join('');}
+ $('clearRecords').addEventListener('click',()=>{S.records=[];renderRecords();});
+ $('exportRecords').addEventListener('click',()=>{if(!S.records.length){alert('Record at least one measurement first.');return;}const headers=['No.','Instrument','Object','MSR','Coinciding division','Observed reading','Zero correction','Corrected reading'];const rows=S.records.map((r,i)=>[i+1,r.instrument,r.object,r.msr,r.division,r.observed,r.correction,r.corrected]);const csv=[headers,...rows].map(row=>row.map(x=>'"'+String(x).replaceAll('"','""')+'"').join(',')).join('\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='precision-measurement-observations.csv';a.click();URL.revokeObjectURL(url);});
+ document.querySelectorAll('[data-answer]').forEach(b=>b.addEventListener('click',()=>{const f=$('challengeFeedback');if(b.dataset.answer==='s'){f.textContent='✓ Correct! The screw gauge least count is 0.01 mm, which is smaller than the Vernier calipers least count of 0.1 mm in this lab.';f.style.color='#087e58';}else{f.textContent='Not quite. Compare the least counts: Vernier = 0.1 mm; screw gauge = 0.01 mm. A smaller least count gives finer scale resolution.';f.style.color='#bd5960';}}));
+ if('ResizeObserver' in window){const ro=new ResizeObserver(render);ro.observe($canvas);}else window.addEventListener('resize',render);
+ showGuide();render();
+})();
+</script>
+</body>
+</html>
