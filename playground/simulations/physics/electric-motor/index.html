@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f8f7">
+<title>Electric Motor — Working Principle | Virtual Science Lab</title>
+<style>
+:root{--bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;--line:#dceae6;--teal:#087e75;--teal2:#dff5ef;--blue:#3477ce;--orange:#e58b26;--red:#d84b55;--shadow:0 10px 30px rgba(24,70,63,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}button,input{font:inherit}
+.topbar{padding:16px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:23px;font-weight:800}.brand h1{font-size:17px;margin:0 0 3px}.brand p{margin:0;color:var(--muted);font-size:12px}.topright{display:flex;align-items:center;gap:8px}.live{font-size:10px;font-weight:800;letter-spacing:.07em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1260px;margin:22px auto;padding:0 16px 35px}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);gap:17px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}.cardhead h3{margin:0;font-size:15px}.small{font-size:11px;color:var(--muted)}.canvas-wrap{padding:10px 12px 2px}#motorCanvas{width:100%;height:430px;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--blue)}.dot.orange{background:var(--orange)}.dot.teal{background:var(--teal)}.dot.red{background:var(--red)}
+.controls{padding:15px 17px}.switchrow{display:flex;gap:8px;margin:8px 0 17px}.switchbtn{flex:1;border:1px solid #b7dcd3;background:#effaf6;color:#087568;padding:11px 8px;border-radius:11px;font-weight:800;cursor:pointer}.switchbtn.on{background:#e2f8ed;border-color:#8cd3b1;color:#08764b}.switchbtn.off{background:#fff2f2;border-color:#edc4c6;color:#b8444b}.control{margin-bottom:15px}.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}.control label{font-size:13px;font-weight:700}.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}.metric{background:#f5faf8;border:1px solid var(--line);border-radius:13px;padding:11px 8px}.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.35}.metric strong{display:block;font-size:18px;margin-top:6px;color:var(--ink);font-variant-numeric:tabular-nums}.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.statebox{margin-top:11px;padding:11px 12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.statebox b{font-size:11px;color:#285a9a}.statebox strong{display:block;font-size:13px;color:#285a9a;margin-top:5px;line-height:1.4}.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}.formula b{font-size:11px;color:#285a9a}.formula div{font-family:Georgia,serif;font-size:18px;text-align:center;margin:8px 0;color:#1f4675}.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}.btn:hover{filter:brightness(.97);transform:translateY(-1px)}.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}.btn.danger{color:#b8444b}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}.graphbox{padding:8px 14px 14px}#graphCanvas{width:100%;height:205px;display:block}.graph-note{color:var(--muted);font-size:11px;margin:0 3px 5px;line-height:1.45}.guide{padding:15px 17px}.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}.guide strong{color:var(--ink)}.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}.guide-actions{display:flex;gap:8px;flex-wrap:wrap}.modebar{display:flex;gap:7px}.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}.answers{display:flex;flex-wrap:wrap;gap:7px}.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}.table-wrap{overflow-x:auto;padding:0 15px 15px}table{width:100%;border-collapse:collapse;min-width:600px;font-size:11px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-weight:750;background:#f7fbfa}td{font-variant-numeric:tabular-nums}.empty{text-align:center;color:#91a6a2;padding:20px}.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:880px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#motorCanvas{height:370px}}@media(max-width:520px){.topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}.topright .btn{display:none}main{padding:0 10px 25px;margin-top:15px}.intro{align-items:flex-start;flex-direction:column;gap:10px}#motorCanvas{height:315px}.metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}.cardhead{padding:13px}}
+</style>
+</head>
+<body>
+<!-- This metadata is read automatically by catalog/sync_simulation_catalog.py -->
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-10-electric-motor",
+  "title": "Electric Motor — Working Principle (Enrichment)",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Explore the rotating coil, magnetic force, split-ring commutator and motor action. Adjust field strength, turns, voltage and load to investigate torque and speed.",
+  "simulationType": "2D"
+}
+</script>
+<header class="topbar">
+  <div class="brand"><div class="logo">↻</div><div><h1>Virtual Science Lab</h1><p>Physics · Interactive Experiment</p></div></div>
+  <div class="topright"><div class="live" id="liveStatus">● MOTOR RUNNING</div><button class="btn" id="fullscreenBtn">⛶ Fullscreen</button></div>
+</header>
+<main>
+  <section class="intro"><div><h2>Electric Motor — Working Principle</h2><p>Build a simple DC motor. Watch the coil rotate and investigate how the magnetic field and split-ring commutator produce continuous rotation.</p></div><div class="tag">CLASS 10 · MAGNETIC EFFECTS</div></section>
+  <section class="workspace">
+    <div class="card">
+      <div class="cardhead"><h3>Inside the DC motor</h3><span class="small">Animated motor model</span></div>
+      <div class="canvas-wrap"><canvas id="motorCanvas"></canvas></div>
+      <div class="legend"><span><i class="dot"></i>Magnetic field B</span><span><i class="dot teal"></i>Armature coil</span><span><i class="dot orange"></i>Current path</span><span><i class="dot red"></i>Magnetic force</span></div>
+    </div>
+    <div class="card">
+      <div class="cardhead"><h3>Motor controls</h3><span class="small">Change the setup</span></div>
+      <div class="controls">
+        <div class="switchrow"><button class="switchbtn on" id="powerBtn">⏻ Power ON</button><button class="switchbtn" id="reverseBtn">↻ Reverse supply</button></div>
+        <div class="control"><div class="control-top"><label for="voltage">Supply voltage (V)</label><span class="value" id="voltageVal">6.0 V</span></div><input id="voltage" type="range" min="1" max="12" step="0.5" value="6"><div class="scale"><span>1 V</span><span>12 V</span></div></div>
+        <div class="control"><div class="control-top"><label for="field">Magnetic field strength (B)</label><span class="value" id="fieldVal">0.30 T</span></div><input id="field" type="range" min="0.05" max="0.8" step="0.05" value="0.3"><div class="scale"><span>0.05 T</span><span>0.80 T</span></div></div>
+        <div class="control"><div class="control-top"><label for="turns">Number of coil turns (N)</label><span class="value" id="turnsVal">100</span></div><input id="turns" type="range" min="20" max="200" step="10" value="100"><div class="scale"><span>20</span><span>200 turns</span></div></div>
+        <div class="control"><div class="control-top"><label for="area">Coil area (A)</label><span class="value" id="areaVal">25 cm²</span></div><input id="area" type="range" min="10" max="50" step="1" value="25"><div class="scale"><span>10 cm²</span><span>50 cm²</span></div></div>
+        <div class="control"><div class="control-top"><label for="resistance">Coil resistance (R)</label><span class="value" id="resistanceVal">4.0 Ω</span></div><input id="resistance" type="range" min="2" max="12" step="0.5" value="4"><div class="scale"><span>2 Ω</span><span>12 Ω</span></div></div>
+        <div class="control"><div class="control-top"><label for="load">Mechanical load</label><span class="value" id="loadVal">0.010 N·m</span></div><input id="load" type="range" min="0" max="0.05" step="0.002" value="0.01"><div class="scale"><span>No load</span><span>Heavy load</span></div></div>
+        <div class="metrics">
+          <div class="metric"><span>Supply current</span><strong id="currentValue">1.50</strong><small>A</small></div>
+          <div class="metric"><span>Rotor speed</span><strong id="speedValue">0</strong><small>rpm</small></div>
+          <div class="metric"><span>Motor torque</span><strong id="torqueValue">0.072</strong><small>N·m · average model</small></div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span>Back EMF</span><strong id="emfValue">0.00</strong><small>V</small></div>
+          <div class="metric"><span>Electrical input</span><strong id="powerValue">9.00</strong><small>W</small></div>
+          <div class="metric"><span>Commutator</span><strong id="commutatorValue">A</strong><small>Contact segment</small></div>
+        </div>
+        <div class="statebox"><b>HOW THE MOTOR ROTATES</b><strong id="motorStatus">Current in the coil interacts with the magnetic field. The split-ring commutator reverses coil current every half-turn so the torque keeps the rotor turning in the same mechanical direction.</strong></div>
+        <div class="formula"><b>MAGNETIC TORQUE ON A COIL</b><div>τ = N B I A sin θ</div><p>θ is the angle between the coil's normal and magnetic field. The model uses the average value of |sin θ| (2/π) for its simplified rotating-motor dynamics.</p></div>
+        <div class="actions"><button class="btn" id="resetBtn">↻ Reset motor</button><button class="btn primary" id="recordBtn">＋ Record reading</button></div>
+      </div>
+    </div>
+  </section>
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Torque vs rotor angle</h3><span class="small">One electrical cycle</span></div><div class="graphbox"><p class="graph-note">The commutator flips coil current after each half-turn. The torque direction stays the same while its magnitude varies through the rotation.</p><canvas id="graphCanvas"></canvas></div></div>
+    <div class="card"><div class="cardhead"><h3>Guided practical</h3><div class="modebar"><button class="btn active" id="guidedBtn">Guided</button><button class="btn" id="exploreBtn">Explore</button></div></div>
+      <div class="guide" id="guidedPanel"><strong id="guideTitle">Task 1 — Start the motor</strong><div class="guide-step"><div class="count" id="guideCount">TASK 1 OF 4</div><div id="guideText">Start with 6 V, 0.30 T field and 100 turns. Turn the power ON and observe the coil.</div></div><p id="guideHint">Watch how the split-ring commutator swaps the coil connections after every half-turn.</p><div class="guide-actions"><button class="btn primary" id="applyGuide">Apply task setup</button><button class="btn" id="nextGuide">Next task →</button></div></div>
+      <div class="guide" id="explorePanel" hidden><strong>Free exploration</strong><p>Change voltage, magnetic field, number of turns, coil area and mechanical load. Reverse the supply to reverse the motor's rotation.</p><p><strong>Investigate:</strong> Does a stronger magnetic field increase torque? What happens to speed when the mechanical load increases? Why does the commutator need to reverse coil current?</p></div>
+    </div>
+  </section>
+  <section class="lower">
+    <div class="card"><div class="cardhead"><h3>Prediction challenge</h3><span class="tag">TEST YOURSELF</span></div><div class="challenge"><strong>Why is a split-ring commutator used in a simple DC motor?</strong><p>Choose your answer:</p><div class="answers"><button class="btn" data-answer="a">To reverse coil current every half-turn</button><button class="btn" data-answer="b">To increase the battery voltage</button><button class="btn" data-answer="c">To stop magnetic field lines</button></div><div class="feedback" id="challengeFeedback"></div></div></div>
+    <div class="card"><div class="cardhead"><h3>Observation record</h3><button class="btn danger" id="clearRecords">Clear records</button></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Voltage</th><th>Field</th><th>Turns</th><th>Current</th><th>Speed</th><th>Load</th></tr></thead><tbody id="recordsBody"><tr><td colspan="7" class="empty">No readings recorded yet.</td></tr></tbody></table></div></div>
+  </section>
+  <p class="note">Model note: This is an educational idealised DC motor. The displayed rotation and speed are produced by a simplified torque, back-EMF and load model. Real motors also have winding inductance, brush voltage drop, friction, iron losses, heating, magnetic saturation and detailed electromagnetic transients, which are not fully modelled here. The split-ring commutator reverses the current in the rotating coil every half-turn.</p>
+</main>
+<script>
+(() => {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const controls = {
+    voltage: $("voltage"), field: $("field"), turns: $("turns"),
+    area: $("area"), resistance: $("resistance"), load: $("load")
+  };
+  const state = {power:true, polarity:1, angle:Math.PI/2, omega:0, current:0, backEmf:0, torque:0, lastTime:0, records:[], guideStep:0};
+  const AVG_SIN = 2 / Math.PI;
+  const INERTIA = 0.018;
+  const DAMPING = 0.006;
+  let animationId = 0;
+  const guideTasks = [
+    {title:"Task 1 — Start the motor",count:"TASK 1 OF 4",text:"Start with 6 V, 0.30 T field and 100 turns. Turn the power ON and observe the coil.",hint:"Watch how the split-ring commutator swaps the coil connections after every half-turn.",v:{voltage:6,field:.3,turns:100,area:25,resistance:4,load:.01,polarity:1}},
+    {title:"Task 2 — Strengthen the magnetic field",count:"TASK 2 OF 4",text:"Keep voltage and turns fixed. Increase the magnetic field from 0.30 T to 0.60 T and compare the torque and speed.",hint:"For the same current and coil area, stronger magnetic field produces greater torque.",v:{voltage:6,field:.6,turns:100,area:25,resistance:4,load:.01,polarity:1}},
+    {title:"Task 3 — Increase the coil turns",count:"TASK 3 OF 4",text:"Keep the other values fixed and increase the number of turns from 100 to 150.",hint:"More turns increase the coil's magnetic moment and its torque for the same current and field.",v:{voltage:6,field:.3,turns:150,area:25,resistance:4,load:.01,polarity:1}},
+    {title:"Task 4 — Reverse the supply",count:"TASK 4 OF 4",text:"Reverse the battery supply. Observe the rotor direction and the commutator action.",hint:"Reversing the supply reverses the direction of motor rotation.",v:{voltage:6,field:.3,turns:100,area:25,resistance:4,load:.01,polarity:-1}}
+  ];
+  function vals(){return {V:+controls.voltage.value,B:+controls.field.value,N:+controls.turns.value,Acm2:+controls.area.value,R:+controls.resistance.value,load:+controls.load.value};}
+  function K(v){return v.N*v.B*(v.Acm2/10000);}
+  function clamp(x,a,b){return Math.max(a,Math.min(b,x));}
+  function electrical(v){
+    const k=K(v)*AVG_SIN;
+    const speedAlong=state.omega*state.polarity;
+    const emf=Math.max(0,k*Math.max(0,speedAlong));
+    const current=state.power?clamp((v.V-emf)/v.R,0,8):0;
+    return {k,emf,current,averageTorque:k*current};
+  }
+  function updateLabels(v,e){
+    $("voltageVal").textContent=v.V.toFixed(1)+" V";
+    $("fieldVal").textContent=v.B.toFixed(2)+" T";
+    $("turnsVal").textContent=v.N;
+    $("areaVal").textContent=v.Acm2+" cm²";
+    $("resistanceVal").textContent=v.R.toFixed(1)+" Ω";
+    $("loadVal").textContent=v.load.toFixed(3)+" N·m";
+    $("powerBtn").textContent=state.power?"⏻ Power ON":"⏻ Power OFF";
+    $("powerBtn").classList.toggle("on",state.power);
+    $("powerBtn").classList.toggle("off",!state.power);
+    $("reverseBtn").textContent=state.polarity>0?"↻ Reverse supply":"↺ Restore direction";
+    $("liveStatus").textContent=state.power?"● MOTOR POWERED":"● MOTOR OFF";
+    $("liveStatus").style.color=state.power?"#087e58":"#b8444b";
+    $("liveStatus").style.background=state.power?"#e4f8ed":"#fff0f0";
+    $("currentValue").textContent=e.current.toFixed(2);
+    $("speedValue").textContent=Math.round(Math.abs(state.omega)*60/(2*Math.PI));
+    $("torqueValue").textContent=e.averageTorque.toFixed(3);
+    $("emfValue").textContent=e.emf.toFixed(2);
+    $("powerValue").textContent=(v.V*e.current).toFixed(2);
+    const segment=Math.floor(Math.abs(state.angle)/Math.PI)%2===0?"A":"B";
+    $("commutatorValue").textContent=state.power?segment:"—";
+    $("motorStatus").textContent=!state.power
+      ? "Power is OFF. Coil current is zero; the rotor slows down under the mechanical load and damping."
+      : Math.abs(state.omega)<.12
+        ? "Current is flowing. Magnetic forces on opposite sides of the coil create a turning effect and start the rotor."
+        : "The rotor is turning. The split-ring commutator reverses coil current every half-turn so the mechanical torque keeps the same rotation direction.";
+  }
+  function arrow(ctx,x1,y1,x2,y2,color,size=7){const a=Math.atan2(y2-y1,x2-x1);ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-size*Math.cos(a-Math.PI/6),y2-size*Math.sin(a-Math.PI/6));ctx.lineTo(x2-size*Math.cos(a+Math.PI/6),y2-size*Math.sin(a+Math.PI/6));ctx.closePath();ctx.fill();}
+  function drawBrush(ctx,x,y,w,h){ctx.fillStyle="#435451";ctx.beginPath();ctx.roundRect(x-w/2,y-h/2,w,h,3);ctx.fill();ctx.strokeStyle="#91a6a0";ctx.stroke();}
+  function drawCanvas(){
+    const canvas=$("motorCanvas"),ctx=canvas.getContext("2d"),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+    if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    const v=vals(),e=electrical(v),cx=w*.5,cy=h*.43,top=h*.20,bottom=h*.68,magW=Math.max(31,w*.09),gap=w-magW*2-24,leftX=12,rightX=w-magW-12;
+    ctx.strokeStyle="#eaf2f0";ctx.lineWidth=1;for(let x=0;x<w;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+    const nPole=state.polarity>0?"N":"S",sPole=state.polarity>0?"S":"N";
+    const mg1=ctx.createLinearGradient(0,top,0,bottom);mg1.addColorStop(0,"#e77c82");mg1.addColorStop(1,"#b9434c");ctx.fillStyle=mg1;ctx.beginPath();ctx.roundRect(leftX,top,magW,bottom-top,9);ctx.fill();
+    const mg2=ctx.createLinearGradient(0,top,0,bottom);mg2.addColorStop(0,"#638ed4");mg2.addColorStop(1,"#2e5ca1");ctx.fillStyle=mg2;ctx.beginPath();ctx.roundRect(rightX,top,magW,bottom-top,9);ctx.fill();
+    ctx.fillStyle="#fff";ctx.font="800 22px system-ui";ctx.textAlign="center";ctx.fillText(nPole,leftX+magW/2,cy+7);ctx.fillText(sPole,rightX+magW/2,cy+7);ctx.font="9px system-ui";ctx.fillText("NORTH POLE",leftX+magW/2,bottom+13);ctx.fillText("SOUTH POLE",rightX+magW/2,bottom+13);
+    const fx1=leftX+magW+5,fx2=rightX-5;
+    for(let i=0;i<6;i++){const y=top+28+i*(bottom-top-56)/5;const from=state.polarity>0?fx1:fx2,to=state.polarity>0?fx2:fx1;arrow(ctx,from,y,to,y,"#3477ce",6);}
+    ctx.fillStyle="#285a9a";ctx.font="700 11px system-ui";ctx.fillText(state.polarity>0?"B →":"← B",cx,top-9);
+    const theta=state.angle,projected=Math.abs(Math.sin(theta)),coilW=20+Math.min(116,gap*.62)*projected,coilH=Math.min(132,h*.38),xL=cx-coilW/2,xR=cx+coilW/2,yT=cy-coilH/2,yB=cy+coilH/2;
+    ctx.strokeStyle="#71827d";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(cx,cy+coilH/2);ctx.lineTo(cx,h*.82);ctx.stroke();
+    ctx.strokeStyle="#087e75";ctx.lineWidth=7;ctx.lineJoin="round";ctx.beginPath();ctx.moveTo(xL,yB);ctx.lineTo(xL,yT);ctx.lineTo(xR,yT);ctx.lineTo(xR,yB);ctx.stroke();
+    ctx.strokeStyle="#9be0cf";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(xL,yB);ctx.lineTo(xL,yT);ctx.lineTo(xR,yT);ctx.lineTo(xR,yB);ctx.stroke();
+    const commSign=Math.sin(theta)>=0?1:-1,coilCurrent=state.power?state.polarity*commSign:0;
+    if(coilCurrent!==0){const ax=cx+(coilCurrent>0?-1:1)*coilW*.38,ay=cy;arrow(ctx,ax,ay+(coilCurrent>0?20:-20),ax,ay+(coilCurrent>0?-20:20),"#e58b26",7);}
+    if(state.power&&e.current>.005){
+      const forceOut=state.polarity>0;
+      for(const [index,x] of [xL,xR].entries()){const symbolOut=index===0?forceOut:!forceOut;ctx.beginPath();ctx.arc(x,cy,10,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();ctx.strokeStyle="#d84b55";ctx.lineWidth=1.7;ctx.stroke();ctx.fillStyle="#d84b55";ctx.font="800 12px system-ui";ctx.textAlign="center";ctx.fillText(symbolOut?"•":"×",x,cy+4);}
+    }
+    ctx.fillStyle="#087e75";ctx.font="700 10px system-ui";ctx.textAlign="center";ctx.fillText("ROTATING ARMATURE COIL",cx,yT-11);
+    const ringY=h*.82,ringRX=28,ringRY=10;
+    ctx.beginPath();ctx.ellipse(cx,ringY,ringRX,ringRY,0,Math.PI,Math.PI*2);ctx.strokeStyle="#b97828";ctx.lineWidth=8;ctx.stroke();
+    ctx.beginPath();ctx.ellipse(cx,ringY,ringRX,ringRY,0,0,Math.PI);ctx.strokeStyle="#e4a64c";ctx.lineWidth=8;ctx.stroke();
+    ctx.fillStyle="#6d7f79";ctx.font="9px system-ui";ctx.fillText("SPLIT-RING COMMUTATOR",cx,ringY+26);
+    drawBrush(ctx,cx-ringRX-10,ringY,12,20);drawBrush(ctx,cx+ringRX+10,ringY,12,20);
+    ctx.strokeStyle="#e58b26";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-ringRX-16,ringY);ctx.lineTo(cx-ringRX-16,ringY+40);ctx.lineTo(cx-52,ringY+40);ctx.stroke();ctx.beginPath();ctx.moveTo(cx+ringRX+16,ringY);ctx.lineTo(cx+ringRX+16,ringY+40);ctx.lineTo(cx+52,ringY+40);ctx.stroke();
+    const by=h*.96;ctx.strokeStyle="#5e716c";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-43,by);ctx.lineTo(cx-15,by);ctx.moveTo(cx+15,by);ctx.lineTo(cx+43,by);ctx.stroke();ctx.beginPath();ctx.moveTo(cx-8,by-11);ctx.lineTo(cx-8,by+11);ctx.moveTo(cx+8,by-6);ctx.lineTo(cx+8,by+6);ctx.stroke();ctx.fillStyle="#718982";ctx.font="9px system-ui";ctx.fillText(state.power?(state.polarity>0?"DC SUPPLY  +":"DC SUPPLY  −"):"SUPPLY OFF",cx,by-16);
+    ctx.strokeStyle="#e58b26";ctx.lineWidth=2;ctx.beginPath();const start=-Math.PI*.8,end=start+(state.polarity>0?1:-1)*Math.PI*.85;ctx.arc(cx,cy,coilH*.66,start,end,state.polarity<0);ctx.stroke();const tipX=cx+Math.cos(end)*coilH*.66,tipY=cy+Math.sin(end)*coilH*.66;arrow(ctx,tipX-5,tipY+5,tipX,tipY,"#e58b26",6);
+    ctx.textAlign="right";ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.fillText("Speed: "+Math.round(Math.abs(state.omega)*60/(2*Math.PI))+" rpm",w-10,h-10);
+  }
+  function drawGraph(){
+    const canvas=$("graphCanvas"),ctx=canvas.getContext("2d"),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;
+    if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    const v=vals(),left=43,right=12,top=12,bottom=32,gw=w-left-right,gh=h-top-bottom,maxT=Math.max(.001,K(v)*1.08),px=a=>left+a/360*gw,py=t=>top+gh-t/maxT*gh;
+    ctx.strokeStyle="#e3eeeb";ctx.lineWidth=1;ctx.fillStyle="#78908b";ctx.font="10px system-ui";ctx.textAlign="right";
+    for(let i=0;i<=4;i++){const y=top+gh*i/4;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke();ctx.fillText((maxT*(1-i/4)).toFixed(2),left-6,y+3);}
+    ctx.textAlign="center";for(let a=0;a<=360;a+=60){const x=px(a);ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+gh);ctx.stroke();ctx.fillText(a+"°",x,h-15);}
+    ctx.strokeStyle="#829994";ctx.beginPath();ctx.moveTo(left,top);ctx.lineTo(left,top+gh);ctx.lineTo(w-right,top+gh);ctx.stroke();
+    const k=K(v);ctx.strokeStyle="#3477ce";ctx.lineWidth=2.5;ctx.beginPath();for(let a=0;a<=360;a++){const raw=Math.abs(Math.sin(a*Math.PI/180));const t=k*raw;if(a===0)ctx.moveTo(px(a),py(t));else ctx.lineTo(px(a),py(t));}ctx.stroke();
+    const angle=((state.angle%(Math.PI*2))+(Math.PI*2))%(Math.PI*2)*180/Math.PI,currentTorque=k*Math.abs(Math.sin(state.angle));ctx.beginPath();ctx.arc(px(angle),py(currentTorque),5,0,Math.PI*2);ctx.fillStyle="#e58b26";ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle="#58716c";ctx.textAlign="center";ctx.fillText("Rotor angle (degrees)",left+gw/2,h-1);ctx.save();ctx.translate(11,top+gh/2);ctx.rotate(-Math.PI/2);ctx.fillText("Torque per ampere (N·m/A)",0,0);ctx.restore();
+  }
+  function step(timestamp){
+    if(!state.lastTime)state.lastTime=timestamp;const dt=clamp((timestamp-state.lastTime)/1000,0,.05);state.lastTime=timestamp;
+    const v=vals(),e=electrical(v),signedMotorTorque=state.power?state.polarity*e.averageTorque:0,friction=Math.sign(state.omega||0)*v.load,net=signedMotorTorque-DAMPING*state.omega-friction;
+    state.omega+=net/INERTIA*dt;
+    if(!state.power&&Math.abs(state.omega)<.015)state.omega=0;
+    if(Math.abs(state.omega)>0)state.angle+=state.omega*dt;
+    state.current=e.current;state.backEmf=e.emf;
+    const fresh=electrical(v);updateLabels(v,fresh);drawCanvas();drawGraph();
+    animationId=requestAnimationFrame(step);
+  }
+  function render(){const v=vals(),e=electrical(v);updateLabels(v,e);drawCanvas();drawGraph();}
+  Object.values(controls).forEach(input=>input.addEventListener("input",render));
+  $("powerBtn").addEventListener("click",()=>{state.power=!state.power;render();});
+  $("reverseBtn").addEventListener("click",()=>{state.polarity*=-1;render();});
+  $("resetBtn").addEventListener("click",()=>{controls.voltage.value=6;controls.field.value=.3;controls.turns.value=100;controls.area.value=25;controls.resistance.value=4;controls.load.value=.01;state.power=true;state.polarity=1;state.angle=Math.PI/2;state.omega=0;state.lastTime=0;render();});
+  $("recordBtn").addEventListener("click",()=>{const v=vals(),e=electrical(v);state.records.push({V:v.V,B:v.B,N:v.N,I:e.current,rpm:Math.round(Math.abs(state.omega)*60/(2*Math.PI)),load:v.load});renderRecords();});
+  function renderRecords(){const body=$("recordsBody");if(!state.records.length){body.innerHTML='<tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>';return;}body.innerHTML=state.records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.V.toFixed(1)} V</td><td>${r.B.toFixed(2)} T</td><td>${r.N}</td><td>${r.I.toFixed(2)} A</td><td>${r.rpm} rpm</td><td>${r.load.toFixed(3)} N·m</td></tr>`).join("");}
+  $("clearRecords").addEventListener("click",()=>{state.records=[];renderRecords();});
+  function showGuide(){const t=guideTasks[state.guideStep];$("guideTitle").textContent=t.title;$("guideCount").textContent=t.count;$("guideText").textContent=t.text;$("guideHint").textContent=t.hint;$("nextGuide").textContent=state.guideStep===guideTasks.length-1?"Restart tasks ↺":"Next task →";}
+  $("applyGuide").addEventListener("click",()=>{const t=guideTasks[state.guideStep].v;Object.keys(t).forEach(k=>{if(controls[k])controls[k].value=t[k];});state.polarity=t.polarity;state.power=true;state.omega=0;state.angle=Math.PI/2;state.lastTime=0;render();});
+  $("nextGuide").addEventListener("click",()=>{state.guideStep=(state.guideStep+1)%guideTasks.length;showGuide();});
+  $("guidedBtn").addEventListener("click",()=>{$("guidedBtn").classList.add("active");$("exploreBtn").classList.remove("active");$("guidedPanel").hidden=false;$("explorePanel").hidden=true;});
+  $("exploreBtn").addEventListener("click",()=>{$("exploreBtn").classList.add("active");$("guidedBtn").classList.remove("active");$("guidedPanel").hidden=true;$("explorePanel").hidden=false;});
+  document.querySelectorAll("[data-answer]").forEach(button=>button.addEventListener("click",()=>{const f=$("challengeFeedback");if(button.dataset.answer==="a"){f.textContent="✓ Correct! The split-ring commutator reverses the current in the coil every half-turn, keeping the turning effect in the same rotational direction.";f.style.color="#087e58";}else{f.textContent="Not quite. The split-ring commutator swaps the coil connections every half-turn so the motor continues turning in the same direction.";f.style.color="#bd5960";}}));
+  $("fullscreenBtn").addEventListener("click",async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}catch(e){$("fullscreenBtn").textContent="Fullscreen unavailable";}});
+  if("ResizeObserver" in window){const ro=new ResizeObserver(render);ro.observe($("motorCanvas"));ro.observe($("graphCanvas"));}
+  showGuide();render();animationId=requestAnimationFrame(step);
+  window.addEventListener("pagehide",()=>cancelAnimationFrame(animationId),{once:true});
+})();
+</script>
+</body>
+</html>
