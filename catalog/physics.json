@@ -283,7 +283,7 @@
   "chapter": "The Human Eye and the Colourful World",
   "description": "Investigate the blue colour of the sky, red sunsets and atmospheric optical effects.",
   "simulationType": "2D",
-  "simulationPath": "simulations/physics/atmospheric-refraction/"
+  "simulationPath": "simulations/physics/atmospheric-refraction-scattering/"
 },
 
     {
