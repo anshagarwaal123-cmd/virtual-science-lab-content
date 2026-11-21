@@ -239,6 +239,7 @@
       "chapter": "Light: Reflection and Refraction",
       "description": "Explore plane and spherical mirrors, lenses, image formation, refraction and prism-based dispersion in one optics workspace.",
       "simulationType": "2D"
+      "simulationPath": "simulations/physics/light-reflection/"
     },
     {
       "id": "class-10-human-eye-colourful-world",
