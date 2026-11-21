@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f8f7">
+<title>Motion in a Plane | Virtual Science Lab</title>
+<style>
+:root{--bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;--line:#dceae6;--teal:#087e75;--teal2:#dff5ef;--blue:#3477ce;--orange:#e58b26;--red:#d84b55;--green:#26966d;--shadow:0 10px 30px rgba(24,70,63,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}
+button,input{font:inherit}
+.topbar{padding:16px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:23px;font-weight:800}
+.brand h1{font-size:17px;margin:0 0 3px}
+.brand p{margin:0;color:var(--muted);font-size:12px}
+.topright{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.live{font-size:10px;font-weight:800;letter-spacing:.06em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1280px;margin:22px auto;padding:0 16px 35px}
+.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}
+.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}
+.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;background:#e8f1ee;padding:6px;border-radius:14px;width:max-content;max-width:100%}
+.tab{border:0;background:transparent;padding:10px 15px;border-radius:10px;color:#56716b;font-weight:800;cursor:pointer}
+.tab.active{background:#fff;color:var(--teal);box-shadow:0 3px 12px rgba(24,70,63,.08)}
+.workspace{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(310px,.85fr);gap:17px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cardhead h3{margin:0;font-size:15px}
+.small{font-size:11px;color:var(--muted)}
+.canvas-wrap{padding:10px 12px 2px}
+canvas{width:100%;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}
+#sceneCanvas{height:425px;touch-action:pan-y}
+#graphCanvas{height:250px}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--blue)}
+.dot.orange{background:var(--orange)}
+.dot.teal{background:var(--teal)}
+.dot.red{background:var(--red)}
+.dot.green{background:var(--green)}
+.controls{padding:15px 17px}
+.mode-panel[hidden],.guide-panel[hidden]{display:none!important}
+.control{margin-bottom:15px}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
+.control label{font-size:13px;font-weight:700}
+.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}
+.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.metric{background:#f5faf8;border:1px solid var(--line);border-radius:12px;padding:10px 8px;min-width:0}
+.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.4}
+.metric strong{display:block;font-size:18px;margin-top:5px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.statebox{margin-top:12px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}
+.statebox b{font-size:11px;color:#285a9a}
+.statebox strong{display:block;font-size:13px;color:#285a9a;margin-top:5px;line-height:1.45}
+.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}
+.formula b{font-size:11px;color:#285a9a}
+.formula div{font-family:Georgia,serif;font-size:17px;text-align:center;margin:8px 0;color:#1f4675}
+.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.soundbtn{border:1px solid #b7dcd3;background:#effaf6;color:#087568;padding:8px 11px;border-radius:10px;font-size:11px;font-weight:800;cursor:pointer}
+.soundbtn.active{background:#087e75;color:#fff;border-color:#087e75}
+.transport{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 15px}
+.transport .btn{flex:1;min-width:75px}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}
+.graphbox{padding:8px 14px 14px}
+.graph-note{color:var(--muted);font-size:11px;margin:0 3px 5px;line-height:1.45}
+.guide{padding:15px 17px}
+.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}
+.guide strong{color:var(--ink)}
+.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}
+.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}
+.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}
+.guide-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modebar{display:flex;gap:7px}
+.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}
+.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}
+.answers{display:flex;flex-wrap:wrap;gap:7px}
+.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}
+.table-wrap{overflow-x:auto;padding:0 15px 15px}
+table{width:100%;border-collapse:collapse;min-width:620px;font-size:11px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:750;background:#f7fbfa}
+td{font-variant-numeric:tabular-nums}
+.empty{text-align:center;color:#91a6a2;padding:20px}
+.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#sceneCanvas{height:365px}}
+@media(max-width:520px){
+ .topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}
+ main{padding:0 10px 25px;margin-top:15px}
+ .intro{align-items:flex-start;flex-direction:column;gap:10px}
+ #sceneCanvas{height:310px}
+ .metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}
+ .cardhead{padding:13px}.tab{padding:9px 10px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-11-motion-in-a-plane",
+  "title": "Motion in a Plane",
+  "class": 11,
+  "chapterNumber": 3,
+  "chapter": "Kinematics",
+  "description": "Explore vector addition and components, projectile motion, and uniform circular motion through interactive models, live graphs and measurements.",
+  "simulationType": "2D"
+}
+</script>
+<header class="topbar">
+ <div class="brand"><div class="logo">↗</div><div><h1>Virtual Science Lab</h1><p>Physics · Interactive Experiment</p></div></div>
+ <div class="topright"><div class="live" id="liveStatus">● VECTOR LAB ACTIVE</div><button class="soundbtn" id="soundBtn" aria-pressed="false">🔇 Sound OFF</button></div>
+</header>
+<main>
+ <section class="intro"><div><h2>Motion in a Plane</h2><p>Explore vectors, projectile trajectories and circular motion. Change variables, interact with the model and analyse the resulting motion.</p></div><div class="tag">CLASS 11 · KINEMATICS</div></section>
+ <div class="tabs" role="tablist" aria-label="Motion in a plane experiments">
+  <button class="tab active" id="vectorTab" role="tab" aria-selected="true">Vector Addition</button>
+  <button class="tab" id="projectileTab" role="tab" aria-selected="false">Projectile Motion</button>
+  <button class="tab" id="circularTab" role="tab" aria-selected="false">Circular Motion</button>
+ </div>
+ <section class="workspace">
+  <div class="card">
+   <div class="cardhead"><h3 id="sceneTitle">Vector addition · head-to-tail method</h3><span class="small" id="sceneSubtitle">Drag vector endpoints or use controls</span></div>
+   <div class="canvas-wrap"><canvas id="sceneCanvas"></canvas></div>
+   <div class="legend" id="legend"><span><i class="dot teal"></i>Vector A</span><span><i class="dot orange"></i>Vector B</span><span><i class="dot"></i>Resultant R</span><span><i class="dot red"></i>Components</span></div>
+  </div>
+  <div class="card">
+   <div class="cardhead"><h3 id="controlTitle">Vector controls</h3><span class="small">SI units</span></div>
+   <div class="controls">
+    <div class="mode-panel" id="vectorPanel">
+     <div class="control"><div class="control-top"><label for="magA">Vector A magnitude</label><span class="value" id="magAVal">6.0 units</span></div><input id="magA" type="range" min="0" max="10" step="0.1" value="6"><div class="scale"><span>0</span><span>10 units</span></div></div>
+     <div class="control"><div class="control-top"><label for="angleA">Vector A angle</label><span class="value" id="angleAVal">30°</span></div><input id="angleA" type="range" min="-180" max="180" step="1" value="30"><div class="scale"><span>−180°</span><span>0°</span><span>+180°</span></div></div>
+     <div class="control"><div class="control-top"><label for="magB">Vector B magnitude</label><span class="value" id="magBVal">4.0 units</span></div><input id="magB" type="range" min="0" max="10" step="0.1" value="4"><div class="scale"><span>0</span><span>10 units</span></div></div>
+     <div class="control"><div class="control-top"><label for="angleB">Vector B angle</label><span class="value" id="angleBVal">120°</span></div><input id="angleB" type="range" min="-180" max="180" step="1" value="120"><div class="scale"><span>−180°</span><span>0°</span><span>+180°</span></div></div>
+     <div class="metrics"><div class="metric"><span>Resultant magnitude</span><strong id="resultantValue">7.21</strong><small>units</small></div><div class="metric"><span>Resultant angle</span><strong id="resultantAngle">63.7°</strong><small>from +x axis</small></div><div class="metric"><span>Angle between A and B</span><strong id="betweenAngle">90°</strong><small>degrees</small></div></div>
+     <div class="readout"><b>VECTOR COMPONENTS</b><div class="readout-grid"><div><span>Aₓ, Aᵧ</span><strong id="componentsA">5.20, 3.00</strong></div><div><span>Bₓ, Bᵧ</span><strong id="componentsB">−2.00, 3.46</strong></div><div><span>Rₓ, Rᵧ</span><strong id="componentsR">3.20, 6.46</strong></div><div><span>Direction quadrant</span><strong id="quadrant">Quadrant I</strong></div></div></div>
+     <div class="formula"><b>VECTOR ADDITION</b><div>R⃗ = A⃗ + B⃗ &nbsp; | &nbsp; R = √(Rₓ² + Rᵧ²)</div><p>Resolve each vector into perpendicular x and y components. Add corresponding components to find the resultant.</p></div>
+     <div class="actions"><button class="btn" id="vectorPreset">Use perpendicular vectors</button><button class="btn" id="vectorReset">Reset vectors</button></div>
+    </div>
+    <div class="mode-panel" id="projectilePanel" hidden>
+     <div class="control"><div class="control-top"><label for="launchSpeed">Initial speed (u)</label><span class="value" id="launchSpeedVal">20 m/s</span></div><input id="launchSpeed" type="range" min="5" max="40" step="1" value="20"><div class="scale"><span>5 m/s</span><span>40 m/s</span></div></div>
+     <div class="control"><div class="control-top"><label for="launchAngle">Launch angle (θ)</label><span class="value" id="launchAngleVal">45°</span></div><input id="launchAngle" type="range" min="5" max="85" step="1" value="45"><div class="scale"><span>5°</span><span>85°</span></div></div>
+     <div class="control"><div class="control-top"><label for="launchHeight">Initial height (h)</label><span class="value" id="launchHeightVal">0.0 m</span></div><input id="launchHeight" type="range" min="0" max="20" step="0.5" value="0"><div class="scale"><span>0 m</span><span>20 m</span></div></div>
+     <div class="control"><div class="control-top"><label for="gravity">Gravitational acceleration (g)</label><span class="value" id="gravityVal">9.8 m/s²</span></div><input id="gravity" type="range" min="1" max="20" step="0.1" value="9.8"><div class="scale"><span>1 m/s²</span><span>20 m/s²</span></div></div>
+     <div class="transport"><button class="btn primary" id="launchBtn">▶ Launch</button><button class="btn" id="pauseProjectile">Ⅱ Pause</button><button class="btn" id="resetProjectile">↻ Reset</button></div>
+     <div class="control"><div class="control-top"><label for="projectileTime">Projectile time</label><span class="value" id="projectileTimeVal">0.00 s</span></div><input id="projectileTime" type="range" min="0" max="4.08" step="0.01" value="0"></div>
+     <div class="metrics"><div class="metric"><span>Horizontal range</span><strong id="rangeValue">40.82</strong><small>m</small></div><div class="metric"><span>Maximum height</span><strong id="heightValue">10.20</strong><small>m above ground</small></div><div class="metric"><span>Time of flight</span><strong id="flightValue">2.89</strong><small>s</small></div></div>
+     <div class="metrics"><div class="metric"><span>Horizontal velocity</span><strong id="vxValue">14.14</strong><small>m/s</small></div><div class="metric"><span>Vertical velocity</span><strong id="vyValue">14.14</strong><small>m/s at launch</small></div><div class="metric"><span>Speed now</span><strong id="speedNowValue">20.00</strong><small>m/s</small></div></div>
+     <div class="statebox"><b>PROJECTILE MOTION</b><strong id="projectileState">The projectile follows a parabolic trajectory when air resistance is neglected.</strong></div>
+     <div class="formula"><b>PROJECTILE EQUATIONS</b><div>x = u cosθ · t &nbsp; | &nbsp; y = h + u sinθ · t − ½gt²</div><p>Horizontal acceleration is zero and vertical acceleration is −g. The ideal model neglects air resistance and assumes constant gravitational acceleration.</p></div>
+    </div>
+    <div class="mode-panel" id="circularPanel" hidden>
+     <div class="control"><div class="control-top"><label for="circleRadius">Radius (r)</label><span class="value" id="circleRadiusVal">3.0 m</span></div><input id="circleRadius" type="range" min="1" max="10" step="0.5" value="3"><div class="scale"><span>1 m</span><span>10 m</span></div></div>
+     <div class="control"><div class="control-top"><label for="circleSpeed">Tangential speed (v)</label><span class="value" id="circleSpeedVal">6.0 m/s</span></div><input id="circleSpeed" type="range" min="1" max="20" step="0.5" value="6"><div class="scale"><span>1 m/s</span><span>20 m/s</span></div></div>
+     <div class="control"><div class="control-top"><label for="circleMass">Mass (m)</label><span class="value" id="circleMassVal">2.0 kg</span></div><input id="circleMass" type="range" min="0.2" max="5" step="0.1" value="2"><div class="scale"><span>0.2 kg</span><span>5 kg</span></div></div>
+     <div class="transport"><button class="btn primary" id="circlePlay">▶ Start rotation</button><button class="btn" id="circlePause">Ⅱ Pause</button><button class="btn" id="circleReset">↻ Reset angle</button></div>
+     <div class="control"><div class="control-top"><label for="circleAngle">Angular position</label><span class="value" id="circleAngleVal">0°</span></div><input id="circleAngle" type="range" min="0" max="359" step="1" value="0"></div>
+     <div class="metrics"><div class="metric"><span>Angular speed (ω)</span><strong id="omegaValue">2.00</strong><small>rad/s</small></div><div class="metric"><span>Time period (T)</span><strong id="periodValue">3.14</strong><small>s</small></div><div class="metric"><span>Frequency (f)</span><strong id="frequencyValue">0.32</strong><small>Hz</small></div></div>
+     <div class="metrics"><div class="metric"><span>Centripetal acceleration</span><strong id="centripetalAValue">12.00</strong><small>m/s²</small></div><div class="metric"><span>Centripetal force</span><strong id="centripetalFValue">24.00</strong><small>N</small></div><div class="metric"><span>Revolutions / min</span><strong id="rpmValue">19.10</strong><small>rpm</small></div></div>
+     <div class="statebox"><b>UNIFORM CIRCULAR MOTION</b><strong id="circularState">Velocity is tangential to the path. Centripetal acceleration and force point towards the centre.</strong></div>
+     <div class="formula"><b>CIRCULAR MOTION RELATIONSHIPS</b><div>ω = v/r &nbsp; | &nbsp; aᶜ = v²/r &nbsp; | &nbsp; Fᶜ = mv²/r</div><p>In uniform circular motion, speed remains constant but velocity changes because its direction continuously changes.</p></div>
+    </div>
+   </div>
+  </div>
+ </section>
+ <section class="lower">
+  <div class="card"><div class="cardhead"><h3 id="graphTitle">Vector component comparison</h3><span class="small" id="graphSubtitle">x and y components</span></div><div class="graphbox"><p class="graph-note" id="graphNote">Components make vector addition measurable. Drag the vector tips in the main diagram or use the sliders.</p><canvas id="graphCanvas"></canvas></div></div>
+  <div class="card"><div class="cardhead"><h3>Guided practical</h3><div class="modebar"><button class="btn active" id="guidedBtn">Guided</button><button class="btn" id="exploreBtn">Explore</button></div></div>
+   <div class="guide guide-panel" id="guidedPanel"><strong id="guideTitle">Task 1 — Add perpendicular vectors</strong><div class="guide-step"><div class="count" id="guideCount">TASK 1 OF 3</div><div id="guideText">Set vector A to 6 units at 0° and vector B to 4 units at 90°. Observe the resultant.</div></div><p id="guideHint">The resultant is the diagonal of the right-angled vector triangle.</p><div class="guide-actions"><button class="btn primary" id="applyGuide">Apply task setup</button><button class="btn" id="nextGuide">Next task →</button></div></div>
+   <div class="guide guide-panel" id="explorePanel" hidden><strong>Free exploration</strong><p>Move vector endpoints, change the launch speed and angle, or alter the circular path radius and speed. Compare how the components and motion graphs respond.</p><p><strong>Try:</strong> Change the projectile angle while keeping launch speed fixed. Compare 30°, 45° and 60°. Investigate how centripetal acceleration changes when speed doubles.</p></div>
+  </div>
+ </section>
+ <section class="lower">
+  <div class="card"><div class="cardhead"><h3>Prediction challenge</h3><span class="tag">TEST YOURSELF</span></div>
+   <div class="challenge" id="vectorChallenge"><strong>Two perpendicular vectors have magnitudes 3 units and 4 units. What is the magnitude of their resultant?</strong><p>Choose your answer:</p><div class="answers"><button class="btn" data-challenge="vector" data-answer="5">5 units</button><button class="btn" data-challenge="vector" data-answer="7">7 units</button><button class="btn" data-challenge="vector" data-answer="12">12 units</button></div></div>
+   <div class="challenge" id="projectileChallenge" hidden><strong>For the same launch speed on level ground, at which angle is the horizontal range greatest in the ideal projectile model?</strong><p>Choose your answer:</p><div class="answers"><button class="btn" data-challenge="projectile" data-answer="30">30°</button><button class="btn" data-challenge="projectile" data-answer="45">45°</button><button class="btn" data-challenge="projectile" data-answer="60">60°</button></div></div>
+   <div class="challenge" id="circularChallenge" hidden><strong>If tangential speed doubles while radius stays constant, what happens to centripetal acceleration?</strong><p>Choose your answer:</p><div class="answers"><button class="btn" data-challenge="circular" data-answer="2">It doubles</button><button class="btn" data-challenge="circular" data-answer="4">It becomes four times</button><button class="btn" data-challenge="circular" data-answer="same">It stays the same</button></div></div>
+   <div class="feedback" id="challengeFeedback"></div>
+  </div>
+  <div class="card"><div class="cardhead"><h3>Observation record</h3><div class="actions" style="margin:0"><button class="btn danger" id="clearRecords">Clear</button><button class="btn" id="exportRecords">↓ Export CSV</button></div></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Mode</th><th>Condition</th><th>Result 1</th><th>Result 2</th></tr></thead><tbody id="recordsBody"><tr><td colspan="5" class="empty">No observations recorded yet.</td></tr></tbody></table></div><div style="padding:0 15px 13px"><button class="btn primary" id="recordBtn">＋ Record current observation</button></div></div>
+ </section>
+ <p class="note">Model note: Vector addition uses Cartesian components. Projectile motion assumes a flat ground, constant gravitational acceleration and no air resistance. Circular motion is uniform: tangential speed is constant while velocity direction changes continuously. Sound effects are optional and only accompany projectile launch and landing; they are illustrative cues, not measurements. Audio starts only after the user enables it.</p>
+</main>
+<script>
+(() => {
+ "use strict";
+ const $=id=>document.getElementById(id);
+ const S={mode:"vector",running:false,t:0,last:0,circleRunning:false,circleAngle:0,sound:false,audio:null,records:[],guideStep:0,drag:null,landed:false};
+ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+ const rad=d=>d*Math.PI/180;
+ const deg=r=>r*180/Math.PI;
+ const guides={
+  vector:[
+   {title:"Task 1 — Add perpendicular vectors",count:"TASK 1 OF 3",text:"Set vector A to 6 units at 0° and vector B to 4 units at 90°. Observe the resultant.",hint:"The resultant is the diagonal of the right-angled vector triangle.",v:{magA:6,angleA:0,magB:4,angleB:90}},
+   {title:"Task 2 — Same direction",count:"TASK 2 OF 3",text:"Set both vectors to 0°. Observe how their magnitudes add directly.",hint:"For collinear vectors in the same direction, the resultant magnitude is A + B.",v:{magA:5,angleA:0,magB:3,angleB:0}},
+   {title:"Task 3 — Opposite directions",count:"TASK 3 OF 3",text:"Keep vector A at 0° and set vector B at 180°. Compare the resultant direction and magnitude.",hint:"For opposite collinear vectors, the resultant magnitude is the difference of their magnitudes.",v:{magA:8,angleA:0,magB:3,angleB:180}}
+  ],
+  projectile:[
+   {title:"Task 1 — Launch at 45°",count:"TASK 1 OF 3",text:"Set a speed of 20 m/s, launch angle 45°, and launch from ground level. Launch the projectile and follow its path.",hint:"For level-ground projectile motion, 45° gives the maximum range at a fixed launch speed.",v:{launchSpeed:20,launchAngle:45,launchHeight:0,gravity:9.8}},
+   {title:"Task 2 — Change launch angle",count:"TASK 2 OF 3",text:"Keep speed fixed at 20 m/s. Compare the ranges at 30° and 60°.",hint:"Complementary angles have equal ranges when launch and landing heights are the same.",v:{launchSpeed:20,launchAngle:30,launchHeight:0,gravity:9.8}},
+   {title:"Task 3 — Launch from a height",count:"TASK 3 OF 3",text:"Set initial height to 10 m and observe how flight time and horizontal range change.",hint:"The projectile has extra time to travel horizontally before reaching the ground.",v:{launchSpeed:20,launchAngle:45,launchHeight:10,gravity:9.8}}
+  ],
+  circular:[
+   {title:"Task 1 — Explore one revolution",count:"TASK 1 OF 3",text:"Set radius 3 m and speed 6 m/s. Start rotation and follow velocity and centripetal acceleration.",hint:"Velocity is tangential, while centripetal acceleration always points towards the centre.",v:{circleRadius:3,circleSpeed:6,circleMass:2}},
+   {title:"Task 2 — Double the speed",count:"TASK 2 OF 3",text:"Keep radius fixed and double speed from 6 m/s to 12 m/s. Compare centripetal acceleration.",hint:"Centripetal acceleration is proportional to the square of speed.",v:{circleRadius:3,circleSpeed:12,circleMass:2}},
+   {title:"Task 3 — Change the radius",count:"TASK 3 OF 3",text:"Keep speed 6 m/s and increase radius from 3 m to 6 m. Compare period and centripetal acceleration.",hint:"At fixed speed, a larger radius means a lower centripetal acceleration and a longer period.",v:{circleRadius:6,circleSpeed:6,circleMass:2}}
+  ]
+ };
+ const vectorControls=["magA","angleA","magB","angleB"],projectileControls=["launchSpeed","launchAngle","launchHeight","gravity"],circleControls=["circleRadius","circleSpeed","circleMass"];
+ function readVector(){let A=+$("magA").value,aa=rad(+$("angleA").value),B=+$("magB").value,ba=rad(+$("angleB").value);let ax=A*Math.cos(aa),ay=A*Math.sin(aa),bx=B*Math.cos(ba),by=B*Math.sin(ba),rx=ax+bx,ry=ay+by;return {A,aa,B,ba,ax,ay,bx,by,rx,ry,R:Math.hypot(rx,ry),angle:deg(Math.atan2(ry,rx))};}
+ function projectileParams(){const u=+$("launchSpeed").value,theta=rad(+$("launchAngle").value),h=+$("launchHeight").value,g=+$("gravity").value,ux=u*Math.cos(theta),uy=u*Math.sin(theta),tf=(uy+Math.sqrt(uy*uy+2*g*h))/g,range=ux*tf,hmax=h+uy*uy/(2*g);return {u,theta,h,g,ux,uy,tf,range,hmax,peakTime:uy/g};}
+ function projectileAt(t,p){t=clamp(t,0,p.tf);return {x:p.ux*t,y:p.h+p.uy*t-.5*p.g*t*t,vx:p.ux,vy:p.uy-p.g*t,speed:Math.hypot(p.ux,p.uy-p.g*t)};}
+ function circleParams(){const r=+$("circleRadius").value,v=+$("circleSpeed").value,m=+$("circleMass").value,omega=v/r,T=2*Math.PI/omega,f=1/T,a=v*v/r,F=m*a;return {r,v,m,omega,T,f,a,F,rpm:omega*60/(2*Math.PI)};}
+ function vectorQuadrant(x,y){if(Math.abs(x)<1e-8&&Math.abs(y)<1e-8)return "Zero vector";if(x>=0&&y>=0)return "Quadrant I";if(x<0&&y>=0)return "Quadrant II";if(x<0&&y<0)return "Quadrant III";return "Quadrant IV";}
+ function setMode(mode){if(S.mode!==mode){S.mode=mode;S.running=false;S.circleRunning=false;S.last=0;S.drag=null;}document.querySelectorAll(".tab").forEach(b=>{const active=b.id===mode+"Tab";b.classList.toggle("active",active);b.setAttribute("aria-selected",String(active));});["vector","projectile","circular"].forEach(m=>$(m+"Panel").hidden=m!==mode);$("vectorChallenge").hidden=mode!=="vector";$("projectileChallenge").hidden=mode!=="projectile";$("circularChallenge").hidden=mode!=="circular";$("challengeFeedback").textContent="";$("guidedBtn").classList.add("active");$("exploreBtn").classList.remove("active");$("guidedPanel").hidden=false;$("explorePanel").hidden=true;S.guideStep=0;applyModeLabels();showGuide();render();}
+ function applyModeLabels(){const c={vector:["Vector addition · head-to-tail method","Drag vector endpoints or use controls","Vector controls","Vector component comparison","x and y components","Components make vector addition measurable. Drag the vector tips in the main diagram or use the sliders."],projectile:["Projectile motion · ideal trajectory","Launch and follow the parabolic path","Projectile controls","Projectile trajectory and velocity","y versus x trajectory","The curve is calculated from the equations of projectile motion. Enable sound for optional launch and landing cues."],circular:["Uniform circular motion","Tangential velocity and inward acceleration","Circular motion controls","Circular motion · time projections","x(t) and y(t) for circular motion","The projections of uniform circular motion are sinusoidal."]};const x=c[S.mode];$("sceneTitle").textContent=x[0];$("sceneSubtitle").textContent=x[1];$("controlTitle").textContent=x[2];$("graphTitle").textContent=x[3];$("graphSubtitle").textContent=x[4];$("graphNote").textContent=x[5];$("liveStatus").textContent=S.mode==="vector"?"● VECTOR LAB ACTIVE":S.mode==="projectile"?"● PROJECTILE LAB ACTIVE":"● CIRCULAR MOTION LAB ACTIVE";$("legend").innerHTML=S.mode==="vector"?'<span><i class="dot teal"></i>Vector A</span><span><i class="dot orange"></i>Vector B</span><span><i class="dot"></i>Resultant R</span><span><i class="dot red"></i>Components</span>':S.mode==="projectile"?'<span><i class="dot teal"></i>Trajectory</span><span><i class="dot orange"></i>Velocity</span><span><i class="dot red"></i>Gravity</span>':'<span><i class="dot teal"></i>Circular path</span><span><i class="dot orange"></i>Tangential velocity</span><span><i class="dot red"></i>Centripetal acceleration</span>';}
+ function updateVector(){const v=readVector();$("magAVal").textContent=v.A.toFixed(1)+" units";$("angleAVal").textContent=$("angleA").value+"°";$("magBVal").textContent=v.B.toFixed(1)+" units";$("angleBVal").textContent=$("angleB").value+"°";$("resultantValue").textContent=v.R.toFixed(2);$("resultantAngle").textContent=v.R<1e-8?"—":v.angle.toFixed(1)+"°";let delta=Math.abs((+$("angleA").value)-(+ $("angleB").value))%360;if(delta>180)delta=360-delta;$("betweenAngle").textContent=delta.toFixed(0)+"°";$("componentsA").textContent=v.ax.toFixed(2)+", "+v.ay.toFixed(2);$("componentsB").textContent=v.bx.toFixed(2)+", "+v.by.toFixed(2);$("componentsR").textContent=v.rx.toFixed(2)+", "+v.ry.toFixed(2);$("quadrant").textContent=vectorQuadrant(v.rx,v.ry);}
+ function updateProjectile(){const p=projectileParams(),q=projectileAt(S.t,p);$("launchSpeedVal").textContent=p.u.toFixed(0)+" m/s";$("launchAngleVal").textContent=$("launchAngle").value+"°";$("launchHeightVal").textContent=p.h.toFixed(1)+" m";$("gravityVal").textContent=p.g.toFixed(1)+" m/s²";$("projectileTime").max=p.tf.toFixed(2);$("projectileTime").value=clamp(S.t,0,p.tf);$("projectileTimeVal").textContent=S.t.toFixed(2)+" s";$("rangeValue").textContent=p.range.toFixed(2);$("heightValue").textContent=p.hmax.toFixed(2);$("flightValue").textContent=p.tf.toFixed(2);$("vxValue").textContent=q.vx.toFixed(2);$("vyValue").textContent=p.uy.toFixed(2);$("speedNowValue").textContent=q.speed.toFixed(2);$("launchBtn").disabled=S.running;$("pauseProjectile").disabled=!S.running;$("projectileState").textContent=S.running?"Projectile is in flight. Horizontal velocity remains constant while vertical velocity changes due to gravity.":S.t>=p.tf-1e-6?"Projectile has reached the ground. Compare its launch and landing velocities.":"Ready to launch. The ideal trajectory is a parabola; no air resistance is included.";}
+ function updateCircle(){const c=circleParams();$("circleRadiusVal").textContent=c.r.toFixed(1)+" m";$("circleSpeedVal").textContent=c.v.toFixed(1)+" m/s";$("circleMassVal").textContent=c.m.toFixed(1)+" kg";$("circleAngleVal").textContent=(deg(S.circleAngle)%360).toFixed(0)+"°";$("circleAngle").value=Math.round((deg(S.circleAngle)%360+360)%360);$("omegaValue").textContent=c.omega.toFixed(2);$("periodValue").textContent=c.T.toFixed(2);$("frequencyValue").textContent=c.f.toFixed(2);$("centripetalAValue").textContent=c.a.toFixed(2);$("centripetalFValue").textContent=c.F.toFixed(2);$("rpmValue").textContent=c.rpm.toFixed(2);$("circularState").textContent="The object moves at constant speed "+c.v.toFixed(1)+" m/s. Velocity is tangent to the circle; acceleration "+c.a.toFixed(2)+" m/s² points inward.";$("circlePlay").disabled=S.circleRunning;$("circlePause").disabled=!S.circleRunning;}
+ function arrow(ctx,x1,y1,x2,y2,color,size=8,width=2.5){const a=Math.atan2(y2-y1,x2-x1);ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-size*Math.cos(a-Math.PI/6),y2-size*Math.sin(a-Math.PI/6));ctx.lineTo(x2-size*Math.cos(a+Math.PI/6),y2-size*Math.sin(a+Math.PI/6));ctx.closePath();ctx.fill();}
+ function drawGrid(ctx,w,h,step=28){ctx.strokeStyle="#eaf2f0";ctx.lineWidth=1;for(let x=0;x<w;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}}
+ function drawVector(){const canvas=$("sceneCanvas"),ctx=canvas.getContext("2d"),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);drawGrid(ctx,w,h);const v=readVector(),ox=w*.17,oy=h*.78,scale=Math.min((w*.64)/20,(h*.65)/20,23),map=(x,y)=>({x:ox+x*scale,y:oy-y*scale});ctx.strokeStyle="#93aaa4";ctx.lineWidth=1.3;arrow(ctx,18,oy,w-14,oy,"#859c96",6,1.2);arrow(ctx,ox,h-14,ox,14,"#859c96",6,1.2);ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.textAlign="right";ctx.fillText("+x",w-17,oy-9);ctx.textAlign="left";ctx.fillText("+y",ox+8,18);const A=map(v.ax,v.ay),R=map(v.rx,v.ry),origin={x:ox,y:oy};ctx.setLineDash([4,4]);ctx.strokeStyle="#d6e2de";ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(A.x,A.y);ctx.lineTo(R.x,R.y);ctx.stroke();ctx.setLineDash([]);arrow(ctx,origin.x,origin.y,A.x,A.y,"#087e75",9,3.2);arrow(ctx,A.x,A.y,R.x,R.y,"#e58b26",9,3.2);arrow(ctx,origin.x,origin.y,R.x,R.y,"#3477ce",9,3);ctx.setLineDash([4,4]);ctx.strokeStyle="#d84b55";ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(A.x,oy);ctx.lineTo(A.x,A.y);ctx.moveTo(A.x,A.y);ctx.lineTo(ox,A.y);ctx.moveTo(R.x,oy);ctx.lineTo(R.x,R.y);ctx.moveTo(R.x,R.y);ctx.lineTo(ox,R.y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#087e75";ctx.beginPath();ctx.arc(A.x,A.y,6,0,Math.PI*2);ctx.fill();ctx.fillStyle="#e58b26";ctx.beginPath();ctx.arc(R.x,R.y,6,0,Math.PI*2);ctx.fill();ctx.fillStyle="#087e75";ctx.font="700 11px system-ui";ctx.textAlign="left";ctx.fillText("A",A.x+9,A.y-7);ctx.fillStyle="#e58b26";ctx.fillText("B tip / R",R.x+9,R.y-7);ctx.fillStyle="#3477ce";ctx.fillText("R = A + B",ox+10,oy-12);ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.fillText("Drag green endpoint to change A · drag orange endpoint to change B",12,h-12);S.vectorPoints={origin,A,R,scale};}
+ function drawProjectile(){const canvas=$("sceneCanvas"),ctx=canvas.getContext("2d"),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);drawGrid(ctx,w,h);const p=projectileParams(),q=projectileAt(S.t,p),pad={l:48,r:25,t:24,b:48},groundY=h-pad.b,maxX=Math.max(p.range*1.12,5),maxY=Math.max(p.hmax*1.18,5),sx=(w-pad.l-pad.r)/maxX,sy=(h-pad.t-pad.b)/maxY,px=x=>pad.l+x*sx,py=y=>groundY-y*sy;ctx.strokeStyle="#839b95";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(pad.l,groundY);ctx.lineTo(w-pad.r,groundY);ctx.stroke();ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.textAlign="left";ctx.fillText("Ground · y = 0",pad.l,groundY+27);ctx.textAlign="right";ctx.fillText("x (m)",w-pad.r,groundY+27);ctx.textAlign="left";ctx.fillText("y (m)",8,pad.t+4);ctx.strokeStyle="#3477ce";ctx.lineWidth=2.8;ctx.beginPath();for(let i=0;i<=160;i++){const t=p.tf*i/160,z=projectileAt(t,p);if(i===0)ctx.moveTo(px(z.x),py(z.y));else ctx.lineTo(px(z.x),py(z.y));}ctx.stroke();ctx.strokeStyle="#9dc2ef";ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(px(p.range),py(0));ctx.lineTo(px(p.range),groundY);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#3477ce";ctx.font="700 10px system-ui";ctx.fillText("Range = "+p.range.toFixed(2)+" m",Math.max(pad.l+4,px(p.range)-105),groundY-10);const bx=px(0),by=py(p.h);ctx.fillStyle="#e8b45d";ctx.strokeStyle="#bd7d2d";ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(bx,by,8,0,Math.PI*2);ctx.fill();ctx.stroke();const x=px(q.x),y=py(q.y);ctx.strokeStyle="#e58b26";ctx.lineWidth=2.5;arrow(ctx,x,y,x+q.vx,y-q.vy,"#e58b26",7,2);ctx.strokeStyle="#d84b55";arrow(ctx,x,y,x,y+Math.max(18,Math.min(55,p.g*3)),"#d84b55",7,2);ctx.fillStyle="#087e75";ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.textAlign="left";ctx.fillText("t = "+S.t.toFixed(2)+" s",x+12,y-13);if(q.y<=0.001&&S.t>0){ctx.fillStyle="#087e75";ctx.textAlign="right";ctx.fillText("Landing",w-20,22);}}
+ function drawCircular(){const canvas=$("sceneCanvas"),ctx=canvas.getContext("2d"),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);drawGrid(ctx,w,h);const c=circleParams(),cx=w*.5,cy=h*.51,R=Math.min(w*.34,h*.36),a=S.circleAngle,x=cx+R*Math.cos(a),y=cy-R*Math.sin(a);ctx.strokeStyle="#087e75";ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();ctx.strokeStyle="#9ab8b0";ctx.setLineDash([4,4]);ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#718982";ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);ctx.fill();ctx.fillStyle="#087e75";ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=2;ctx.stroke();const tx=Math.sin(a),ty=Math.cos(a),alen=clamp(c.v*3,25,80);arrow(ctx,x,y,x+tx*alen,y-ty*alen,"#e58b26",8,2.7);arrow(ctx,x,y,x+(cx-x)*.45,y+(cy-y)*.45,"#d84b55",8,2.7);ctx.fillStyle="#e58b26";ctx.font="700 11px system-ui";ctx.textAlign="left";ctx.fillText("v · tangent",x+tx*alen+5,y-ty*alen);ctx.fillStyle="#d84b55";ctx.fillText("aᶜ · inward",x+(cx-x)*.5+8,y+(cy-y)*.5);ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.textAlign="center";ctx.fillText("r = "+c.r.toFixed(1)+" m",(cx+x)/2+8,(cy+y)/2-8);ctx.fillText("Centre",cx,cy+19);ctx.textAlign="left";ctx.fillText("Uniform circular motion",12,19);}
+ function drawGraph(){const canvas=$("graphCanvas"),ctx=canvas.getContext("2d"),w=canvas.clientWidth,h=canvas.clientHeight,dpr=window.devicePixelRatio||1;if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);drawGrid(ctx,w,h,32);if(S.mode==="vector"){const v=readVector(),vals=[{n:"Aₓ",x:v.ax,c:"#087e75"},{n:"Bₓ",x:v.bx,c:"#e58b26"},{n:"Rₓ",x:v.rx,c:"#3477ce"},{n:"Aᵧ",x:v.ay,c:"#087e75"},{n:"Bᵧ",x:v.by,c:"#e58b26"},{n:"Rᵧ",x:v.ry,c:"#3477ce"}],left=40,right=12,top=20,bottom=37,gw=w-left-right,gh=h-top-bottom,max=Math.max(1,...vals.map(z=>Math.abs(z.x)))*1.18,zero=top+gh/2,bar=gw/vals.length*.52;ctx.strokeStyle="#8da59e";ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(left,zero);ctx.lineTo(w-right,zero);ctx.stroke();vals.forEach((q,i)=>{const x=left+(i+.5)*gw/vals.length,height=q.x/max*(gh*.43);ctx.fillStyle=q.c;ctx.fillRect(x-bar/2,q.x>=0?zero-height:zero,bar,Math.abs(height));ctx.fillStyle="#5b756e";ctx.font="10px system-ui";ctx.textAlign="center";ctx.fillText(q.n,x,h-14);ctx.fillText(q.x.toFixed(1),x,q.x>=0?zero-height-7:zero-height+14);});ctx.fillStyle="#607d78";ctx.textAlign="left";ctx.fillText("Positive ↑",4,14);ctx.fillText("Negative ↓",4,h-28);}else if(S.mode==="projectile"){const p=projectileParams(),left=42,right=12,top=18,bottom=30,gw=w-left-right,gh=h-top-bottom,maxX=Math.max(p.range*1.1,2),maxY=Math.max(p.hmax*1.15,2),px=x=>left+x/maxX*gw,py=y=>top+gh-y/maxY*gh;ctx.strokeStyle="#8da59e";ctx.beginPath();ctx.moveTo(left,top+gh);ctx.lineTo(w-right,top+gh);ctx.moveTo(left,top);ctx.lineTo(left,top+gh);ctx.stroke();ctx.strokeStyle="#3477ce";ctx.lineWidth=2.7;ctx.beginPath();for(let i=0;i<=150;i++){const t=p.tf*i/150,q=projectileAt(t,p);if(i===0)ctx.moveTo(px(q.x),py(q.y));else ctx.lineTo(px(q.x),py(q.y));}ctx.stroke();const q=projectileAt(S.t,p);ctx.fillStyle="#e58b26";ctx.beginPath();ctx.arc(px(q.x),py(q.y),5,0,Math.PI*2);ctx.fill();ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.textAlign="center";ctx.fillText("Horizontal position x (m)",left+gw/2,h-5);ctx.save();ctx.translate(12,top+gh/2);ctx.rotate(-Math.PI/2);ctx.fillText("Vertical position y (m)",0,0);ctx.restore();}else{const c=circleParams(),left=42,right=12,top=20,bottom=28,gw=w-left-right,gh=h-top-bottom,mid=top+gh/2,amp=gh*.36,period=c.T,now=S.circleAngle/c.omega;ctx.strokeStyle="#8da59e";ctx.beginPath();ctx.moveTo(left,mid);ctx.lineTo(w-right,mid);ctx.stroke();for(const [fn,color] of [[Math.cos,"#087e75"],[Math.sin,"#e58b26"]]){ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=2.2;for(let i=0;i<=150;i++){const t=period*i/150,angle=c.omega*t,x=left+gw*i/150,y=mid-amp*fn(angle);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}const phase=(now%period)/period;const px=left+phase*gw;ctx.strokeStyle="#d84b55";ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(px,top);ctx.lineTo(px,top+gh);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#607d78";ctx.font="10px system-ui";ctx.textAlign="center";ctx.fillText("Time over one period (s)",left+gw/2,h-4);ctx.textAlign="left";ctx.fillStyle="#087e75";ctx.fillText("x projection",left+4,top+10);ctx.fillStyle="#e58b26";ctx.fillText("y projection",left+4,top+23);}}
+ function playTone(freq,duration,type="sine",volume=.08){if(!S.sound)return;try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!S.audio)S.audio=new AC();if(S.audio.state==="suspended")S.audio.resume();const osc=S.audio.createOscillator(),gain=S.audio.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,S.audio.currentTime);gain.gain.setValueAtTime(volume,S.audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,S.audio.currentTime+duration);osc.connect(gain);gain.connect(S.audio.destination);osc.start();osc.stop(S.audio.currentTime+duration);}catch(e){console.warn("Audio unavailable",e);}}
+ function playLaunchSound(){playTone(420,.10,"sine",.045);setTimeout(()=>playTone(660,.14,"sine",.035),70);}
+ function playLandingSound(){playTone(190,.12,"triangle",.06);setTimeout(()=>playTone(130,.18,"triangle",.045),85);}
+ function render(){if(S.mode==="vector"){updateVector();drawVector();}else if(S.mode==="projectile"){updateProjectile();drawProjectile();}else{updateCircle();drawCircular();}drawGraph();}
+ function applyGuide(){const p=guides[S.mode][S.guideStep].v;S.running=false;S.circleRunning=false;S.last=0;if(S.mode==="vector"){Object.keys(p).forEach(k=>$(k).value=p[k]);}else if(S.mode==="projectile"){Object.keys(p).forEach(k=>$(k).value=p[k]);S.t=0;S.landed=false;}else{Object.keys(p).forEach(k=>$(k).value=p[k]);S.circleAngle=0;}render();}
+ function showGuide(){const t=guides[S.mode][S.guideStep];$("guideTitle").textContent=t.title;$("guideCount").textContent=t.count;$("guideText").textContent=t.text;$("guideHint").textContent=t.hint;$("nextGuide").textContent=S.guideStep===guides[S.mode].length-1?"Restart tasks ↺":"Next task →";}
+ function record(){let row;if(S.mode==="vector"){const v=readVector();row={mode:"Vector addition",condition:"A "+v.A.toFixed(1)+" @ "+$("angleA").value+"°; B "+v.B.toFixed(1)+" @ "+$("angleB").value+"°",r1:"R = "+v.R.toFixed(2),r2:"θ = "+v.angle.toFixed(1)+"°"};}else if(S.mode==="projectile"){const p=projectileParams(),q=projectileAt(S.t,p);row={mode:"Projectile",condition:p.u+" m/s @ "+$("launchAngle").value+"°",r1:"x = "+q.x.toFixed(2)+" m",r2:"y = "+q.y.toFixed(2)+" m"};}else{const c=circleParams();row={mode:"Circular motion",condition:"r "+c.r+" m; v "+c.v+" m/s",r1:"aᶜ = "+c.a.toFixed(2)+" m/s²",r2:"Fᶜ = "+c.F.toFixed(2)+" N"};}S.records.push(row);renderRecords();}
+ function renderRecords(){const body=$("recordsBody");if(!S.records.length){body.innerHTML='<tr><td colspan="5" class="empty">No observations recorded yet.</td></tr>';return;}body.innerHTML=S.records.map((r,i)=>`<tr><td>${i+1}</td><td>${r.mode}</td><td>${r.condition}</td><td>${r.r1}</td><td>${r.r2}</td></tr>`).join("");}
+ function exportCSV(){if(!S.records.length){alert("Record at least one observation first.");return;}const rows=[["No","Mode","Condition","Result 1","Result 2"],...S.records.map((r,i)=>[i+1,r.mode,r.condition,r.r1,r.r2])];const csv=rows.map(row=>row.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(",")).join("\n");const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="motion-in-a-plane-observations.csv";a.click();URL.revokeObjectURL(url);}
+ function animate(ts){if(!S.last)S.last=ts;const dt=clamp((ts-S.last)/1000,0,.05);S.last=ts;if(S.mode==="projectile"&&S.running){const p=projectileParams();S.t=Math.min(p.tf,S.t+dt);if(S.t>=p.tf-1e-8){S.running=false;if(!S.landed){S.landed=true;playLandingSound();}}}if(S.mode==="circular"&&S.circleRunning){const c=circleParams();S.circleAngle=(S.circleAngle+c.omega*dt)%(2*Math.PI);}render();requestAnimationFrame(animate);}
+ vectorControls.concat(projectileControls,circleControls).forEach(id=>$(id).addEventListener("input",()=>{if(projectileControls.includes(id)){S.running=false;S.t=0;S.landed=false;}if(circleControls.includes(id)){S.circleRunning=false;}render();}));
+ ["vectorTab","projectileTab","circularTab"].forEach((id,i)=>$(id).addEventListener("click",()=>setMode(["vector","projectile","circular"][i])));
+ $("projectileTime").addEventListener("input",()=>{S.running=false;S.t=+$("projectileTime").value;S.landed=S.t>=projectileParams().tf-1e-6;render();});
+ $("launchBtn").addEventListener("click",()=>{S.t=0;S.landed=false;S.running=true;S.last=0;playLaunchSound();render();});
+ $("pauseProjectile").addEventListener("click",()=>{S.running=false;render();});
+ $("resetProjectile").addEventListener("click",()=>{S.running=false;S.t=0;S.landed=false;render();});
+ $("circlePlay").addEventListener("click",()=>{S.circleRunning=true;render();});
+ $("circlePause").addEventListener("click",()=>{S.circleRunning=false;render();});
+ $("circleReset").addEventListener("click",()=>{S.circleRunning=false;S.circleAngle=0;render();});
+ $("circleAngle").addEventListener("input",()=>{S.circleRunning=false;S.circleAngle=rad(+$("circleAngle").value);render();});
+ $("vectorPreset").addEventListener("click",()=>{$("magA").value=6;$("angleA").value=0;$("magB").value=4;$("angleB").value=90;render();});
+ $("vectorReset").addEventListener("click",()=>{$("magA").value=6;$("angleA").value=30;$("magB").value=4;$("angleB").value=120;render();});
+ $("guidedBtn").addEventListener("click",()=>{$("guidedBtn").classList.add("active");$("exploreBtn").classList.remove("active");$("guidedPanel").hidden=false;$("explorePanel").hidden=true;});
+ $("exploreBtn").addEventListener("click",()=>{$("exploreBtn").classList.add("active");$("guidedBtn").classList.remove("active");$("guidedPanel").hidden=true;$("explorePanel").hidden=false;});
+ $("applyGuide").addEventListener("click",applyGuide);
+ $("nextGuide").addEventListener("click",()=>{S.guideStep=(S.guideStep+1)%guides[S.mode].length;showGuide();});
+ $("soundBtn").addEventListener("click",async()=>{S.sound=!S.sound;if(S.sound){try{const AC=window.AudioContext||window.webkitAudioContext;if(AC){if(!S.audio)S.audio=new AC();await S.audio.resume();}$("soundBtn").textContent="🔊 Sound ON";$("soundBtn").classList.add("active");$("soundBtn").setAttribute("aria-pressed","true");playTone(520,.09,"sine",.035);}catch(e){S.sound=false;$("soundBtn").textContent="🔇 Sound OFF";}}else{$("soundBtn").textContent="🔇 Sound OFF";$("soundBtn").classList.remove("active");$("soundBtn").setAttribute("aria-pressed","false");}});
+ document.querySelectorAll("[data-challenge]").forEach(b=>b.addEventListener("click",()=>{const mode=b.dataset.challenge,answer=b.dataset.answer,correct={vector:"5",projectile:"45",circular:"4"}[mode],f=$("challengeFeedback");if(answer===correct){const messages={vector:"✓ Correct! Pythagoras gives R = √(3² + 4²) = 5 units.",projectile:"✓ Correct! On level ground, R = u² sin(2θ)/g, which is maximum at 45°.",circular:"✓ Correct! aᶜ = v²/r. Doubling v makes acceleration four times as large."};f.textContent=messages[mode];f.style.color="#087e58";}else{f.textContent="Not quite. Review the relationship shown in the formula panel and try again.";f.style.color="#bd5960";}}));
+ $("recordBtn").addEventListener("click",record);
+ $("clearRecords").addEventListener("click",()=>{S.records=[];renderRecords();});
+ $("exportRecords").addEventListener("click",exportCSV);
+ const canvas=$("sceneCanvas");
+ canvas.addEventListener("pointerdown",e=>{if(S.mode!=="vector"||!S.vectorPoints)return;const rect=canvas.getBoundingClientRect(),x=(e.clientX-rect.left)*canvas.clientWidth/rect.width,y=(e.clientY-rect.top)*canvas.clientHeight/rect.height,p=S.vectorPoints;const dA=Math.hypot(x-p.A.x,y-p.A.y),dR=Math.hypot(x-p.R.x,y-p.R.y);if(Math.min(dA,dR)<24){S.drag=dA<dR?"A":"R";canvas.setPointerCapture(e.pointerId);e.preventDefault();}});
+ canvas.addEventListener("pointermove",e=>{if(!S.drag)return;const rect=canvas.getBoundingClientRect(),x=(e.clientX-rect.left)*canvas.clientWidth/rect.width,y=(e.clientY-rect.top)*canvas.clientHeight/rect.height,p=S.vectorPoints,ux=(x-p.origin.x)/p.scale,uy=(p.origin.y-y)/p.scale;if(S.drag==="A"){const mag=clamp(Math.hypot(ux,uy),0,10),ang=deg(Math.atan2(uy,ux));$("magA").value=mag;$("angleA").value=Math.round(ang);}else{const vx=ux-readVector().ax,vy=uy-readVector().ay,mag=clamp(Math.hypot(vx,vy),0,10),ang=deg(Math.atan2(vy,vx));$("magB").value=mag;$("angleB").value=Math.round(ang);}render();});
+ const endDrag=()=>S.drag=null;
+ canvas.addEventListener("pointerup",endDrag);
+ canvas.addEventListener("pointercancel",endDrag);
+ canvas.addEventListener("lostpointercapture",endDrag);
+ if("ResizeObserver" in window){const ro=new ResizeObserver(render);ro.observe($("sceneCanvas"));ro.observe($("graphCanvas"));}else window.addEventListener("resize",render);
+ showGuide();render();requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
