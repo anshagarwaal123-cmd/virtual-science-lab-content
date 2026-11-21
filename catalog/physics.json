@@ -254,15 +254,35 @@
   
 },
 
-    {
-      "id": "class-10-human-eye-colourful-world",
-      "title": "The Human Eye and the Colourful World",
-      "class": 10,
-      "chapterNumber": 10,
-      "chapter": "The Human Eye and the Colourful World",
-      "description": "Explore eye accommodation, common vision defects and correction, dispersion and atmospheric optical effects.",
-      "simulationType": "2D"
-    },
+   
+{
+  "id": "class-10-human-eye-vision-correction",
+  "title": "Human Eye — Accommodation and Vision Defects",
+  "class": 10,
+  "chapterNumber": 10,
+  "chapter": "The Human Eye and the Colourful World",
+  "description": "Explore eye accommodation, image formation on the retina, myopia, hypermetropia and corrective lenses.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-dispersion-prism",
+  "title": "Dispersion of White Light — Prism",
+  "class": 10,
+  "chapterNumber": 10,
+  "chapter": "The Human Eye and the Colourful World",
+  "description": "Explore how a prism separates white light into its constituent colours and investigate dispersion.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-atmospheric-refraction-scattering",
+  "title": "Atmospheric Refraction and Scattering",
+  "class": 10,
+  "chapterNumber": 10,
+  "chapter": "The Human Eye and the Colourful World",
+  "description": "Investigate the blue colour of the sky, red sunsets and atmospheric optical effects.",
+  "simulationType": "2D"
+},
+
     {
       "id": "ohms-law-playground",
       "title": "Electricity: Ohm's Law and Circuits",
