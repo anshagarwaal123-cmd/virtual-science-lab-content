@@ -324,7 +324,8 @@
   "chapterNumber": 12,
   "chapter": "Magnetic Effects of Electric Current",
   "description": "Explore magnetic field lines, coil turns, current direction and electromagnet strength.",
-  "simulationType": "2D"
+  "simulationType": "2D",
+  "simulationPath": "simulations/physics/solenoid-electromagnet/"
 },
 {
   "id": "class-10-force-on-current-conductor",
