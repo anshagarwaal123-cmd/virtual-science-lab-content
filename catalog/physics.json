@@ -304,7 +304,8 @@
   "chapterNumber": 12,
   "chapter": "Magnetic Effects of Electric Current",
   "description": "Change current direction and strength, move a compass and explore circular magnetic field lines around a straight wire.",
-  "simulationType": "2D"
+  "simulationType": "2D",
+   "simulationPath": "simulations/physics/magnetic-field-straight-wire/"
 },
 {
   "id": "class-10-magnetic-field-circular-loop",
