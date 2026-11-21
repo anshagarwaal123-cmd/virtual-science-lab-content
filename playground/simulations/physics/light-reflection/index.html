@@ -1,1657 +1,452 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f1faf6">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3f8f6">
 <title>Law of Reflection | Virtual Science Lab</title>
-
 <style>
-:root {
-    --bg: #f2f8f5;
-    --panel: #ffffff;
-    --ink: #18352d;
-    --muted: #71847d;
-    --green: #16896b;
-    --green-light: #e1f5ed;
-    --blue: #2788dc;
-    --orange: #f08b36;
-    --border: #dfebe5;
-    --shadow: 0 12px 35px rgba(29, 76, 57, .07);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: Inter, system-ui, Arial, sans-serif;
-}
-
-button, input {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.topbar {
-    min-height: 68px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 5%;
-    background: rgba(255,255,255,.94);
-    border-bottom: 1px solid var(--border);
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    font-weight: 800;
-}
-
-.brand-icon {
-    width: 39px;
-    height: 39px;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    background: var(--green-light);
-    color: var(--green);
-    font-size: 22px;
-}
-
-.brand small {
-    display: block;
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 600;
-    margin-top: 2px;
-}
-
-.top-actions {
-    display: flex;
-    gap: 9px;
-}
-
-.secondary-btn,
-.primary-btn {
-    border: 1px solid var(--border);
-    border-radius: 11px;
-    padding: 10px 14px;
-    background: white;
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 13px;
-}
-
-.primary-btn {
-    background: var(--green);
-    border-color: var(--green);
-    color: white;
-}
-
-.secondary-btn:hover {
-    background: var(--green-light);
-}
-
-.primary-btn:hover {
-    background: #107456;
-}
-
-.back-link {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.back-link:hover {
-    color: var(--green);
-}
-
-main {
-    width: min(1420px, 94%);
-    margin: 28px auto 45px;
-}
-
-.hero {
-    margin-bottom: 23px;
-}
-
-.eyebrow {
-    color: var(--green);
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-}
-
-.hero h1 {
-    margin: 8px 0;
-    font-size: clamp(26px, 4vw, 38px);
-    letter-spacing: -1.2px;
-}
-
-.hero p {
-    max-width: 750px;
-    margin: 0;
-    color: var(--muted);
-    line-height: 1.65;
-}
-
-.workspace {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 350px;
-    gap: 20px;
-    align-items: start;
-}
-
-.panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 19px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-}
-
-.panel-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    padding: 17px 20px;
-    border-bottom: 1px solid var(--border);
-}
-
-.panel-heading h2 {
-    margin: 0;
-    font-size: 16px;
-}
-
-.live-indicator {
-    display: flex;
-    gap: 7px;
-    align-items: center;
-    color: var(--green);
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.live-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #26bd83;
-    box-shadow: 0 0 0 4px #e5f8ee;
-}
-
-.scene-wrap {
-    position: relative;
-    padding: 12px;
-    background:
-        radial-gradient(circle at 50% 35%, #ffffff 0%, #f3faf6 75%);
-}
-
-#diagram {
-    width: 100%;
-    height: auto;
-    display: block;
-    min-height: 320px;
-    touch-action: none;
-    user-select: none;
-}
-
-.scene-hint {
-    padding: 11px 17px;
-    color: var(--muted);
-    font-size: 12px;
-    background: #fbfdfc;
-    border-top: 1px solid var(--border);
-    line-height: 1.5;
-}
-
-.scene-hint strong {
-    color: var(--green);
-}
-
-.draggable {
-    cursor: grab;
-}
-
-.draggable:active {
-    cursor: grabbing;
-}
-
-.control-panel {
-    padding-bottom: 18px;
-}
-
-.mode-switch {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--border);
-}
-
-.mode-btn {
-    padding: 10px;
-    background: #f4f8f6;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 800;
-    color: var(--muted);
-}
-
-.mode-btn.active {
-    background: var(--green-light);
-    border-color: #bde6d5;
-    color: var(--green);
-}
-
-.control-section {
-    padding: 16px 18px 3px;
-}
-
-.control-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 11px;
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.control-value {
-    min-width: 54px;
-    padding: 5px 8px;
-    border-radius: 8px;
-    color: var(--green);
-    background: var(--green-light);
-    text-align: center;
-    font-weight: 900;
-    font-size: 12px;
-}
-
-input[type="range"] {
-    width: 100%;
-    accent-color: var(--green);
-    cursor: pointer;
-}
-
-.range-scale {
-    display: flex;
-    justify-content: space-between;
-    color: #93a39c;
-    font-size: 10px;
-    margin-top: 4px;
-}
-
-.control-description {
-    font-size: 11px;
-    color: var(--muted);
-    margin: 7px 0 0;
-    line-height: 1.45;
-}
-
-.readings {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 9px;
-    padding: 16px 18px;
-}
-
-.reading-card {
-    padding: 12px;
-    border: 1px solid var(--border);
-    background: #fbfdfc;
-    border-radius: 12px;
-}
-
-.reading-card small {
-    display: block;
-    color: var(--muted);
-    font-size: 10px;
-    font-weight: 800;
-    margin-bottom: 7px;
-}
-
-.reading-card strong {
-    font-size: 23px;
-    letter-spacing: -.7px;
-}
-
-.reading-card span {
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.law-result {
-    margin: 0 18px;
-    padding: 12px;
-    border-radius: 12px;
-    background: var(--green-light);
-    color: #176c53;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.5;
-}
-
-.visibility-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 15px 18px 3px;
-}
-
-.visibility-options label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.visibility-options input {
-    accent-color: var(--green);
-}
-
-.guide-box {
-    margin: 16px 18px 0;
-    padding: 14px;
-    background: #fff9ee;
-    border: 1px solid #f6e8c9;
-    border-radius: 12px;
-}
-
-.guide-box h3 {
-    margin: 0 0 7px;
-    font-size: 13px;
-}
-
-.guide-box p {
-    margin: 0;
-    color: #816b43;
-    line-height: 1.55;
-    font-size: 11px;
-}
-
-.guide-bottom {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.step-count {
-    color: #927a4f;
-    font-size: 10px;
-    font-weight: 800;
-}
-
-.guide-bottom button {
-    border: 0;
-    border-radius: 8px;
-    padding: 8px 11px;
-    background: #f2e2bd;
-    color: #755b2a;
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.observation {
-    margin-top: 20px;
-    padding: 18px 20px;
-}
-
-.observation h2 {
-    margin: 0 0 9px;
-    font-size: 16px;
-}
-
-.observation p {
-    margin: 0;
-    line-height: 1.7;
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.formula {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 10px 16px;
-    background: var(--green-light);
-    color: #126d51;
-    border-radius: 10px;
-    font-size: 17px;
-    font-weight: 900;
-}
-
-.footer-note {
-    margin-top: 20px;
-    text-align: center;
-    color: #91a29a;
-    font-size: 11px;
-    line-height: 1.6;
-}
-
-[hidden] {
-    display: none !important;
-}
-
-@media (max-width: 900px) {
-    .workspace {
-        grid-template-columns: 1fr;
-    }
-
-    .control-panel {
-        max-width: none;
-    }
-}
-
-@media (max-width: 520px) {
-    .topbar {
-        padding: 11px 4%;
-    }
-
-    .brand small {
-        display: none;
-    }
-
-    .back-link {
-        display: none;
-    }
-
-    .top-actions button {
-        padding: 9px;
-        font-size: 11px;
-    }
-
-    main {
-        width: 94%;
-        margin-top: 22px;
-    }
-
-    .scene-wrap {
-        padding: 4px;
-    }
-
-    #diagram {
-        min-height: 250px;
-    }
-}
+:root{--bg:#f2f7f5;--surface:#fff;--ink:#20352f;--muted:#71837c;--line:#dce7e2;--green:#16866a;--green-soft:#e5f5ef;--blue:#2589d8;--orange:#ed9238;--shadow:0 10px 28px rgba(31,69,54,.07)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--bg)}button,input{font:inherit}button{cursor:pointer}
+.topbar{height:66px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(3%,calc((100% - 1500px)/2));gap:16px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.3px}.brandmark{height:39px;width:39px;border-radius:12px;background:var(--green-soft);display:grid;place-items:center;color:var(--green);font-size:21px}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:1px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:8px}.top-actions a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:750;margin-right:8px}
+.btn{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);padding:9px 13px;font-size:12px;font-weight:800}.btn:hover{background:#f3f8f6}.btn.primary{background:var(--green);border-color:var(--green);color:white}.btn.primary:hover{background:#0f7057}.btn:disabled{opacity:.45;cursor:not-allowed}
+.page{max-width:1500px;width:94%;margin:24px auto 44px}
+.intro{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:18px}.eyebrow{font-size:10px;font-weight:900;letter-spacing:1.6px;color:var(--green);text-transform:uppercase}.intro h1{font-size:clamp(25px,3.5vw,36px);letter-spacing:-1.1px;margin:6px 0}.intro p{max-width:780px;margin:0;color:var(--muted);font-size:13px;line-height:1.55}.class-chip{white-space:nowrap;border:1px solid #cde7db;background:var(--green-soft);color:#177255;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:850}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:15px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line)}.panel-head h2{font-size:14px;margin:0}.live{font-size:10px;font-weight:850;color:var(--green);display:flex;align-items:center;gap:7px}.live:before{content:"";height:7px;width:7px;background:#1cb783;border-radius:50%;box-shadow:0 0 0 4px #e8f8f1}
+.sim-wrap{background:#f9fcfa;padding:8px}.sim-svg{display:block;width:100%;height:auto;aspect-ratio:1000/620;touch-action:none;user-select:none}.sim-svg [data-drag]{cursor:grab;touch-action:none}.sim-svg [data-drag]:active{cursor:grabbing}.sim-svg .ray{filter:drop-shadow(0 1px 4px rgba(45,100,140,.25));stroke-dasharray:10 5;animation:rayflow 1.5s linear infinite}.sim-svg .reflected{animation-direction:reverse}@keyframes rayflow{to{stroke-dashoffset:-30}}
+.scene-tools{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:10px 13px;border-top:1px solid var(--line);background:#fff}.tool-label{font-size:10px;color:var(--muted);font-weight:850;margin-right:2px}.tool-btn{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:#fff;color:#53665e;font-size:10px;font-weight:800}.tool-btn.active{background:var(--green-soft);border-color:#b9dfd0;color:#126e52}.scene-note{margin-left:auto;color:var(--muted);font-size:10px}
+.side-panel{padding-bottom:13px}.side-section{padding:13px 15px;border-bottom:1px solid #edf2ef}.section-title{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:850;margin-bottom:9px}.value{color:var(--green);background:var(--green-soft);border-radius:7px;padding:4px 7px;font-size:11px;font-weight:900}.slider{width:100%;accent-color:var(--green);cursor:pointer}.scale{display:flex;justify-content:space-between;font-size:9px;color:#91a098;margin-top:3px}.help{font-size:10px;color:var(--muted);line-height:1.45;margin:7px 0 0}.control-row{display:flex;gap:7px}.control-row .tool-btn{flex:1}
+.readings{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 15px}.read-card{border:1px solid var(--line);border-radius:11px;padding:10px;background:#fbfdfc}.read-card small{display:block;font-size:9px;color:var(--muted);font-weight:850;margin-bottom:6px}.read-card strong{font-size:23px;letter-spacing:-.8px}.read-card span{font-size:10px;color:var(--muted);margin-left:3px}.law-status{margin:0 15px;padding:10px 11px;border-radius:10px;background:var(--green-soft);color:#176b51;font-size:10px;line-height:1.5;font-weight:750}
+.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:12px 15px 0}.mode-btn{border:1px solid transparent;background:#f3f7f5;color:var(--muted);border-radius:8px;padding:9px 6px;font-size:10px;font-weight:850}.mode-btn.active{background:var(--green-soft);border-color:#b9dfd0;color:#147153}
+.guided{margin:12px 15px 0;padding:12px;background:#fff9ed;border:1px solid #f0e3c8;border-radius:11px}.guided h3{font-size:11px;margin:0 0 6px}.guided p{font-size:10px;color:#796b4e;line-height:1.5;margin:0}.guided-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:9px}.guided-foot span{font-size:9px;font-weight:850;color:#9b865d}.guided-foot button{border:0;background:#f3e5c6;border-radius:7px;padding:7px 9px;color:#71572d;font-size:10px;font-weight:850}
+.below-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.75fr);gap:15px;margin-top:15px}.subpanel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;box-shadow:var(--shadow)}.subpanel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.subpanel h2{margin:0;font-size:13px}.subpanel p{color:var(--muted);font-size:10px;line-height:1.5;margin:7px 0}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:10px;white-space:nowrap}th,td{text-align:center;padding:8px 9px;border-bottom:1px solid #edf2ef}th{color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.4px}td{font-weight:750}td:first-child,th:first-child{text-align:left}.empty{color:#95a39d;text-align:center;padding:18px 8px;font-size:10px}.graph{width:100%;height:auto;display:block;max-height:215px}
+.theory{margin-top:15px;padding:15px 17px;background:#fff;border:1px solid var(--line);border-radius:14px}.theory h2{font-size:13px;margin:0 0 7px}.theory p{font-size:11px;line-height:1.6;color:var(--muted);margin:0}.formula{display:inline-flex;margin-top:9px;padding:9px 13px;border-radius:9px;background:var(--green-soft);color:#116b50;font-weight:900;font-size:15px}.footer{text-align:center;color:#93a19b;font-size:10px;line-height:1.6;margin-top:17px}[hidden]{display:none!important}
+@media(max-width:980px){.main-grid{grid-template-columns:1fr}.side-panel{display:grid;grid-template-columns:1fr 1fr}.side-panel>.panel-head{grid-column:1/-1}.side-section{border-right:1px solid #edf2ef}.readings{align-self:center}.law-status{align-self:center}.mode-row,.guided{grid-column:1/-1}.below-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.topbar{height:58px;padding:0 3%}.brand small{display:none}.top-actions a{display:none}.top-actions .btn{padding:8px 9px;font-size:10px}.page{width:95%;margin-top:17px}.intro{display:block}.class-chip{display:inline-block;margin-top:10px}.sim-wrap{padding:3px}.scene-tools{gap:5px}.scene-note{width:100%;margin:2px 0 0}.side-panel{display:block}.side-section{border-right:0}.below-grid{grid-template-columns:1fr}.read-card strong{font-size:21px}}
 </style>
 </head>
-
 <body>
-
 <header class="topbar">
-    <div class="brand">
-        <div class="brand-icon">光</div>
-        <div>
-            Virtual Science Lab
-            <small>INTERACTIVE PHYSICS LAB</small>
-        </div>
-    </div>
-
-    <div class="top-actions">
-        <a class="back-link"
-           href="../../../index.html?subject=physics">
-            ← Physics Playground
-        </a>
-
-        <button class="secondary-btn" id="fullscreenBtn">
-            ⛶ Fullscreen
-        </button>
-
-        <button class="primary-btn" id="resetBtn">
-            ↻ Reset
-        </button>
-    </div>
+  <div class="brand"><div class="brandmark">光</div><div>Virtual Science Lab<small>INTERACTIVE PHYSICS</small></div></div>
+  <div class="top-actions"><a href="../../../index.html?subject=physics">← Physics Playground</a><button class="btn" id="fullscreenBtn">⛶ Fullscreen</button><button class="btn primary" id="resetBtn">↻ Reset All</button></div>
 </header>
-
-<main>
-
-    <section class="hero">
-        <div class="eyebrow">CLASS 10 · LIGHT · OPTICS</div>
-        <h1>Law of Reflection</h1>
-        <p>
-            Investigate how light reflects from a plane mirror.
-            Move the light source, rotate the mirror and observe
-            how the angles of incidence and reflection change.
-        </p>
+<main class="page">
+  <section class="intro"><div><div class="eyebrow">CLASS 10 · LIGHT · REFLECTION</div><h1>Law of Reflection</h1><p>Build your own ray experiment. Move the laser, rotate the mirror, measure angles and collect observations. Hide the rays to make a prediction, then reveal the result.</p></div><div class="class-chip">2D INTERACTIVE LAB</div></section>
+  <div class="main-grid">
+    <section class="panel">
+      <div class="panel-head"><h2>Optical Bench</h2><span class="live">SIMULATION RUNNING</span></div>
+      <div class="sim-wrap">
+        <svg id="scene" class="sim-svg" viewBox="0 0 1000 620" role="img" aria-label="Interactive laser, plane mirror and reflected light rays">
+          <defs>
+            <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#e8efeb" stroke-width="1"/></pattern>
+            <linearGradient id="mirrorFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c5d8d1"/><stop offset=".48" stop-color="#f0f6f3"/><stop offset="1" stop-color="#91aea3"/></linearGradient>
+            <marker id="blueArrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L0 8L9 4Z" fill="#2589d8"/></marker>
+            <marker id="orangeArrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L0 8L9 4Z" fill="#ed9238"/></marker>
+            <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <rect width="1000" height="620" rx="12" fill="#fbfdfc"/><rect width="1000" height="620" fill="url(#grid)"/>
+          <line x1="55" y1="390" x2="945" y2="390" stroke="#c5d5ce" stroke-width="1.5" stroke-dasharray="5 7"/><text x="64" y="378" fill="#9aaba3" font-size="11" font-weight="700">OPTICAL BENCH</text>
+          <g id="rulerGroup" opacity=".95"><rect x="180" y="548" width="640" height="40" rx="5" fill="#fff9e8" stroke="#e8d8a8"/><line x1="200" y1="548" x2="800" y2="548" stroke="#c9ab61" stroke-width="2" id="rulerBase"/><g id="rulerTicks"></g><text x="500" y="581" text-anchor="middle" fill="#987d3f" font-size="10" font-weight="800">POSITION SCALE · RELATIVE UNITS</text></g>
+          <g id="protractorGroup"></g>
+          <line id="normalLine" x1="500" y1="150" x2="500" y2="490" stroke="#83968e" stroke-width="2" stroke-dasharray="8 7"/>
+          <text id="normalLabel" x="512" y="164" fill="#72857c" font-size="12" font-weight="800">NORMAL</text>
+          <line id="mirrorBody" x1="240" y1="390" x2="760" y2="390" stroke="url(#mirrorFill)" stroke-width="26" stroke-linecap="round"/>
+          <line id="mirrorSurface" x1="240" y1="390" x2="760" y2="390" stroke="#76968a" stroke-width="3" stroke-linecap="round"/>
+          <g id="mirrorHatch"></g>
+          <line id="incidentRay" class="ray" x1="380" y1="220" x2="500" y2="390" stroke="#2589d8" stroke-width="4" stroke-linecap="round" marker-end="url(#blueArrow)" filter="url(#glow)"/>
+          <line id="reflectedRay" class="ray reflected" x1="500" y1="390" x2="680" y2="130" stroke="#ed9238" stroke-width="4" stroke-linecap="round" marker-end="url(#orangeArrow)" filter="url(#glow)"/>
+          <path id="incidentArc" fill="none" stroke="#2589d8" stroke-width="3"/>
+          <path id="reflectedArc" fill="none" stroke="#ed9238" stroke-width="3"/>
+          <text id="incidentText" fill="#1876bb" font-size="15" font-weight="900">i = 35°</text>
+          <text id="reflectedText" fill="#d47724" font-size="15" font-weight="900">r = 35°</text>
+          <g id="laserHandle" data-drag="laser" tabindex="0" role="button" aria-label="Drag laser to change the direction of the incident ray">
+            <rect x="-39" y="-20" width="63" height="40" rx="11" fill="#fff4cb" stroke="#dca83d" stroke-width="2.5"/>
+            <rect x="-29" y="-12" width="31" height="24" rx="5" fill="#f3c65d" stroke="#d5a13b"/>
+            <path d="M2 -8L28 0L2 8Z" fill="#dba034" stroke="#b98222" stroke-width="1.5"/>
+            <circle cx="-17" cy="0" r="4" fill="#fff" stroke="#bf8b27"/>
+            <text x="-8" y="-29" text-anchor="middle" fill="#8e6d2b" font-size="11" font-weight="900">LASER</text>
+          </g>
+          <g id="incidenceHandle" data-drag="point" tabindex="0" role="button" aria-label="Drag to move the point of incidence"><circle r="14" fill="#fff" stroke="#16866a" stroke-width="3"/><circle r="5" fill="#16866a"/></g>
+          <g id="rotationHandle" data-drag="rotate" tabindex="0" role="button" aria-label="Drag to rotate the plane mirror"><circle r="17" fill="#fff" stroke="#9ab4a8" stroke-width="2"/><path d="M-8 0H8M0 -8V8" stroke="#638b79" stroke-width="2.5" stroke-linecap="round"/><circle r="4" fill="#16866a"/></g>
+          <text id="pointLabel" x="516" y="421" fill="#16866a" font-size="11" font-weight="900">POINT OF INCIDENCE</text>
+          <text id="mirrorLabel" x="700" y="427" fill="#58776a" font-size="11" font-weight="900" text-anchor="middle">PLANE MIRROR</text>
+          <g transform="translate(25 28)"><rect width="215" height="56" rx="10" fill="#fff" stroke="#e0e9e4"/><circle cx="18" cy="19" r="5" fill="#2589d8"/><text x="31" y="23" fill="#587168" font-size="11" font-weight="800">INCIDENT RAY</text><circle cx="18" cy="39" r="5" fill="#ed9238"/><text x="31" y="43" fill="#587168" font-size="11" font-weight="800">REFLECTED RAY</text></g>
+          <text x="970" y="36" text-anchor="end" fill="#a0afa8" font-size="10" font-weight="800">DRAG THE LASER · MIRROR HANDLE · GREEN POINT</text>
+        </svg>
+      </div>
+      <div class="scene-tools">
+        <span class="tool-label">RAY DISPLAY</span>
+        <button class="tool-btn active" data-ray="both">Both rays</button>
+        <button class="tool-btn" data-ray="incident">Incident only</button>
+        <button class="tool-btn" data-ray="reflected">Reflected only</button>
+        <button class="tool-btn" data-ray="none">Hide rays</button>
+        <span class="scene-note">Drag objects directly on the bench</span>
+      </div>
     </section>
-
-    <div class="workspace">
-
-        <!-- SIMULATION SCENE -->
-        <section class="panel">
-            <div class="panel-heading">
-                <h2>Interactive Ray Diagram</h2>
-                <div class="live-indicator">
-                    <span class="live-dot"></span>
-                    LIVE SIMULATION
-                </div>
-            </div>
-
-            <div class="scene-wrap">
-
-                <svg id="diagram"
-                     viewBox="0 0 800 540"
-                     role="img"
-                     aria-label="Interactive plane mirror reflection experiment">
-
-                    <defs>
-                        <pattern id="grid"
-                                 width="32"
-                                 height="32"
-                                 patternUnits="userSpaceOnUse">
-                            <path d="M 32 0 L 0 0 0 32"
-                                  fill="none"
-                                  stroke="#e1eee7"
-                                  stroke-width="1"/>
-                        </pattern>
-
-                        <linearGradient id="mirrorGradient"
-                                        x1="0" y1="0"
-                                        x2="0" y2="1">
-                            <stop offset="0%"
-                                  stop-color="#a8c1bb"/>
-                            <stop offset="50%"
-                                  stop-color="#dce8e3"/>
-                            <stop offset="100%"
-                                  stop-color="#8ca9a0"/>
-                        </linearGradient>
-
-                        <marker id="incidentArrow"
-                                markerWidth="9"
-                                markerHeight="9"
-                                refX="7"
-                                refY="3"
-                                orient="auto"
-                                markerUnits="userSpaceOnUse">
-                            <path d="M0,0 L0,6 L8,3 Z"
-                                  fill="#2788dc"/>
-                        </marker>
-
-                        <marker id="reflectedArrow"
-                                markerWidth="9"
-                                markerHeight="9"
-                                refX="7"
-                                refY="3"
-                                orient="auto"
-                                markerUnits="userSpaceOnUse">
-                            <path d="M0,0 L0,6 L8,3 Z"
-                                  fill="#f08b36"/>
-                        </marker>
-
-                        <filter id="softGlow">
-                            <feGaussianBlur stdDeviation="5"
-                                            result="blur"/>
-                            <feMerge>
-                                <feMergeNode in="blur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-
-                    <rect width="800"
-                          height="540"
-                          rx="12"
-                          fill="#f8fcf9"/>
-
-                    <rect width="800"
-                          height="540"
-                          fill="url(#grid)"/>
-
-                    <!-- NORMAL -->
-                    <line id="normalLine"
-                          x1="400" y1="150"
-                          x2="400" y2="440"
-                          stroke="#82958d"
-                          stroke-width="2"
-                          stroke-dasharray="8 7"/>
-
-                    <text id="normalLabel"
-                          x="412" y="164"
-                          fill="#71847d"
-                          font-size="13"
-                          font-weight="700">
-                        NORMAL
-                    </text>
-
-                    <!-- MIRROR BODY -->
-                    <line id="mirrorBody"
-                          x1="110" y1="360"
-                          x2="690" y2="360"
-                          stroke="url(#mirrorGradient)"
-                          stroke-width="24"
-                          stroke-linecap="round"/>
-
-                    <line id="mirrorSurface"
-                          x1="110" y1="360"
-                          x2="690" y2="360"
-                          stroke="#66877d"
-                          stroke-width="3"
-                          stroke-linecap="round"/>
-
-                    <text id="mirrorLabel"
-                          x="640" y="393"
-                          fill="#5c786e"
-                          font-size="13"
-                          font-weight="800"
-                          text-anchor="middle">
-                        PLANE MIRROR
-                    </text>
-
-                    <!-- INCIDENT RAY -->
-                    <line id="incidentRay"
-                          x1="560" y1="180"
-                          x2="400" y2="360"
-                          stroke="#2788dc"
-                          stroke-width="4"
-                          stroke-linecap="round"
-                          marker-end="url(#incidentArrow)"
-                          filter="url(#softGlow)"/>
-
-                    <!-- REFLECTED RAY -->
-                    <line id="reflectedRay"
-                          x1="400" y1="360"
-                          x2="240" y2="180"
-                          stroke="#f08b36"
-                          stroke-width="4"
-                          stroke-linecap="round"
-                          marker-end="url(#reflectedArrow)"
-                          filter="url(#softGlow)"/>
-
-                    <!-- ANGLE ARCS -->
-                    <path id="incidentArc"
-                          fill="none"
-                          stroke="#2788dc"
-                          stroke-width="3"/>
-
-                    <path id="reflectedArc"
-                          fill="none"
-                          stroke="#f08b36"
-                          stroke-width="3"/>
-
-                    <text id="incidentAngleText"
-                          fill="#1877c3"
-                          font-size="16"
-                          font-weight="900">
-                        i = 35°
-                    </text>
-
-                    <text id="reflectedAngleText"
-                          fill="#d87723"
-                          font-size="16"
-                          font-weight="900">
-                        r = 35°
-                    </text>
-
-                    <!-- LIGHT SOURCE HANDLE -->
-                    <g id="sourceHandle"
-                       class="draggable"
-                       data-drag="source">
-
-                        <circle r="27"
-                                fill="#fff0bb"
-                                stroke="#e5a52e"
-                                stroke-width="3"/>
-
-                        <circle r="12"
-                                fill="#ffca55"
-                                stroke="#e29b19"
-                                stroke-width="2"/>
-
-                        <path d="M0 -34 V-43
-                                 M34 0 H43
-                                 M-34 0 H-43
-                                 M24 -24 L31 -31
-                                 M-24 -24 L-31 -31"
-                              stroke="#e29b19"
-                              stroke-width="3"
-                              stroke-linecap="round"/>
-                    </g>
-
-                    <text id="sourceLabel"
-                          x="560" y="140"
-                          fill="#986d19"
-                          font-size="13"
-                          font-weight="800"
-                          text-anchor="middle">
-                        LIGHT SOURCE
-                    </text>
-
-                    <!-- INCIDENCE POINT -->
-                    <g id="incidenceHandle"
-                       class="draggable"
-                       data-drag="point">
-
-                        <circle r="13"
-                                fill="#ffffff"
-                                stroke="#16896b"
-                                stroke-width="3"/>
-
-                        <circle r="5"
-                                fill="#16896b"/>
-                    </g>
-
-                    <text id="pointLabel"
-                          x="418" y="388"
-                          fill="#16896b"
-                          font-size="12"
-                          font-weight="900">
-                        POINT OF INCIDENCE
-                    </text>
-
-                    <text x="26" y="35"
-                          fill="#93a39b"
-                          font-size="12"
-                          font-weight="700">
-                        DRAG THE LIGHT SOURCE OR INCIDENCE POINT
-                    </text>
-
-                    <g transform="translate(28 486)">
-                        <line x1="0" y1="0"
-                              x2="30" y2="0"
-                              stroke="#2788dc"
-                              stroke-width="4"/>
-                        <text x="40" y="5"
-                              fill="#627b70"
-                              font-size="12"
-                              font-weight="700">
-                            Incident ray
-                        </text>
-
-                        <line x1="155" y1="0"
-                              x2="185" y2="0"
-                              stroke="#f08b36"
-                              stroke-width="4"/>
-                        <text x="195" y="5"
-                              fill="#627b70"
-                              font-size="12"
-                              font-weight="700">
-                            Reflected ray
-                        </text>
-                    </g>
-
-                </svg>
-            </div>
-
-            <div class="scene-hint">
-                <strong>Try it:</strong>
-                Drag the yellow light source to change the
-                angle of incidence. Drag the green point to
-                move the point of incidence along the mirror.
-            </div>
-        </section>
-
-        <!-- CONTROL PANEL -->
-        <aside class="panel control-panel">
-
-            <div class="panel-heading">
-                <h2>Experiment Controls</h2>
-                <span class="eyebrow">LAB PANEL</span>
-            </div>
-
-            <div class="mode-switch">
-                <button class="mode-btn active"
-                        id="guidedMode">
-                    Guided Lab
-                </button>
-
-                <button class="mode-btn"
-                        id="freeMode">
-                    Free Explore
-                </button>
-            </div>
-
-            <!-- ANGLE CONTROL -->
-            <div class="control-section">
-                <div class="control-title">
-                    Angle of Incidence
-                    <span class="control-value"
-                          id="angleValue">35°</span>
-                </div>
-
-                <input id="angleSlider"
-                       type="range"
-                       min="0"
-                       max="80"
-                       step="1"
-                       value="35">
-
-                <div class="range-scale">
-                    <span>0°</span>
-                    <span>40°</span>
-                    <span>80°</span>
-                </div>
-
-                <p class="control-description">
-                    Change the angle between the incident ray
-                    and the normal.
-                </p>
-            </div>
-
-            <!-- MIRROR CONTROL -->
-            <div class="control-section">
-                <div class="control-title">
-                    Mirror Rotation
-                    <span class="control-value"
-                          id="mirrorValue">0°</span>
-                </div>
-
-                <input id="mirrorSlider"
-                       type="range"
-                       min="-25"
-                       max="25"
-                       step="1"
-                       value="0">
-
-                <div class="range-scale">
-                    <span>-25°</span>
-                    <span>0°</span>
-                    <span>+25°</span>
-                </div>
-
-                <p class="control-description">
-                    Rotate the plane mirror. The normal
-                    and both rays update automatically.
-                </p>
-            </div>
-
-            <!-- INCIDENCE POINT CONTROL -->
-            <div class="control-section">
-                <div class="control-title">
-                    Point Position
-                    <span class="control-value"
-                          id="positionValue">0</span>
-                </div>
-
-                <input id="positionSlider"
-                       type="range"
-                       min="-140"
-                       max="140"
-                       step="1"
-                       value="0">
-
-                <div class="range-scale">
-                    <span>Left</span>
-                    <span>Centre</span>
-                    <span>Right</span>
-                </div>
-            </div>
-
-            <!-- LIVE READINGS -->
-            <div class="readings">
-
-                <div class="reading-card">
-                    <small>ANGLE OF INCIDENCE</small>
-                    <strong id="incidenceReading">35°</strong>
-                    <span>i</span>
-                </div>
-
-                <div class="reading-card">
-                    <small>ANGLE OF REFLECTION</small>
-                    <strong id="reflectionReading">35°</strong>
-                    <span>r</span>
-                </div>
-
-            </div>
-
-            <div class="law-result"
-                 id="lawResult"
-                 aria-live="polite">
-                Law verified: angle of incidence equals
-                angle of reflection.
-            </div>
-
-            <!-- DISPLAY OPTIONS -->
-            <div class="visibility-options">
-
-                <label>
-                    <input type="checkbox"
-                           id="showNormal"
-                           checked>
-                    Show normal
-                </label>
-
-                <label>
-                    <input type="checkbox"
-                           id="showAngles"
-                           checked>
-                    Show angles
-                </label>
-
-            </div>
-
-            <!-- GUIDED TASK -->
-            <div class="guide-box" id="guideBox">
-
-                <h3>Guided Experiment</h3>
-
-                <p id="guideText">
-                    Step 1: Set the angle of incidence to
-                    20°. Observe the incident and reflected rays.
-                </p>
-
-                <div class="guide-bottom">
-                    <span class="step-count"
-                          id="stepCount">
-                        STEP 1 OF 3
-                    </span>
-
-                    <button id="nextStep">
-                        Next Step →
-                    </button>
-                </div>
-
-            </div>
-
-        </aside>
-
-    </div>
-
-    <!-- OBSERVATION / THEORY -->
-    <section class="panel observation">
-
-        <h2>What are you observing?</h2>
-
-        <p>
-            When a light ray strikes a plane mirror, it
-            reflects from the surface. The angle of incidence
-            and angle of reflection are measured from the
-            normal, which is perpendicular to the mirror
-            at the point where the light ray strikes it.
-            In this ideal plane-mirror model, these two
-            angles are always equal.
-        </p>
-
-        <div class="formula">
-            Angle of incidence = Angle of reflection
-        </div>
-
+    <aside class="panel side-panel">
+      <div class="panel-head"><h2>Experiment Controls</h2><span class="eyebrow">CONTROL AREA</span></div>
+      <div class="side-section">
+        <div class="section-title">Laser direction <span class="value" id="laserValue">55°</span></div>
+        <input class="slider" id="laserSlider" type="range" min="20" max="100" step="1" value="55" aria-label="Laser direction angle"/>
+        <div class="scale"><span>20°</span><span>60°</span><span>100°</span></div>
+        <p class="help">Change the laser's direction independently of the mirror.</p>
+        <div class="control-row" style="margin-top:8px"><button class="tool-btn" data-target="20">Try 20°</button><button class="tool-btn" data-target="40">Try 40°</button><button class="tool-btn" data-target="60">Try 60°</button></div>
+      </div>
+      <div class="side-section">
+        <div class="section-title">Mirror rotation <span class="value" id="mirrorValue">0°</span></div>
+        <input class="slider" id="mirrorSlider" type="range" min="-20" max="20" step="1" value="0" aria-label="Mirror rotation"/>
+        <div class="scale"><span>-20°</span><span>0°</span><span>+20°</span></div>
+        <p class="help">Rotate the mirror and observe how the normal and reflected ray change.</p>
+      </div>
+      <div class="side-section">
+        <div class="section-title">Point of incidence <span class="value" id="positionValue">0</span></div>
+        <input class="slider" id="positionSlider" type="range" min="-130" max="130" step="1" value="0" aria-label="Point of incidence position"/>
+        <div class="scale"><span>Left</span><span>Centre</span><span>Right</span></div>
+      </div>
+      <div class="readings">
+        <div class="read-card"><small>ANGLE OF INCIDENCE (i)</small><strong id="incidenceValue">35°</strong><span>degrees</span></div>
+        <div class="read-card"><small>ANGLE OF REFLECTION (r)</small><strong id="reflectionValue">35°</strong><span>degrees</span></div>
+      </div>
+      <div class="law-status" id="lawStatus" aria-live="polite">The two angles are equal. Both are measured from the normal.</div>
+      <div class="side-section">
+        <div class="section-title">Display tools</div>
+        <div class="control-row"><button class="tool-btn active" id="normalToggle">✓ Normal</button><button class="tool-btn active" id="angleToggle">✓ Angle arcs</button></div>
+        <div class="control-row" style="margin-top:7px"><button class="tool-btn" id="protractorToggle">＋ Protractor</button><button class="tool-btn active" id="rulerToggle">✓ Ruler</button></div>
+        <p class="help">Use the measuring tools to inspect the ray geometry.</p>
+      </div>
+      <div class="mode-row"><button class="mode-btn active" id="guidedMode">Guided investigation</button><button class="mode-btn" id="freeMode">Free exploration</button></div>
+      <div class="guided" id="guidedBox"><h3 id="guideTitle">Investigation 1 · Set an angle</h3><p id="guideText">Set the incidence angle to 20°. Use the laser direction slider or drag the laser. Read both angles.</p><div class="guided-foot"><span id="guideStep">TASK 1 OF 4</span><button id="nextGuide">Next task →</button></div></div>
+    </aside>
+  </div>
+  <div class="below-grid">
+    <section class="subpanel">
+      <div class="subpanel-head"><h2>Measurement table</h2><div style="display:flex;gap:6px"><button class="btn primary" id="recordBtn">＋ Record trial</button><button class="btn" id="clearDataBtn">Clear</button></div></div>
+      <p>Change the laser direction, then record each pair of angles. Compare the results from different trials.</p>
+      <div class="table-wrap"><table><thead><tr><th>Trial</th><th>Incidence (i)</th><th>Reflection (r)</th><th>Difference</th></tr></thead><tbody id="trialRows"><tr><td colspan="4" class="empty">No trials recorded yet. Press “Record trial” to begin.</td></tr></tbody></table></div>
     </section>
-
-    <div class="footer-note">
-        Virtual Science Lab · Interactive Physics Experiment<br>
-        Ideal plane-mirror model · All angles are measured
-        from the normal.
-    </div>
-
+    <section class="subpanel">
+      <div class="subpanel-head"><h2>Angle comparison</h2><span class="eyebrow">r VS i</span></div>
+      <p>The diagonal reference line represents equal incidence and reflection angles.</p>
+      <svg id="graph" class="graph" viewBox="0 0 360 220" role="img" aria-label="Graph comparing angle of reflection with angle of incidence">
+        <rect x="43" y="12" width="280" height="170" rx="5" fill="#fbfdfc" stroke="#e4ece7"/>
+        <g id="graphGrid"></g>
+        <line x1="43" y1="182" x2="323" y2="182" stroke="#73877e" stroke-width="1.5"/><line x1="43" y1="12" x2="43" y2="182" stroke="#73877e" stroke-width="1.5"/>
+        <line x1="43" y1="182" x2="323" y2="12" stroke="#9ab7aa" stroke-width="2" stroke-dasharray="6 5"/>
+        <g id="graphPoints"></g>
+        <text x="183" y="211" text-anchor="middle" fill="#71837c" font-size="10" font-weight="800">INCIDENCE ANGLE (°)</text>
+        <text x="12" y="97" text-anchor="middle" transform="rotate(-90 12 97)" fill="#71837c" font-size="10" font-weight="800">REFLECTION (°)</text>
+      </svg>
+      <p id="graphNote">No measurements yet. Recorded trials will appear as points.</p>
+    </section>
+  </div>
+  <section class="theory"><h2>What should you discover?</h2><p>The angle of incidence is the angle between the incoming ray and the normal. The angle of reflection is the angle between the reflected ray and the normal. In an ideal plane-mirror model, the reflected ray is symmetric to the incident ray about the normal. Do not measure either angle from the mirror surface itself.</p><div class="formula">Angle of incidence = Angle of reflection</div></section>
+  <div class="footer">Virtual Science Lab · Original interactive learning activity<br/>Ideal plane-mirror model · Angles are measured from the normal</div>
 </main>
-
 <script>
 (() => {
-    "use strict";
+  "use strict";
+  const state = { beta:55, mirror:0, position:0, rays:"both", showNormal:true, showAngles:true, showProtractor:false, showRuler:true, mode:"guided", guide:0, trials:[] };
+  const $ = id => document.getElementById(id);
+  const svg = $("scene");
+  const tasks = [
+    {title:"Investigation 1 · Set an angle",text:"Set the angle of incidence to 20°. Use the laser direction slider or drag the laser. Read both angles."},
+    {title:"Investigation 2 · Change the angle",text:"Set the incidence angle to about 40°. Observe how the reflected ray changes by the same amount."},
+    {title:"Investigation 3 · Rotate the mirror",text:"Rotate the mirror while keeping the laser direction fixed. Watch the normal and both angle readings update."},
+    {title:"Investigation 4 · Collect evidence",text:"Record at least three trials. Compare the values in the table and the points on the graph."}
+  ];
+  const rad = d => d * Math.PI / 180;
+  const deg = r => r * 180 / Math.PI;
+  const clamp = (v,min,max) => Math.max(min,Math.min(max,v));
+  const normDeg = d => ((d + 180) % 360 + 360) % 360 - 180;
+  const makePoint = (x,y) => ({x,y});
 
-    /* -----------------------------------------------
-       DEFAULT VALUES
-    ----------------------------------------------- */
+  function line(id,a,b){
+    const el=$(id);
+    el.setAttribute("x1",a.x);el.setAttribute("y1",a.y);
+    el.setAttribute("x2",b.x);el.setAttribute("y2",b.y);
+  }
 
-    const DEFAULTS = {
-        angle: 35,
-        mirror: 0,
-        position: 0
-    };
+  function moveGroup(id,p,rotation=0){
+    $(id).setAttribute("transform",`translate(${p.x} ${p.y}) rotate(${rotation})`);
+  }
 
-    const state = {
-        angle: DEFAULTS.angle,
-        mirror: DEFAULTS.mirror,
-        position: DEFAULTS.position,
-        showNormal: true,
-        showAngles: true,
-        mode: "guided",
-        step: 0
-    };
+  function arcPath(c,r,start,end){
+    const delta=normDeg(end-start);
+    const a=rad(start), b=rad(start+delta);
+    const p1=makePoint(c.x+r*Math.cos(a),c.y+r*Math.sin(a));
+    const p2=makePoint(c.x+r*Math.cos(b),c.y+r*Math.sin(b));
+    return `M ${p1.x} ${p1.y} A ${r} ${r} 0 ${Math.abs(delta)>180?1:0} ${delta>=0?1:0} ${p2.x} ${p2.y}`;
+  }
 
-    const GUIDE_STEPS = [
-        "Step 1: Set the angle of incidence to 20°. Observe the incident and reflected rays.",
+  function placeText(id,p,dx=0,dy=0){
+    $(id).setAttribute("x",p.x+dx);
+    $(id).setAttribute("y",p.y+dy);
+  }
 
-        "Step 2: Change the angle of incidence to 40°. Compare the two angle readings.",
+  function geometry(){
+    const phi=rad(state.mirror), beta=rad(state.beta);
+    const t=makePoint(Math.cos(phi),Math.sin(phi));
+    const n=makePoint(Math.sin(phi),-Math.cos(phi));
+    const p=makePoint(500+state.position*t.x,390+state.position*t.y);
+    const d=makePoint(Math.cos(beta),Math.sin(beta));
+    const dot=d.x*n.x+d.y*n.y;
+    const reflected=makePoint(d.x-2*dot*n.x,d.y-2*dot*n.y);
+    const source=makePoint(p.x-205*d.x,p.y-205*d.y);
+    const end=makePoint(p.x+255*reflected.x,p.y+255*reflected.y);
+    const mirrorA=makePoint(p.x-260*t.x,p.y-260*t.y);
+    const mirrorB=makePoint(p.x+260*t.x,p.y+260*t.y);
+    const normalA=makePoint(p.x+210*n.x,p.y+210*n.y);
+    const normalB=makePoint(p.x-65*n.x,p.y-65*n.y);
+    const normalAngle=deg(Math.atan2(n.y,n.x));
+    const sourceAngle=deg(Math.atan2(-d.y,-d.x));
+    const reflectedAngle=deg(Math.atan2(reflected.y,reflected.x));
+    const i=Math.abs(normDeg(sourceAngle-normalAngle));
+    const r=Math.abs(normDeg(reflectedAngle-normalAngle));
+    return {t,n,p,d,reflected,source,end,mirrorA,mirrorB,normalA,normalB,normalAngle,sourceAngle,reflectedAngle,i,r};
+  }
 
-        "Step 3: Set the angle to 60°. Notice that the angle of reflection changes by the same amount."
-    ];
-
-    const $ = id => document.getElementById(id);
-
-    const svg = $("diagram");
-
-    /* -----------------------------------------------
-       SVG GEOMETRY HELPERS
-    ----------------------------------------------- */
-
-    function radians(degrees) {
-        return degrees * Math.PI / 180;
+  function renderProtractor(g){
+    const group=$("protractorGroup");
+    group.replaceChildren();
+    if(!state.showProtractor){group.style.display="none";return;}
+    group.style.display="";
+    group.setAttribute("transform",`translate(${g.p.x} ${g.p.y})`);
+    const ns="http://www.w3.org/2000/svg";
+    const circle=document.createElementNS(ns,"circle");
+    circle.setAttribute("r","104");circle.setAttribute("fill","#ffffff");
+    circle.setAttribute("fill-opacity",".42");circle.setAttribute("stroke","#a6b9b0");
+    circle.setAttribute("stroke-width","1.5");group.appendChild(circle);
+    for(let a=0;a<360;a+=5){
+      const major=a%30===0,mid=a%10===0,length=major?15:(mid?10:6);
+      const q1=makePoint(104*Math.cos(rad(a)),104*Math.sin(rad(a)));
+      const q2=makePoint((104-length)*Math.cos(rad(a)),(104-length)*Math.sin(rad(a)));
+      const tick=document.createElementNS(ns,"line");
+      tick.setAttribute("x1",q1.x);tick.setAttribute("y1",q1.y);
+      tick.setAttribute("x2",q2.x);tick.setAttribute("y2",q2.y);
+      tick.setAttribute("stroke","#849b90");tick.setAttribute("stroke-width",major?1.7:1);
+      group.appendChild(tick);
+      if(major){
+        const tx=document.createElementNS(ns,"text");
+        tx.setAttribute("x",92*Math.cos(rad(a)));tx.setAttribute("y",92*Math.sin(rad(a))+3);
+        tx.setAttribute("text-anchor","middle");tx.setAttribute("font-size","9");
+        tx.setAttribute("fill","#61796d");tx.textContent=String(a);group.appendChild(tx);
+      }
     }
+  }
 
-    function degrees(radiansValue) {
-        return radiansValue * 180 / Math.PI;
+  function updateScene(){
+    const g=geometry();
+    line("mirrorBody",g.mirrorA,g.mirrorB);
+    line("mirrorSurface",g.mirrorA,g.mirrorB);
+    line("normalLine",g.normalA,g.normalB);
+    line("incidentRay",g.source,g.p);
+    line("reflectedRay",g.p,g.end);
+    moveGroup("laserHandle",g.source,state.beta);
+    moveGroup("incidenceHandle",g.p);
+    moveGroup("rotationHandle",g.mirrorB);
+    placeText("normalLabel",g.normalA,9,4);
+    placeText("pointLabel",g.p,16,30);
+    placeText("mirrorLabel",g.mirrorB,-70,35);
+    $("incidentArc").setAttribute("d",arcPath(g.p,72,g.normalAngle,g.sourceAngle));
+    $("reflectedArc").setAttribute("d",arcPath(g.p,72,g.normalAngle,g.reflectedAngle));
+    const ai=g.normalAngle+normDeg(g.sourceAngle-g.normalAngle)/2;
+    const ar=g.normalAngle+normDeg(g.reflectedAngle-g.normalAngle)/2;
+    placeText("incidentText",makePoint(g.p.x+91*Math.cos(rad(ai)),g.p.y+91*Math.sin(rad(ai))),-12,4);
+    placeText("reflectedText",makePoint(g.p.x+91*Math.cos(rad(ar)),g.p.y+91*Math.sin(rad(ar))),-12,4);
+    $("incidentText").textContent=`i = ${g.i.toFixed(1)}°`;
+    $("reflectedText").textContent=`r = ${g.r.toFixed(1)}°`;
+    $("normalLine").style.display=state.showNormal?"":"none";
+    $("normalLabel").style.display=state.showNormal?"":"none";
+    $("incidentArc").style.display=state.showAngles?"":"none";
+    $("reflectedArc").style.display=state.showAngles?"":"none";
+    $("incidentText").style.display=state.showAngles?"":"none";
+    $("reflectedText").style.display=state.showAngles?"":"none";
+    $("incidentRay").style.display=(state.rays==="both"||state.rays==="incident")?"":"none";
+    $("reflectedRay").style.display=(state.rays==="both"||state.rays==="reflected")?"":"none";
+    $("rulerGroup").style.display=state.showRuler?"":"none";
+    $("laserSlider").value=state.beta;
+    $("mirrorSlider").value=state.mirror;
+    $("positionSlider").value=state.position;
+    $("laserValue").textContent=`${state.beta}°`;
+    $("mirrorValue").textContent=`${state.mirror>0?"+":""}${state.mirror}°`;
+    $("positionValue").textContent=String(state.position);
+    $("incidenceValue").textContent=`${g.i.toFixed(1)}°`;
+    $("reflectionValue").textContent=`${g.r.toFixed(1)}°`;
+    $("lawStatus").textContent=`Law verified: i = ${g.i.toFixed(1)}° and r = ${g.r.toFixed(1)}°. Both angles are measured from the normal.`;
+    document.querySelectorAll("[data-ray]").forEach(b=>b.classList.toggle("active",b.dataset.ray===state.rays));
+    $("normalToggle").classList.toggle("active",state.showNormal);
+    $("normalToggle").textContent=state.showNormal?"✓ Normal":"＋ Normal";
+    $("angleToggle").classList.toggle("active",state.showAngles);
+    $("angleToggle").textContent=state.showAngles?"✓ Angle arcs":"＋ Angle arcs";
+    $("protractorToggle").classList.toggle("active",state.showProtractor);
+    $("protractorToggle").textContent=state.showProtractor?"✓ Protractor":"＋ Protractor";
+    $("rulerToggle").classList.toggle("active",state.showRuler);
+    $("rulerToggle").textContent=state.showRuler?"✓ Ruler":"＋ Ruler";
+    renderProtractor(g);
+  }
+
+  function buildRuler(){
+    const group=$("rulerTicks");
+    for(let i=0;i<=30;i++){
+      const x=200+i*20,major=i%5===0;
+      const el=document.createElementNS("http://www.w3.org/2000/svg","line");
+      el.setAttribute("x1",x);el.setAttribute("x2",x);el.setAttribute("y1",548);
+      el.setAttribute("y2",548+(major?13:7));el.setAttribute("stroke","#b99c59");
+      el.setAttribute("stroke-width",major?1.4:1);group.appendChild(el);
+      if(major&&i<30){
+        const tx=document.createElementNS("http://www.w3.org/2000/svg","text");
+        tx.setAttribute("x",x);tx.setAttribute("y",543);tx.setAttribute("text-anchor","middle");
+        tx.setAttribute("font-size","8");tx.setAttribute("fill","#9a8149");
+        tx.textContent=String(i*2);group.appendChild(tx);
+      }
     }
+  }
 
-    function setLine(id, a, b) {
-        const line = $(id);
-
-        line.setAttribute("x1", a.x);
-        line.setAttribute("y1", a.y);
-        line.setAttribute("x2", b.x);
-        line.setAttribute("y2", b.y);
+  function buildGraphGrid(){
+    const group=$("graphGrid");
+    for(let i=0;i<=9;i++){
+      const x=43+i*280/9,y=182-i*170/9;
+      const vx=document.createElementNS("http://www.w3.org/2000/svg","line");
+      vx.setAttribute("x1",x);vx.setAttribute("x2",x);vx.setAttribute("y1",12);
+      vx.setAttribute("y2",182);vx.setAttribute("stroke","#edf2ef");group.appendChild(vx);
+      const hy=document.createElementNS("http://www.w3.org/2000/svg","line");
+      hy.setAttribute("x1",43);hy.setAttribute("x2",323);hy.setAttribute("y1",y);
+      hy.setAttribute("y2",y);hy.setAttribute("stroke","#edf2ef");group.appendChild(hy);
+      if(i%3===0){
+        const tx=document.createElementNS("http://www.w3.org/2000/svg","text");
+        tx.setAttribute("x",x);tx.setAttribute("y",195);tx.setAttribute("text-anchor","middle");
+        tx.setAttribute("font-size","8");tx.setAttribute("fill","#82948c");
+        tx.textContent=String(i*10);group.appendChild(tx);
+      }
     }
+  }
 
-    function setTranslate(id, point) {
-        $(id).setAttribute(
-            "transform",
-            `translate(${point.x} ${point.y})`
-        );
+  function renderTrials(){
+    const body=$("trialRows");body.replaceChildren();
+    if(!state.trials.length){
+      const row=document.createElement("tr"),cell=document.createElement("td");
+      cell.colSpan=4;cell.className="empty";
+      cell.textContent="No trials recorded yet. Press “Record trial” to begin.";
+      row.appendChild(cell);body.appendChild(row);
+    }else{
+      state.trials.forEach((trial,index)=>{
+        const row=document.createElement("tr");
+        [index+1,`${trial.i.toFixed(1)}°`,`${trial.r.toFixed(1)}°`,`${Math.abs(trial.i-trial.r).toFixed(1)}°`].forEach(value=>{
+          const td=document.createElement("td");td.textContent=value;row.appendChild(td);
+        });
+        body.appendChild(row);
+      });
     }
+    const points=$("graphPoints");points.replaceChildren();
+    state.trials.forEach(trial=>{
+      const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
+      c.setAttribute("cx",43+trial.i/90*280);
+      c.setAttribute("cy",182-trial.r/90*170);
+      c.setAttribute("r",5);c.setAttribute("fill","#16866a");
+      c.setAttribute("stroke","#fff");c.setAttribute("stroke-width","2");
+      points.appendChild(c);
+    });
+    $("graphNote").textContent=state.trials.length
+      ?`${state.trials.length} trial(s) recorded. The points should lie close to the equality line.`
+      :"No measurements yet. Recorded trials will appear as points.";
+  }
 
-    function pointAt(center, angle, radius) {
-        const a = radians(angle);
+  function setTargetAngle(target){
+    const beta=90-target+state.mirror;
+    state.beta=clamp(beta,20,100);
+    updateScene();
+  }
 
-        return {
-            x: center.x + Math.cos(a) * radius,
-            y: center.y + Math.sin(a) * radius
-        };
+  function setMode(mode){
+    state.mode=mode;
+    $("guidedMode").classList.toggle("active",mode==="guided");
+    $("freeMode").classList.toggle("active",mode==="free");
+    $("guidedBox").hidden=mode!=="guided";
+  }
+
+  function updateGuide(){
+    const task=tasks[state.guide];
+    $("guideTitle").textContent=task.title;
+    $("guideText").textContent=task.text;
+    $("guideStep").textContent=`TASK ${state.guide+1} OF ${tasks.length}`;
+    $("nextGuide").textContent=state.guide===tasks.length-1?"Start again ↻":"Next task →";
+  }
+
+  $("laserSlider").addEventListener("input",e=>{state.beta=Number(e.target.value);updateScene();});
+  document.querySelectorAll("[data-target]").forEach(button=>button.addEventListener("click",()=>setTargetAngle(Number(button.dataset.target))));
+  $("mirrorSlider").addEventListener("input",e=>{state.mirror=Number(e.target.value);updateScene();});
+  $("positionSlider").addEventListener("input",e=>{state.position=Number(e.target.value);updateScene();});
+  document.querySelectorAll("[data-ray]").forEach(button=>button.addEventListener("click",()=>{state.rays=button.dataset.ray;updateScene();}));
+  $("normalToggle").addEventListener("click",()=>{state.showNormal=!state.showNormal;updateScene();});
+  $("angleToggle").addEventListener("click",()=>{state.showAngles=!state.showAngles;updateScene();});
+  $("protractorToggle").addEventListener("click",()=>{state.showProtractor=!state.showProtractor;updateScene();});
+  $("rulerToggle").addEventListener("click",()=>{state.showRuler=!state.showRuler;updateScene();});
+  $("guidedMode").addEventListener("click",()=>setMode("guided"));
+  $("freeMode").addEventListener("click",()=>setMode("free"));
+  $("nextGuide").addEventListener("click",()=>{state.guide=(state.guide+1)%tasks.length;updateGuide();if(state.guide===0)setMode("guided");});
+  $("recordBtn").addEventListener("click",()=>{const g=geometry();state.trials.push({i:g.i,r:g.r});if(state.trials.length>12)state.trials.shift();renderTrials();});
+  $("clearDataBtn").addEventListener("click",()=>{state.trials=[];renderTrials();});
+
+  $("resetBtn").addEventListener("click",()=>{
+    state.beta=55;state.mirror=0;state.position=0;state.rays="both";
+    state.showNormal=true;state.showAngles=true;state.showProtractor=false;
+    state.showRuler=true;state.guide=0;state.trials=[];
+    setMode("guided");updateGuide();renderTrials();updateScene();
+  });
+
+  $("fullscreenBtn").addEventListener("click",async()=>{
+    try{
+      if(!document.fullscreenElement)await document.documentElement.requestFullscreen();
+      else await document.exitFullscreen();
+    }catch(error){console.warn("Fullscreen unavailable",error);}
+  });
+  document.addEventListener("fullscreenchange",()=>{
+    $("fullscreenBtn").textContent=document.fullscreenElement?"✕ Exit fullscreen":"⛶ Fullscreen";
+  });
+
+  let dragging=null;
+  function pointerToSvg(event){
+    const p=svg.createSVGPoint();p.x=event.clientX;p.y=event.clientY;
+    const matrix=svg.getScreenCTM();
+    return matrix?p.matrixTransform(matrix.inverse()):null;
+  }
+
+  svg.addEventListener("pointerdown",event=>{
+    const target=event.target.closest("[data-drag]");
+    if(!target)return;
+    dragging=target.dataset.drag;
+    target.setPointerCapture?.(event.pointerId);
+    svg.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+
+  svg.addEventListener("pointermove",event=>{
+    if(!dragging)return;
+    const p=pointerToSvg(event);if(!p)return;
+    const g=geometry();
+    if(dragging==="laser"){
+      const angle=deg(Math.atan2(g.p.y-p.y,g.p.x-p.x));
+      state.beta=clamp(Math.round(angle),20,100);
+    }else if(dragging==="point"){
+      const along=(p.x-500)*g.t.x+(p.y-390)*g.t.y;
+      state.position=clamp(Math.round(along),-130,130);
+    }else if(dragging==="rotate"){
+      const angle=deg(Math.atan2(p.y-g.p.y,p.x-g.p.x));
+      state.mirror=clamp(Math.round(angle),-20,20);
     }
-
-    function arcPath(center, radius, startAngle, endAngle) {
-        const start = pointAt(
-            center,
-            startAngle,
-            radius
-        );
-
-        const end = pointAt(
-            center,
-            endAngle,
-            radius
-        );
-
-        const sweep = endAngle >= startAngle ? 1 : 0;
-
-        return [
-            `M ${start.x} ${start.y}`,
-            `A ${radius} ${radius} 0 0 ${sweep}`,
-            `${end.x} ${end.y}`
-        ].join(" ");
-    }
-
-    /* -----------------------------------------------
-       MAIN SIMULATION UPDATE
-    ----------------------------------------------- */
-
-    function updateSimulation() {
-        const theta = radians(state.angle);
-        const phi = radians(state.mirror);
-
-        // Tangent direction along the mirror.
-        const tangent = {
-            x: Math.cos(phi),
-            y: Math.sin(phi)
-        };
-
-        // Normal points away from the mirror.
-        const normal = {
-            x: Math.sin(phi),
-            y: -Math.cos(phi)
-        };
-
-        // Point of incidence.
-        const incidence = {
-            x: 400 + state.position * tangent.x,
-            y: 360 + state.position * tangent.y
-        };
-
-        const rayLength = 205;
-
-        /*
-         * Source position:
-         * normal component = cos(theta)
-         * tangent component = sin(theta)
-         */
-        const source = {
-            x: incidence.x + rayLength *
-                (
-                    Math.sin(theta) * tangent.x +
-                    Math.cos(theta) * normal.x
-                ),
-
-            y: incidence.y + rayLength *
-                (
-                    Math.sin(theta) * tangent.y +
-                    Math.cos(theta) * normal.y
-                )
-        };
-
-        /*
-         * Reflected ray:
-         * Tangential component remains unchanged.
-         * Normal component reverses direction.
-         */
-        const reflected = {
-            x: incidence.x + rayLength *
-                (
-                    -Math.sin(theta) * tangent.x +
-                    Math.cos(theta) * normal.x
-                ),
-
-            y: incidence.y + rayLength *
-                (
-                    -Math.sin(theta) * tangent.y +
-                    Math.cos(theta) * normal.y
-                )
-        };
-
-        // Mirror endpoints.
-        const mirrorA = {
-            x: incidence.x - 290 * tangent.x,
-            y: incidence.y - 290 * tangent.y
-        };
-
-        const mirrorB = {
-            x: incidence.x + 290 * tangent.x,
-            y: incidence.y + 290 * tangent.y
-        };
-
-        // Normal line.
-        const normalA = {
-            x: incidence.x + 195 * normal.x,
-            y: incidence.y + 195 * normal.y
-        };
-
-        const normalB = {
-            x: incidence.x - 75 * normal.x,
-            y: incidence.y - 75 * normal.y
-        };
-
-        // Draw mirror.
-        setLine("mirrorBody", mirrorA, mirrorB);
-        setLine("mirrorSurface", mirrorA, mirrorB);
-
-        // Draw normal.
-        setLine("normalLine", normalA, normalB);
-
-        // Draw rays.
-        setLine("incidentRay", source, incidence);
-        setLine("reflectedRay", incidence, reflected);
-
-        // Move source and point handles.
-        setTranslate("sourceHandle", source);
-        setTranslate("incidenceHandle", incidence);
-
-        // Label positions.
-        const sourceLabel = $("sourceLabel");
-
-        sourceLabel.setAttribute("x", source.x);
-        sourceLabel.setAttribute("y", source.y - 39);
-
-        const pointLabel = $("pointLabel");
-
-        pointLabel.setAttribute(
-            "x",
-            incidence.x + 17
-        );
-
-        pointLabel.setAttribute(
-            "y",
-            incidence.y + 27
-        );
-
-        const normalLabel = $("normalLabel");
-
-        normalLabel.setAttribute(
-            "x",
-            normalA.x + 12
-        );
-
-        normalLabel.setAttribute(
-            "y",
-            normalA.y + 12
-        );
-
-        // Mirror label.
-        const mirrorLabel = $("mirrorLabel");
-
-        mirrorLabel.setAttribute(
-            "x",
-            mirrorB.x - 35 * tangent.x
-        );
-
-        mirrorLabel.setAttribute(
-            "y",
-            mirrorB.y + 34
-        );
-
-        /*
-         * The normal angle is the reference direction.
-         * Incident and reflected angles are symmetric
-         * around this normal.
-         */
-        const normalAngle = degrees(
-            Math.atan2(normal.y, normal.x)
-        );
-
-        // Draw angle arcs.
-        $("incidentArc").setAttribute(
-            "d",
-            arcPath(
-                incidence,
-                65,
-                normalAngle,
-                normalAngle + state.angle
-            )
-        );
-
-        $("reflectedArc").setAttribute(
-            "d",
-            arcPath(
-                incidence,
-                65,
-                normalAngle,
-                normalAngle - state.angle
-            )
-        );
-
-        // Angle text positions.
-        const incidentTextPoint = pointAt(
-            incidence,
-            normalAngle + state.angle / 2,
-            91
-        );
-
-        const reflectedTextPoint = pointAt(
-            incidence,
-            normalAngle - state.angle / 2,
-            91
-        );
-
-        $("incidentAngleText").setAttribute(
-            "x",
-            incidentTextPoint.x - 15
-        );
-
-        $("incidentAngleText").setAttribute(
-            "y",
-            incidentTextPoint.y
-        );
-
-        $("incidentAngleText").textContent =
-            `i = ${state.angle}°`;
-
-        $("reflectedAngleText").setAttribute(
-            "x",
-            reflectedTextPoint.x - 15
-        );
-
-        $("reflectedAngleText").setAttribute(
-            "y",
-            reflectedTextPoint.y
-        );
-
-        $("reflectedAngleText").textContent =
-            `r = ${state.angle}°`;
-
-        // Visibility controls.
-        $("normalLine").style.display =
-            state.showNormal ? "" : "none";
-
-        $("normalLabel").style.display =
-            state.showNormal ? "" : "none";
-
-        $("incidentArc").style.display =
-            state.showAngles ? "" : "none";
-
-        $("reflectedArc").style.display =
-            state.showAngles ? "" : "none";
-
-        $("incidentAngleText").style.display =
-            state.showAngles ? "" : "none";
-
-        $("reflectedAngleText").style.display =
-            state.showAngles ? "" : "none";
-
-        // Update controls and readings.
-        $("angleSlider").value = state.angle;
-        $("mirrorSlider").value = state.mirror;
-        $("positionSlider").value = state.position;
-
-        $("angleValue").textContent =
-            `${state.angle}°`;
-
-        $("mirrorValue").textContent =
-            `${state.mirror}°`;
-
-        $("positionValue").textContent =
-            String(state.position);
-
-        $("incidenceReading").textContent =
-            `${state.angle}°`;
-
-        $("reflectionReading").textContent =
-            `${state.angle}°`;
-
-        $("lawResult").textContent =
-            `Law verified: ${state.angle}° = ${state.angle}°. The angle of incidence equals the angle of reflection.`;
-    }
-
-    /* -----------------------------------------------
-       RANGE SLIDERS
-    ----------------------------------------------- */
-
-    $("angleSlider").addEventListener(
-        "input",
-        event => {
-            state.angle = Number(event.target.value);
-            updateSimulation();
-        }
-    );
-
-    $("mirrorSlider").addEventListener(
-        "input",
-        event => {
-            state.mirror = Number(event.target.value);
-            updateSimulation();
-        }
-    );
-
-    $("positionSlider").addEventListener(
-        "input",
-        event => {
-            state.position = Number(event.target.value);
-            updateSimulation();
-        }
-    );
-
-    /* -----------------------------------------------
-       VISIBILITY CONTROLS
-    ----------------------------------------------- */
-
-    $("showNormal").addEventListener(
-        "change",
-        event => {
-            state.showNormal = event.target.checked;
-            updateSimulation();
-        }
-    );
-
-    $("showAngles").addEventListener(
-        "change",
-        event => {
-            state.showAngles = event.target.checked;
-            updateSimulation();
-        }
-    );
-
-    /* -----------------------------------------------
-       DRAG AND TOUCH INTERACTION
-    ----------------------------------------------- */
-
-    let dragging = null;
-
-    function pointerPosition(event) {
-        const point = svg.createSVGPoint();
-
-        point.x = event.clientX;
-        point.y = event.clientY;
-
-        const matrix = svg.getScreenCTM();
-
-        if (!matrix) {
-            return null;
-        }
-
-        return point.matrixTransform(
-            matrix.inverse()
-        );
-    }
-
-    function currentDirections() {
-        const phi = radians(state.mirror);
-
-        return {
-            tangent: {
-                x: Math.cos(phi),
-                y: Math.sin(phi)
-            },
-
-            normal: {
-                x: Math.sin(phi),
-                y: -Math.cos(phi)
-            },
-
-            incidence: {
-                x: 400 + state.position * Math.cos(phi),
-                y: 360 + state.position * Math.sin(phi)
-            }
-        };
-    }
-
-    svg.addEventListener(
-        "pointerdown",
-        event => {
-            const target = event.target.closest("[data-drag]");
-
-            if (!target) {
-                return;
-            }
-
-            dragging = target.dataset.drag;
-
-            svg.setPointerCapture(event.pointerId);
-
-            event.preventDefault();
-        }
-    );
-
-    svg.addEventListener(
-        "pointermove",
-        event => {
-            if (!dragging) {
-                return;
-            }
-
-            const point = pointerPosition(event);
-
-            if (!point) {
-                return;
-            }
-
-            const directions = currentDirections();
-
-            if (dragging === "source") {
-                const dx =
-                    point.x - directions.incidence.x;
-
-                const dy =
-                    point.y - directions.incidence.y;
-
-                const alongTangent =
-                    dx * directions.tangent.x +
-                    dy * directions.tangent.y;
-
-                const alongNormal =
-                    dx * directions.normal.x +
-                    dy * directions.normal.y;
-
-                let angle = degrees(
-                    Math.atan2(
-                        alongTangent,
-                        alongNormal
-                    )
-                );
-
-                // Keep the source on the incident side.
-                angle = Math.max(
-                    0,
-                    Math.min(80, angle)
-                );
-
-                state.angle = Math.round(angle);
-            }
-
-            if (dragging === "point") {
-                const dx = point.x - 400;
-                const dy = point.y - 360;
-
-                const position =
-                    dx * directions.tangent.x +
-                    dy * directions.tangent.y;
-
-                state.position = Math.round(
-                    Math.max(
-                        -140,
-                        Math.min(140, position)
-                    )
-                );
-            }
-
-            updateSimulation();
-        }
-    );
-
-    function stopDragging() {
-        dragging = null;
-    }
-
-    svg.addEventListener("pointerup", stopDragging);
-    svg.addEventListener("pointercancel", stopDragging);
-    svg.addEventListener("lostpointercapture", stopDragging);
-
-    /* -----------------------------------------------
-       GUIDED AND FREE EXPLORE MODES
-    ----------------------------------------------- */
-
-    function setMode(mode) {
-        state.mode = mode;
-
-        $("guidedMode").classList.toggle(
-            "active",
-            mode === "guided"
-        );
-
-        $("freeMode").classList.toggle(
-            "active",
-            mode === "free"
-        );
-
-        $("guideBox").hidden =
-            mode !== "guided";
-    }
-
-    $("guidedMode").addEventListener(
-        "click",
-        () => setMode("guided")
-    );
-
-    $("freeMode").addEventListener(
-        "click",
-        () => setMode("free")
-    );
-
-    $("nextStep").addEventListener(
-        "click",
-        () => {
-            state.step++;
-
-            if (state.step >= GUIDE_STEPS.length) {
-                state.step = 0;
-            }
-
-            $("guideText").textContent =
-                GUIDE_STEPS[state.step];
-
-            $("stepCount").textContent =
-                `STEP ${state.step + 1} OF ${GUIDE_STEPS.length}`;
-        }
-    );
-
-    /* -----------------------------------------------
-       RESET
-    ----------------------------------------------- */
-
-    function resetExperiment() {
-        state.angle = DEFAULTS.angle;
-        state.mirror = DEFAULTS.mirror;
-        state.position = DEFAULTS.position;
-
-        state.showNormal = true;
-        state.showAngles = true;
-        state.step = 0;
-
-        $("showNormal").checked = true;
-        $("showAngles").checked = true;
-
-        $("guideText").textContent =
-            GUIDE_STEPS[0];
-
-        $("stepCount").textContent =
-            `STEP 1 OF ${GUIDE_STEPS.length}`;
-
-        setMode("guided");
-
-        updateSimulation();
-    }
-
-    $("resetBtn").addEventListener(
-        "click",
-        resetExperiment
-    );
-
-    /* -----------------------------------------------
-       FULLSCREEN
-    ----------------------------------------------- */
-
-    $("fullscreenBtn").addEventListener(
-        "click",
-        async () => {
-            try {
-                if (!document.fullscreenElement) {
-                    await document.documentElement.requestFullscreen();
-                } else {
-                    await document.exitFullscreen();
-                }
-            } catch (error) {
-                console.error(
-                    "Fullscreen is not available:",
-                    error
-                );
-            }
-        }
-    );
-
-    document.addEventListener(
-        "fullscreenchange",
-        () => {
-            $("fullscreenBtn").textContent =
-                document.fullscreenElement
-                    ? "✕ Exit Fullscreen"
-                    : "⛶ Fullscreen";
-        }
-    );
-
-    /* -----------------------------------------------
-       START
-    ----------------------------------------------- */
-
-    updateSimulation();
-
+    updateScene();
+  });
+
+  function stopDrag(){dragging=null;}
+  svg.addEventListener("pointerup",stopDrag);
+  svg.addEventListener("pointercancel",stopDrag);
+  svg.addEventListener("lostpointercapture",stopDrag);
+
+  buildRuler();buildGraphGrid();updateGuide();renderTrials();updateScene();
 })();
 </script>
-
 </body>
 </html>
