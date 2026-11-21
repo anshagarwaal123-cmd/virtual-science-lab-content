@@ -242,6 +242,15 @@
       "simulationPath": "simulations/physics/light-reflection/"
     },
     {
+  "id": "light-refraction-playground",
+  "title": "Refraction of Light — Snell's Law",
+  "class": 10,
+  "chapterNumber": 9,
+  "chapter": "Light: Reflection and Refraction",
+  "description": "Explore light bending through different materials, measure angles and investigate Snell's law.",
+  "simulationType": "2D"
+   },
+    {
       "id": "class-10-human-eye-colourful-world",
       "title": "The Human Eye and the Colourful World",
       "class": 10,
