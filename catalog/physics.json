@@ -22,7 +22,8 @@
       "chapterNumber": 1,
       "chapter": "Light and Shadows",
       "description": "Move a light source, object and screen to investigate shadow size, shape and direction.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-05-light-and-shadows/"
     },
     {
       "id": "class-05-simple-machines",
@@ -31,7 +32,8 @@
       "chapterNumber": 2,
       "chapter": "Simple Machines",
       "description": "Explore levers, pulleys and inclined planes by changing load, effort and position.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-05-simple-machines/"
     },
     {
       "id": "class-05-sound",
@@ -40,7 +42,8 @@
       "chapterNumber": 3,
       "chapter": "Sound and Vibrations",
       "description": "Change vibration speed and strength to explore how sound is produced and how pitch and loudness change.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-05-sound/"
     },
     {
       "id": "class-06-magnets",
@@ -49,7 +52,8 @@
       "chapterNumber": 4,
       "chapter": "Exploring Magnets",
       "description": "Move magnets, a compass and magnetic materials to investigate poles, attraction, repulsion and magnetic fields.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-06-magnets/"
     },
     {
       "id": "class-06-measurement-of-length",
@@ -58,7 +62,8 @@
       "chapterNumber": 5,
       "chapter": "Measurement of Length and Motion",
       "description": "Use a virtual ruler and measuring tools to measure objects, compare units and understand measurement accuracy.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-06-measurement-of-length/"
     },
     {
       "id": "class-06-motion-and-measurement",
@@ -67,7 +72,8 @@
       "chapterNumber": 5,
       "chapter": "Measurement of Length and Motion",
       "description": "Change distance and time, compare uniform and non-uniform motion, and read simple motion graphs.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-06-motion-and-measurement/"
     },
     {
       "id": "class-06-temperature-and-its-measurement",
@@ -76,7 +82,8 @@
       "chapterNumber": 7,
       "chapter": "Temperature and Its Measurement",
       "description": "Use virtual thermometers to compare temperatures and observe how readings change during heating and cooling.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-06-temperature-and-its-measurement/"
     },
     {
       "id": "class-06-beyond-earth",
@@ -85,7 +92,8 @@
       "chapterNumber": 12,
       "chapter": "Beyond Earth",
       "description": "Explore the Sun, Earth, Moon and planets, and change their relative positions to understand basic astronomical patterns.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-06-beyond-earth/"
     },
     {
       "id": "electric-circuit-builder",
@@ -94,7 +102,8 @@
       "chapterNumber": 3,
       "chapter": "Electricity: Circuits and Their Components",
       "description": "Build a working circuit by connecting cells, wires, switches and bulbs; test open and closed circuits.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/electric-circuit-builder/"
     },
     {
       "id": "class-07-heat-transfer-and-conduction",
@@ -103,7 +112,8 @@
       "chapterNumber": 7,
       "chapter": "Heat Transfer in Nature",
       "description": "Compare conduction, convection and radiation using adjustable materials and temperature readings.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-07-heat-transfer-and-conduction/"
     },
     {
       "id": "class-07-measurement-of-time-period-pendulum",
@@ -112,7 +122,8 @@
       "chapterNumber": 8,
       "chapter": "Measurement of Time and Motion",
       "description": "Change pendulum length and count oscillations to compare time period and periodic motion.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-07-measurement-of-time-period-pendulum/"
     },
     {
       "id": "class-07-reflection-of-light-plane-mirror",
@@ -121,7 +132,8 @@
       "chapterNumber": 11,
       "chapter": "Light: Shadows and Reflection",
       "description": "Move a light source, object and plane mirror to explore shadow formation and the law of reflection.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-07-reflection-of-light-plane-mirror/"
     },
     {
       "id": "class-07-earth-moon-sun",
@@ -130,7 +142,8 @@
       "chapterNumber": 12,
       "chapter": "Earth, Moon and the Sun",
       "description": "Control the positions and motion of the Earth, Moon and Sun to explore day, night and lunar phases.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-07-earth-moon-sun/"
     },
     {
       "id": "class-07-electric-current-and-electromagnets",
@@ -139,7 +152,8 @@
       "chapterNumber": 4,
       "chapter": "Electricity: Magnetic and Heating Effects",
       "description": "Change current, coil turns and resistance to explore heating, magnetic fields and electromagnets.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-07-electric-current-and-electromagnets/"
     },
     {
       "id": "class-08-friction-and-surfaces",
@@ -148,7 +162,8 @@
       "chapterNumber": 5,
       "chapter": "Exploring Forces",
       "description": "Change the applied force and surface to investigate friction, balanced forces and motion.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-08-friction-and-surfaces/"
     },
     {
       "id": "class-08-pressure-in-fluids",
@@ -157,7 +172,8 @@
       "chapterNumber": 6,
       "chapter": "Pressure, Winds, Storms and Cyclones",
       "description": "Change fluid depth, density and air-pressure differences to explore pressure, winds and storm formation.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-08-pressure-in-fluids/"
     },
     {
       "id": "class-08-sound-propagation-and-medium",
@@ -166,7 +182,8 @@
       "chapterNumber": 0,
       "chapter": "Supplementary: Sound",
       "description": "Explore how sound travels through solids, liquids and gases and compare the effects of different media.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-08-sound-propagation-and-medium/"
     },
     {
       "id": "class-08-lenses",
@@ -175,7 +192,8 @@
       "chapterNumber": 10,
       "chapter": "Light: Mirrors and Lenses",
       "description": "Move mirrors, convex and concave lenses, objects and screens to investigate image formation.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-08-lenses/"
     },
     {
       "id": "class-08-keeping-time-with-skies",
@@ -184,7 +202,8 @@
       "chapterNumber": 11,
       "chapter": "Keeping Time with the Skies",
       "description": "Explore repeating sky patterns and use a simple celestial-motion model to understand timekeeping.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-08-keeping-time-with-skies/"
     },
     {
       "id": "class-09-motion-around-us",
@@ -193,7 +212,8 @@
       "chapterNumber": 4,
       "chapter": "Describing Motion Around Us",
       "description": "Change position, speed and direction and interpret distance-time and velocity-time graphs.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-09-motion-around-us/"
     },
     {
       "id": "class-09-newtons-laws-of-motion",
@@ -202,7 +222,8 @@
       "chapterNumber": 6,
       "chapter": "How Forces Affect Motion",
       "description": "Apply balanced and unbalanced forces and observe inertia, acceleration and action-reaction pairs.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-09-newtons-laws-of-motion/"
     },
     {
       "id": "class-09-work-energy-simple-machines",
@@ -211,7 +232,8 @@
       "chapterNumber": 7,
       "chapter": "Work, Energy and Simple Machines",
       "description": "Change force, displacement and height to explore work, energy transfer and mechanical advantage.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-09-work-energy-simple-machines/"
     },
     {
       "id": "class-09-laws-of-reflection-of-sound",
@@ -220,7 +242,8 @@
       "chapterNumber": 10,
       "chapter": "Sound Waves: Characteristics and Applications",
       "description": "Adjust frequency, amplitude and medium to explore sound waves, echoes, reflection and applications.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-09-laws-of-reflection-of-sound/"
     },
     {
       "id": "class-09-density-and-archimedes-principle",
@@ -229,63 +252,59 @@
       "chapterNumber": 0,
       "chapter": "Supplementary: Matter and Buoyancy",
       "description": "Change object mass and volume, then observe floating, sinking, buoyant force and displaced fluid.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-09-density-and-archimedes-principle/"
     },
-    
-{
-  "id": "light-reflection-playground",
-  "title": "Laws of Reflection — Plane Mirror",
-  "class": 10,
-  "chapterNumber": 9,
-  "chapter": "Light: Reflection and Refraction",
-  "description": "Explore the law of reflection using an interactive plane mirror and laser.",
-  "simulationType": "2D",
-  "simulationPath": "simulations/physics/light-reflection/"
-},
-{
-  "id": "light-refraction-playground",
-  "title": "Refraction of Light — Snell's Law",
-  "class": 10,
-  "chapterNumber": 9,
-  "chapter": "Light: Reflection and Refraction",
-  "description": "Explore refraction, different materials and Snell's law.",
-  "simulationType": "2D",
-  "simulationPath": "simulations/physics/light-refraction/"
-  
-},
-
-   
-{
-  "id": "class-10-human-eye-vision-correction",
-  "title": "Human Eye — Accommodation and Vision Defects",
-  "class": 10,
-  "chapterNumber": 10,
-  "chapter": "The Human Eye and the Colourful World",
-  "description": "Explore eye accommodation, image formation on the retina, myopia, hypermetropia and corrective lenses.",
-  "simulationType": "2D",
-  "simulationPath": "simulations/physics/human-eye-vision/"
-},
-{
-  "id": "class-10-dispersion-prism",
-  "title": "Dispersion of White Light — Prism",
-  "class": 10,
-  "chapterNumber": 10,
-  "chapter": "The Human Eye and the Colourful World",
-  "description": "Explore how a prism separates white light into its constituent colours and investigate dispersion.",
-  "simulationType": "2D",
-  "simulationPath": "simulations/physics/dispersion-prism/"
-},
-{
-  "id": "class-10-atmospheric-refraction-scattering",
-  "title": "Atmospheric Refraction and Scattering",
-  "class": 10,
-  "chapterNumber": 10,
-  "chapter": "The Human Eye and the Colourful World",
-  "description": "Investigate the blue colour of the sky, red sunsets and atmospheric optical effects.",
-  "simulationType": "2D",
-  "simulationPath": "simulations/physics/atmospheric-refraction-scattering/"
-},
-
+    {
+      "id": "light-reflection-playground",
+      "title": "Laws of Reflection — Plane Mirror",
+      "class": 10,
+      "chapterNumber": 9,
+      "chapter": "Light: Reflection and Refraction",
+      "description": "Explore the law of reflection using an interactive plane mirror and laser.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/light-reflection/"
+    },
+    {
+      "id": "light-refraction-playground",
+      "title": "Refraction of Light — Snell's Law",
+      "class": 10,
+      "chapterNumber": 9,
+      "chapter": "Light: Reflection and Refraction",
+      "description": "Explore refraction, different materials and Snell's law.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/light-refraction/"
+    },
+    {
+      "id": "class-10-human-eye-vision-correction",
+      "title": "Human Eye — Accommodation and Vision Defects",
+      "class": 10,
+      "chapterNumber": 10,
+      "chapter": "The Human Eye and the Colourful World",
+      "description": "Explore eye accommodation, image formation on the retina, myopia, hypermetropia and corrective lenses.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/human-eye-vision/"
+    },
+    {
+      "id": "class-10-dispersion-prism",
+      "title": "Dispersion of White Light — Prism",
+      "class": 10,
+      "chapterNumber": 10,
+      "chapter": "The Human Eye and the Colourful World",
+      "description": "Explore how a prism separates white light into its constituent colours and investigate dispersion.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/dispersion-prism/"
+    },
+    {
+      "id": "class-10-atmospheric-refraction-scattering",
+      "title": "Atmospheric Refraction and Scattering",
+      "class": 10,
+      "chapterNumber": 10,
+      "chapter": "The Human Eye and the Colourful World",
+      "description": "Investigate the blue colour of the sky, red sunsets and atmospheric optical effects.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/atmospheric-refraction-scattering/"
+    },
     {
       "id": "ohms-law-playground",
       "title": "Electricity: Ohm's Law and Circuits",
@@ -296,83 +315,86 @@
       "simulationType": "2D",
       "simulationPath": "simulations/physics/ohms-law/"
     },
-    
-{
-  "id": "class-10-magnetic-field-straight-wire",
-  "title": "Magnetic Field Around a Straight Current-Carrying Conductor",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Change current direction and strength, move a compass and explore circular magnetic field lines around a straight wire.",
-  "simulationType": "2D",
-   "simulationPath": "simulations/physics/magnetic-field-straight-wire/"
-},
-{
-  "id": "class-10-magnetic-field-circular-loop",
-  "title": "Magnetic Field of a Circular Current-Carrying Loop",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Change current and coil turns to investigate the magnetic field of a circular loop.",
-  "simulationType": "2D",
-   "simulationPath": "simulations/physics/magnetic-field-circular-loop/"
-},
-{
-  "id": "class-10-solenoid-electromagnet",
-  "title": "Magnetic Field of a Solenoid and Electromagnet",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Explore magnetic field lines, coil turns, current direction and electromagnet strength.",
-  "simulationType": "2D",
-  "simulationPath": "simulations/physics/solenoid-electromagnet/"
-},
-{
-  "id": "class-10-force-on-current-conductor",
-  "title": "Force on a Current-Carrying Conductor",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Change current and magnetic field direction to investigate force and Fleming's Left Hand Rule.",
-  "simulationType": "2D"
-},
-{
-  "id": "class-10-electric-motor",
-  "title": "Electric Motor — Working Principle (Enrichment)",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Explore the rotating coil, magnetic force and split-ring commutator in a simple electric motor.",
-  "simulationType": "2D"
-},
-{
-  "id": "class-10-electromagnetic-induction-generator",
-  "title": "Electromagnetic Induction and Electric Generator (Enrichment)",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Move a magnet or rotate a coil to investigate induced voltage and generator action.",
-  "simulationType": "2D"
-},
-{
-  "id": "class-10-ac-and-dc-current",
-  "title": "Alternating Current and Direct Current",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Compare AC and DC, current direction, frequency and voltage-time waveforms.",
-  "simulationType": "2D"
-},
-{
-  "id": "class-10-domestic-electric-circuits",
-  "title": "Domestic Electric Circuits and Safety",
-  "class": 10,
-  "chapterNumber": 12,
-  "chapter": "Magnetic Effects of Electric Current",
-  "description": "Build a household circuit and investigate live, neutral and earth wires, fuse, short circuit and overloading.",
-  "simulationType": "2D"
-},
-
+    {
+      "id": "class-10-magnetic-field-straight-wire",
+      "title": "Magnetic Field Around a Straight Current-Carrying Conductor",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Change current direction and strength, move a compass and explore circular magnetic field lines around a straight wire.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/magnetic-field-straight-wire/"
+    },
+    {
+      "id": "class-10-magnetic-field-circular-loop",
+      "title": "Magnetic Field of a Circular Current-Carrying Loop",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Change current and coil turns to investigate the magnetic field of a circular loop.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/magnetic-field-circular-loop/"
+    },
+    {
+      "id": "class-10-solenoid-electromagnet",
+      "title": "Magnetic Field of a Solenoid and Electromagnet",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Explore magnetic field lines, coil turns, current direction and electromagnet strength.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/solenoid-electromagnet/"
+    },
+    {
+      "id": "class-10-force-on-current-conductor",
+      "title": "Force on a Current-Carrying Conductor",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Change current and magnetic field direction to investigate force and Fleming's Left Hand Rule.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/force-on-current-conductor/"
+    },
+    {
+      "id": "class-10-electric-motor",
+      "title": "Electric Motor — Working Principle (Enrichment)",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Explore the rotating coil, magnetic force and split-ring commutator in a simple electric motor.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-10-electric-motor/"
+    },
+    {
+      "id": "class-10-electromagnetic-induction-generator",
+      "title": "Electromagnetic Induction and Electric Generator (Enrichment)",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Move a magnet or rotate a coil to investigate induced voltage and generator action.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-10-electromagnetic-induction-generator/"
+    },
+    {
+      "id": "class-10-ac-and-dc-current",
+      "title": "Alternating Current and Direct Current",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Compare AC and DC, current direction, frequency and voltage-time waveforms.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-10-ac-and-dc-current/"
+    },
+    {
+      "id": "class-10-domestic-electric-circuits",
+      "title": "Domestic Electric Circuits and Safety",
+      "class": 10,
+      "chapterNumber": 12,
+      "chapter": "Magnetic Effects of Electric Current",
+      "description": "Build a household circuit and investigate live, neutral and earth wires, fuse, short circuit and overloading.",
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-10-domestic-electric-circuits/"
+    },
     {
       "id": "class-11-vernier-calipers-and-screw-gauge",
       "title": "Units and Measurements: Vernier Calipers and Screw Gauge",
@@ -380,7 +402,8 @@
       "chapterNumber": 1,
       "chapter": "Units and Measurements",
       "description": "Take virtual measurements, find least count and compare precision, accuracy and measurement error.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-vernier-calipers-and-screw-gauge/"
     },
     {
       "id": "class-11-motion-in-a-straight-line",
@@ -389,7 +412,8 @@
       "chapterNumber": 2,
       "chapter": "Kinematics",
       "description": "Change initial velocity and acceleration and investigate displacement, velocity and motion graphs.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-motion-in-a-straight-line/"
     },
     {
       "id": "class-11-motion-in-a-plane",
@@ -398,7 +422,8 @@
       "chapterNumber": 3,
       "chapter": "Kinematics",
       "description": "Adjust vector magnitude and direction to explore vector addition, projectile motion and circular motion.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-motion-in-a-plane/"
     },
     {
       "id": "class-11-friction-and-inclined-plane",
@@ -407,7 +432,8 @@
       "chapterNumber": 4,
       "chapter": "Laws of Motion",
       "description": "Adjust mass, applied force, friction and slope to study Newton's laws and free-body forces.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-friction-and-inclined-plane/"
     },
     {
       "id": "class-11-work-energy-power",
@@ -416,7 +442,8 @@
       "chapterNumber": 5,
       "chapter": "Work, Energy and Power",
       "description": "Change force, displacement, height and time to compare work, kinetic energy, potential energy and power.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-work-energy-power/"
     },
     {
       "id": "class-11-rotational-motion",
@@ -425,7 +452,8 @@
       "chapterNumber": 6,
       "chapter": "System of Particles and Rotational Motion",
       "description": "Move masses and change torque to explore centre of mass, angular acceleration and rotational equilibrium.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-rotational-motion/"
     },
     {
       "id": "class-11-gravitation",
@@ -434,7 +462,8 @@
       "chapterNumber": 7,
       "chapter": "Gravitation",
       "description": "Change masses and separation to explore gravitational force, orbital motion and variation of gravitational acceleration.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-gravitation/"
     },
     {
       "id": "class-11-hookes-law-using-spring-balance",
@@ -443,7 +472,8 @@
       "chapterNumber": 8,
       "chapter": "Mechanical Properties of Solids",
       "description": "Add loads to a spring and observe extension, elastic limit and the force-extension relationship.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-hookes-law-using-spring-balance/"
     },
     {
       "id": "class-11-surface-tension-of-water",
@@ -452,7 +482,8 @@
       "chapterNumber": 9,
       "chapter": "Mechanical Properties of Fluids",
       "description": "Explore pressure, buoyancy, viscosity, surface tension and capillary action using virtual fluid setups.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-11-surface-tension-of-water/"
     },
     {
       "id": "class-11-thermal-properties-of-matter",
@@ -461,7 +492,8 @@
       "chapterNumber": 10,
       "chapter": "Thermal Properties of Matter",
       "description": "Change heat input and material properties to explore expansion, calorimetry and heat transfer.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-thermal-properties-of-matter/"
     },
     {
       "id": "class-11-thermodynamics",
@@ -470,7 +502,8 @@
       "chapterNumber": 11,
       "chapter": "Thermodynamics",
       "description": "Control heat and work in a model system to explore internal energy and thermodynamic processes.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-thermodynamics/"
     },
     {
       "id": "class-11-kinetic-theory",
@@ -479,7 +512,8 @@
       "chapterNumber": 12,
       "chapter": "Kinetic Theory",
       "description": "Change gas temperature, volume and particle number to observe molecular motion and pressure.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-kinetic-theory/"
     },
     {
       "id": "class-11-oscillations",
@@ -488,7 +522,8 @@
       "chapterNumber": 13,
       "chapter": "Oscillations",
       "description": "Adjust mass, spring constant and pendulum length to explore simple harmonic motion and energy exchange.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-oscillations/"
     },
     {
       "id": "class-11-waves",
@@ -497,7 +532,8 @@
       "chapterNumber": 14,
       "chapter": "Waves",
       "description": "Change frequency, amplitude, wavelength and tension to explore travelling waves, standing waves, resonance and sound.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-11-waves/"
     },
     {
       "id": "class-12-electric-charges-and-fields",
@@ -506,7 +542,8 @@
       "chapterNumber": 1,
       "chapter": "Electric Charges and Fields",
       "description": "Move charges and explore Coulomb force, electric field lines, superposition and electric dipoles.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-electric-charges-and-fields/"
     },
     {
       "id": "class-12-electrostatic-potential-capacitance",
@@ -515,7 +552,8 @@
       "chapterNumber": 2,
       "chapter": "Electrostatic Potential and Capacitance",
       "description": "Explore potential maps, potential difference, capacitor geometry and stored energy.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-electrostatic-potential-capacitance/"
     },
     {
       "id": "class-12-resistivity-using-meter-bridge",
@@ -524,7 +562,8 @@
       "chapterNumber": 3,
       "chapter": "Current Electricity",
       "description": "Build circuits, adjust resistance and use a meter bridge balance point to calculate unknown resistance and resistivity.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-12-resistivity-using-meter-bridge/"
     },
     {
       "id": "class-12-moving-charges-and-magnetism",
@@ -533,7 +572,8 @@
       "chapterNumber": 4,
       "chapter": "Moving Charges and Magnetism",
       "description": "Change charge velocity and current direction to explore magnetic force, fields and motion in a magnetic field.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-moving-charges-and-magnetism/"
     },
     {
       "id": "class-12-magnetism-and-matter",
@@ -542,7 +582,8 @@
       "chapterNumber": 5,
       "chapter": "Magnetism and Matter",
       "description": "Explore bar magnets, magnetic dipoles, field patterns and the response of magnetic materials.",
-      "simulationType": "3D"
+      "simulationType": "3D",
+      "simulationPath": "simulations/physics/class-12-magnetism-and-matter/"
     },
     {
       "id": "class-12-electromagnetic-induction",
@@ -551,7 +592,8 @@
       "chapterNumber": 6,
       "chapter": "Electromagnetic Induction",
       "description": "Move a magnet or coil and change turns and speed to observe induced emf and Lenz's law.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-electromagnetic-induction/"
     },
     {
       "id": "class-12-alternating-current",
@@ -560,7 +602,8 @@
       "chapterNumber": 7,
       "chapter": "Alternating Current",
       "description": "Change frequency and circuit components to explore AC waveforms, reactance, impedance and resonance.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-alternating-current/"
     },
     {
       "id": "class-12-electromagnetic-waves",
@@ -569,7 +612,8 @@
       "chapterNumber": 8,
       "chapter": "Electromagnetic Waves",
       "description": "Explore how electric and magnetic fields propagate and compare the electromagnetic spectrum.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-electromagnetic-waves/"
     },
     {
       "id": "class-12-focal-length-of-convex-lens-u-v-method",
@@ -578,7 +622,8 @@
       "chapterNumber": 9,
       "chapter": "Ray Optics and Optical Instruments",
       "description": "Explore image formation by mirrors and lenses, focal length, prism deviation and basic optical instruments.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-focal-length-of-convex-lens-u-v-method/"
     },
     {
       "id": "class-12-wave-optics",
@@ -587,7 +632,8 @@
       "chapterNumber": 10,
       "chapter": "Wave Optics",
       "description": "Change slit separation and wavelength to explore interference, diffraction and polarization.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-wave-optics/"
     },
     {
       "id": "class-12-dual-nature-radiation-matter",
@@ -596,7 +642,8 @@
       "chapterNumber": 11,
       "chapter": "Dual Nature of Radiation and Matter",
       "description": "Change light frequency and intensity to investigate photoelectric emission and de Broglie wavelength.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-dual-nature-radiation-matter/"
     },
     {
       "id": "class-12-atoms",
@@ -605,7 +652,8 @@
       "chapterNumber": 12,
       "chapter": "Atoms",
       "description": "Explore atomic spectra and simple atomic models by changing energy levels and transitions.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-atoms/"
     },
     {
       "id": "class-12-nuclei",
@@ -614,7 +662,8 @@
       "chapterNumber": 13,
       "chapter": "Nuclei",
       "description": "Compare nuclear size, binding energy and radioactive decay using a safe model simulation.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-nuclei/"
     },
     {
       "id": "class-12-pn-junction-diode-characteristics",
@@ -623,7 +672,8 @@
       "chapterNumber": 14,
       "chapter": "Semiconductor Electronics: Materials, Devices and Simple Circuits",
       "description": "Change diode bias and circuit components to observe current-voltage behaviour and simple semiconductor circuits.",
-      "simulationType": "2D"
+      "simulationType": "2D",
+      "simulationPath": "simulations/physics/class-12-pn-junction-diode-characteristics/"
     }
   ]
 }
