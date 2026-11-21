@@ -1,1 +1,1534 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f1f8f5">
+<title>Dispersion of Light | Virtual Science Lab</title>
+<style>
+:root{--bg:#f1f7f4;--panel:#fff;--ink:#20362e;--muted:#71847b;--line:#dce8e1;--green:#16866a;--soft:#e4f4ed;--shadow:0 10px 28px rgba(30,75,54,.07)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}button{cursor:pointer}
+.topbar{min-height:64px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(3%,calc((100% - 1480px)/2))}
+.brand{display:flex;align-items:center;gap:10px;font-weight:850}.brand-icon{height:39px;width:39px;border-radius:12px;background:var(--soft);display:grid;place-items:center;color:var(--green);font-size:23px}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:1px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:8px}.top-actions a{color:var(--muted);text-decoration:none;font-size:11px;font-weight:800;margin-right:7px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:9px;font-size:11px;font-weight:850}.btn:hover{background:#f3f8f5}.btn.primary{background:var(--green);border-color:var(--green);color:white}.btn.primary:hover{background:#107052}
+.page{width:94%;max-width:1480px;margin:23px auto 42px}.intro{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:17px}.eyebrow{color:var(--green);font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}.intro h1{margin:6px 0;font-size:clamp(25px,3.5vw,36px);letter-spacing:-1px}.intro p{max-width:820px;margin:0;color:var(--muted);font-size:12px;line-height:1.6}.chip{white-space:nowrap;background:var(--soft);border:1px solid #cce6d9;color:#176f53;padding:8px 12px;border-radius:999px;font-size:10px;font-weight:900}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:15px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}.panel-head h2{font-size:14px;margin:0}.live{font-size:9px;font-weight:900;color:var(--green);display:flex;align-items:center;gap:7px}.live:before{content:"";width:7px;height:7px;background:#23b783;border-radius:50%;box-shadow:0 0 0 4px #e7f8f0}
+.scene-wrap{padding:6px;background:#f9fcfa}.scene{width:100%;height:auto;display:block;aspect-ratio:1000/620;touch-action:none;user-select:none}.scene [data-drag]{cursor:grab;touch-action:none}.scene [data-drag]:active{cursor:grabbing}.ray{stroke-linecap:round;filter:drop-shadow(0 1px 3px rgba(35,100,145,.14))}.scene-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:10px 12px;border-top:1px solid var(--line)}.tool-label{font-size:9px;font-weight:900;color:var(--muted)}.tool-btn{border:1px solid var(--line);border-radius:8px;background:#fff;color:#52675d;padding:7px 9px;font-size:10px;font-weight:850}.tool-btn.active{background:var(--soft);border-color:#b9dfcf;color:#126d50}.scene-note{margin-left:auto;color:var(--muted);font-size:9px}
+.side-panel{padding-bottom:12px}.section{padding:12px 14px;border-bottom:1px solid #edf2ef}.section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;font-weight:900;margin-bottom:8px}.value{color:var(--green);background:var(--soft);padding:4px 7px;border-radius:7px;font-size:10px;font-weight:900}
+select{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font-size:11px;font-weight:800}.range{width:100%;accent-color:var(--green);cursor:pointer}.scale{display:flex;justify-content:space-between;color:#93a29a;font-size:9px;margin-top:3px}.help{margin:7px 0 0;color:var(--muted);font-size:9px;line-height:1.5}
+.quick-row{display:flex;gap:6px;margin-top:8px}.quick-row .tool-btn{flex:1}.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}.mode-btn{border:1px solid transparent;border-radius:8px;background:#f2f7f4;color:var(--muted);padding:9px 5px;font-size:10px;font-weight:900}.mode-btn.active{background:var(--soft);border-color:#b9dfcf;color:#126d50}
+.readings{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px}.read-card{border:1px solid var(--line);border-radius:10px;padding:9px;background:#fbfdfc;min-width:0}.read-card small{display:block;font-size:8px;color:var(--muted);font-weight:900;margin-bottom:6px}.read-card strong{font-size:20px;letter-spacing:-.7px}.read-card span{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+.status{margin:0 14px;padding:10px 11px;background:var(--soft);border-radius:9px;color:#176b51;font-size:10px;line-height:1.5;font-weight:750}.status.warning{background:#fff4e6;color:#98601e}.status.danger{background:#fff0ed;color:#a64636}
+.checks{display:flex;flex-wrap:wrap;gap:11px;margin-top:9px}.checks label{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:9px;font-weight:800;cursor:pointer}.checks input{accent-color:var(--green)}
+.guided{margin:11px 14px 0;padding:11px;background:#fff9ed;border:1px solid #f0e2c4;border-radius:10px}.guided h3{font-size:10px;margin:0 0 6px}.guided p{font-size:9px;color:#796b4e;line-height:1.5;margin:0}.guided-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:9px}.guided-foot span{color:#9a8358;font-size:8px;font-weight:900}.guided-foot button{border:0;background:#f2e3c3;color:#72582e;padding:7px 9px;border-radius:7px;font-size:9px;font-weight:900}
+.below-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.8fr);gap:14px;margin-top:14px}.subpanel{min-width:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow)}.subhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}.subhead h2{font-size:12px;margin:0}.subpanel p{font-size:9px;color:var(--muted);line-height:1.5;margin:6px 0 9px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:9px;white-space:nowrap}th,td{padding:8px 7px;text-align:center;border-bottom:1px solid #edf2ef}th{font-size:8px;color:var(--muted);text-transform:uppercase}td{font-weight:750}th:first-child,td:first-child{text-align:left}.empty{text-align:center;color:#9ba8a1;padding:18px 8px;font-size:9px}
+.graph{display:block;width:100%;height:auto}.theory{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px 16px}.theory h2{font-size:12px;margin:0 0 7px}.theory p{font-size:10px;line-height:1.6;color:var(--muted);margin:0}.formula{display:inline-block;margin-top:9px;padding:8px 12px;background:var(--soft);border-radius:8px;color:#146d51;font-size:14px;font-weight:900}.footer{text-align:center;color:#93a29a;font-size:9px;line-height:1.6;margin-top:16px}
+.recombine{margin-top:14px}.recombine svg{width:100%;height:auto;display:block}
+[hidden]{display:none!important}
+@media(max-width:980px){.main-grid{grid-template-columns:1fr}.side-panel{display:grid;grid-template-columns:1fr 1fr}.side-panel>.panel-head{grid-column:1/-1}.side-panel>.section:nth-child(2){grid-column:1/-1}.readings{align-self:center}.side-panel>.mode-section,.guided{grid-column:1/-1}.below-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.topbar{padding:8px 3%;min-height:56px}.brand small,.top-actions a{display:none}.top-actions .btn{padding:8px 9px;font-size:9px}.page{width:95%;margin-top:16px}.intro{display:block}.chip{display:inline-block;margin-top:9px}.scene-wrap{padding:2px}.scene-toolbar{gap:5px}.scene-note{width:100%;margin:2px 0 0}.side-panel{display:block}.below-grid{grid-template-columns:1fr}.read-card strong{font-size:18px}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+ <div class="brand"><div class="brand-icon">🌈</div><div>Virtual Science Lab<small>INTERACTIVE PHYSICS</small></div></div>
+ <div class="top-actions">
+  <a href="../../../index.html?subject=physics">← Physics Playground</a>
+  <button class="btn" id="fullscreenBtn">⛶ Fullscreen</button>
+  <button class="btn primary" id="resetBtn">↻ Reset all</button>
+ </div>
+</header>
+
+<main class="page">
+
+ <section class="intro">
+  <div>
+   <div class="eyebrow">CLASS 10 · THE HUMAN EYE AND THE COLOURFUL WORLD</div>
+   <h1>Dispersion of White Light — Prism</h1>
+   <p>Send light through a triangular prism. Change its material, rotate the prism, investigate the spectrum and compare how red and violet light deviate.</p>
+  </div>
+  <div class="chip">2D INTERACTIVE OPTICS LAB</div>
+ </section>
+
+ <div class="main-grid">
+
+  <!-- OPTICAL SCENE -->
+  <section class="panel">
+   <div class="panel-head">
+    <h2>Optical Bench</h2>
+    <span class="live">LIVE SIMULATION</span>
+   </div>
+
+   <div class="scene-wrap">
+    <svg id="scene" class="scene" viewBox="0 0 1000 620"
+         role="img" aria-label="Interactive prism dispersion experiment">
+
+     <defs>
+      <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+       <path d="M32 0H0V32" fill="none" stroke="#e9f0eb"/>
+      </pattern>
+      <linearGradient id="prismFill" x1="0" y1="0" x2="1" y2="1">
+       <stop stop-color="#d9f1f1" stop-opacity=".72"/>
+       <stop offset=".5" stop-color="#e9f6f4" stop-opacity=".55"/>
+       <stop offset="1" stop-color="#c9e8e8" stop-opacity=".72"/>
+      </linearGradient>
+      <marker id="rayArrow" markerWidth="9" markerHeight="9"
+              refX="7" refY="3" orient="auto"
+              markerUnits="userSpaceOnUse">
+       <path d="M0 0L0 6L8 3Z" fill="context-stroke"/>
+      </marker>
+     </defs>
+
+     <rect width="1000" height="620" rx="10" fill="#fbfdfc"/>
+     <rect width="1000" height="620" fill="url(#grid)"/>
+
+     <text x="22" y="31" font-size="11" fill="#8c9d95" font-weight="850">
+       LIGHT SOURCE
+     </text>
+
+     <!-- Incoming beam -->
+     <g id="incomingGroup"></g>
+
+     <!-- Prism -->
+     <polygon id="prism"
+              points="470,170 354,440 586,440"
+              fill="url(#prismFill)"
+              stroke="#6b9e99"
+              stroke-width="4"
+              stroke-linejoin="round"/>
+
+     <g id="prismNormals"></g>
+     <g id="protractorGroup"></g>
+     <g id="rayGroup"></g>
+
+     <!-- Source handle -->
+     <g id="laserHandle" data-drag="laser"
+        tabindex="0" role="button"
+        aria-label="Drag the laser source">
+      <rect x="-39" y="-16" width="66" height="32" rx="9"
+            fill="#fff2c9" stroke="#d5a13c" stroke-width="2.5"/>
+      <rect x="-29" y="-10" width="33" height="20" rx="4"
+            fill="#f3c45d" stroke="#cb942e"/>
+      <path d="M4 -7L27 0L4 7Z" fill="#d79c32"/>
+      <circle cx="-19" cy="0" r="3.5" fill="#fff" stroke="#b98929"/>
+     </g>
+
+     <!-- Rotation handle -->
+     <g id="rotationHandle" data-drag="rotate"
+        tabindex="0" role="button"
+        aria-label="Drag to rotate the prism">
+      <circle r="17" fill="#fff" stroke="#7da99a" stroke-width="2"/>
+      <path d="M-8 0H8M0 -8V8" stroke="#16866a" stroke-width="2.4"
+            stroke-linecap="round"/>
+      <circle r="3.5" fill="#16866a"/>
+     </g>
+
+     <text id="prismLabel" x="470" y="470"
+           text-anchor="middle" font-size="12"
+           font-weight="900" fill="#5b8278">TRIANGULAR PRISM</text>
+
+     <g transform="translate(22 540)">
+      <rect width="350" height="55" rx="9"
+            fill="#fff" stroke="#e0eae4"/>
+      <text x="13" y="20" font-size="10" font-weight="850"
+            fill="#667e72">WHAT TO OBSERVE</text>
+      <text x="13" y="40" font-size="10" fill="#84968d">
+       Colours separate because their refractive indices differ.
+      </text>
+     </g>
+     <text x="975" y="585" text-anchor="end"
+           fill="#9aaba2" font-size="9" font-weight="800">
+       SCHEMATIC OPTICAL BENCH · NOT TO SCALE
+     </text>
+    </svg>
+   </div>
+
+   <div class="scene-toolbar">
+    <span class="tool-label">LIGHT</span>
+    <button class="tool-btn active" data-light="white">White light</button>
+    <button class="tool-btn" data-light="mono">Single colour</button>
+    <span class="tool-label" style="margin-left:8px">DISPLAY</span>
+    <button class="tool-btn active" id="showNormals">＋ Normals</button>
+    <button class="tool-btn" id="showProtractor">＋ Protractor</button>
+    <button class="tool-btn active" id="showReflection">✓ Reflection</button>
+    <span class="scene-note">Drag laser or prism handle</span>
+   </div>
+  </section>
+
+  <!-- CONTROL PANEL -->
+  <aside class="panel side-panel">
+
+   <div class="panel-head">
+    <h2>Experiment Controls</h2>
+    <span class="eyebrow">LAB PANEL</span>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Prism material</div>
+    <select id="material">
+     <option value="glass">Crown glass</option>
+     <option value="water">Water</option>
+     <option value="acrylic">Acrylic</option>
+     <option value="diamond">Diamond</option>
+    </select>
+    <p class="help">Different materials have different refractive indices and dispersion strengths.</p>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Prism rotation
+     <span class="value" id="rotationValue">0°</span>
+    </div>
+    <input id="rotation" class="range" type="range"
+           min="-20" max="20" step="1" value="0">
+    <div class="scale"><span>-20°</span><span>0°</span><span>+20°</span></div>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Prism apex angle
+     <span class="value" id="apexValue">50°</span>
+    </div>
+    <input id="apex" class="range" type="range"
+           min="40" max="70" step="1" value="50">
+    <div class="scale"><span>40°</span><span>55°</span><span>70°</span></div>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Laser direction
+     <span class="value" id="beamValue">0°</span>
+    </div>
+    <input id="beamAngle" class="range" type="range"
+           min="-12" max="12" step="1" value="0">
+    <div class="scale"><span>-12°</span><span>0°</span><span>+12°</span></div>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Laser position
+     <span class="value" id="sourceValue">310</span>
+    </div>
+    <input id="sourceY" class="range" type="range"
+           min="170" max="450" step="1" value="310">
+    <div class="scale"><span>Top</span><span>Middle</span><span>Bottom</span></div>
+   </div>
+
+   <div class="section" id="monoControls" hidden>
+    <div class="section-title">Wavelength
+     <span class="value" id="wavelengthValue">550 nm</span>
+    </div>
+    <input id="wavelength" class="range" type="range"
+           min="400" max="700" step="1" value="550">
+    <div class="scale"><span>400 nm · Violet</span><span>700 nm · Red</span></div>
+    <p class="help">Select one wavelength to see a single-colour ray.</p>
+   </div>
+
+   <div class="readings">
+    <div class="read-card">
+     <small>INDEX · RED (650 nm)</small>
+     <strong id="redIndex">1.516</strong>
+     <span>refractive index</span>
+    </div>
+    <div class="read-card">
+     <small>INDEX · VIOLET (430 nm)</small>
+     <strong id="violetIndex">1.531</strong>
+     <span>refractive index</span>
+    </div>
+    <div class="read-card">
+     <small>RED DEVIATION</small>
+     <strong id="redDeviation">—</strong>
+     <span>degrees</span>
+    </div>
+    <div class="read-card">
+     <small>VIOLET DEVIATION</small>
+     <strong id="violetDeviation">—</strong>
+     <span>degrees</span>
+    </div>
+   </div>
+
+   <div class="status" id="status" aria-live="polite">
+    White light is entering the prism. Observe the emerging spectrum.
+   </div>
+
+   <div class="section">
+    <div class="section-title">Guided investigation</div>
+    <div class="mode-row">
+     <button class="mode-btn active" id="guidedMode">Guided Lab</button>
+     <button class="mode-btn" id="freeMode">Free Explore</button>
+    </div>
+    <div class="guided" id="guidedBox">
+     <h3 id="guideTitle">Task 1 · Observe dispersion</h3>
+     <p id="guideText">Select White light and observe how the emerging beam separates into colours.</p>
+     <div class="guided-foot">
+      <span id="guideStep">TASK 1 OF 4</span>
+      <button id="nextGuide">Next task →</button>
+     </div>
+    </div>
+   </div>
+
+  </aside>
+ </div>
+
+ <!-- MEASUREMENTS -->
+ <div class="below-grid">
+
+  <section class="subpanel">
+   <div class="subhead">
+    <h2>Dispersion measurement table</h2>
+    <div style="display:flex;gap:5px">
+     <button class="btn primary" id="recordBtn">＋ Record</button>
+     <button class="btn" id="clearBtn">Clear</button>
+    </div>
+   </div>
+   <p>Record the emerging deviation angles for the spectrum's different colours.</p>
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr>
+       <th>Trial</th>
+       <th>Colour</th>
+       <th>Wavelength</th>
+       <th>Index</th>
+       <th>Deviation</th>
+       <th>Result</th>
+      </tr>
+     </thead>
+     <tbody id="trialRows">
+      <tr><td colspan="6" class="empty">No measurements yet. Press Record.</td></tr>
+     </tbody>
+    </table>
+   </div>
+  </section>
+
+  <section class="subpanel">
+   <div class="subhead">
+    <h2>Dispersion graph</h2>
+    <span class="eyebrow">WAVELENGTH VS DEVIATION</span>
+   </div>
+   <p>Compare the deviation of different wavelengths using the current prism settings.</p>
+   <svg id="graph" class="graph" viewBox="0 0 380 235"
+        role="img" aria-label="Graph of wavelength against deviation">
+    <rect x="43" y="12" width="315" height="184" rx="5"
+          fill="#fbfdfc" stroke="#e2ebe6"/>
+    <g id="graphGrid"></g>
+    <line x1="43" y1="196" x2="358" y2="196"
+          stroke="#70847a" stroke-width="1.5"/>
+    <line x1="43" y1="12" x2="43" y2="196"
+          stroke="#70847a" stroke-width="1.5"/>
+    <path id="graphLine" d="" fill="none" stroke="#16866a" stroke-width="2.5"/>
+    <g id="graphPoints"></g>
+    <text x="200" y="228" text-anchor="middle"
+          font-size="10" fill="#71847b" font-weight="800">WAVELENGTH (nm)</text>
+    <text x="12" y="105" text-anchor="middle"
+          transform="rotate(-90 12 105)"
+          font-size="10" fill="#71847b" font-weight="800">DEVIATION (°)</text>
+   </svg>
+   <p id="graphNote">The graph updates as you change the experimental settings.</p>
+  </section>
+
+ </div>
+
+ <!-- TWO PRISM RECOMBINATION -->
+ <section class="subpanel recombine">
+  <div class="subhead">
+   <h2>Two-prism recombination demonstration</h2>
+   <button class="btn" id="recombineToggle">Show demonstration</button>
+  </div>
+  <p>A second inverted prism can bring the separated colours back together in an ideal complementary arrangement.</p>
+  <div id="recombinePanel" hidden>
+   <svg viewBox="0 0 800 230" role="img"
+        aria-label="Conceptual demonstration of white light separation and recombination">
+    <rect width="800" height="230" rx="10" fill="#f9fcfa"/>
+    <path d="M150 43L86 190H214Z" fill="#d9eeee" fill-opacity=".7" stroke="#73a39a" stroke-width="3"/>
+    <path d="M545 43L481 190H609Z" transform="rotate(180 545 116)" fill="#d9eeee" fill-opacity=".7" stroke="#73a39a" stroke-width="3"/>
+    <text x="150" y="211" text-anchor="middle" fill="#71847b" font-size="11" font-weight="800">PRISM 1</text>
+    <text x="545" y="211" text-anchor="middle" fill="#71847b" font-size="11" font-weight="800">INVERTED PRISM 2</text>
+    <line x1="12" y1="115" x2="110" y2="115" stroke="#ffffff" stroke-width="9"/>
+    <line x1="12" y1="115" x2="110" y2="115" stroke="#a0aaa3" stroke-width="2"/>
+    <text x="17" y="95" font-size="10" fill="#71847b" font-weight="800">WHITE LIGHT</text>
+    <g stroke-width="3.5" fill="none">
+     <path d="M180 100L340 45L495 115" stroke="#9b35bd"/>
+     <path d="M180 104L340 67L495 115" stroke="#315bd5"/>
+     <path d="M180 108L340 87L495 115" stroke="#24a9b7"/>
+     <path d="M180 112L340 105L495 115" stroke="#34a75b"/>
+     <path d="M180 116L340 125L495 115" stroke="#e2c83d"/>
+     <path d="M180 120L340 145L495 115" stroke="#ee9732"/>
+     <path d="M180 124L340 165L495 115" stroke="#d94e48"/>
+    </g>
+    <path d="M495 115L780 115" stroke="#fff" stroke-width="9"/>
+    <path d="M495 115L780 115" stroke="#a0aaa3" stroke-width="2"/>
+    <text x="690" y="95" font-size="11" fill="#16866a" font-weight="900">WHITE LIGHT</text>
+   </svg>
+   <p><strong>Concept illustration:</strong> The diagram shows the principle of recombination. The exact ray geometry depends on both prisms' orientation, angle and material.</p>
+  </div>
+ </section>
+
+ <section class="theory">
+  <h2>What should you discover?</h2>
+  <p>When white light passes through a prism, its constituent wavelengths experience different refractive indices. This causes different colours to bend by different amounts. In normal dispersion for these materials, violet light generally deviates more than red light. A complementary second prism can recombine the separated colours to produce white light.</p>
+  <div class="formula">n = A + B / λ² (approximate Cauchy model)</div>
+ </section>
+
+ <div class="footer">
+  Virtual Science Lab · Original interactive optics activity<br>
+  Approximate wavelength-dependent refractive-index model · Not to scale
+ </div>
+</main>
+
+<script>
+(() => {
+"use strict";
+
+/* -------------------------------------------------------
+   MATERIAL MODEL
+
+   Approximate Cauchy equation:
+   n(lambda) = n589 + B * (1/lambda² - 1/0.589²)
+
+   Lambda is measured in micrometres.
+------------------------------------------------------- */
+
+const MATERIALS = {
+ glass: {
+  name:"Crown glass",
+  n589:1.520,
+  B:0.0042
+ },
+ water: {
+  name:"Water",
+  n589:1.333,
+  B:0.0030
+ },
+ acrylic: {
+  name:"Acrylic",
+  n589:1.490,
+  B:0.0030
+ },
+ diamond: {
+  name:"Diamond",
+  n589:2.417,
+  B:0.0150
+ }
+};
+
+const COLOURS = [
+ {name:"Red",lambda:650,color:"#e74c3c"},
+ {name:"Orange",lambda:610,color:"#ed8733"},
+ {name:"Yellow",lambda:580,color:"#dfbd35"},
+ {name:"Green",lambda:550,color:"#36a86b"},
+ {name:"Blue",lambda:490,color:"#3287d0"},
+ {name:"Indigo",lambda:450,color:"#5553b8"},
+ {name:"Violet",lambda:430,color:"#963bbd"}
+];
+
+const state = {
+ material:"glass",
+ light:"white",
+ wavelength:550,
+ prismRotation:0,
+ apex:50,
+ beamAngle:0,
+ sourceY:310,
+ showNormals:true,
+ showProtractor:false,
+ showReflection:true,
+ mode:"guided",
+ guide:0,
+ trials:[],
+ recombination:false
+};
+
+const $ = id => document.getElementById(id);
+const svg = $("scene");
+
+const guides = [
+ {
+  title:"Task 1 · Observe dispersion",
+  text:"Select White light and observe how the emerging beam separates into colours. Identify red and violet."
+ },
+ {
+  title:"Task 2 · Compare colours",
+  text:"Compare the direction of red and violet rays. Which colour has the larger deviation?"
+ },
+ {
+  title:"Task 3 · Change materials",
+  text:"Switch between water, glass and diamond. Observe how the spectrum and the refractive indices change."
+ },
+ {
+  title:"Task 4 · Rotate the prism",
+  text:"Rotate the prism and change its apex angle. Record observations and compare their spectra."
+ }
+];
+
+const DEG = Math.PI/180;
+const rad = d => d*DEG;
+const deg = r => r/DEG;
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+
+function add(a,b){
+ return {x:a.x+b.x,y:a.y+b.y};
+}
+
+function sub(a,b){
+ return {x:a.x-b.x,y:a.y-b.y};
+}
+
+function mul(a,k){
+ return {x:a.x*k,y:a.y*k};
+}
+
+function dot(a,b){
+ return a.x*b.x+a.y*b.y;
+}
+
+function cross(a,b){
+ return a.x*b.y-a.y*b.x;
+}
+
+function length(a){
+ return Math.hypot(a.x,a.y);
+}
+
+function unit(a){
+ const l=length(a);
+ return l>0?mul(a,1/l):{x:0,y:0};
+}
+
+function wrapAngle(a){
+ while(a>Math.PI)a-=2*Math.PI;
+ while(a<-Math.PI)a+=2*Math.PI;
+ return a;
+}
+
+function refractiveIndex(lambda){
+ const m=MATERIALS[state.material];
+ const um=lambda/1000;
+ return m.n589+m.B*(1/(um*um)-1/(0.589*0.589));
+}
+
+/* -------------------------------------------------------
+   PRISM GEOMETRY
+------------------------------------------------------- */
+
+function getVertices(){
+ const height=270;
+ const half=height*Math.tan(rad(state.apex/2));
+
+ const cx=470;
+ const cy=350;
+
+ const base=[
+  {x:cx,y:cy-height*2/3},
+  {x:cx-half,y:cy+height/3},
+  {x:cx+half,y:cy+height/3}
+ ];
+
+ const centre=base.reduce(
+  (sum,p)=>add(sum,p),
+  {x:0,y:0}
+ );
+
+ const c=mul(centre,1/3);
+ const angle=rad(state.prismRotation);
+
+ return base.map(p=>{
+  const v=sub(p,c);
+  return add(c,{
+   x:v.x*Math.cos(angle)-v.y*Math.sin(angle),
+   y:v.x*Math.sin(angle)+v.y*Math.cos(angle)
+  });
+ });
+}
+
+function centroid(vertices){
+ return mul(vertices.reduce((s,p)=>add(s,p),{x:0,y:0}),1/vertices.length);
+}
+
+function outwardNormal(a,b,centre){
+ const e=sub(b,a);
+ let n=unit({x:e.y,y:-e.x});
+ const middle=mul(add(a,b),.5);
+
+ if(dot(n,sub(middle,centre))<0){
+  n=mul(n,-1);
+ }
+
+ return n;
+}
+
+/* -------------------------------------------------------
+   RAY / EDGE INTERSECTION
+------------------------------------------------------- */
+
+function firstHit(origin,direction,vertices,excludedEdge=-1){
+ let best=null;
+ const centre=centroid(vertices);
+
+ for(let i=0;i<vertices.length;i++){
+  if(i===excludedEdge)continue;
+
+  const a=vertices[i];
+  const b=vertices[(i+1)%vertices.length];
+  const edge=sub(b,a);
+  const denominator=cross(direction,edge);
+
+  if(Math.abs(denominator)<1e-8)continue;
+
+  const diff=sub(a,origin);
+  const t=cross(diff,edge)/denominator;
+  const u=cross(diff,direction)/denominator;
+
+  if(t>0.03&&u>=-1e-6&&u<=1.000001){
+   if(!best||t<best.t){
+    const point=add(origin,mul(direction,t));
+
+    best={
+     point,
+     t,
+     edgeIndex:i,
+     normal:outwardNormal(a,b,centre)
+    };
+   }
+  }
+ }
+
+ return best;
+}
+
+/* -------------------------------------------------------
+   SNELL'S LAW VECTOR REFRACTION
+------------------------------------------------------- */
+
+function refractRay(I,outwardNormal,n1,n2){
+ // Normal is oriented against the incoming ray.
+ let N=outwardNormal;
+
+ if(dot(I,N)>0){
+  N=mul(N,-1);
+ }
+
+ const cosI=-dot(N,I);
+ const eta=n1/n2;
+ const k=1-eta*eta*(1-cosI*cosI);
+
+ if(k<-1e-9){
+  return null;
+ }
+
+ const direction=add(
+  mul(I,eta),
+  mul(N,eta*cosI-Math.sqrt(Math.max(0,k)))
+ );
+
+ return unit(direction);
+}
+
+function reflectRay(I,N){
+ return unit(sub(I,mul(N,2*dot(I,N))));
+}
+
+/* -------------------------------------------------------
+   TRACE ONE WAVELENGTH THROUGH THE PRISM
+------------------------------------------------------- */
+
+function traceRay(lambda,vertices){
+ const n=refractiveIndex(lambda);
+
+ const source={
+  x:65,
+  y:state.sourceY
+ };
+
+ const angle=rad(state.beamAngle);
+ const initial=unit({
+  x:Math.cos(angle),
+  y:Math.sin(angle)
+ });
+
+ const entry=firstHit(source,initial,vertices);
+
+ if(!entry){
+  return {
+   lambda,n,hit:false,segments:[],deviation:null,tir:false
+  };
+ }
+
+ const segments=[
+  {a:source,b:entry.point,kind:"incoming"}
+ ];
+
+ const entryReflection=reflectRay(
+  initial,
+  entry.normal
+ );
+
+ const reflectedStart=entry.point;
+ const reflectedEnd=add(
+  reflectedStart,
+  mul(entryReflection,85)
+ );
+
+ const firstInside=refractRay(
+  initial,
+  entry.normal,
+  1,
+  n
+ );
+
+ if(!firstInside){
+  return {
+   lambda,n,hit:true,segments,
+   entry,entryReflection,reflectedEnd,
+   deviation:null,tir:true
+  };
+ }
+
+ let currentPoint=add(entry.point,mul(firstInside,.04));
+ let currentDirection=firstInside;
+ let previousEdge=entry.edgeIndex;
+ let outgoing=null;
+ let tir=false;
+ let exitPoint=null;
+ let internalBounces=0;
+
+ for(let bounce=0;bounce<5;bounce++){
+  const hit=firstHit(
+   currentPoint,
+   currentDirection,
+   vertices,
+   previousEdge
+  );
+
+  if(!hit)break;
+
+  segments.push({
+   a:currentPoint,
+   b:hit.point,
+   kind:"inside"
+  });
+
+  exitPoint=hit.point;
+
+  const transmitted=refractRay(
+   currentDirection,
+   hit.normal,
+   n,
+   1
+  );
+
+  if(transmitted){
+   outgoing=transmitted;
+   break;
+  }
+
+  // Total internal reflection.
+  tir=true;
+  internalBounces++;
+
+  currentDirection=reflectRay(
+   currentDirection,
+   hit.normal
+  );
+
+  currentPoint=add(hit.point,mul(currentDirection,.05));
+  previousEdge=hit.edgeIndex;
+ }
+
+ let deviation=null;
+
+ if(outgoing){
+  const outEnd=add(exitPoint,mul(outgoing,295));
+
+  segments.push({
+   a:exitPoint,
+   b:outEnd,
+   kind:"outgoing"
+  });
+
+  deviation=Math.abs(
+   wrapAngle(
+    Math.atan2(outgoing.y,outgoing.x)-angle
+   )
+  )/DEG;
+ }
+
+ return {
+  lambda,n,hit:true,
+  entry,
+  exitPoint,
+  segments,
+  outgoing,
+  deviation,
+  tir,
+  internalBounces,
+  entryReflection,
+  reflectedEnd,
+  firstInside,
+  beamAngle:state.beamAngle
+ };
+}
+
+/* -------------------------------------------------------
+   SVG DRAWING HELPERS
+------------------------------------------------------- */
+
+function addSvgLine(group,a,b,color,width=3,dash=""){
+ const el=document.createElementNS(
+  "http://www.w3.org/2000/svg","line"
+ );
+
+ el.setAttribute("x1",a.x);
+ el.setAttribute("y1",a.y);
+ el.setAttribute("x2",b.x);
+ el.setAttribute("y2",b.y);
+ el.setAttribute("stroke",color);
+ el.setAttribute("stroke-width",width);
+ el.setAttribute("stroke-linecap","round");
+ el.setAttribute("class","ray");
+
+ if(dash)el.setAttribute("stroke-dasharray",dash);
+
+ group.appendChild(el);
+ return el;
+}
+
+function pointGroup(id,p){
+ $(id).setAttribute(
+  "transform",
+  `translate(${p.x} ${p.y})`
+ );
+}
+
+function updatePrismDrawing(vertices){
+ $("prism").setAttribute(
+  "points",
+  vertices.map(p=>`${p.x},${p.y}`).join(" ")
+ );
+
+ const handle=vertices[0];
+
+ pointGroup("rotationHandle",{
+  x:handle.x,
+  y:handle.y-28
+ });
+
+ $("prismLabel").setAttribute(
+  "x",
+  centroid(vertices).x
+ );
+
+ $("prismLabel").setAttribute(
+  "y",
+  Math.max(...vertices.map(v=>v.y))+35
+ );
+}
+
+/* -------------------------------------------------------
+   NORMALS AND PROTRACTOR
+------------------------------------------------------- */
+
+function drawNormals(reference){
+ const group=$("prismNormals");
+ group.replaceChildren();
+
+ group.style.display=
+  state.showNormals?"":"none";
+
+ if(!state.showNormals||!reference.entry)return;
+
+ const hits=[
+  reference.entry,
+  reference.exitPoint?
+   {point:reference.exitPoint,normal:reference.exitNormal}:
+   null
+ ].filter(Boolean);
+
+ hits.forEach(hit=>{
+  if(!hit.normal)return;
+
+  const a=add(hit.point,mul(hit.normal,48));
+  const b=add(hit.point,mul(hit.normal,-48));
+
+  addSvgLine(group,a,b,"#73887d",1.5,"5 5");
+ });
+}
+
+function drawProtractor(reference){
+ const group=$("protractorGroup");
+ group.replaceChildren();
+
+ group.style.display=
+  state.showProtractor?"":"none";
+
+ if(!state.showProtractor||!reference.entry)return;
+
+ const p=reference.entry.point;
+ group.setAttribute(
+  "transform",
+  `translate(${p.x} ${p.y})`
+ );
+
+ const ns="http://www.w3.org/2000/svg";
+
+ const circle=document.createElementNS(ns,"circle");
+ circle.setAttribute("r","76");
+ circle.setAttribute("fill","#fff");
+ circle.setAttribute("fill-opacity",".37");
+ circle.setAttribute("stroke","#91a99e");
+ circle.setAttribute("stroke-width","1.4");
+ group.appendChild(circle);
+
+ for(let a=0;a<360;a+=10){
+  const major=a%30===0;
+  const len=major?11:6;
+
+  const tick=document.createElementNS(ns,"line");
+  tick.setAttribute("x1",76*Math.cos(rad(a)));
+  tick.setAttribute("y1",76*Math.sin(rad(a)));
+  tick.setAttribute("x2",(76-len)*Math.cos(rad(a)));
+  tick.setAttribute("y2",(76-len)*Math.sin(rad(a)));
+  tick.setAttribute("stroke","#82978d");
+  tick.setAttribute("stroke-width",major?1.5:1);
+
+  group.appendChild(tick);
+ }
+}
+
+/* -------------------------------------------------------
+   GRAPH
+------------------------------------------------------- */
+
+function buildGraph(){
+ const group=$("graphGrid");
+ const ns="http://www.w3.org/2000/svg";
+
+ for(let i=0;i<=5;i++){
+  const x=43+i*63;
+  const y=196-i*36.8;
+
+  const vertical=document.createElementNS(ns,"line");
+  vertical.setAttribute("x1",x);
+  vertical.setAttribute("x2",x);
+  vertical.setAttribute("y1",12);
+  vertical.setAttribute("y2",196);
+  vertical.setAttribute("stroke","#edf2ef");
+  group.appendChild(vertical);
+
+  const horizontal=document.createElementNS(ns,"line");
+  horizontal.setAttribute("x1",43);
+  horizontal.setAttribute("x2",358);
+  horizontal.setAttribute("y1",y);
+  horizontal.setAttribute("y2",y);
+  horizontal.setAttribute("stroke","#edf2ef");
+  group.appendChild(horizontal);
+ }
+}
+
+function spectrumTraces(){
+ const vertices=getVertices();
+
+ return COLOURS.map(colour=>
+  traceRay(colour.lambda,vertices)
+ );
+}
+
+function renderGraph(traces){
+ const valid=traces.filter(
+  t=>t.deviation!==null
+ );
+
+ const group=$("graphPoints");
+ group.replaceChildren();
+
+ if(!valid.length){
+  $("graphLine").setAttribute("d","");
+  $("graphNote").textContent=
+   "No transmitted spectrum. Adjust prism or laser settings.";
+  return;
+ }
+
+ const deviations=valid.map(t=>t.deviation);
+ const maxDeviation=Math.max(10,...deviations);
+ const maxY=Math.ceil(maxDeviation/10)*10;
+
+ const xFor=lambda=>
+  43+(lambda-400)/300*315;
+
+ const yFor=deviation=>
+  196-clamp(deviation/maxY,0,1)*184;
+
+ const path=valid
+  .slice()
+  .sort((a,b)=>a.lambda-b.lambda)
+  .map((t,i)=>
+   `${i===0?"M":"L"} ${xFor(t.lambda)} ${yFor(t.deviation)}`
+  ).join(" ");
+
+ $("graphLine").setAttribute("d",path);
+
+ valid.forEach(t=>{
+  const point=document.createElementNS(
+   "http://www.w3.org/2000/svg","circle"
+  );
+
+  point.setAttribute("cx",xFor(t.lambda));
+  point.setAttribute("cy",yFor(t.deviation));
+  point.setAttribute("r","5");
+  point.setAttribute(
+   "fill",
+   COLOURS.find(c=>c.lambda===t.lambda)?.color||"#16866a"
+  );
+  point.setAttribute("stroke","#fff");
+  point.setAttribute("stroke-width","2");
+
+  group.appendChild(point);
+ });
+
+ $("graphNote").textContent=
+  `${valid.length} colour rays plotted. Vertical scale: 0–${maxY}°.`;
+}
+
+/* -------------------------------------------------------
+   MAIN RENDER
+------------------------------------------------------- */
+
+function update(){
+ const vertices=getVertices();
+ updatePrismDrawing(vertices);
+
+ const incomingGroup=$("incomingGroup");
+ const rayGroup=$("rayGroup");
+
+ incomingGroup.replaceChildren();
+ rayGroup.replaceChildren();
+
+ const laserPosition={
+  x:65,
+  y:state.sourceY
+ };
+
+ pointGroup("laserHandle",laserPosition);
+
+ const traces=state.light==="white"
+  ? spectrumTraces()
+  : [traceRay(state.wavelength,vertices)];
+
+ const reference=
+  traceRay(550,vertices);
+
+ // Draw the white incident beam once.
+ if(state.light==="white"){
+  const primary=traces.find(t=>t.hit);
+
+  if(primary){
+   addSvgLine(
+    incomingGroup,
+    {x:65,y:state.sourceY},
+    primary.entry.point,
+    "#ffffff",
+    9
+   );
+
+   addSvgLine(
+    incomingGroup,
+    {x:65,y:state.sourceY},
+    primary.entry.point,
+    "#9caaa3",
+    1.2
+   );
+  }
+ }
+
+ let tirCount=0;
+
+ traces.forEach(trace=>{
+  if(!trace.hit)return;
+
+  const colour=state.light==="white"
+   ?COLOURS.find(c=>c.lambda===trace.lambda)?.color||"#16866a"
+   :wavelengthColour(state.wavelength);
+
+  trace.segments.forEach(segment=>{
+   if(segment.kind==="incoming"){
+    if(state.light==="mono"){
+     addSvgLine(
+      incomingGroup,
+      segment.a,
+      segment.b,
+      colour,
+      3.5
+     );
+    }
+   }else if(segment.kind==="inside"){
+    addSvgLine(
+     rayGroup,
+     segment.a,
+     segment.b,
+     colour,
+     2.7
+    );
+   }else{
+    addSvgLine(
+     rayGroup,
+     segment.a,
+     segment.b,
+     colour,
+     3.2
+    );
+   }
+  });
+
+  if(trace.tir&&!trace.outgoing)tirCount++;
+
+  if(
+   state.showReflection&&
+   state.light==="mono"
+  ){
+   addSvgLine(
+    rayGroup,
+    trace.entry.point,
+    trace.reflectedEnd,
+    "#e88e3b",
+    2,
+    "5 5"
+   );
+  }
+ });
+
+ if(
+  state.light==="white"&&
+  state.showReflection&&
+  reference.hit
+ ){
+  addSvgLine(
+   rayGroup,
+   reference.entry.point,
+   reference.reflectedEnd,
+   "#e88e3b",
+   2,
+   "5 5"
+  );
+ }
+
+ // Use the reference ray for the normal and protractor.
+ const ref=reference;
+ drawNormals(ref);
+ drawProtractor(ref);
+
+ const material=MATERIALS[state.material];
+
+ const red=refractiveIndex(650);
+ const violet=refractiveIndex(430);
+
+ $("redIndex").textContent=red.toFixed(4);
+ $("violetIndex").textContent=violet.toFixed(4);
+
+ const redTrace=traceRay(650,vertices);
+ const violetTrace=traceRay(430,vertices);
+
+ $("redDeviation").textContent=
+  redTrace.deviation===null
+   ?"TIR"
+   :`${redTrace.deviation.toFixed(1)}°`;
+
+ $("violetDeviation").textContent=
+  violetTrace.deviation===null
+   ?"TIR"
+   :`${violetTrace.deviation.toFixed(1)}°`;
+
+ $("rotationValue").textContent=
+  `${state.prismRotation>0?"+":""}${state.prismRotation}°`;
+
+ $("apexValue").textContent=`${state.apex}°`;
+ $("beamValue").textContent=`${state.beamAngle}°`;
+ $("sourceValue").textContent=String(state.sourceY);
+ $("wavelengthValue").textContent=`${state.wavelength} nm`;
+
+ $("rotation").value=state.prismRotation;
+ $("apex").value=state.apex;
+ $("beamAngle").value=state.beamAngle;
+ $("sourceY").value=state.sourceY;
+ $("wavelength").value=state.wavelength;
+
+ $("status").className="status";
+
+ if(tirCount>0){
+  $("status").classList.add("warning");
+  $("status").textContent=
+   "One or more wavelength rays undergo total internal reflection at the prism surface. Try changing the prism or beam angle.";
+ }else if(
+  redTrace.deviation!==null&&
+  violetTrace.deviation!==null
+ ){
+  $("status").textContent=
+   `Dispersion visible: red deviates ${redTrace.deviation.toFixed(1)}° and violet ${violetTrace.deviation.toFixed(1)}°. Compare their paths.`;
+ }else{
+  $("status").classList.add("warning");
+  $("status").textContent=
+   "The laser may be missing a suitable prism face. Adjust its position or direction.";
+ }
+
+ if(state.light==="mono"){
+  $("status").textContent+=
+   ` Current wavelength: ${state.wavelength} nm.`;
+ }
+
+ $("monoControls").hidden=state.light!=="mono";
+
+ document.querySelectorAll("[data-light]").forEach(button=>{
+  button.classList.toggle(
+   "active",
+   button.dataset.light===state.light
+  );
+ });
+
+ $("showNormals").classList.toggle(
+  "active",state.showNormals
+ );
+
+ $("showProtractor").classList.toggle(
+  "active",state.showProtractor
+ );
+
+ $("showReflection").classList.toggle(
+  "active",state.showReflection
+ );
+
+ renderGraph(spectrumTraces());
+}
+
+function wavelengthColor(lambda){
+ return (
+  COLOURS.slice().sort(
+   (a,b)=>Math.abs(a.lambda-lambda)-Math.abs(b.lambda-lambda)
+  )[0]?.color || "#2588cf"
+ );
+}
+
+/* -------------------------------------------------------
+   EXPERIMENT CONTROLS
+------------------------------------------------------- */
+
+$("material").addEventListener("change",e=>{
+ state.material=e.target.value;
+ update();
+});
+
+$("rotation").addEventListener("input",e=>{
+ state.prismRotation=Number(e.target.value);
+ update();
+});
+
+$("apex").addEventListener("input",e=>{
+ state.apex=Number(e.target.value);
+ update();
+});
+
+$("beamAngle").addEventListener("input",e=>{
+ state.beamAngle=Number(e.target.value);
+ update();
+});
+
+$("sourceY").addEventListener("input",e=>{
+ state.sourceY=Number(e.target.value);
+ update();
+});
+
+$("wavelength").addEventListener("input",e=>{
+ state.wavelength=Number(e.target.value);
+ update();
+});
+
+document.querySelectorAll("[data-light]").forEach(button=>{
+ button.addEventListener("click",()=>{
+  state.light=button.dataset.light;
+  update();
+ });
+});
+
+$("showNormals").addEventListener("click",()=>{
+ state.showNormals=!state.showNormals;
+ $("showNormals").textContent=
+  state.showNormals?"✓ Normals":"＋ Normals";
+ update();
+});
+
+$("showProtractor").addEventListener("click",()=>{
+ state.showProtractor=!state.showProtractor;
+ $("showProtractor").textContent=
+  state.showProtractor?"✓ Protractor":"＋ Protractor";
+ update();
+});
+
+$("showReflection").addEventListener("click",()=>{
+ state.showReflection=!state.showReflection;
+ $("showReflection").textContent=
+  state.showReflection?"✓ Reflection":"＋ Reflection";
+ update();
+});
+
+/* -------------------------------------------------------
+   GUIDED INVESTIGATION
+------------------------------------------------------- */
+
+function setMode(mode){
+ state.mode=mode;
+ $("guidedMode").classList.toggle("active",mode==="guided");
+ $("freeMode").classList.toggle("active",mode==="free");
+ $("guidedBox").hidden=mode!=="guided";
+}
+
+function updateGuide(){
+ const item=guides[state.guide];
+
+ $("guideTitle").textContent=item.title;
+ $("guideText").textContent=item.text;
+ $("guideStep").textContent=
+  `TASK ${state.guide+1} OF ${guides.length}`;
+
+ $("nextGuide").textContent=
+  state.guide===guides.length-1
+   ?"Start again ↻"
+   :"Next task →";
+}
+
+$("guidedMode").addEventListener(
+ "click",()=>setMode("guided")
+);
+
+$("freeMode").addEventListener(
+ "click",()=>setMode("free")
+);
+
+$("nextGuide").addEventListener("click",()=>{
+ state.guide=(state.guide+1)%guides.length;
+ updateGuide();
+
+ if(state.guide===0)setMode("guided");
+});
+
+/* -------------------------------------------------------
+   MEASUREMENT TABLE
+------------------------------------------------------- */
+
+function renderTable(){
+ const body=$("trialRows");
+ body.replaceChildren();
+
+ if(state.trials.length===0){
+  const tr=document.createElement("tr");
+  const td=document.createElement("td");
+
+  td.colSpan=6;
+  td.className="empty";
+  td.textContent="No measurements yet. Press Record.";
+
+  tr.appendChild(td);
+  body.appendChild(tr);
+  return;
+ }
+
+ state.trials.forEach((trial,index)=>{
+  const row=document.createElement("tr");
+
+  [
+   index+1,
+   trial.colour,
+   `${trial.lambda} nm`,
+   trial.n.toFixed(4),
+   trial.deviation===null?"TIR":`${trial.deviation.toFixed(2)}°`,
+   trial.deviation===null?"Reflected internally":"Transmitted"
+  ].forEach(value=>{
+   const cell=document.createElement("td");
+   cell.textContent=value;
+   row.appendChild(cell);
+  });
+
+  body.appendChild(row);
+ });
+}
+
+$("recordBtn").addEventListener("click",()=>{
+ const vertices=getVertices();
+
+ const selected=state.light==="white"
+  ?COLOURS
+  :[{name:"Selected colour",lambda:state.wavelength}];
+
+ selected.forEach(colour=>{
+  const result=traceRay(colour.lambda,vertices);
+
+  state.trials.push({
+   colour:colour.name,
+   lambda:colour.lambda,
+   n:result.n,
+   deviation:result.deviation
+  });
+ });
+
+ if(state.trials.length>70){
+  state.trials=state.trials.slice(-70);
+ }
+
+ renderTable();
+});
+
+$("clearBtn").addEventListener("click",()=>{
+ state.trials=[];
+ renderTable();
+});
+
+/* -------------------------------------------------------
+   SECOND PRISM CONCEPT DEMONSTRATION
+------------------------------------------------------- */
+
+$("recombineToggle").addEventListener("click",()=>{
+ state.recombination=!state.recombination;
+
+ $("recombinePanel").hidden=!state.recombination;
+
+ $("recombineToggle").textContent=
+  state.recombination
+   ?"Hide demonstration"
+   :"Show demonstration";
+});
+
+/* -------------------------------------------------------
+   POINTER AND TOUCH DRAG
+------------------------------------------------------- */
+
+function toSvgPoint(event){
+ const point=svg.createSVGPoint();
+ point.x=event.clientX;
+ point.y=event.clientY;
+
+ const matrix=svg.getScreenCTM();
+ return matrix
+  ?point.matrixTransform(matrix.inverse())
+  :null;
+}
+
+let dragging=null;
+
+svg.addEventListener("pointerdown",event=>{
+ const target=event.target.closest("[data-drag]");
+ if(!target)return;
+
+ dragging=target.dataset.drag;
+
+ svg.setPointerCapture(event.pointerId);
+ event.preventDefault();
+});
+
+svg.addEventListener("pointermove",event=>{
+ if(!dragging)return;
+
+ const point=toSvgPoint(event);
+ if(!point)return;
+
+ if(dragging==="laser"){
+  state.sourceY=clamp(
+   Math.round(point.y),
+   170,450
+  );
+ }
+
+ if(dragging==="rotate"){
+  const vertices=getVertices();
+  const centre=centroid(vertices);
+  const angle=deg(
+   Math.atan2(
+    point.y-centre.y,
+    point.x-centre.x
+   )
+  );
+
+  state.prismRotation=clamp(
+   Math.round(angle+90),
+   -20,20
+  );
+ }
+
+ update();
+});
+
+function stopDrag(){
+ dragging=null;
+}
+
+svg.addEventListener("pointerup",stopDrag);
+svg.addEventListener("pointercancel",stopDrag);
+svg.addEventListener("lostpointercapture",stopDrag);
+
+/* -------------------------------------------------------
+   RESET AND FULLSCREEN
+------------------------------------------------------- */
+
+$("resetBtn").addEventListener("click",()=>{
+ state.material="glass";
+ state.light="white";
+ state.wavelength=550;
+ state.prismRotation=0;
+ state.apex=50;
+ state.beamAngle=0;
+ state.sourceY=310;
+
+ state.showNormals=true;
+ state.showProtractor=false;
+ state.showReflection=true;
+
+ state.guide=0;
+ state.trials=[];
+
+ $("material").value="glass";
+
+ $("showNormals").textContent="✓ Normals";
+ $("showProtractor").textContent="＋ Protractor";
+ $("showReflection").textContent="✓ Reflection";
+
+ state.recombination=false;
+ $("recombinePanel").hidden=true;
+ $("recombineToggle").textContent="Show demonstration";
+
+ setMode("guided");
+ updateGuide();
+ renderTable();
+ update();
+});
+
+$("fullscreenBtn").addEventListener(
+ "click",
+ async()=>{
+  try{
+   if(!document.fullscreenElement){
+    await document.documentElement.requestFullscreen();
+   }else{
+    await document.exitFullscreen();
+   }
+  }catch(error){
+   console.warn("Fullscreen unavailable",error);
+  }
+ }
+);
+
+document.addEventListener("fullscreenchange",()=>{
+ $("fullscreenBtn").textContent=
+  document.fullscreenElement
+   ?"✕ Exit fullscreen"
+   :"⛶ Fullscreen";
+});
+
+/* -------------------------------------------------------
+   START
+------------------------------------------------------- */
+
+renderTable();
+buildGraph();
+updateGuide();
+update();
+
+})();
+</script>
+
+</body>
+</html>
