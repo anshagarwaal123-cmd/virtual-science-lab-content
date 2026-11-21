@@ -1,1 +1,1191 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Virtual Science Lab | Circular Coil</title>
+<style>
+:root{
+  --bg:#f3f8f6;--panel:#fff;--ink:#173b35;--muted:#718780;
+  --line:#e1ece7;--green:#16866b;--green2:#dff5ec;
+  --blue:#2475c5;--orange:#e28a35;--red:#d95757;
+  --shadow:0 10px 30px rgba(29,75,61,.07);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.page{max-width:1450px;margin:auto;padding:22px}
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;margin-bottom:19px;flex-wrap:wrap
+}
+.brand{display:flex;gap:12px;align-items:center}
+.brand-icon{
+  width:48px;height:48px;border-radius:15px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#0f876b,#49b895);color:white;
+  font-size:23px;box-shadow:0 8px 18px #16866b35
+}
+.eyebrow{
+  color:var(--green);font-size:11px;font-weight:850;
+  letter-spacing:1.5px;text-transform:uppercase
+}
+h1{font-size:clamp(21px,3vw,29px);margin:3px 0 0;letter-spacing:-.7px}
+.header-right{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.pill{
+  padding:8px 12px;border-radius:30px;background:#fff;
+  border:1px solid var(--line);font-size:12px;color:var(--muted);font-weight:700
+}
+.live-dot{display:inline-block;width:7px;height:7px;background:#20ad79;border-radius:50%;margin-right:6px}
+.intro{
+  background:linear-gradient(110deg,#e5f6ef,#f5fbf8);
+  border:1px solid #d4eee3;border-radius:17px;padding:16px 19px;
+  margin-bottom:17px;display:flex;justify-content:space-between;
+  gap:15px;align-items:center;flex-wrap:wrap
+}
+.intro strong{display:block;font-size:15px;margin-bottom:4px}
+.intro p{margin:0;color:#58736a;font-size:13px;line-height:1.5}
+.mode-switch{display:flex;background:#fff;border:1px solid var(--line);border-radius:11px;padding:4px;gap:4px}
+.mode-switch button{
+  border:0;border-radius:8px;padding:8px 13px;background:transparent;
+  color:var(--muted);font-size:12px;font-weight:800
+}
+.mode-switch button.active{background:var(--green);color:#fff}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:17px
+}
+.stat{
+  background:var(--panel);border:1px solid var(--line);border-radius:15px;
+  padding:13px 15px;box-shadow:var(--shadow);min-width:0
+}
+.stat-label{font-size:11px;color:var(--muted);font-weight:750;text-transform:uppercase;letter-spacing:.6px}
+.stat-value{font-size:22px;font-weight:850;margin-top:5px;letter-spacing:-.5px;overflow-wrap:anywhere}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.main-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(290px,.85fr);gap:16px;align-items:start}
+.panel{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:17px;box-shadow:var(--shadow);overflow:hidden
+}
+.panel-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:15px 17px;border-bottom:1px solid var(--line)
+}
+.panel-head h2{font-size:15px;margin:0}
+.panel-head small{font-size:11px;color:var(--muted)}
+.canvas-wrap{padding:10px 12px 0;position:relative}
+#labCanvas{
+  display:block;width:100%;height:470px;background:#f9fcfb;
+  border:1px solid #e8f0ed;border-radius:12px;touch-action:none
+}
+.canvas-tools{
+  padding:10px 13px 13px;display:flex;gap:8px;align-items:center;flex-wrap:wrap
+}
+.tool-btn,.action-btn{
+  border:1px solid var(--line);background:#fff;border-radius:9px;
+  padding:8px 11px;font-size:11px;font-weight:800;color:var(--ink)
+}
+.tool-btn.active{background:var(--green2);border-color:#bce8d6;color:#08765a}
+.canvas-hint{
+  color:var(--muted);font-size:11px;margin-left:auto
+}
+.side{display:grid;gap:14px}
+.control-body{padding:15px 16px}
+.control-row{margin-bottom:18px}
+.control-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
+.control-top label{font-weight:800;font-size:12px}
+.value-chip{
+  background:#eff7f3;color:#08765a;padding:5px 8px;border-radius:7px;
+  font-size:11px;font-weight:850;white-space:nowrap
+}
+input[type=range]{width:100%;accent-color:var(--green);cursor:pointer}
+.range-scale{display:flex;justify-content:space-between;color:#94a69f;font-size:10px;margin-top:3px}
+.direction-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 17px}
+.direction-row button{
+  padding:10px 8px;border:1px solid var(--line);background:#fff;
+  border-radius:10px;font-weight:800;font-size:11px;color:#637b72
+}
+.direction-row button.active{background:#e5f6ef;border-color:#9bd9c0;color:#08765a}
+.probe-readout{
+  background:#f3f9f6;border:1px solid #dceee5;border-radius:12px;padding:12px;
+  margin-top:4px
+}
+.probe-readout .big{font-size:23px;font-weight:900;margin:3px 0}
+.probe-readout .small{font-size:11px;color:var(--muted);line-height:1.5}
+.probe-components{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.component{
+  background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px
+}
+.component span{display:block;color:var(--muted);font-size:10px}
+.component b{font-size:12px}
+.mission{
+  padding:14px 15px;background:#fffaf0;border:1px solid #f3e4c3;border-radius:14px
+}
+.mission-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.mission h3{font-size:13px;margin:0}
+.mission p{font-size:11px;line-height:1.55;color:#786746;margin:8px 0}
+.mission-status{font-size:10px;font-weight:850;color:#97641e}
+.mission button{
+  border:0;border-radius:8px;background:#f3e4c3;color:#75501c;
+  padding:8px 10px;font-size:11px;font-weight:850
+}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.graph-area{padding:12px}
+#graphCanvas{display:block;width:100%;height:220px}
+.graph-select{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:11px;color:var(--ink);background:#fff}
+.observation-body{padding:12px 15px}
+.observation-actions{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.primary{
+  border:0;border-radius:9px;background:var(--green);color:#fff;
+  padding:9px 12px;font-size:11px;font-weight:850
+}
+.secondary{
+  border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);
+  padding:9px 12px;font-size:11px;font-weight:850
+}
+.table-wrap{overflow:auto;max-height:230px}
+table{width:100%;border-collapse:collapse;font-size:11px;white-space:nowrap}
+th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-size:10px;text-transform:uppercase;background:#f8fbf9;position:sticky;top:0}
+.empty{text-align:center;color:#91a29b;padding:23px 8px;font-size:12px}
+.formula{
+  margin-top:15px;padding:13px 15px;border-radius:12px;
+  background:#f3f8ff;border:1px solid #dce8f7
+}
+.formula strong{font-size:12px;color:#285c94}
+.formula .equation{font-size:17px;font-weight:800;margin:7px 0;color:#214c7c}
+.formula p{font-size:11px;line-height:1.5;margin:0;color:#647b94}
+.footer-note{
+  color:#8b9e96;text-align:center;font-size:10px;padding:18px 0 4px;line-height:1.5
+}
+@media(max-width:900px){
+  .main-grid{grid-template-columns:1fr}
+  .side{grid-template-columns:1fr 1fr}
+  .side .mission{grid-column:1/-1}
+}
+@media(max-width:620px){
+  .page{padding:12px}
+  .stats{grid-template-columns:1fr 1fr;gap:8px}
+  .stat{padding:11px}
+  .stat-value{font-size:19px}
+  .side,.bottom-grid{grid-template-columns:1fr}
+  #labCanvas{height:390px}
+  .canvas-hint{width:100%;margin:0}
+  .intro{padding:13px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🧲</div>
+      <div>
+        <div class="eyebrow">Virtual Science Lab · Physics</div>
+        <h1>Magnetic Field of a Circular Coil</h1>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="pill"><span class="live-dot"></span>Live simulation</span>
+      <span class="pill">Class 10 · Chapter 12</span>
+    </div>
+  </header>
+
+  <section class="intro">
+    <div>
+      <strong>Explore how a current-carrying circular coil creates a magnetic field.</strong>
+      <p>Change current, radius and turns. Move the magnetic probe to measure the field at different positions.</p>
+    </div>
+    <div class="mode-switch">
+      <button id="guidedBtn" class="active">Guided Lab</button>
+      <button id="freeBtn">Free Explore</button>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-label">Field at coil centre</div>
+      <div class="stat-value" id="centreStat">0.628 mT</div>
+      <div class="stat-sub">Magnitude at the centre</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Current</div>
+      <div class="stat-value" id="currentStat">5.0 A</div>
+      <div class="stat-sub">Conventional current</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Coil turns</div>
+      <div class="stat-value" id="turnStat">10</div>
+      <div class="stat-sub">Number of circular turns</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Coil radius</div>
+      <div class="stat-value" id="radiusStat">5.0 cm</div>
+      <div class="stat-sub">Radius of each turn</div>
+    </div>
+  </section>
+
+  <section class="main-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Live magnetic field view</h2>
+          <small>Cross-section through the circular coil and its axis</small>
+        </div>
+        <span class="pill">2D field map</span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="labCanvas"></canvas>
+      </div>
+      <div class="canvas-tools">
+        <button class="tool-btn active" id="linesBtn">Field lines: ON</button>
+        <button class="tool-btn active" id="vectorsBtn">Vectors: ON</button>
+        <button class="tool-btn active" id="gridBtn">Grid: ON</button>
+        <button class="tool-btn" id="resetViewBtn">Reset probe</button>
+        <span class="canvas-hint">Drag the probe anywhere in the field map.</span>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Coil controls</h2>
+          <small>Change live values</small>
+        </div>
+        <div class="control-body">
+          <div class="control-row">
+            <div class="control-top">
+              <label for="current">Current (I)</label>
+              <span class="value-chip" id="currentValue">5.0 A</span>
+            </div>
+            <input id="current" type="range" min="0" max="10" step="0.1" value="5">
+            <div class="range-scale"><span>0 A</span><span>10 A</span></div>
+          </div>
+
+          <div class="control-row">
+            <div class="control-top">
+              <label for="radius">Coil radius (R)</label>
+              <span class="value-chip" id="radiusValue">5.0 cm</span>
+            </div>
+            <input id="radius" type="range" min="2" max="10" step="0.5" value="5">
+            <div class="range-scale"><span>2 cm</span><span>10 cm</span></div>
+          </div>
+
+          <div class="control-row">
+            <div class="control-top">
+              <label for="turns">Number of turns (N)</label>
+              <span class="value-chip" id="turnsValue">10</span>
+            </div>
+            <input id="turns" type="range" min="1" max="50" step="1" value="10">
+            <div class="range-scale"><span>1 turn</span><span>50 turns</span></div>
+          </div>
+
+          <div class="control-row">
+            <label style="font-size:12px;font-weight:800">Current direction</label>
+            <div class="direction-row">
+              <button id="ccwBtn" class="active">↺ Anticlockwise</button>
+              <button id="cwBtn">↻ Clockwise</button>
+            </div>
+          </div>
+
+          <div class="formula">
+            <strong>Magnetic field at the centre</strong>
+            <div class="equation">B = μ₀ N I / 2R</div>
+            <p>μ₀ = 4π × 10⁻⁷ T m/A. Reverse the current to reverse the field direction.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Magnetic probe</h2>
+          <small>Move to measure</small>
+        </div>
+        <div class="control-body">
+          <div class="control-row">
+            <div class="control-top">
+              <label for="probeX">Horizontal position (x)</label>
+              <span class="value-chip" id="probeXValue">0.0 cm</span>
+            </div>
+            <input id="probeX" type="range" min="-10" max="10" step="0.1" value="0">
+          </div>
+          <div class="control-row">
+            <div class="control-top">
+              <label for="probeZ">Axial position (z)</label>
+              <span class="value-chip" id="probeZValue">0.0 cm</span>
+            </div>
+            <input id="probeZ" type="range" min="-8" max="8" step="0.1" value="0">
+          </div>
+          <div class="probe-readout">
+            <div class="small">Magnetic field at probe</div>
+            <div class="big" id="probeMagnitude">0.628 mT</div>
+            <div class="small" id="probeAngle">Direction: upward along the coil axis</div>
+            <div class="probe-components">
+              <div class="component"><span>Horizontal Bx</span><b id="bxValue">0.000 μT</b></div>
+              <div class="component"><span>Axial Bz</span><b id="bzValue">628.319 μT</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mission" id="missionBox">
+        <div class="mission-head">
+          <h3>🎯 Guided challenge</h3>
+          <span class="mission-status" id="missionStatus">IN PROGRESS</span>
+        </div>
+        <p id="missionText">Move the probe along the coil axis until the magnetic field becomes about half of its centre value. Try changing the axial position.</p>
+        <button id="checkMission">Check my result</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="bottom-grid">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Live data graph</h2>
+        <select id="graphMode" class="graph-select">
+          <option value="distance">Field vs axial distance</option>
+          <option value="current">Field vs current</option>
+          <option value="turns">Field vs number of turns</option>
+          <option value="radius">Field vs coil radius</option>
+        </select>
+      </div>
+      <div class="graph-area">
+        <canvas id="graphCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Observation record</h2>
+        <small id="recordCount">0 readings saved</small>
+      </div>
+      <div class="observation-body">
+        <div class="observation-actions">
+          <button class="primary" id="recordBtn">＋ Record reading</button>
+          <button class="secondary" id="exportBtn">Export CSV</button>
+          <button class="secondary" id="clearBtn">Clear</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th><th>Current</th><th>x</th><th>z</th><th>Field</th>
+              </tr>
+            </thead>
+            <tbody id="recordsBody">
+              <tr><td colspan="5" class="empty">No readings yet. Move the probe and record your first observation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    Educational model: magnetic field is calculated using the Biot–Savart law for an ideal circular coil.
+    Real coils may show small differences due to wire thickness, coil shape and surrounding magnetic materials.
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const MU0 = 4 * Math.PI * 1e-7;
+
+  const state = {
+    I: 5, R: 5, N: 10, direction: 1,
+    x: 0, z: 0,
+    lines: true, vectors: true, grid: true,
+    mode: "guided",
+    records: [],
+    dragging: false,
+    graph: "distance"
+  };
+
+  const lab = $("labCanvas");
+  const ctx = lab.getContext("2d");
+  const graph = $("graphCanvas");
+  const gctx = graph.getContext("2d");
+
+  let plot = null;
+  let cachedFieldGrid = null;
+  let renderQueued = false;
+
+  function signedCurrent() {
+    return state.I * state.direction;
+  }
+
+  function fieldOnAxis(zCm) {
+    const R = state.R / 100;
+    const z = zCm / 100;
+    const I = signedCurrent();
+    const denominator = 2 * Math.pow(R * R + z * z, 1.5);
+    if (!denominator || state.I === 0) return 0;
+    return MU0 * state.N * I * R * R / denominator;
+  }
+
+  // Biot-Savart numerical integration for a circular N-turn coil.
+  // The displayed plane contains the coil axis and is perpendicular to the coil plane.
+  function fieldAt(xCm, zCm) {
+    if (state.I === 0) return { bx: 0, bz: 0 };
+
+    if (Math.abs(xCm) < 1e-8) {
+      return { bx: 0, bz: fieldOnAxis(zCm) * 1e6 };
+    }
+
+    const R = state.R / 100;
+    const x = xCm / 100;
+    const z = zCm / 100;
+    const I = signedCurrent();
+
+    // Avoid the ideal thin-wire singularity at the conductor itself.
+    const distanceToRight = Math.hypot(x - R, z);
+    const distanceToLeft = Math.hypot(x + R, z);
+    if (Math.min(distanceToRight, distanceToLeft) < 0.0015) {
+      return { bx: 0, bz: 0 };
+    }
+
+    const segments = 112;
+    const dphi = 2 * Math.PI / segments;
+    let bx = 0;
+    let bz = 0;
+
+    for (let i = 0; i < segments; i++) {
+      const phi = (i + 0.5) * dphi;
+      const c = Math.cos(phi);
+      const s = Math.sin(phi);
+
+      const dx = x - R * c;
+      const dy = -R * s;
+      const distanceSquared = dx * dx + dy * dy + z * z;
+      const distanceCubed = Math.pow(distanceSquared, 1.5);
+
+      if (distanceCubed < 1e-20) continue;
+
+      // dℓ × r / |r|³, expressed in the displayed x-z plane.
+      bx += (R * c * z / distanceCubed) * dphi;
+      bz += ((R * R - R * x * c) / distanceCubed) * dphi;
+    }
+
+    const factor = MU0 * state.N * I / (4 * Math.PI);
+    return { bx: bx * factor * 1e6, bz: bz * factor * 1e6 };
+  }
+
+  function magnitude(v) {
+    return Math.hypot(v.bx, v.bz);
+  }
+
+  function formatField(microTesla) {
+    const a = Math.abs(microTesla);
+    if (a >= 1000) return (microTesla / 1000).toFixed(3) + " mT";
+    return microTesla.toFixed(2) + " μT";
+  }
+
+  function formatComponent(v) {
+    return v.toFixed(2) + " μT";
+  }
+
+  function scheduleRender() {
+    if (renderQueued) return;
+    renderQueued = true;
+    requestAnimationFrame(() => {
+      renderQueued = false;
+      updateAll();
+    });
+  }
+
+  function syncStateFromControls() {
+    state.I = Number($("current").value);
+    state.R = Number($("radius").value);
+    state.N = Number($("turns").value);
+    state.x = Number($("probeX").value);
+    state.z = Number($("probeZ").value);
+  }
+
+  function syncControlLabels() {
+    $("currentValue").textContent = state.I.toFixed(1) + " A";
+    $("radiusValue").textContent = state.R.toFixed(1) + " cm";
+    $("turnsValue").textContent = state.N;
+    $("probeXValue").textContent = state.x.toFixed(1) + " cm";
+    $("probeZValue").textContent = state.z.toFixed(1) + " cm";
+
+    $("currentStat").textContent = state.I.toFixed(1) + " A";
+    $("turnStat").textContent = state.N;
+    $("radiusStat").textContent = state.R.toFixed(1) + " cm";
+
+    $("linesBtn").textContent = "Field lines: " + (state.lines ? "ON" : "OFF");
+    $("vectorsBtn").textContent = "Vectors: " + (state.vectors ? "ON" : "OFF");
+    $("gridBtn").textContent = "Grid: " + (state.grid ? "ON" : "OFF");
+
+    $("linesBtn").classList.toggle("active", state.lines);
+    $("vectorsBtn").classList.toggle("active", state.vectors);
+    $("gridBtn").classList.toggle("active", state.grid);
+
+    $("ccwBtn").classList.toggle("active", state.direction === 1);
+    $("cwBtn").classList.toggle("active", state.direction === -1);
+  }
+
+  function updateReadouts() {
+    const centre = Math.abs(fieldOnAxis(0) * 1e6);
+    const p = fieldAt(state.x, state.z);
+    const b = magnitude(p);
+    const angle = Math.atan2(p.bz, p.bx) * 180 / Math.PI;
+
+    $("centreStat").textContent = formatField(centre);
+    $("probeMagnitude").textContent = formatField(b);
+    $("bxValue").textContent = formatComponent(p.bx);
+    $("bzValue").textContent = formatComponent(p.bz);
+
+    if (b < 0.0001) {
+      $("probeAngle").textContent = "Direction: no magnetic field";
+    } else {
+      $("probeAngle").textContent =
+        "Field direction: " + angle.toFixed(1) + "° from horizontal";
+    }
+  }
+
+  function resizeCanvas(canvas, context) {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(rect.width * dpr));
+    const height = Math.max(1, Math.round(rect.height * dpr));
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { w: rect.width, h: rect.height };
+  }
+
+  function buildFieldGrid(w, h, map) {
+    const nx = 53;
+    const nz = 37;
+    const bx = new Float32Array(nx * nz);
+    const bz = new Float32Array(nx * nz);
+
+    for (let j = 0; j < nz; j++) {
+      const z = map.zmax - j / (nz - 1) * (map.zmax - map.zmin);
+      for (let i = 0; i < nx; i++) {
+        const x = map.xmin + i / (nx - 1) * (map.xmax - map.xmin);
+        const p = fieldAt(x, z);
+        const index = j * nx + i;
+        bx[index] = p.bx;
+        bz[index] = p.bz;
+      }
+    }
+
+    return { nx, nz, bx, bz, map };
+  }
+
+  function sampleGrid(grid, x, z) {
+    const m = grid.map;
+    const u = (x - m.xmin) / (m.xmax - m.xmin) * (grid.nx - 1);
+    const v = (m.zmax - z) / (m.zmax - m.zmin) * (grid.nz - 1);
+
+    if (u < 0 || v < 0 || u > grid.nx - 1 || v > grid.nz - 1) {
+      return { bx: 0, bz: 0 };
+    }
+
+    const i = Math.min(grid.nx - 2, Math.floor(u));
+    const j = Math.min(grid.nz - 2, Math.floor(v));
+    const fu = u - i;
+    const fv = v - j;
+
+    const at = (arr, x0, y0) => arr[y0 * grid.nx + x0];
+    const interpolate = arr => {
+      const a = at(arr, i, j);
+      const b = at(arr, i + 1, j);
+      const c = at(arr, i, j + 1);
+      const d = at(arr, i + 1, j + 1);
+      const top = a * (1 - fu) + b * fu;
+      const bottom = c * (1 - fu) + d * fu;
+      return top * (1 - fv) + bottom * fv;
+    };
+
+    return { bx: interpolate(grid.bx), bz: interpolate(grid.bz) };
+  }
+
+  function drawArrow(context, x1, y1, x2, y2, color, width = 1.5) {
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const head = 5;
+    context.strokeStyle = color;
+    context.fillStyle = color;
+    context.lineWidth = width;
+    context.beginPath();
+    context.moveTo(x1, y1);
+    context.lineTo(x2, y2);
+    context.stroke();
+    context.beginPath();
+    context.moveTo(x2, y2);
+    context.lineTo(x2 - head * Math.cos(angle - 0.48), y2 - head * Math.sin(angle - 0.48));
+    context.lineTo(x2 - head * Math.cos(angle + 0.48), y2 - head * Math.sin(angle + 0.48));
+    context.closePath();
+    context.fill();
+  }
+
+  function traceStreamline(grid, startX, startZ, direction, map, toX, toY, scale) {
+    let x = startX;
+    let z = startZ;
+    const points = [];
+    const step = 0.16;
+
+    for (let k = 0; k < 520; k++) {
+      const p1 = sampleGrid(grid, x, z);
+      const m1 = magnitude(p1);
+      if (m1 < 0.0005) break;
+
+      const ux = direction * p1.bx / m1;
+      const uz = direction * p1.bz / m1;
+      const midX = x + ux * step * 0.5;
+      const midZ = z + uz * step * 0.5;
+      const p2 = sampleGrid(grid, midX, midZ);
+      const m2 = magnitude(p2);
+      if (m2 < 0.0005) break;
+
+      x += direction * p2.bx / m2 * step;
+      z += direction * p2.bz / m2 * step;
+
+      if (x < map.xmin || x > map.xmax || z < map.zmin || z > map.zmax) break;
+
+      const nearWire = Math.min(
+        Math.hypot(x - state.R, z),
+        Math.hypot(x + state.R, z)
+      );
+      if (nearWire < 0.19) break;
+
+      points.push([toX(x), toY(z)]);
+      if (points.length > 24 &&
+          Math.hypot(x - startX, z - startZ) < 0.28) break;
+    }
+
+    return points;
+  }
+
+  function drawStreamlines(grid, map, toX, toY, scale) {
+    if (!state.lines || state.I === 0) return;
+
+    const c = ctx;
+    const seeds = 15;
+    c.save();
+    c.strokeStyle = "rgba(24,132,105,.58)";
+    c.lineWidth = 1.45;
+
+    for (let i = 0; i < seeds; i++) {
+      const a = (i / seeds) * Math.PI * 2;
+      const sx = Math.cos(a) * state.R * 1.23;
+      const sz = Math.sin(a) * state.R * 1.23;
+
+      for (const dir of [1, -1]) {
+        const pts = traceStreamline(grid, sx, sz, dir, map, toX, toY, scale);
+        if (pts.length < 5) continue;
+        c.beginPath();
+        c.moveTo(toX(sx), toY(sz));
+        for (const pt of pts) c.lineTo(pt[0], pt[1]);
+        c.stroke();
+
+        const idx = Math.floor(pts.length * 0.55);
+        if (pts[idx] && pts[idx + 2]) {
+          drawArrow(c, pts[idx][0], pts[idx][1],
+            pts[idx + 2][0], pts[idx + 2][1], "#16866b", 1.3);
+        }
+      }
+    }
+    c.restore();
+  }
+
+  function drawFieldVectors(grid, map, toX, toY) {
+    if (!state.vectors || state.I === 0) return;
+    const c = ctx;
+    c.save();
+    c.globalAlpha = 0.65;
+
+    for (let j = 2; j < grid.nz - 1; j += 5) {
+      for (let i = 2; i < grid.nx - 1; i += 5) {
+        const x = map.xmin + i / (grid.nx - 1) * (map.xmax - map.xmin);
+        const z = map.zmax - j / (grid.nz - 1) * (map.zmax - map.zmin);
+        if (Math.abs(Math.abs(x) - state.R) < 0.8 && Math.abs(z) < 0.8) continue;
+
+        const p = sampleGrid(grid, x, z);
+        const b = magnitude(p);
+        if (b < 0.0005) continue;
+        const length = Math.min(14, 5 + Math.log1p(b) * 1.5);
+        const dx = p.bx / b * length;
+        const dy = -p.bz / b * length;
+        drawArrow(c, toX(x) - dx * 0.5, toY(z) - dy * 0.5,
+          toX(x) + dx * 0.5, toY(z) + dy * 0.5, "#6a9dc0", 1);
+      }
+    }
+    c.restore();
+  }
+
+  function drawCoil(map, toX, toY, scale) {
+    const c = ctx;
+    const y = toY(0);
+    const left = toX(-state.R);
+    const right = toX(state.R);
+    const rad = Math.max(9, Math.min(15, scale * 0.34));
+
+    c.save();
+
+    // A light guide line connects the two sides of the coil in this cross-section.
+    c.strokeStyle = "#d99a47";
+    c.lineWidth = 3;
+    c.setLineDash([5, 5]);
+    c.beginPath();
+    c.moveTo(left, y);
+    c.lineTo(right, y);
+    c.stroke();
+    c.setLineDash([]);
+
+    function currentSymbol(x, outOfPage) {
+      c.fillStyle = "#fff";
+      c.strokeStyle = "#bf7b29";
+      c.lineWidth = 2;
+      c.beginPath();
+      c.arc(x, y, rad, 0, Math.PI * 2);
+      c.fill();
+      c.stroke();
+
+      c.strokeStyle = "#bf7b29";
+      c.fillStyle = "#bf7b29";
+      c.lineWidth = 2.4;
+      if (outOfPage) {
+        c.beginPath();
+        c.arc(x, y, 3.3, 0, Math.PI * 2);
+        c.fill();
+      } else {
+        c.beginPath();
+        c.moveTo(x - 4, y - 4);
+        c.lineTo(x + 4, y + 4);
+        c.moveTo(x + 4, y - 4);
+        c.lineTo(x - 4, y + 4);
+        c.stroke();
+      }
+    }
+
+    const rightOut = state.direction === 1;
+    currentSymbol(left, !rightOut);
+    currentSymbol(right, rightOut);
+
+    c.fillStyle = "#9a6b32";
+    c.font = "bold 11px system-ui";
+    c.textAlign = "center";
+    c.fillText("COIL", (left + right) / 2, y + 27);
+    c.fillText("I", right + rad + 12, y - 14);
+    c.fillText("I", left - rad - 12, y - 14);
+
+    c.restore();
+  }
+
+  function drawProbe(toX, toY) {
+    const c = ctx;
+    const p = fieldAt(state.x, state.z);
+    const b = magnitude(p);
+    const px = toX(state.x);
+    const py = toY(state.z);
+
+    c.save();
+    c.strokeStyle = "#d95e54";
+    c.lineWidth = 1.5;
+    c.setLineDash([4, 4]);
+    c.beginPath();
+    c.moveTo(px - 15, py);
+    c.lineTo(px + 15, py);
+    c.moveTo(px, py - 15);
+    c.lineTo(px, py + 15);
+    c.stroke();
+    c.setLineDash([]);
+
+    c.fillStyle = "#fff";
+    c.strokeStyle = "#d95e54";
+    c.lineWidth = 2;
+    c.beginPath();
+    c.arc(px, py, 9, 0, Math.PI * 2);
+    c.fill();
+    c.stroke();
+
+    if (b > 0.0001) {
+      const angle = Math.atan2(-p.bz, p.bx);
+      const length = 23;
+      drawArrow(c, px, py,
+        px + Math.cos(angle) * length,
+        py + Math.sin(angle) * length,
+        "#d95e54", 2.4);
+    }
+
+    c.fillStyle = "#b9443d";
+    c.font = "bold 11px system-ui";
+    c.textAlign = "left";
+    c.fillText("PROBE", px + 13, py - 12);
+    c.restore();
+  }
+
+  function drawLab() {
+    const size = resizeCanvas(lab, ctx);
+    const w = size.w, h = size.h;
+    ctx.clearRect(0, 0, w, h);
+
+    const scale = Math.min((w - 48) / 28, (h - 42) / 18);
+    const map = { xmin: -14, xmax: 14, zmin: -9, zmax: 9 };
+    const ox = w / 2;
+    const oy = h / 2;
+    const toX = x => ox + x * scale;
+    const toY = z => oy - z * scale;
+
+    // Background grid and reference axes.
+    ctx.save();
+    if (state.grid) {
+      ctx.strokeStyle = "#eaf1ee";
+      ctx.lineWidth = 1;
+      for (let x = -14; x <= 14; x += 2) {
+        ctx.beginPath(); ctx.moveTo(toX(x), 0); ctx.lineTo(toX(x), h); ctx.stroke();
+      }
+      for (let z = -8; z <= 8; z += 2) {
+        ctx.beginPath(); ctx.moveTo(0, toY(z)); ctx.lineTo(w, toY(z)); ctx.stroke();
+      }
+    }
+
+    ctx.strokeStyle = "#94aaa1";
+    ctx.lineWidth = 1.3;
+    ctx.beginPath(); ctx.moveTo(0, oy); ctx.lineTo(w, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, h); ctx.lineTo(ox, 0); ctx.stroke();
+
+    ctx.fillStyle = "#728b81";
+    ctx.font = "10px system-ui";
+    ctx.textAlign = "right";
+    ctx.fillText("x (cm)", w - 8, oy - 8);
+    ctx.textAlign = "left";
+    ctx.fillText("Axis (z)", ox + 7, 13);
+    ctx.restore();
+
+    cachedFieldGrid = buildFieldGrid(w, h, map);
+    drawStreamlines(cachedFieldGrid, map, toX, toY, scale);
+    drawFieldVectors(cachedFieldGrid, map, toX, toY);
+    drawCoil(map, toX, toY, scale);
+    drawProbe(toX, toY);
+
+    ctx.save();
+    ctx.fillStyle = "#6f867d";
+    ctx.font = "10px system-ui";
+    ctx.textAlign = "left";
+    ctx.fillText("• Current out of page     × Current into page", 12, h - 10);
+    ctx.restore();
+
+    plot = { w, h, scale, ox, oy, map, toX, toY };
+  }
+
+  function drawGraph() {
+    const size = resizeCanvas(graph, gctx);
+    const w = size.w, h = size.h;
+    const c = gctx;
+    c.clearRect(0, 0, w, h);
+
+    const pad = { l: 48, r: 14, t: 14, b: 35 };
+    const pw = w - pad.l - pad.r;
+    const ph = h - pad.t - pad.b;
+    const mode = state.graph;
+
+    const labels = {
+      distance: ["Axial distance z (cm)", "B (μT)"],
+      current: ["Current I (A)", "B (μT)"],
+      turns: ["Number of turns N", "B (μT)"],
+      radius: ["Coil radius R (cm)", "B (μT)"]
+    };
+
+    let values = [];
+    if (mode === "distance") {
+      for (let z = -8; z <= 8.001; z += 0.25) {
+        values.push([z, Math.abs(fieldOnAxis(z) * 1e6)]);
+      }
+    } else if (mode === "current") {
+      for (let i = 0; i <= 10.001; i += 0.25) {
+        const r = state.R / 100;
+        const b = MU0 * state.N * i * r * r / (2 * Math.pow(r * r + Math.pow(state.z / 100, 2), 1.5));
+        values.push([i, Math.abs(b * 1e6)]);
+      }
+    } else if (mode === "turns") {
+      for (let n = 1; n <= 50; n += 1) {
+        const r = state.R / 100;
+        const b = MU0 * n * state.I * r * r / (2 * Math.pow(r * r + Math.pow(state.z / 100, 2), 1.5));
+        values.push([n, Math.abs(b * 1e6)]);
+      }
+    } else {
+      for (let rCm = 2; rCm <= 10.001; rCm += 0.25) {
+        const r = rCm / 100;
+        const z = state.z / 100;
+        const b = MU0 * state.N * state.I * r * r / (2 * Math.pow(r * r + z * z, 1.5));
+        values.push([rCm, Math.abs(b * 1e6)]);
+      }
+    }
+
+    const minX = Math.min(...values.map(v => v[0]));
+    const maxX = Math.max(...values.map(v => v[0]));
+    const maxY = Math.max(1, ...values.map(v => v[1])) * 1.12;
+    const xMap = x => pad.l + (x - minX) / (maxX - minX || 1) * pw;
+    const yMap = y => pad.t + ph - y / maxY * ph;
+
+    c.strokeStyle = "#e6eeea";
+    c.lineWidth = 1;
+    c.fillStyle = "#7b9188";
+    c.font = "10px system-ui";
+
+    for (let i = 0; i <= 4; i++) {
+      const y = pad.t + ph * i / 4;
+      c.beginPath(); c.moveTo(pad.l, y); c.lineTo(w - pad.r, y); c.stroke();
+      c.textAlign = "right";
+      c.fillText((maxY * (4 - i) / 4).toFixed(0), pad.l - 7, y + 3);
+    }
+
+    c.strokeStyle = "#8ca198";
+    c.beginPath();
+    c.moveTo(pad.l, pad.t);
+    c.lineTo(pad.l, pad.t + ph);
+    c.lineTo(w - pad.r, pad.t + ph);
+    c.stroke();
+
+    c.strokeStyle = "#16866b";
+    c.lineWidth = 2.5;
+    c.beginPath();
+    values.forEach((v, i) => {
+      const x = xMap(v[0]), y = yMap(v[1]);
+      if (i === 0) c.moveTo(x, y); else c.lineTo(x, y);
+    });
+    c.stroke();
+
+    const markerX = mode === "distance" ? state.z :
+      mode === "current" ? state.I :
+      mode === "turns" ? state.N : state.R;
+
+    const markerPoint = values.reduce((best, v) =>
+      Math.abs(v[0] - markerX) < Math.abs(best[0] - markerX) ? v : best, values[0]);
+
+    c.fillStyle = "#e28a35";
+    c.beginPath();
+    c.arc(xMap(markerPoint[0]), yMap(markerPoint[1]), 5, 0, Math.PI * 2);
+    c.fill();
+
+    c.fillStyle = "#526b61";
+    c.textAlign = "center";
+    c.fillText(labels[mode][0], pad.l + pw / 2, h - 7);
+
+    c.save();
+    c.translate(12, pad.t + ph / 2);
+    c.rotate(-Math.PI / 2);
+    c.fillText(labels[mode][1], 0, 0);
+    c.restore();
+  }
+
+  function updateMission() {
+    const centre = Math.abs(fieldOnAxis(0));
+    const current = Math.abs(fieldOnAxis(state.z));
+    const ratio = centre > 0 ? current / centre : 0;
+
+    if (state.mode === "free") {
+      $("missionText").textContent =
+        "Free exploration is active. Try changing the current, radius and number of turns. Move the probe to compare the field at different positions.";
+      $("missionStatus").textContent = "FREE EXPLORE";
+      return;
+    }
+
+    $("missionText").textContent =
+      "Move the probe along the coil axis until the field becomes about half of its centre value. Current ratio: " +
+      (ratio * 100).toFixed(1) + "% of the centre field.";
+    $("missionStatus").textContent = "IN PROGRESS";
+  }
+
+  function updateAll() {
+    syncControlLabels();
+    updateReadouts();
+    drawLab();
+    drawGraph();
+    updateMission();
+  }
+
+  function addRecord() {
+    const p = fieldAt(state.x, state.z);
+    state.records.push({
+      I: state.I, x: state.x, z: state.z, b: magnitude(p),
+      bx: p.bx, bz: p.bz, R: state.R, N: state.N
+    });
+    if (state.records.length > 30) state.records.shift();
+    renderRecords();
+  }
+
+  function renderRecords() {
+    $("recordCount").textContent = state.records.length + " readings saved";
+    const tbody = $("recordsBody");
+
+    if (!state.records.length) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty">No readings yet. Move the probe and record your first observation.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = state.records.map((r, i) =>
+      `<tr>
+        <td>${i + 1}</td>
+        <td>${r.I.toFixed(1)} A</td>
+        <td>${r.x.toFixed(1)} cm</td>
+        <td>${r.z.toFixed(1)} cm</td>
+        <td><b>${formatField(r.b)}</b></td>
+      </tr>`
+    ).join("");
+  }
+
+  function exportCSV() {
+    if (!state.records.length) {
+      alert("Record at least one reading before exporting.");
+      return;
+    }
+    const rows = [
+      ["Reading", "Current_A", "Radius_cm", "Turns", "Probe_x_cm", "Probe_z_cm", "Bx_microT", "Bz_microT", "Magnitude_microT"],
+      ...state.records.map((r, i) =>
+        [i + 1, r.I, r.R, r.N, r.x, r.z, r.bx, r.bz, r.b]
+      )
+    ];
+    const csv = rows.map(row => row.join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "circular-coil-observations.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function setProbe(x, z) {
+    state.x = Math.max(-10, Math.min(10, x));
+    state.z = Math.max(-8, Math.min(8, z));
+    $("probeX").value = state.x;
+    $("probeZ").value = state.z;
+    scheduleRender();
+  }
+
+  function canvasCoordinates(event) {
+    const rect = lab.getBoundingClientRect();
+    const px = event.clientX - rect.left;
+    const py = event.clientY - rect.top;
+    if (!plot) return null;
+    return {
+      x: (px - plot.ox) / plot.scale,
+      z: (plot.oy - py) / plot.scale
+    };
+  }
+
+  lab.addEventListener("pointerdown", event => {
+    const p = canvasCoordinates(event);
+    if (!p) return;
+    state.dragging = true;
+    lab.setPointerCapture(event.pointerId);
+    setProbe(p.x, p.z);
+  });
+
+  lab.addEventListener("pointermove", event => {
+    if (!state.dragging) return;
+    const p = canvasCoordinates(event);
+    if (p) setProbe(p.x, p.z);
+  });
+
+  lab.addEventListener("pointerup", () => state.dragging = false);
+  lab.addEventListener("pointercancel", () => state.dragging = false);
+
+  ["current", "radius", "turns", "probeX", "probeZ"].forEach(id => {
+    $(id).addEventListener("input", () => {
+      syncStateFromControls();
+      scheduleRender();
+    });
+  });
+
+  $("ccwBtn").addEventListener("click", () => {
+    state.direction = 1;
+    scheduleRender();
+  });
+  $("cwBtn").addEventListener("click", () => {
+    state.direction = -1;
+    scheduleRender();
+  });
+
+  $("linesBtn").addEventListener("click", () => {
+    state.lines = !state.lines;
+    scheduleRender();
+  });
+  $("vectorsBtn").addEventListener("click", () => {
+    state.vectors = !state.vectors;
+    scheduleRender();
+  });
+  $("gridBtn").addEventListener("click", () => {
+    state.grid = !state.grid;
+    scheduleRender();
+  });
+
+  $("resetViewBtn").addEventListener("click", () => {
+    setProbe(0, 0);
+  });
+
+  $("guidedBtn").addEventListener("click", () => {
+    state.mode = "guided";
+    $("guidedBtn").classList.add("active");
+    $("freeBtn").classList.remove("active");
+    updateMission();
+  });
+
+  $("freeBtn").addEventListener("click", () => {
+    state.mode = "free";
+    $("freeBtn").classList.add("active");
+    $("guidedBtn").classList.remove("active");
+    updateMission();
+  });
+
+  $("checkMission").addEventListener("click", () => {
+    const centre = Math.abs(fieldOnAxis(0));
+    const current = Math.abs(fieldOnAxis(state.z));
+    const ratio = centre > 0 ? current / centre : 0;
+
+    if (state.mode === "free") {
+      alert("Free Explore is active. Switch to Guided Lab to check the challenge.");
+    } else if (centre > 0 && Math.abs(ratio - 0.5) <= 0.05) {
+      $("missionStatus").textContent = "COMPLETED ✓";
+      $("missionText").textContent =
+        "Excellent! The measured field is approximately half the centre field. You found the required position on the axis.";
+      alert("Challenge completed! Great observation.");
+    } else {
+      alert("Not quite there. Adjust the probe's axial position until the field is close to 50% of the centre value.");
+    }
+  });
+
+  $("graphMode").addEventListener("change", event => {
+    state.graph = event.target.value;
+    drawGraph();
+  });
+
+  $("recordBtn").addEventListener("click", addRecord);
+  $("clearBtn").addEventListener("click", () => {
+    state.records = [];
+    renderRecords();
+  });
+  $("exportBtn").addEventListener("click", exportCSV);
+
+  $("current").value = state.I;
+  $("radius").value = state.R;
+  $("turns").value = state.N;
+  $("probeX").value = state.x;
+  $("probeZ").value = state.z;
+
+  window.addEventListener("resize", scheduleRender);
+  if ("ResizeObserver" in window) {
+    const observer = new ResizeObserver(scheduleRender);
+    observer.observe(lab);
+    observer.observe(graph);
+  }
+
+  updateAll();
+})();
+</script>
+</body>
+</html>
+
