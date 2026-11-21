@@ -272,7 +272,8 @@
   "chapterNumber": 10,
   "chapter": "The Human Eye and the Colourful World",
   "description": "Explore how a prism separates white light into its constituent colours and investigate dispersion.",
-  "simulationType": "2D"
+  "simulationType": "2D",
+  "simulationPath": "simulations/physics/dispersion-prism/"
 },
 {
   "id": "class-10-atmospheric-refraction-scattering",
