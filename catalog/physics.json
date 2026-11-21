@@ -314,7 +314,8 @@
   "chapterNumber": 12,
   "chapter": "Magnetic Effects of Electric Current",
   "description": "Change current and coil turns to investigate the magnetic field of a circular loop.",
-  "simulationType": "2D"
+  "simulationType": "2D",
+   "simulationPath": "simulations/physics/magnetic-field-circular-loop/"
 },
 {
   "id": "class-10-solenoid-electromagnet",
