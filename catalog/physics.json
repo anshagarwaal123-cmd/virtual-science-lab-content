@@ -249,7 +249,9 @@
   "chapterNumber": 9,
   "chapter": "Light: Reflection and Refraction",
   "description": "Explore refraction, different materials and Snell's law.",
-  "simulationType": "2D"
+  "simulationType": "2D",
+  "simulationPath": "simulations/physics/light-refraction/"
+  
 },
 
     {
