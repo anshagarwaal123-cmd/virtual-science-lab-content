@@ -1,0 +1,789 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f1f8f5">
+<title>Human Eye | Virtual Science Lab</title>
+<style>
+:root{--bg:#f1f7f4;--panel:#fff;--ink:#20362e;--muted:#71847b;--line:#dce8e1;--green:#16866a;--soft:#e4f4ed;--blue:#2688d7;--orange:#e98d38;--shadow:0 10px 28px rgba(30,75,54,.07)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}button,input,select{font:inherit}button{cursor:pointer}
+.topbar{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(3%,calc((100% - 1480px)/2));background:#fff;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:850}.brand-icon{height:39px;width:39px;border-radius:12px;background:var(--soft);display:grid;place-items:center;color:var(--green);font-size:23px}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:1px;margin-top:2px}
+.top-actions{display:flex;gap:8px;align-items:center}.top-actions a{color:var(--muted);text-decoration:none;font-size:11px;font-weight:800;margin-right:7px}.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:9px;font-size:11px;font-weight:850}.btn:hover{background:#f3f8f5}.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.btn.primary:hover{background:#107052}
+.page{width:94%;max-width:1480px;margin:23px auto 42px}.intro{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:17px}.eyebrow{color:var(--green);font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}.intro h1{margin:6px 0;font-size:clamp(25px,3.5vw,36px);letter-spacing:-1px}.intro p{max-width:790px;margin:0;color:var(--muted);font-size:12px;line-height:1.6}.chip{white-space:nowrap;background:var(--soft);border:1px solid #cce6d9;color:#176f53;padding:8px 12px;border-radius:999px;font-size:10px;font-weight:900}
+.main-grid{display:grid;grid-template-columns:minmax(0,1fr) 345px;gap:15px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}.panel-head h2{font-size:14px;margin:0}.live{font-size:9px;font-weight:900;color:var(--green);display:flex;align-items:center;gap:7px}.live:before{content:"";width:7px;height:7px;background:#23b783;border-radius:50%;box-shadow:0 0 0 4px #e7f8f0}
+.scene-wrap{padding:7px;background:#f9fcfa}.scene{width:100%;height:auto;display:block;aspect-ratio:1000/600;touch-action:none}.scene .ray{stroke-linecap:round;filter:drop-shadow(0 1px 3px rgba(35,100,145,.15))}.scene [data-drag]{cursor:grab;touch-action:none}.scene [data-drag]:active{cursor:grabbing}.scene-label{font-size:11px;font-weight:850;fill:#637a6f}
+.scene-tools{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:10px 12px;border-top:1px solid var(--line)}.tool-label{font-size:9px;font-weight:900;color:var(--muted)}.tool-btn{border:1px solid var(--line);border-radius:8px;background:#fff;color:#52675d;padding:7px 9px;font-size:10px;font-weight:850}.tool-btn.active{background:var(--soft);border-color:#b9dfcf;color:#126d50}.scene-note{margin-left:auto;color:var(--muted);font-size:9px}
+.side-panel{padding-bottom:13px}.section{padding:12px 14px;border-bottom:1px solid #edf2ef}.section-title{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;font-weight:900;margin-bottom:8px}.value{color:var(--green);background:var(--soft);padding:4px 7px;border-radius:7px;font-size:10px;font-weight:900}
+select{width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);font-size:11px;font-weight:800}.range{width:100%;accent-color:var(--green);cursor:pointer}.scale{display:flex;justify-content:space-between;color:#91a29a;font-size:9px;margin-top:3px}.help{margin:7px 0 0;color:var(--muted);font-size:9px;line-height:1.5}.quick-row{display:flex;gap:6px;margin-top:8px}.quick-row .tool-btn{flex:1}
+.toggle-row{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:9px;background:#f7faf8;border:1px solid var(--line);font-size:10px;font-weight:800}.toggle-row input{accent-color:var(--green);width:16px;height:16px}.readings{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px}.read-card{border:1px solid var(--line);border-radius:10px;padding:9px;background:#fbfdfc;min-width:0}.read-card small{display:block;font-size:8px;color:var(--muted);font-weight:900;margin-bottom:6px}.read-card strong{font-size:20px;letter-spacing:-.7px}.read-card span{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+.status{margin:0 14px;padding:10px 11px;background:var(--soft);border-radius:9px;color:#176b51;font-size:10px;line-height:1.5;font-weight:750}.status.warning{background:#fff4e6;color:#9a621d}.status.danger{background:#fff0ed;color:#a64636}
+.mode-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}.mode-btn{border:1px solid transparent;border-radius:8px;background:#f2f7f4;color:var(--muted);padding:9px 5px;font-size:9px;font-weight:900}.mode-btn.active{background:var(--soft);border-color:#b9dfcf;color:#126d50}
+.guided{margin:11px 14px 0;padding:11px;background:#fff9ed;border:1px solid #f0e2c4;border-radius:10px}.guided h3{font-size:10px;margin:0 0 6px}.guided p{font-size:9px;color:#796b4e;line-height:1.5;margin:0}.guided-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:9px}.guided-foot span{color:#9a8358;font-size:8px;font-weight:900}.guided-foot button{border:0;background:#f2e3c3;color:#72582e;padding:7px 9px;border-radius:7px;font-size:9px;font-weight:900}
+.below-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.75fr);gap:14px;margin-top:14px}.subpanel{min-width:0;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow)}.subhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}.subhead h2{font-size:12px;margin:0}.subpanel p{font-size:9px;color:var(--muted);line-height:1.5;margin:6px 0 9px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:9px;white-space:nowrap}th,td{padding:8px 7px;text-align:center;border-bottom:1px solid #edf2ef}th{font-size:8px;color:var(--muted);text-transform:uppercase}td{font-weight:750}td:first-child,th:first-child{text-align:left}.empty{text-align:center;color:#9ba8a1;padding:18px 8px;font-size:9px}
+.theory{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:14px 16px}.theory h2{font-size:12px;margin:0 0 7px}.theory p{font-size:10px;line-height:1.6;color:var(--muted);margin:0}.formula{display:inline-block;margin-top:9px;padding:8px 12px;background:var(--soft);border-radius:8px;color:#146d51;font-size:14px;font-weight:900}.footer{text-align:center;color:#93a29a;font-size:9px;line-height:1.6;margin-top:16px}[hidden]{display:none!important}
+@media(max-width:980px){.main-grid{grid-template-columns:1fr}.side-panel{display:grid;grid-template-columns:1fr 1fr}.side-panel>.panel-head{grid-column:1/-1}.side-panel>.section:nth-child(2){grid-column:1/-1}.readings{align-self:center}.side-panel>.mode-section,.guided{grid-column:1/-1}.below-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.topbar{padding:8px 3%;min-height:56px}.brand small,.top-actions a{display:none}.top-actions .btn{padding:8px 9px;font-size:9px}.page{width:95%;margin-top:16px}.intro{display:block}.chip{display:inline-block;margin-top:9px}.scene-wrap{padding:2px}.scene-tools{gap:5px}.scene-note{width:100%;margin:2px 0 0}.side-panel{display:block}.below-grid{grid-template-columns:1fr}.read-card strong{font-size:18px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="brand"><div class="brand-icon">◉</div><div>Virtual Science Lab<small>INTERACTIVE BIO-OPTICS</small></div></div>
+ <div class="top-actions"><a href="../../../index.html?subject=physics">← Physics Playground</a><button class="btn" id="fullscreenBtn">⛶ Fullscreen</button><button class="btn primary" id="resetBtn">↻ Reset all</button></div>
+</header>
+
+<main class="page">
+ <section class="intro">
+  <div>
+   <div class="eyebrow">CLASS 10 · THE HUMAN EYE AND THE COLOURFUL WORLD</div>
+   <h1>Human Eye — Accommodation and Vision Defects</h1>
+   <p>Explore how the eye focuses light on the retina. Change the object distance, eye power and corrective lens to investigate normal vision, myopia and hypermetropia.</p>
+  </div>
+  <div class="chip">2D INTERACTIVE LAB</div>
+ </section>
+
+ <div class="main-grid">
+  <section class="panel">
+   <div class="panel-head"><h2>Eye Ray Diagram</h2><span class="live">LIVE MODEL</span></div>
+   <div class="scene-wrap">
+    <svg id="scene" class="scene" viewBox="0 0 1000 600" role="img" aria-label="Schematic ray diagram of an eye with a corrective lens and retina">
+     <defs>
+      <linearGradient id="eyeFill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5fcf8"/><stop offset="1" stop-color="#d9eee4"/></linearGradient>
+      <linearGradient id="lensFill" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#b7dce7"/><stop offset=".5" stop-color="#f8ffff"/><stop offset="1" stop-color="#a6d0df"/></linearGradient>
+      <marker id="rayArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0 0L0 6L8 3Z" fill="#2588cf"/></marker>
+      <pattern id="sceneGrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#edf2ef"/></pattern>
+     </defs>
+     <rect width="1000" height="600" rx="10" fill="#fbfdfc"/>
+     <rect width="1000" height="600" fill="url(#sceneGrid)"/>
+     <line x1="25" y1="310" x2="960" y2="310" stroke="#a8b9b0" stroke-dasharray="6 7" stroke-width="1.5"/>
+     <text x="35" y="297" fill="#82958b" font-size="10" font-weight="800">OPTICAL AXIS</text>
+
+     <!-- Eye cross-section -->
+     <path d="M445 310 C480 105 690 75 820 160 C910 220 925 400 820 465 C690 545 480 515 445 310Z"
+           fill="url(#eyeFill)" stroke="#83ab9a" stroke-width="4"/>
+     <path d="M444 192 Q395 310 444 428" fill="none" stroke="#66a1a0" stroke-width="8"/>
+     <path d="M455 220 Q435 310 455 400" fill="none" stroke="#b1d9d6" stroke-width="5"/>
+     <text x="455" y="173" text-anchor="middle" fill="#5e8b82" font-size="11" font-weight="850">CORNEA</text>
+
+     <!-- Iris -->
+     <path d="M520 230 Q545 260 520 290 M520 330 Q545 360 520 390" fill="none" stroke="#b17f54" stroke-width="9" stroke-linecap="round"/>
+     <text x="510" y="420" text-anchor="middle" fill="#96714e" font-size="10" font-weight="800">IRIS</text>
+
+     <!-- Eye lens -->
+     <path d="M565 230 Q620 310 565 390 Q510 310 565 230Z"
+           fill="url(#lensFill)" stroke="#6e9baa" stroke-width="3"/>
+     <path d="M565 235 Q600 310 565 385" fill="none" stroke="#fff" stroke-width="2"/>
+     <text x="590" y="205" text-anchor="middle" fill="#4f8291" font-size="11" font-weight="900">EYE LENS</text>
+
+     <!-- Ciliary muscles -->
+     <path d="M520 215 Q545 220 550 245 M520 405 Q545 400 550 375" fill="none" stroke="#d29a68" stroke-width="8" stroke-linecap="round"/>
+     <text x="515" y="445" text-anchor="middle" fill="#9b7859" font-size="9" font-weight="800">CILIARY MUSCLES</text>
+
+     <!-- Retina -->
+     <path id="retinaLine" d="M817 165 Q875 310 817 460" fill="none" stroke="#d76d63" stroke-width="9" stroke-linecap="round"/>
+     <path d="M825 173 Q884 310 825 452" fill="none" stroke="#f0a099" stroke-width="3"/>
+     <text x="866" y="490" text-anchor="middle" fill="#bd6259" font-size="12" font-weight="900">RETINA</text>
+
+     <!-- Optic nerve -->
+     <path d="M820 305 Q900 285 958 250" fill="none" stroke="#e6c09a" stroke-width="24" stroke-linecap="round"/>
+     <path d="M820 305 Q900 285 958 250" fill="none" stroke="#c89e7d" stroke-width="2"/>
+
+     <!-- Object -->
+     <g id="objectGroup">
+      <line x1="100" y1="310" x2="100" y2="145" stroke="#16866a" stroke-width="6" stroke-linecap="round"/>
+      <path d="M87 160L100 138L113 160" fill="none" stroke="#16866a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="100" y="120" text-anchor="middle" fill="#16866a" font-size="12" font-weight="900">OBJECT</text>
+     </g>
+
+     <!-- Corrective lens -->
+     <g id="correctiveGroup">
+      <path id="correctiveLens" d="M375 215 Q405 310 375 405 Q345 310 375 215Z"
+            fill="#d6eaf1" fill-opacity=".7" stroke="#6398aa" stroke-width="3"/>
+      <text id="correctiveLabel" x="375" y="190" text-anchor="middle" fill="#608999" font-size="11" font-weight="900">CORRECTIVE LENS</text>
+     </g>
+     <g id="noCorrectionGroup" style="display:none">
+      <line x1="375" y1="205" x2="375" y2="415" stroke="#adbbb4" stroke-width="2" stroke-dasharray="7 6"/>
+      <text x="375" y="190" text-anchor="middle" fill="#8d9c95" font-size="10" font-weight="850">NO CORRECTION</text>
+     </g>
+
+     <!-- Rays -->
+     <g id="incomingRays">
+      <line id="incoming1" class="ray" x1="100" y1="145" x2="565" y2="260" stroke="#2588cf" stroke-width="2.5"/>
+      <line id="incoming2" class="ray" x1="100" y1="145" x2="565" y2="310" stroke="#2588cf" stroke-width="2.5"/>
+      <line id="incoming3" class="ray" x1="100" y1="145" x2="565" y2="360" stroke="#2588cf" stroke-width="2.5"/>
+     </g>
+     <g id="outgoingRays">
+      <line id="outgoing1" class="ray" x1="565" y1="260" x2="820" y2="455" stroke="#e58b39" stroke-width="2.8"/>
+      <line id="outgoing2" class="ray" x1="565" y1="310" x2="820" y2="455" stroke="#e58b39" stroke-width="2.8"/>
+      <line id="outgoing3" class="ray" x1="565" y1="360" x2="820" y2="455" stroke="#e58b39" stroke-width="2.8"/>
+     </g>
+
+     <!-- Focus point and retinal blur -->
+     <g id="focusGroup">
+      <circle id="focusHalo" cx="820" cy="455" r="13" fill="#42ad80" fill-opacity=".15"/>
+      <circle id="focusPoint" cx="820" cy="455" r="5" fill="#15956d" stroke="#fff" stroke-width="2"/>
+      <text id="focusLabel" x="835" y="438" fill="#16866a" font-size="10" font-weight="900">FOCUS</text>
+     </g>
+     <g id="blurGroup" style="display:none">
+      <ellipse id="blurSpot" cx="820" cy="400" rx="7" ry="17" fill="#e36f61" fill-opacity=".24" stroke="#d66b5f" stroke-width="2"/>
+      <text id="blurLabel" x="835" y="385" fill="#c15d52" font-size="10" font-weight="900">BLUR ON RETINA</text>
+     </g>
+     <g id="imageArrow" opacity=".85">
+      <line x1="820" y1="455" x2="820" y2="510" stroke="#16866a" stroke-width="3"/>
+      <path d="M812 500L820 513L828 500" fill="none" stroke="#16866a" stroke-width="3"/>
+      <text x="800" y="535" text-anchor="middle" fill="#16866a" font-size="10" font-weight="900">INVERTED IMAGE</text>
+     </g>
+
+     <text x="25" y="565" fill="#97a69f" font-size="10" font-weight="800">SCHEMATIC RAY MODEL · NOT TO SCALE</text>
+    </svg>
+   </div>
+   <div class="scene-tools">
+    <span class="tool-label">DISPLAY</span>
+    <button class="tool-btn active" id="raysToggle">✓ Light rays</button>
+    <button class="tool-btn active" id="imageToggle">✓ Image</button>
+    <span class="scene-note">Focus position updates live</span>
+   </div>
+  </section>
+
+  <aside class="panel side-panel">
+   <div class="panel-head"><h2>Experiment Controls</h2><span class="eyebrow">EYE MODEL</span></div>
+
+   <div class="section">
+    <div class="section-title">Select eye condition</div>
+    <select id="condition">
+     <option value="normal">Normal eye</option>
+     <option value="myopia">Myopia (short-sightedness)</option>
+     <option value="hyperopia">Hypermetropia (long-sightedness)</option>
+    </select>
+    <p class="help" id="conditionHelp">A normal eye changes its lens power using accommodation to focus objects at different distances.</p>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Object distance <span class="value" id="distanceValue">100 cm</span></div>
+    <input id="distance" class="range" type="range" min="25" max="500" step="5" value="100" aria-label="Object distance in centimetres">
+    <div class="scale"><span>25 cm · Near</span><span>500 cm · Far</span></div>
+    <p class="help">Move the object closer or farther from the eye.</p>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Eye accommodation <span class="value" id="accommodationValue">1.0 D</span></div>
+    <input id="accommodation" class="range" type="range" min="0" max="5" step=".1" value="1" aria-label="Eye accommodation in diopters">
+    <div class="scale"><span>0 D · Relaxed</span><span>5 D · More power</span></div>
+    <p class="help">Ciliary muscles change the curvature and power of the eye lens.</p>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Vision defect severity <span class="value" id="severityValue">2.0 D</span></div>
+    <input id="severity" class="range" type="range" min=".5" max="3" step=".1" value="2" aria-label="Vision defect severity">
+    <div class="scale"><span>0.5 D</span><span>3.0 D</span></div>
+    <p class="help" id="severityHelp">Select Myopia or Hypermetropia to adjust the modelled defect.</p>
+   </div>
+
+   <div class="section">
+    <div class="section-title">Corrective lens</div>
+    <label class="toggle-row">
+     <input type="checkbox" id="correction">
+     Add corrective spectacle lens
+    </label>
+    <p class="help" id="correctionHelp">Choose a vision defect to see the appropriate corrective lens.</p>
+   </div>
+
+   <div class="readings">
+    <div class="read-card"><small>IMAGE DISTANCE</small><strong id="imageDistance">17.00 mm</strong><span>from eye lens</span></div>
+    <div class="read-card"><small>RETINA POSITION</small><strong>17.00 mm</strong><span>modelled eye length</span></div>
+    <div class="read-card"><small>EYE LENS POWER</small><strong id="eyePower">59.82 D</strong><span>including accommodation</span></div>
+    <div class="read-card"><small>REQUIRED ACCOMMODATION</small><strong id="requiredPower">1.0 D</strong><span>for this object distance</span></div>
+   </div>
+
+   <div class="status" id="status" aria-live="polite">The image is focused on the retina.</div>
+
+   <div class="section">
+    <div class="section-title">Lens information</div>
+    <div class="read-card" style="margin-bottom:8px">
+     <small>CORRECTIVE LENS POWER</small>
+     <strong id="spectaclePower">0.0 D</strong>
+     <span id="lensType">No corrective lens</span>
+    </div>
+    <p class="help" id="lensExplanation">A normal eye uses accommodation to adjust focus.</p>
+   </div>
+
+   <div class="section mode-section" style="border-bottom:0">
+    <div class="section-title">Learning mode</div>
+    <div class="mode-row">
+     <button class="mode-btn active" id="guidedMode">Guided investigation</button>
+     <button class="mode-btn" id="freeMode">Free explore</button>
+    </div>
+    <div class="guided" id="guidedBox">
+     <h3 id="guideTitle">Task 1 · Normal eye</h3>
+     <p id="guideText">Choose Normal eye. Set the object distance to 25 cm and accommodation to 4 D. Observe the focus on the retina.</p>
+     <div class="guided-foot"><span id="guideStep">TASK 1 OF 4</span><button id="nextGuide">Next task →</button></div>
+    </div>
+   </div>
+  </aside>
+ </div>
+
+ <div class="below-grid">
+  <section class="subpanel">
+   <div class="subhead">
+    <h2>Observation table</h2>
+    <div style="display:flex;gap:5px">
+     <button class="btn primary" id="recordBtn">＋ Record</button>
+     <button class="btn" id="clearBtn">Clear</button>
+    </div>
+   </div>
+   <p>Record how the image position changes with eye condition, accommodation and corrective lenses.</p>
+   <div class="table-wrap">
+    <table>
+     <thead><tr><th>Trial</th><th>Condition</th><th>Object</th><th>Accommodation</th><th>Focus</th><th>Result</th></tr></thead>
+     <tbody id="trialRows"><tr><td colspan="6" class="empty">No observations recorded. Change settings and press Record.</td></tr></tbody>
+    </table>
+   </div>
+  </section>
+  <section class="subpanel">
+   <div class="subhead"><h2>Focus comparison</h2><span class="eyebrow">IMAGE PLANE</span></div>
+   <p>Compare the focus position with the fixed retina position.</p>
+   <svg id="focusGraph" viewBox="0 0 380 180" style="display:block;width:100%;height:auto" role="img" aria-label="Focus position compared with retina">
+    <rect x="25" y="25" width="330" height="105" rx="8" fill="#f8fbf9" stroke="#e3ece6"/>
+    <line x1="45" y1="80" x2="335" y2="80" stroke="#93a79c" stroke-width="3"/>
+    <line x1="210" y1="35" x2="210" y2="125" stroke="#d66b5f" stroke-width="3" stroke-dasharray="5 4"/>
+    <text x="210" y="18" text-anchor="middle" fill="#bb6259" font-size="10" font-weight="900">RETINA · 17 mm</text>
+    <circle id="focusGraphDot" cx="210" cy="80" r="8" fill="#16866a" stroke="#fff" stroke-width="2"/>
+    <text x="45" y="148" fill="#71847b" font-size="9">Before retina</text>
+    <text x="335" y="148" text-anchor="end" fill="#71847b" font-size="9">Behind retina</text>
+    <text id="focusGraphLabel" x="210" y="166" text-anchor="middle" fill="#16866a" font-size="10" font-weight="900">Focus on retina</text>
+   </svg>
+   <p id="comparisonText">A focused image forms on the retina.</p>
+  </section>
+ </div>
+
+ <section class="theory">
+  <h2>What should you discover?</h2>
+  <p>The eye lens changes its focal length to focus light from objects at different distances on the retina. In myopia, distant objects may focus in front of the retina; a concave (diverging) lens can correct this. In hypermetropia, near objects may focus behind the retina; a convex (converging) lens can help correct it. This activity uses a simplified equivalent thin-lens model.</p>
+  <div class="formula">Lens power (D) = 1 / focal length (m)</div>
+ </section>
+ <div class="footer">Virtual Science Lab · Original interactive learning activity<br>Educational thin-lens model only · Not a medical or vision diagnosis</div>
+</main>
+
+<script>
+(() => {
+"use strict";
+
+const RETINA_MM = 17;
+const RETINA_POWER = 1000 / RETINA_MM;
+
+const state = {
+ condition:"normal",
+ distance:100,
+ accommodation:1,
+ severity:2,
+ correction:false,
+ showRays:true,
+ showImage:true,
+ mode:"guided",
+ guide:0,
+ trials:[]
+};
+
+const $ = id => document.getElementById(id);
+
+const guides = [
+ {
+  title:"Task 1 · Normal eye",
+  text:"Choose Normal eye. Set the object distance to 25 cm and accommodation to 4 D. Observe the focus on the retina."
+ },
+ {
+  title:"Task 2 · Myopia",
+  text:"Choose Myopia. Turn OFF the corrective lens. Observe where distant-object rays focus. Then add the concave corrective lens."
+ },
+ {
+  title:"Task 3 · Hypermetropia",
+  text:"Choose Hypermetropia. Turn OFF the corrective lens. Observe the focus position. Then add the convex corrective lens."
+ },
+ {
+  title:"Task 4 · Accommodation",
+  text:"Return to Normal eye. Move the object closer and increase accommodation. Find the power needed to focus on the retina."
+ }
+];
+
+const clamp = (v,min,max) => Math.max(min,Math.min(max,v));
+const fmt = (v,d=1) => Number(v).toFixed(d);
+
+function conditionName(){
+ if(state.condition==="myopia") return "Myopia";
+ if(state.condition==="hyperopia") return "Hypermetropia";
+ return "Normal";
+}
+
+function model(){
+ const objectVergence = -100 / state.distance;
+
+ let baseEyePower = RETINA_POWER;
+ let spectaclePower = 0;
+
+ if(state.condition==="myopia"){
+  baseEyePower += state.severity;
+  if(state.correction) spectaclePower = -state.severity;
+ }
+ else if(state.condition==="hyperopia"){
+  baseEyePower -= state.severity;
+  if(state.correction) spectaclePower = state.severity;
+ }
+
+ const eyePower = baseEyePower + state.accommodation;
+ const totalPower = eyePower + spectaclePower;
+ const imageVergence = totalPower + objectVergence;
+
+ const imageDistanceMm =
+  imageVergence > 0 ? 1000 / imageVergence : Infinity;
+
+ const requiredAccommodation =
+  RETINA_POWER - objectVergence -
+  (baseEyePower - RETINA_POWER) -
+  spectaclePower;
+
+ const focusError = imageDistanceMm - RETINA_MM;
+
+ let result = "focused";
+ if(!Number.isFinite(imageDistanceMm)){
+  result = "virtual";
+ }else if(focusError < -0.12){
+  result = "before";
+ }else if(focusError > 0.12){
+  result = "behind";
+ }
+
+ let correctionPower = 0;
+ if(state.correction && state.condition==="myopia"){
+  correctionPower=-state.severity;
+ }else if(state.correction && state.condition==="hyperopia"){
+  correctionPower=state.severity;
+ }
+
+ return {
+  objectVergence,
+  baseEyePower,
+  eyePower,
+  spectaclePower:correctionPower,
+  totalPower,
+  imageVergence,
+  imageDistanceMm,
+  requiredAccommodation,
+  focusError,
+  result
+ };
+}
+
+function line(id,x1,y1,x2,y2){
+ const el=$(id);
+ el.setAttribute("x1",x1);
+ el.setAttribute("y1",y1);
+ el.setAttribute("x2",x2);
+ el.setAttribute("y2",y2);
+}
+
+function renderLens(m){
+ const path=$("correctiveLens");
+ const group=$("correctiveGroup");
+ const noCorrection=$("noCorrectionGroup");
+
+ if(state.condition==="normal" || !state.correction){
+  group.style.display="none";
+  noCorrection.style.display="";
+  return;
+ }
+
+ group.style.display="";
+ noCorrection.style.display="none";
+
+ if(state.condition==="myopia"){
+  // Concave / diverging lens.
+  path.setAttribute("d","M375 215 Q405 310 375 405 Q345 310 375 215Z");
+  path.setAttribute("fill","#d9eaf2");
+  $("correctiveLabel").textContent="CONCAVE LENS (−)";
+ }else{
+  // Convex / converging lens.
+  path.setAttribute("d","M375 215 Q335 310 375 405 Q415 310 375 215Z");
+  path.setAttribute("fill","#d6edf2");
+  $("correctiveLabel").textContent="CONVEX LENS (+)";
+ }
+}
+
+function updateRays(m){
+ const eyeX=565;
+ const retinaX=820;
+ const focusY=455;
+
+ const focusX = Number.isFinite(m.imageDistanceMm)
+  ? eyeX + (m.imageDistanceMm / RETINA_MM) * (retinaX-eyeX)
+  : 950;
+
+ const lensHeights=[260,310,360];
+ const object={x:100,y:145};
+ const spectacleX=375;
+
+ lensHeights.forEach((height,index)=>{
+  const specY=object.y+(height-object.y)*
+   (spectacleX-object.x)/(eyeX-object.x);
+
+  line("incoming"+(index+1),object.x,object.y,eyeX,height);
+
+  const atRetinaY=height+
+   (focusY-height)*
+   ((retinaX-eyeX)/(focusX-eyeX));
+
+  // Ray from eye lens towards its calculated focus.
+  line(
+   "outgoing"+(index+1),
+   eyeX,height,
+   focusX,focusY
+  );
+
+  const dotId="retinaDot"+(index+1);
+  let dot=$(dotId);
+
+  if(!dot){
+   dot=document.createElementNS(
+    "http://www.w3.org/2000/svg","circle"
+   );
+   dot.setAttribute("id",dotId);
+   dot.setAttribute("r","4");
+   dot.setAttribute("fill","#e58b39");
+   dot.setAttribute("stroke","#fff");
+   dot.setAttribute("stroke-width","1.5");
+   $("scene").appendChild(dot);
+  }
+
+  dot.setAttribute("cx",retinaX);
+  dot.setAttribute("cy",atRetinaY);
+  dot.style.display=state.showRays?"":"none";
+ });
+
+ const retinaYs=lensHeights.map(height=>
+  height+(focusY-height)*
+  ((retinaX-eyeX)/(focusX-eyeX))
+ );
+
+ const averageY=retinaYs.reduce((a,b)=>a+b,0)/retinaYs.length;
+ const spread=Math.max(...retinaYs)-Math.min(...retinaYs);
+
+ $("blurSpot").setAttribute("cx",retinaX);
+ $("blurSpot").setAttribute("cy",averageY);
+ $("blurSpot").setAttribute("rx",Math.max(5,Math.min(22,spread*.55+4)));
+ $("blurSpot").setAttribute("ry",Math.max(8,Math.min(30,spread*.65+5)));
+
+ $("focusPoint").setAttribute("cx",focusX);
+ $("focusPoint").setAttribute("cy",focusY);
+ $("focusHalo").setAttribute("cx",focusX);
+ $("focusHalo").setAttribute("cy",focusY);
+ $("focusLabel").setAttribute("x",clamp(focusX+12,20,930));
+ $("focusLabel").setAttribute("y",focusY-16);
+
+ const isFocused=m.result==="focused";
+ $("focusGroup").style.display=isFocused?"":"none";
+ $("blurGroup").style.display=isFocused?"none":"";
+
+ $("blurLabel").setAttribute("x",retinaX+14);
+ $("blurLabel").setAttribute("y",averageY-17);
+
+ $("incomingRays").style.display=state.showRays?"":"none";
+ $("outgoingRays").style.display=state.showRays?"":"none";
+ $("imageArrow").style.display=state.showImage?"":"none";
+
+ $("comparisonText").textContent =
+  isFocused
+   ? "The image is focused on the retina."
+   : m.result==="before"
+    ? "The rays converge before the retina. The image is not sharply focused on the retinal surface."
+    : m.result==="behind"
+     ? "The rays would converge behind the retina. The retinal image is blurred."
+     : "The incoming rays do not form a real image on the retina.";
+
+ // Schematic eye model uses an equivalent thin-lens calculation.
+ $("objectGroup").setAttribute("opacity","1");
+}
+
+function updateStatus(m){
+ const status=$("status");
+ status.className="status";
+
+ if(m.result==="focused"){
+  status.textContent="Focused! The image forms approximately on the retina.";
+ }else if(m.result==="before"){
+  status.classList.add("warning");
+  status.textContent="The image focuses in front of the retina. Try relaxing the lens, changing the object distance or using a suitable corrective lens.";
+ }else if(m.result==="behind"){
+  status.classList.add("warning");
+  status.textContent="The image would focus behind the retina. More eye power or a converging corrective lens may bring it forward.";
+ }else{
+  status.classList.add("danger");
+  status.textContent="The model does not form a real image at the retinal plane with these settings.";
+ }
+}
+
+function updateConditionText(){
+ const help=$("conditionHelp");
+ const severityHelp=$("severityHelp");
+ const correctionHelp=$("correctionHelp");
+ const lensExplanation=$("lensExplanation");
+
+ $("severity").disabled=state.condition==="normal";
+ $("correction").disabled=state.condition==="normal";
+
+ if(state.condition==="normal"){
+  help.textContent="A normal eye changes its lens power using accommodation to focus objects at different distances.";
+  severityHelp.textContent="Severity is used only for the two vision-defect models.";
+  correctionHelp.textContent="No corrective spectacle lens is needed in this model.";
+  lensExplanation.textContent="Accommodation changes the power of the eye lens. The ciliary muscles alter its curvature.";
+ }else if(state.condition==="myopia"){
+  help.textContent="In myopia, distant objects can focus in front of the retina because the eye has too much optical power for the relaxed state.";
+  severityHelp.textContent="Increase severity to model a larger myopic refractive error.";
+  correctionHelp.textContent="A concave (diverging) lens reduces the incoming convergence.";
+  lensExplanation.textContent=`Modelled spectacle correction: −${fmt(state.severity,1)} D. The concave lens helps move the focus back onto the retina.`;
+ }else{
+  help.textContent="In hypermetropia, near objects may focus behind the retina because the eye has insufficient optical power for the required focus.";
+  severityHelp.textContent="Increase severity to model a larger hypermetropic refractive error.";
+  correctionHelp.textContent="A convex (converging) lens increases the convergence of incoming light.";
+  lensExplanation.textContent=`Modelled spectacle correction: +${fmt(state.severity,1)} D. The convex lens helps move the focus forward onto the retina.`;
+ }
+}
+
+function update(){
+ const m=model();
+
+ $("distance").value=state.distance;
+ $("accommodation").value=state.accommodation;
+ $("severity").value=state.severity;
+ $("correction").checked=state.correction;
+
+ $("distanceValue").textContent=`${state.distance} cm`;
+ $("accommodationValue").textContent=`${fmt(state.accommodation,1)} D`;
+ $("severityValue").textContent=`${fmt(state.severity,1)} D`;
+
+ $("imageDistance").textContent=
+  Number.isFinite(m.imageDistanceMm)
+   ? `${fmt(m.imageDistanceMm,2)} mm`
+   : "No real focus";
+
+ $("eyePower").textContent=`${fmt(m.eyePower,2)} D`;
+
+ $("requiredPower").textContent=
+  `${fmt(m.requiredAccommodation,1)} D`;
+
+ $("spectaclePower").textContent=
+  `${m.spectaclePower>0?"+":""}${fmt(m.spectaclePower,1)} D`;
+
+ if(m.spectaclePower===0){
+  $("lensType").textContent="No corrective spectacle power";
+ }else if(m.spectaclePower<0){
+  $("lensType").textContent="Concave · Diverging lens";
+ }else{
+  $("lensType").textContent="Convex · Converging lens";
+ }
+
+ $("focusGraphDot").setAttribute(
+  "cx",
+  Number.isFinite(m.imageDistanceMm)
+   ? clamp(210+(m.imageDistanceMm-17)*65,45,340)
+   : 340
+ );
+
+ $("focusGraphLabel").textContent=
+  m.result==="focused"?"Focus on retina":
+  m.result==="before"?"Focus before retina":
+  m.result==="behind"?"Focus behind retina":"No real focus";
+
+ $("focusGraphDot").setAttribute(
+  "fill",
+  m.result==="focused"?"#16866a":"#e58b39"
+ );
+
+ renderLens(m);
+ updateConditionText();
+ updateRays(m);
+ updateStatus(m);
+}
+
+function setCondition(condition){
+ state.condition=condition;
+ state.correction=false;
+ $("condition").value=condition;
+ update();
+}
+
+$("condition").addEventListener("change",e=>{
+ setCondition(e.target.value);
+});
+
+$("distance").addEventListener("input",e=>{
+ state.distance=Number(e.target.value);
+ update();
+});
+
+$("accommodation").addEventListener("input",e=>{
+ state.accommodation=Number(e.target.value);
+ update();
+});
+
+$("severity").addEventListener("input",e=>{
+ state.severity=Number(e.target.value);
+ update();
+});
+
+$("correction").addEventListener("change",e=>{
+ state.correction=e.target.checked;
+ update();
+});
+
+$("raysToggle").addEventListener("click",()=>{
+ state.showRays=!state.showRays;
+ $("raysToggle").classList.toggle("active",state.showRays);
+ $("raysToggle").textContent=state.showRays?"✓ Light rays":"＋ Light rays";
+ update();
+});
+
+$("imageToggle").addEventListener("click",()=>{
+ state.showImage=!state.showImage;
+ $("imageToggle").classList.toggle("active",state.showImage);
+ $("imageToggle").textContent=state.showImage?"✓ Image":"＋ Image";
+ update();
+});
+
+function setMode(mode){
+ state.mode=mode;
+ $("guidedMode").classList.toggle("active",mode==="guided");
+ $("freeMode").classList.toggle("active",mode==="free");
+ $("guidedBox").hidden=mode!=="guided";
+}
+
+$("guidedMode").addEventListener("click",()=>setMode("guided"));
+$("freeMode").addEventListener("click",()=>setMode("free"));
+
+function updateGuide(){
+ const item=guides[state.guide];
+ $("guideTitle").textContent=item.title;
+ $("guideText").textContent=item.text;
+ $("guideStep").textContent=`TASK ${state.guide+1} OF ${guides.length}`;
+ $("nextGuide").textContent=
+  state.guide===guides.length-1?"Start again ↻":"Next task →";
+}
+
+$("nextGuide").addEventListener("click",()=>{
+ state.guide=(state.guide+1)%guides.length;
+ updateGuide();
+ if(state.guide===0)setMode("guided");
+});
+
+$("recordBtn").addEventListener("click",()=>{
+ const m=model();
+ state.trials.push({
+  condition:conditionName(),
+  distance:state.distance,
+  accommodation:state.accommodation,
+  focus:m.imageDistanceMm,
+  result:m.result,
+  correction:state.correction
+ });
+ if(state.trials.length>15)state.trials.shift();
+ renderTrials();
+});
+
+$("clearBtn").addEventListener("click",()=>{
+ state.trials=[];
+ renderTrials();
+});
+
+function renderTrials(){
+ const body=$("trialRows");
+ body.replaceChildren();
+
+ if(!state.trials.length){
+  const tr=document.createElement("tr");
+  const td=document.createElement("td");
+  td.colSpan=6;
+  td.className="empty";
+  td.textContent="No observations recorded. Change settings and press Record.";
+  tr.appendChild(td);
+  body.appendChild(tr);
+  return;
+ }
+
+ state.trials.forEach((trial,index)=>{
+  const tr=document.createElement("tr");
+  const focus=Number.isFinite(trial.focus)
+   ?`${fmt(trial.focus,2)} mm`
+   :"No real focus";
+  const result=trial.result==="focused"
+   ?"On retina"
+   :trial.result==="before"
+    ?"In front"
+    :trial.result==="behind"
+     ?"Behind"
+     :"Virtual";
+
+  [
+   index+1,
+   trial.condition+(trial.correction?" + correction":""),
+   `${trial.distance} cm`,
+   `${fmt(trial.accommodation,1)} D`,
+   focus,
+   result
+  ].forEach(value=>{
+   const td=document.createElement("td");
+   td.textContent=value;
+   tr.appendChild(td);
+  });
+
+  body.appendChild(tr);
+ });
+}
+
+$("resetBtn").addEventListener("click",()=>{
+ state.condition="normal";
+ state.distance=100;
+ state.accommodation=1;
+ state.severity=2;
+ state.correction=false;
+ state.showRays=true;
+ state.showImage=true;
+ state.guide=0;
+ state.trials=[];
+
+ $("condition").value="normal";
+ $("raysToggle").classList.add("active");
+ $("raysToggle").textContent="✓ Light rays";
+ $("imageToggle").classList.add("active");
+ $("imageToggle").textContent="✓ Image";
+
+ setMode("guided");
+ updateGuide();
+ renderTrials();
+ update();
+});
+
+$("fullscreenBtn").addEventListener("click",async()=>{
+ try{
+  if(!document.fullscreenElement){
+   await document.documentElement.requestFullscreen();
+  }else{
+   await document.exitFullscreen();
+  }
+ }catch(error){
+  console.warn("Fullscreen unavailable",error);
+ }
+});
+
+document.addEventListener("fullscreenchange",()=>{
+ $("fullscreenBtn").textContent=
+  document.fullscreenElement?"✕ Exit fullscreen":"⛶ Fullscreen";
+});
+
+updateGuide();
+renderTrials();
+update();
+
+})();
+</script>
+</body>
+</html>
