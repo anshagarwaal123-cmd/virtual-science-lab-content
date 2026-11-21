@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f8f7">
+<title>Alternating Current and Direct Current | Virtual Science Lab</title>
+<style>
+:root{
+  --bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;
+  --line:#dceae6;--teal:#087e75;--teal2:#dff5ef;
+  --blue:#3477ce;--orange:#e58b26;--red:#d84b55;
+  --shadow:0 10px 30px rgba(24,70,63,.08)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}
+button,input,select{font:inherit}
+.topbar{padding:16px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:23px;font-weight:800}
+.brand h1{font-size:17px;margin:0 0 3px}
+.brand p{margin:0;color:var(--muted);font-size:12px}
+.topright{display:flex;align-items:center;gap:8px}
+.live{font-size:10px;font-weight:800;letter-spacing:.07em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1260px;margin:22px auto;padding:0 16px 35px}
+.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}
+.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}
+.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(300px,.85fr);gap:17px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cardhead h3{margin:0;font-size:15px}
+.small{font-size:11px;color:var(--muted)}
+.canvas-wrap{padding:10px 12px 2px}
+#circuitCanvas{width:100%;height:400px;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--blue)}
+.dot.orange{background:var(--orange)}.dot.teal{background:var(--teal)}.dot.red{background:var(--red)}
+.controls{padding:15px 17px}
+.modebar{display:flex;gap:8px;margin:8px 0 17px}
+.modebtn{flex:1;border:1px solid #b7dcd3;background:#effaf6;color:#087568;padding:11px 8px;border-radius:11px;font-weight:800;cursor:pointer}
+.modebtn.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.switchrow{display:flex;gap:8px;margin:12px 0 16px}
+.switchbtn{flex:1;border:1px solid #b7dcd3;background:#effaf6;color:#087568;padding:10px 8px;border-radius:11px;font-weight:800;cursor:pointer}
+.switchbtn.on{background:#e2f8ed;border-color:#8cd3b1;color:#08764b}
+.switchbtn.off{background:#fff2f2;border-color:#edc6c8;color:#b8444b}
+.control{margin-bottom:15px}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
+.control label{font-size:13px;font-weight:700}
+.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}
+.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+.metric{background:#f5faf8;border:1px solid var(--line);border-radius:13px;padding:11px 8px}
+.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.35}
+.metric strong{display:block;font-size:18px;margin-top:6px;color:var(--ink);font-variant-numeric:tabular-nums}
+.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.statebox{margin-top:11px;padding:11px 12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}
+.statebox b{font-size:11px;color:#285a9a}
+.statebox strong{display:block;font-size:13px;color:#285a9a;margin-top:5px;line-height:1.45}
+.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}
+.formula b{font-size:11px;color:#285a9a}
+.formula div{font-family:Georgia,serif;font-size:17px;text-align:center;margin:8px 0;color:#1f4675}
+.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.active{background:var(--teal2);border-color:#9bd6c8;color:#087568}
+.btn.danger{color:#b8444b}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}
+.graphbox{padding:8px 14px 14px}
+#graphCanvas{width:100%;height:225px;display:block}
+.graph-note{color:var(--muted);font-size:11px;margin:0 3px 5px;line-height:1.45}
+.guide{padding:15px 17px}
+.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}
+.guide strong{color:var(--ink)}
+.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}
+.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}
+.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}
+.guide-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modebar-small{display:flex;gap:7px}
+.modebar-small .btn{padding:7px 10px}
+.challenge{padding:15px 17px}
+.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}
+.answers{display:flex;flex-wrap:wrap;gap:7px}
+.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}
+.table-wrap{overflow-x:auto;padding:0 15px 15px}
+table{width:100%;border-collapse:collapse;min-width:600px;font-size:11px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:750;background:#f7fbfa}
+td{font-variant-numeric:tabular-nums}
+.empty{text-align:center;color:#91a6a2;padding:20px}
+.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:880px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#circuitCanvas{height:360px}}
+@media(max-width:520px){
+ .topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}
+ .topright .btn{display:none}
+ main{padding:0 10px 25px;margin-top:15px}
+ .intro{align-items:flex-start;flex-direction:column;gap:10px}
+ #circuitCanvas{height:310px}
+ .metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}
+ .cardhead{padding:13px}
+}
+</style>
+</head>
+<body>
+
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-10-ac-and-dc-current",
+  "title": "Alternating Current and Direct Current",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Compare AC and DC supplies, current direction, frequency, peak and RMS values, voltage-time waveforms and electrical power in a resistive circuit.",
+  "simulationType": "2D"
+}
+</script>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">∿</div>
+    <div>
+      <h1>Virtual Science Lab</h1>
+      <p>Physics · Interactive Experiment</p>
+    </div>
+  </div>
+  <div class="topright">
+    <div class="live" id="liveStatus">● DC SUPPLY ON</div>
+    <button class="btn" id="fullscreenBtn">⛶ Fullscreen</button>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <div>
+      <h2>Alternating Current and Direct Current</h2>
+      <p>Build an electrical circuit and compare AC and DC voltage, current direction, frequency, RMS values and power.</p>
+    </div>
+    <div class="tag">CLASS 10 · ELECTRICITY</div>
+  </section>
+
+  <section class="workspace">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Live electrical circuit</h3>
+        <span class="small">Supply · Load · Current flow</span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="circuitCanvas"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="dot"></i>Supply circuit</span>
+        <span><i class="dot orange"></i>Conventional current</span>
+        <span><i class="dot teal"></i>Resistive load</span>
+        <span><i class="dot red"></i>Live indicator</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Electrical supply controls</h3>
+        <span class="small">Change the source</span>
+      </div>
+      <div class="controls">
+
+        <div class="modebar">
+          <button class="modebtn active" id="acBtn">∿ AC Supply</button>
+          <button class="modebtn" id="dcBtn">⎓ DC Supply</button>
+        </div>
+
+        <div class="switchrow">
+          <button class="switchbtn on" id="powerBtn">⏻ Supply ON</button>
+          <button class="switchbtn" id="circuitBtn">◎ Circuit CLOSED</button>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="voltage">Supply voltage</label>
+            <span class="value" id="voltageVal">6.0 V RMS</span>
+          </div>
+          <input id="voltage" type="range" min="1" max="24" step="0.5" value="6">
+          <div class="scale"><span>1 V</span><span>24 V</span></div>
+        </div>
+
+        <div class="control" id="frequencyControl">
+          <div class="control-top">
+            <label for="frequency">AC frequency</label>
+            <span class="value" id="frequencyVal">5 Hz</span>
+          </div>
+          <input id="frequency" type="range" min="1" max="50" step="1" value="5">
+          <div class="scale"><span>1 Hz</span><span>50 Hz</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="resistance">Load resistance (R)</label>
+            <span class="value" id="resistanceVal">10 Ω</span>
+          </div>
+          <input id="resistance" type="range" min="5" max="100" step="1" value="10">
+          <div class="scale"><span>5 Ω</span><span>100 Ω</span></div>
+        </div>
+
+        <button class="btn" id="reverseBtn" style="width:100%">↻ Reverse DC polarity</button>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>Instantaneous voltage</span>
+            <strong id="instantV">0.00</strong>
+            <small>V</small>
+          </div>
+          <div class="metric">
+            <span>Instantaneous current</span>
+            <strong id="instantI">0.00</strong>
+            <small>A</small>
+          </div>
+          <div class="metric">
+            <span>Current direction</span>
+            <strong id="direction">—</strong>
+            <small>Conventional current</small>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>RMS voltage</span>
+            <strong id="rmsV">6.00</strong>
+            <small>V</small>
+          </div>
+          <div class="metric">
+            <span>RMS current</span>
+            <strong id="rmsI">0.60</strong>
+            <small>A</small>
+          </div>
+          <div class="metric">
+            <span>Average power</span>
+            <strong id="avgPower">3.60</strong>
+            <small>W</small>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>Peak voltage</span>
+            <strong id="peakV">8.49</strong>
+            <small>V</small>
+          </div>
+          <div class="metric">
+            <span>Peak current</span>
+            <strong id="peakI">0.85</strong>
+            <small>A</small>
+          </div>
+          <div class="metric">
+            <span>Frequency</span>
+            <strong id="frequencyRead">5</strong>
+            <small>Hz</small>
+          </div>
+        </div>
+
+        <div class="statebox">
+          <b>WHAT IS HAPPENING?</b>
+          <strong id="stateText">DC supply maintains a constant polarity. Conventional current flows in one direction through the resistive load.</strong>
+        </div>
+
+        <div class="formula">
+          <b>AC AND DC RELATIONSHIPS</b>
+          <div>V<sub>rms</sub> = V<sub>peak</sub> / √2</div>
+          <div>I = V / R &nbsp; · &nbsp; P<sub>avg</sub> = V<sub>rms</sub>² / R</div>
+          <p>For a sinusoidal AC supply, RMS voltage is its equivalent heating-effect voltage. For an ideal DC supply, its constant voltage equals its RMS value.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn" id="resetBtn">↻ Reset experiment</button>
+          <button class="btn primary" id="recordBtn">＋ Record reading</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Voltage and current waveforms</h3>
+        <span class="small" id="graphLabel">AC · sinusoidal wave</span>
+      </div>
+      <div class="graphbox">
+        <p class="graph-note">The upper graph shows voltage over time. The lower graph shows current over time for the same resistive load.</p>
+        <canvas id="graphCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Guided practical</h3>
+        <div class="modebar-small">
+          <button class="btn active" id="guidedBtn">Guided</button>
+          <button class="btn" id="exploreBtn">Explore</button>
+        </div>
+      </div>
+
+      <div class="guide" id="guidedPanel">
+        <strong id="guideTitle">Task 1 — Observe DC</strong>
+        <div class="guide-step">
+          <div class="count" id="guideCount">TASK 1 OF 4</div>
+          <div id="guideText">Select DC supply at 6 V. Observe that voltage and current remain constant in magnitude and direction.</div>
+        </div>
+        <p id="guideHint">Reverse the DC polarity to see the conventional current direction change.</p>
+        <div class="guide-actions">
+          <button class="btn primary" id="applyGuide">Apply task setup</button>
+          <button class="btn" id="nextGuide">Next task →</button>
+        </div>
+      </div>
+
+      <div class="guide" id="explorePanel" hidden>
+        <strong>Free exploration</strong>
+        <p>Switch between AC and DC. Change voltage, AC frequency and load resistance. Observe the waveform and the live electrical readings.</p>
+        <p><strong>Investigate:</strong> Why does AC current reverse direction? What happens to RMS current when resistance increases? Does changing AC frequency change the RMS current in this ideal resistive-load model?</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Prediction challenge</h3>
+        <span class="tag">TEST YOURSELF</span>
+      </div>
+      <div class="challenge">
+        <strong>In an ideal resistive circuit, what happens to the RMS current if the RMS AC voltage is doubled while resistance stays the same?</strong>
+        <p>Choose your answer:</p>
+        <div class="answers">
+          <button class="btn" data-answer="half">It becomes half</button>
+          <button class="btn" data-answer="same">It stays the same</button>
+          <button class="btn" data-answer="double">It becomes double</button>
+        </div>
+        <div class="feedback" id="challengeFeedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Observation record</h3>
+        <button class="btn danger" id="clearRecords">Clear records</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Supply</th><th>Voltage RMS</th>
+              <th>Frequency</th><th>Resistance</th><th>Current RMS</th><th>Average power</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody">
+            <tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">
+    Scientific model note: This is a low-voltage ideal source connected to a pure resistor. AC is modelled as a sinusoidal voltage; DC is modelled as a constant voltage. Inductance, capacitance, transformer effects, source impedance and switching transients are not included. The RMS relationships shown apply to a sinusoidal AC waveform. This is an educational simulation, not a real electrical wiring experiment.
+  </p>
+</main>
+
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+
+  const controls = {
+    voltage: $("voltage"),
+    frequency: $("frequency"),
+    resistance: $("resistance")
+  };
+
+  const S = {
+    mode: "ac",
+    power: true,
+    closed: true,
+    dcPolarity: 1,
+    time: 0,
+    lastTime: 0,
+    paused: false,
+    records: [],
+    guideStep: 0
+  };
+
+  const SQRT2 = Math.sqrt(2);
+
+  const guideTasks = [
+    {
+      title:"Task 1 — Observe DC",
+      count:"TASK 1 OF 4",
+      text:"Select DC supply at 6 V. Observe that voltage and current remain constant in magnitude and direction.",
+      hint:"Reverse the DC polarity to see the conventional current direction change.",
+      v:{mode:"dc",voltage:6,frequency:5,resistance:10,polarity:1}
+    },
+    {
+      title:"Task 2 — Observe AC",
+      count:"TASK 2 OF 4",
+      text:"Switch to AC at 6 V RMS and 5 Hz. Observe how voltage and current alternate between positive and negative values.",
+      hint:"The current changes direction every half-cycle.",
+      v:{mode:"ac",voltage:6,frequency:5,resistance:10,polarity:1}
+    },
+    {
+      title:"Task 3 — Increase AC frequency",
+      count:"TASK 3 OF 4",
+      text:"Keep the AC RMS voltage at 6 V. Increase frequency from 5 Hz to 20 Hz and watch the waveform.",
+      hint:"The waveform completes more cycles per second. For this ideal resistor, RMS current remains unchanged.",
+      v:{mode:"ac",voltage:6,frequency:20,resistance:10,polarity:1}
+    },
+    {
+      title:"Task 4 — Compare equal RMS voltage",
+      count:"TASK 4 OF 4",
+      text:"Set DC to 6 V and compare it with AC at 6 V RMS. Compare RMS current and average power with the same resistance.",
+      hint:"Equal DC voltage and sinusoidal AC RMS voltage produce equal average heating power in the same ideal resistor.",
+      v:{mode:"dc",voltage:6,frequency:5,resistance:10,polarity:1}
+    }
+  ];
+
+  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+
+  function values(){
+    return {
+      voltage:+controls.voltage.value,
+      frequency:+controls.frequency.value,
+      resistance:+controls.resistance.value
+    };
+  }
+
+  function phase(v){
+    return 2*Math.PI*v.frequency*S.time;
+  }
+
+  function supplyValues(v){
+    if(!S.power){
+      return {
+        vrms:0,vpeak:0,vinst:0,
+        irms:0,ipeak:0,iinst:0,
+        averagePower:0,instantPower:0,
+        frequency:S.mode==="ac"?v.frequency:0
+      };
+    }
+
+    const vrms=v.voltage;
+    const vpeak=S.mode==="ac"?vrms*SQRT2:vrms;
+
+    let vinst;
+    if(S.mode==="ac"){
+      vinst=vpeak*Math.sin(phase(v));
+    }else{
+      vinst=vrms*S.dcPolarity;
+    }
+
+    let iinst=0;
+    if(S.closed){
+      iinst=vinst/v.resistance;
+    }
+
+    const irms=S.closed?vrms/v.resistance:0;
+    const ipeak=S.closed?vpeak/v.resistance:0;
+    const averagePower=S.closed?(vrms*vrms)/v.resistance:0;
+    const instantPower=S.closed?vinst*iinst:0;
+
+    return {
+      vrms,vpeak,vinst,
+      irms,ipeak,iinst,
+      averagePower,instantPower,
+      frequency:S.mode==="ac"?v.frequency:0
+    };
+  }
+
+  function updateLabels(v,r){
+    $("voltageVal").textContent=
+      v.voltage.toFixed(1)+(S.mode==="ac"?" V RMS":" V DC");
+
+    $("frequencyVal").textContent=v.frequency+" Hz";
+    $("resistanceVal").textContent=v.resistance+" Ω";
+
+    $("frequencyControl").style.opacity=
+      S.mode==="ac"?"1":".42";
+
+    controls.frequency.disabled=S.mode==="dc";
+
+    $("powerBtn").textContent=
+      S.power?"⏻ Supply ON":"⏻ Supply OFF";
+
+    $("powerBtn").classList.toggle("on",S.power);
+    $("powerBtn").classList.toggle("off",!S.power);
+
+    $("circuitBtn").textContent=
+      S.closed?"◎ Circuit CLOSED":"○ Circuit OPEN";
+
+    $("circuitBtn").classList.toggle("on",S.closed);
+    $("circuitBtn").classList.toggle("off",!S.closed);
+
+    $("reverseBtn").disabled=S.mode==="ac";
+    $("reverseBtn").style.opacity=S.mode==="ac"?".4":"1";
+
+    $("reverseBtn").textContent=
+      S.dcPolarity>0?"↻ Reverse DC polarity":"↺ Restore DC polarity";
+
+    $("acBtn").classList.toggle("active",S.mode==="ac");
+    $("dcBtn").classList.toggle("active",S.mode==="dc");
+
+    $("liveStatus").textContent=
+      !S.power?"● SUPPLY OFF":
+      S.mode==="ac"?"● AC SUPPLY ON":"● DC SUPPLY ON";
+
+    $("liveStatus").style.color=
+      S.power?"#087e58":"#b8444b";
+
+    $("liveStatus").style.background=
+      S.power?"#e4f8ed":"#fff0f0";
+
+    $("instantV").textContent=r.vinst.toFixed(2);
+    $("instantI").textContent=r.iinst.toFixed(3);
+
+    if(!S.power||!S.closed||Math.abs(r.iinst)<.0001){
+      $("direction").textContent="—";
+    }else{
+      $("direction").textContent=
+        r.iinst>0?"Forward →":"← Reverse";
+    }
+
+    $("rmsV").textContent=r.vrms.toFixed(2);
+    $("rmsI").textContent=r.irms.toFixed(3);
+    $("avgPower").textContent=r.averagePower.toFixed(3);
+    $("peakV").textContent=r.vpeak.toFixed(2);
+    $("peakI").textContent=r.ipeak.toFixed(3);
+    $("frequencyRead").textContent=
+      S.mode==="ac"?String(v.frequency):"0";
+
+    $("graphLabel").textContent=
+      S.mode==="ac"?"AC · sinusoidal wave":"DC · constant level";
+
+    if(!S.power){
+      $("stateText").textContent=
+        "The supply is OFF. There is no output voltage or current.";
+    }else if(!S.closed){
+      $("stateText").textContent=
+        "The circuit is open. The source voltage exists, but no current flows through the disconnected load.";
+    }else if(S.mode==="dc"){
+      $("stateText").textContent=
+        "DC maintains a constant polarity. Conventional current flows in one direction through the resistive load. Reverse the supply polarity to reverse current direction.";
+    }else{
+      $("stateText").textContent=
+        "AC voltage changes sinusoidally. Current follows the voltage in this pure resistive circuit and reverses direction every half-cycle.";
+    }
+  }
+
+  function arrow(ctx,x1,y1,x2,y2,color,size=7){
+    const a=Math.atan2(y2-y1,x2-x1);
+    ctx.strokeStyle=color;
+    ctx.fillStyle=color;
+    ctx.lineWidth=2.5;
+
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(x2,y2);
+    ctx.lineTo(
+      x2-size*Math.cos(a-Math.PI/6),
+      y2-size*Math.sin(a-Math.PI/6)
+    );
+    ctx.lineTo(
+      x2-size*Math.cos(a+Math.PI/6),
+      y2-size*Math.sin(a+Math.PI/6)
+    );
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawSource(ctx,x,y,mode,polarity){
+    ctx.beginPath();
+    ctx.arc(x,y,27,0,Math.PI*2);
+    ctx.fillStyle="#fff";
+    ctx.fill();
+    ctx.strokeStyle="#087e75";
+    ctx.lineWidth=3;
+    ctx.stroke();
+
+    ctx.strokeStyle="#087e75";
+    ctx.fillStyle="#087e75";
+    ctx.lineWidth=2;
+
+    if(mode==="ac"){
+      ctx.beginPath();
+      ctx.moveTo(x-15,y);
+      ctx.bezierCurveTo(x-10,y-14,x-3,y-14,x,y);
+      ctx.bezierCurveTo(x+4,y+14,x+10,y+14,x+15,y);
+      ctx.stroke();
+      ctx.fillStyle="#087e75";
+      ctx.font="700 10px system-ui";
+      ctx.textAlign="center";
+      ctx.fillText("AC",x,y+43);
+    }else{
+      const plusX=x-9,minusX=x+9;
+      ctx.font="800 19px system-ui";
+      ctx.textAlign="center";
+      ctx.fillText(polarity>0?"+":"−",plusX,y+7);
+      ctx.fillText(polarity>0?"−":"+",minusX,y+7);
+      ctx.font="700 10px system-ui";
+      ctx.fillText("DC",x,y+43);
+    }
+  }
+
+  function drawCircuit(){
+    const canvas=$("circuitCanvas");
+    const ctx=canvas.getContext("2d");
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    const dpr=window.devicePixelRatio||1;
+
+    if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){
+      canvas.width=Math.round(w*dpr);
+      canvas.height=Math.round(h*dpr);
+    }
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    const v=values(),r=supplyValues(v);
+    const left=55,right=w-55,top=h*.24,bottom=h*.75;
+    const sx=left+18,sy=(top+bottom)/2;
+    const rx=right-17,ry=sy;
+
+    ctx.strokeStyle="#eaf2f0";
+    ctx.lineWidth=1;
+
+    for(let x=0;x<w;x+=28){
+      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();
+    }
+    for(let y=0;y<h;y+=28){
+      ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();
+    }
+
+    const wireColor=S.closed?"#718982":"#b0bfbb";
+
+    // Circuit wires, leaving a gap for the supply.
+    ctx.strokeStyle=wireColor;
+    ctx.lineWidth=4;
+    ctx.lineCap="round";
+
+    ctx.beginPath();
+    ctx.moveTo(sx,top);
+    ctx.lineTo(rx,top);
+    ctx.lineTo(rx,ry-32);
+    ctx.moveTo(rx,ry+32);
+    ctx.lineTo(rx,bottom);
+    ctx.lineTo(sx,bottom);
+    ctx.moveTo(sx,top);
+    ctx.lineTo(sx,sy-29);
+    ctx.moveTo(sx,sy+29);
+    ctx.lineTo(sx,bottom);
+    ctx.stroke();
+
+    // Supply source.
+    drawSource(ctx,sx,sy,S.mode,S.dcPolarity);
+
+    // Load resistor.
+    ctx.fillStyle="#dff5ef";
+    ctx.strokeStyle="#087e75";
+    ctx.lineWidth=2.5;
+    ctx.beginPath();
+    ctx.roundRect(rx-21,ry-31,42,62,7);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle="#087e75";
+    ctx.font="800 12px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText("R",rx,ry+4);
+
+    ctx.font="10px system-ui";
+    ctx.fillStyle="#607d78";
+    ctx.fillText("Resistive load",rx,ry+48);
+
+    // Current arrows. Positive current follows clockwise convention here.
+    const sign=Math.sign(r.iinst);
+
+    if(S.power&&S.closed&&sign!==0){
+      const points=[
+        [sx+55,top,rx-55,top],
+        [rx,top+37,rx,bottom-37],
+        [rx-55,bottom,sx+55,bottom],
+        [sx, bottom-42, sx, top+42]
+      ];
+
+      points.forEach(([x1,y1,x2,y2])=>{
+        if(sign>0){
+          arrow(ctx,x1,y1,x2,y2,"#e58b26",7);
+        }else{
+          arrow(ctx,x2,y2,x1,y1,"#e58b26",7);
+        }
+      });
+    }
+
+    // Current label
+    ctx.fillStyle="#a76715";
+    ctx.font="700 11px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText(
+      !S.power?"SUPPLY OFF":
+      !S.closed?"OPEN CIRCUIT":
+      sign===0?"INSTANTANEOUS CURRENT = 0":
+      sign>0?"CURRENT →":"CURRENT ←",
+      w/2,top-15
+    );
+
+    // Live indicator
+    const brightness=S.power&&S.closed?
+      clamp(Math.abs(r.iinst)/Math.max(.01,r.ipeak),0,1):0;
+
+    const lx=w/2,ly=h*.92;
+    ctx.beginPath();
+    ctx.arc(lx,ly,12,0,Math.PI*2);
+    ctx.fillStyle=`rgba(243,174,58,${.12+.8*brightness})`;
+    ctx.fill();
+    ctx.strokeStyle="#bd8d3d";
+    ctx.lineWidth=2;
+    ctx.stroke();
+
+    ctx.fillStyle="#718982";
+    ctx.font="10px system-ui";
+    ctx.textAlign="center";
+    ctx.fillText(
+      S.mode==="ac"?"ALTERNATING SUPPLY":"DIRECT SUPPLY",
+      lx,ly+27
+    );
+
+    ctx.textAlign="right";
+    ctx.fillStyle="#607d78";
+    ctx.fillText(
+      "V = "+r.vinst.toFixed(2)+" V  ·  I = "+r.iinst.toFixed(3)+" A",
+      w-12,h-8
+    );
+  }
+
+  function drawGraph(){
+    const canvas=$("graphCanvas");
+    const ctx=canvas.getContext("2d");
+    const w=canvas.clientWidth,h=canvas.clientHeight;
+    const dpr=window.devicePixelRatio||1;
+
+    if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){
+      canvas.width=Math.round(w*dpr);
+      canvas.height=Math.round(h*dpr);
+    }
+
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,w,h);
+
+    const v=values(),r=supplyValues(v);
+    const left=52,right=13,top=12,bottom=31;
+    const gw=w-left-right;
+    const bandH=(h-top-bottom)/2;
+    const upperMid=top+bandH/2;
+    const lowerMid=top+bandH+bandH/2;
+
+    const vScale=Math.max(.01,r.vpeak)*1.15;
+    const iScale=Math.max(.001,r.ipeak)*1.15;
+
+    const xRange=S.mode==="ac"?2/v.frequency:2;
+    const now=S.time;
+    const start=now-xRange;
+
+    const px=t=>left+(t-start)/xRange*gw;
+    const pyV=voltage=>upperMid-
+      voltage/vScale*(bandH*.38);
+
+    const pyI=current=>lowerMid-
+      current/iScale*(bandH*.38);
+
+    ctx.strokeStyle="#e3eeeb";
+    ctx.lineWidth=1;
+    ctx.fillStyle="#78908b";
+    ctx.font="10px system-ui";
+
+    // Panel separators and centre lines
+    ctx.beginPath();
+    ctx.moveTo(left,upperMid);
+    ctx.lineTo(w-right,upperMid);
+    ctx.moveTo(left,lowerMid);
+    ctx.lineTo(w-right,lowerMid);
+    ctx.moveTo(left,top+bandH);
+    ctx.lineTo(w-right,top+bandH);
+    ctx.stroke();
+
+    // Time grid
+    const divisions=4;
+    ctx.textAlign="center";
+
+    for(let j=0;j<=divisions;j++){
+      const x=left+gw*j/divisions;
+      ctx.beginPath();
+      ctx.moveTo(x,top);
+      ctx.lineTo(x,h-bottom);
+      ctx.stroke();
+      ctx.fillText(
+        (xRange*j/divisions).toFixed(2)+" s",
+        x,h-14
+      );
+    }
+
+    // Left labels
+    ctx.textAlign="left";
+    ctx.fillStyle="#3477ce";
+    ctx.font="700 10px system-ui";
+    ctx.fillText("VOLTAGE (V)",5,top+12);
+    ctx.fillStyle="#e58b26";
+    ctx.fillText("CURRENT (A)",5,top+bandH+12);
+
+    // Voltage waveform
+    ctx.strokeStyle="#3477ce";
+    ctx.lineWidth=2.4;
+    ctx.beginPath();
+
+    for(let j=0;j<=200;j++){
+      const t=start+xRange*j/200;
+      let voltage=0;
+
+      if(S.power){
+        voltage=S.mode==="ac"?
+          v.voltage*Math.SQRT2*Math.sin(2*Math.PI*v.frequency*t):
+          v.voltage*S.dcPolarity;
+      }
+
+      const x=px(t),y=pyV(voltage);
+      if(j===0)ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    // Current waveform
+    ctx.strokeStyle="#e58b26";
+    ctx.lineWidth=2.4;
+    ctx.beginPath();
+
+    for(let j=0;j<=200;j++){
+      const t=start+xRange*j/200;
+      let current=0;
+
+      if(S.power&&S.closed){
+        const voltage=S.mode==="ac"?
+          v.voltage*Math.SQRT2*Math.sin(2*Math.PI*v.frequency*t):
+          v.voltage*S.dcPolarity;
+
+        current=voltage/v.resistance;
+      }
+
+      const x=px(t),y=pyI(current);
+      if(j===0)ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+
+    // Current-time marker
+    const markerX=px(now);
+
+    ctx.strokeStyle="#e58b26";
+    ctx.lineWidth=1;
+    ctx.setLineDash([4,4]);
+    ctx.beginPath();
+    ctx.moveTo(markerX,top);
+    ctx.lineTo(markerX,h-bottom);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle="#607d78";
+    ctx.textAlign="center";
+    ctx.font="10px system-ui";
+    ctx.fillText("Time",left+gw/2,h-1);
+  }
+
+  function render(){
+    const v=values();
+    const r=supplyValues(v);
+    updateLabels(v,r);
+    drawCircuit();
+    drawGraph();
+  }
+
+  function setMode(mode){
+    S.mode=mode;
+    render();
+  }
+
+  $("acBtn").addEventListener("click",()=>setMode("ac"));
+  $("dcBtn").addEventListener("click",()=>setMode("dc"));
+
+  $("powerBtn").addEventListener("click",()=>{
+    S.power=!S.power;
+    render();
+  });
+
+  $("circuitBtn").addEventListener("click",()=>{
+    S.closed=!S.closed;
+    render();
+  });
+
+  $("reverseBtn").addEventListener("click",()=>{
+    S.dcPolarity*=-1;
+    render();
+  });
+
+  Object.values(controls).forEach(control=>{
+    control.addEventListener("input",render);
+  });
+
+  $("resetBtn").addEventListener("click",()=>{
+    controls.voltage.value=6;
+    controls.frequency.value=5;
+    controls.resistance.value=10;
+
+    S.mode="ac";
+    S.power=true;
+    S.closed=true;
+    S.dcPolarity=1;
+    S.time=0;
+    S.paused=false;
+
+    $("challengeFeedback").textContent="";
+    render();
+  });
+
+  $("recordBtn").addEventListener("click",()=>{
+    const v=values();
+    const r=supplyValues(v);
+
+    S.records.push({
+      mode:S.mode.toUpperCase(),
+      V:r.vrms,
+      f:S.mode==="ac"?v.frequency:0,
+      R:v.resistance,
+      I:r.irms,
+      P:r.averagePower
+    });
+
+    renderRecords();
+  });
+
+  function renderRecords(){
+    const body=$("recordsBody");
+
+    if(!S.records.length){
+      body.innerHTML=
+        '<tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>';
+      return;
+    }
+
+    body.innerHTML=S.records.map((r,i)=>`
+      <tr>
+        <td>${i+1}</td>
+        <td>${r.mode}</td>
+        <td>${r.V.toFixed(2)} V</td>
+        <td>${r.f.toFixed(1)} Hz</td>
+        <td>${r.R.toFixed(0)} Ω</td>
+        <td>${r.I.toFixed(3)} A</td>
+        <td>${r.P.toFixed(3)} W</td>
+      </tr>
+    `).join("");
+  }
+
+  $("clearRecords").addEventListener("click",()=>{
+    S.records=[];
+    renderRecords();
+  });
+
+  function showGuide(){
+    const task=guideTasks[S.guideStep];
+
+    $("guideTitle").textContent=task.title;
+    $("guideCount").textContent=task.count;
+    $("guideText").textContent=task.text;
+    $("guideHint").textContent=task.hint;
+
+    $("nextGuide").textContent=
+      S.guideStep===guideTasks.length-1?
+      "Restart tasks ↺":"Next task →";
+  }
+
+  $("applyGuide").addEventListener("click",()=>{
+    const preset=guideTasks[S.guideStep].v;
+
+    S.mode=preset.mode;
+    S.dcPolarity=preset.polarity;
+    S.power=true;
+    S.closed=preset.circuit===false?false:true;
+    S.time=0;
+
+    controls.voltage.value=preset.voltage;
+    controls.frequency.value=preset.frequency;
+    controls.resistance.value=preset.resistance;
+
+    render();
+  });
+
+  $("nextGuide").addEventListener("click",()=>{
+    S.guideStep=(S.guideStep+1)%guideTasks.length;
+    showGuide();
+  });
+
+  $("guidedBtn").addEventListener("click",()=>{
+    $("guidedBtn").classList.add("active");
+    $("exploreBtn").classList.remove("active");
+    $("guidedPanel").hidden=false;
+    $("explorePanel").hidden=true;
+  });
+
+  $("exploreBtn").addEventListener("click",()=>{
+    $("exploreBtn").classList.add("active");
+    $("guidedBtn").classList.remove("active");
+    $("guidedPanel").hidden=true;
+    $("explorePanel").hidden=false;
+  });
+
+  document.querySelectorAll("[data-answer]").forEach(button=>{
+    button.addEventListener("click",()=>{
+      const feedback=$("challengeFeedback");
+
+      if(button.dataset.answer==="double"){
+        feedback.textContent=
+          "✓ Correct! For a fixed resistance, I_rms = V_rms / R. Doubling RMS voltage doubles RMS current.";
+        feedback.style.color="#087e58";
+      }else{
+        feedback.textContent=
+          "Not quite. Use Ohm's law for RMS values: I_rms = V_rms / R. With resistance fixed, current changes in the same ratio as voltage.";
+        feedback.style.color="#bd5960";
+      }
+    });
+  });
+
+  $("fullscreenBtn").addEventListener("click",async()=>{
+    try{
+      if(!document.fullscreenElement)
+        await document.documentElement.requestFullscreen();
+      else
+        await document.exitFullscreen();
+    }catch(error){
+      $("fullscreenBtn").textContent="Fullscreen unavailable";
+    }
+  });
+
+  function animate(timestamp){
+    if(!S.lastTime)S.lastTime=timestamp;
+
+    const dt=clamp((timestamp-S.lastTime)/1000,0,.05);
+    S.lastTime=timestamp;
+
+    if(S.power&&!S.paused){
+      S.time+=dt;
+    }
+
+    render();
+    requestAnimationFrame(animate);
+  }
+
+  if("ResizeObserver" in window){
+    const observer=new ResizeObserver(render);
+    observer.observe($("circuitCanvas"));
+    observer.observe($("graphCanvas"));
+  }else{
+    window.addEventListener("resize",render);
+  }
+
+  showGuide();
+  render();
+  requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
