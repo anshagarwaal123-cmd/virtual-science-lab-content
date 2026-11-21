@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f3f8f7">
+<title>Domestic Electric Circuits and Safety | Virtual Science Lab</title>
+<style>
+:root{
+ --bg:#f3f8f7;--card:#fff;--ink:#173332;--muted:#68817e;
+ --line:#dceae6;--teal:#087e75;--teal2:#dff5ef;
+ --blue:#3477ce;--orange:#e58b26;--red:#d84b55;
+ --green:#26966d;--shadow:0 10px 30px rgba(24,70,63,.08)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Arial,sans-serif}
+button,input,select{font:inherit}
+.topbar{padding:16px 22px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:13px;background:var(--teal2);display:grid;place-items:center;color:var(--teal);font-size:23px;font-weight:800}
+.brand h1{font-size:17px;margin:0 0 3px}
+.brand p{margin:0;color:var(--muted);font-size:12px}
+.live{font-size:10px;font-weight:800;letter-spacing:.06em;color:#087e58;background:#e4f8ed;padding:8px 11px;border-radius:30px}
+main{max-width:1280px;margin:22px auto;padding:0 16px 35px}
+.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:17px}
+.intro h2{font-size:clamp(21px,3vw,29px);margin:0 0 6px}
+.intro p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.tag{font-size:11px;font-weight:800;color:var(--teal);background:var(--teal2);padding:8px 11px;border-radius:20px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(310px,.85fr);gap:17px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.cardhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cardhead h3{margin:0;font-size:15px}
+.small{font-size:11px;color:var(--muted)}
+.canvas-wrap{padding:10px 12px 2px}
+#circuitCanvas{width:100%;height:430px;display:block;border-radius:12px;background:linear-gradient(180deg,#fbfefd,#f4faf9)}
+.legend{display:flex;gap:13px;flex-wrap:wrap;padding:8px 16px 15px;color:var(--muted);font-size:11px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.red{background:#d84b55}.blue{background:#3477ce}.green{background:#26966d}.orange{background:#e58b26}
+.controls{padding:15px 17px}
+.control{margin-bottom:15px}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}
+.control label{font-size:13px;font-weight:700}
+.value{font-size:13px;color:var(--teal);font-weight:800;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--teal);cursor:pointer}
+select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fbfefd;color:var(--ink);font-weight:650}
+.scale{display:flex;justify-content:space-between;color:#8aa19d;font-size:10px;margin-top:3px}
+.switchrow{display:flex;gap:8px;margin:9px 0 15px}
+.switchbtn{flex:1;border:1px solid #b7dcd3;background:#effaf6;color:#087568;padding:10px 8px;border-radius:11px;font-weight:800;cursor:pointer}
+.switchbtn.on{background:#e2f8ed;border-color:#8cd3b1;color:#08764b}
+.switchbtn.off{background:#fff2f2;border-color:#edc6c8;color:#b8444b}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}
+.metric{background:#f5faf8;border:1px solid var(--line);border-radius:12px;padding:10px 8px}
+.metric span{display:block;color:var(--muted);font-size:10px;line-height:1.4}
+.metric strong{display:block;font-size:18px;margin-top:5px;font-variant-numeric:tabular-nums}
+.metric small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.load-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 16px}
+.load-option{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid var(--line);border-radius:11px;background:#fbfefd;cursor:pointer;min-width:0}
+.load-option input{accent-color:var(--teal);width:17px;height:17px;flex:none}
+.load-option span{font-size:12px;font-weight:650;line-height:1.3}
+.load-option small{display:block;font-size:10px;color:var(--muted);font-weight:400;margin-top:3px}
+.safety{padding:12px;border-radius:12px;border:1px solid;margin-top:12px}
+.safety strong{display:block;font-size:13px;line-height:1.4}
+.safety p{font-size:11px;line-height:1.5;margin:6px 0 0}
+.safety.safe{background:#edfaf2;border-color:#c8ecd5;color:#176846}
+.safety.warn{background:#fff8e8;border-color:#f0dfad;color:#85601b}
+.safety.danger{background:#fff0f0;border-color:#efc9ca;color:#a93d45}
+.formula{margin-top:11px;padding:12px;border-radius:12px;background:#f0f7ff;border:1px solid #d9e8ff}
+.formula b{font-size:11px;color:#285a9a}
+.formula div{font-family:Georgia,serif;font-size:18px;text-align:center;margin:8px 0;color:#1f4675}
+.formula p{margin:0;color:#5b7490;font-size:10px;line-height:1.5}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 12px;border-radius:10px;font-size:12px;font-weight:750;cursor:pointer;transition:.15s}
+.btn:hover{filter:brightness(.97);transform:translateY(-1px)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.danger{color:#b8444b}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}
+.guide{padding:15px 17px}
+.guide p{margin:8px 0 12px;font-size:13px;line-height:1.55;color:var(--muted)}
+.guide strong{color:var(--ink)}
+.guide-step{background:#f2faf7;border:1px solid #d6eee5;border-radius:12px;padding:12px;margin:12px 0}
+.guide-step .count{font-size:10px;font-weight:850;color:var(--teal);letter-spacing:.08em}
+.guide-step div:last-child{font-size:13px;line-height:1.5;margin-top:5px}
+.guide-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modebar{display:flex;gap:7px}
+.modebar .btn{padding:7px 10px}
+.challenge{padding:15px 17px}
+.challenge p{font-size:13px;line-height:1.5;margin:8px 0;color:var(--muted)}
+.answers{display:flex;flex-wrap:wrap;gap:7px}
+.feedback{font-size:12px;font-weight:750;margin-top:10px;min-height:18px;line-height:1.45}
+.table-wrap{overflow-x:auto;padding:0 15px 15px}
+table{width:100%;border-collapse:collapse;min-width:570px;font-size:11px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:750;background:#f7fbfa}
+td{font-variant-numeric:tabular-nums}
+.empty{text-align:center;color:#91a6a2;padding:20px}
+.note{font-size:11px;color:var(--muted);line-height:1.55;margin:13px 2px}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.lower{grid-template-columns:1fr}#circuitCanvas{height:370px}}
+@media(max-width:520px){
+ .topbar{padding:12px}.brand p{font-size:10px}.live{font-size:9px;padding:7px}
+ main{padding:0 10px 25px;margin-top:15px}
+ .intro{align-items:flex-start;flex-direction:column;gap:10px}
+ #circuitCanvas{height:315px}
+ .metrics{gap:6px}.metric{padding:9px 6px}.metric strong{font-size:15px}
+ .cardhead{padding:13px}.load-list{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-10-domestic-electric-circuits",
+  "title": "Domestic Electric Circuits and Safety",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Explore household parallel circuits, live, neutral and earth wires, fuses, MCBs, RCCBs, overloads, short circuits and electrical leakage using an interactive safety model.",
+  "simulationType": "2D"
+}
+</script>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">⚡</div>
+    <div>
+      <h1>Virtual Science Lab</h1>
+      <p>Physics · Interactive Experiment</p>
+    </div>
+  </div>
+  <div class="live" id="liveStatus">● SUPPLY ON</div>
+</header>
+
+<main>
+  <section class="intro">
+    <div>
+      <h2>Domestic Electric Circuits and Safety</h2>
+      <p>Explore household wiring, parallel connections and the protective devices that help prevent electrical hazards.</p>
+    </div>
+    <div class="tag">CLASS 10 · ELECTRICITY</div>
+  </section>
+
+  <section class="workspace">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Household distribution circuit</h3>
+        <span class="small">Simplified educational circuit</span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="circuitCanvas"></canvas>
+      </div>
+      <div class="legend">
+        <span><i class="dot red"></i>Live wire</span>
+        <span><i class="dot blue"></i>Neutral wire</span>
+        <span><i class="dot green"></i>Earth wire</span>
+        <span><i class="dot orange"></i>Current flow</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Build your household circuit</h3>
+        <span class="small">Change the setup</span>
+      </div>
+
+      <div class="controls">
+        <div class="switchrow">
+          <button class="switchbtn on" id="supplyBtn">⏻ Supply ON</button>
+          <button class="switchbtn on" id="mainSwitchBtn">◎ Main switch ON</button>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="voltage">AC supply voltage</label>
+            <span class="value" id="voltageVal">230 V</span>
+          </div>
+          <input id="voltage" type="range" min="210" max="250" step="1" value="230">
+          <div class="scale"><span>210 V</span><span>250 V</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="protection">Overcurrent protection</label>
+          </div>
+          <select id="protection">
+            <option value="mcb">MCB — Miniature Circuit Breaker</option>
+            <option value="fuse">Fuse — Replaceable fuse model</option>
+          </select>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label for="rating">Protection rating</label>
+            <span class="value" id="ratingVal">16 A</span>
+          </div>
+          <input id="rating" type="range" min="5" max="25" step="1" value="16">
+          <div class="scale"><span>5 A</span><span>25 A</span></div>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label>Select household appliances</label>
+            <span class="value" id="loadCount">3 selected</span>
+          </div>
+          <div class="load-list" id="loadList"></div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>Total connected load</span>
+            <strong id="powerValue">260</strong>
+            <small>W</small>
+          </div>
+          <div class="metric">
+            <span>Normal load current</span>
+            <strong id="loadCurrent">1.13</strong>
+            <small>A · approx.</small>
+          </div>
+          <div class="metric">
+            <span>Load per branch</span>
+            <strong id="branchCount">3</strong>
+            <small>parallel branches</small>
+          </div>
+        </div>
+
+        <div class="control" style="margin-top:17px">
+          <div class="control-top">
+            <label>Protective earthing</label>
+            <span class="value" id="earthLabel">Connected</span>
+          </div>
+          <button class="switchbtn on" id="earthBtn" style="width:100%">⏚ Earth wire CONNECTED</button>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label>RCCB / RCD leakage protection</label>
+            <span class="value" id="rcdLabel">ON</span>
+          </div>
+          <button class="switchbtn on" id="rcdBtn" style="width:100%">◉ RCCB / RCD ON</button>
+        </div>
+
+        <div class="control">
+          <div class="control-top">
+            <label>Simulate electrical faults</label>
+          </div>
+          <div class="switchrow">
+            <button class="switchbtn" id="shortBtn">⚠ Short circuit OFF</button>
+            <button class="switchbtn" id="leakBtn">⚠ Leakage OFF</button>
+          </div>
+          <p class="small">Faults are simulated digitally. No real electrical connections are involved.</p>
+        </div>
+
+        <div class="metrics">
+          <div class="metric">
+            <span>Actual circuit current</span>
+            <strong id="actualCurrent">1.13</strong>
+            <small>A</small>
+          </div>
+          <div class="metric">
+            <span>Protection rating</span>
+            <strong id="ratedCurrent">16</strong>
+            <small>A</small>
+          </div>
+          <div class="metric">
+            <span>Protection status</span>
+            <strong id="protectionStatus">ON</strong>
+            <small id="protectionType">MCB active</small>
+          </div>
+        </div>
+
+        <div class="safety safe" id="safetyBox">
+          <strong id="safetyTitle">Circuit operating normally</strong>
+          <p id="safetyText">Selected appliances are connected in parallel. Current is within the illustrative protection rating.</p>
+        </div>
+
+        <div class="formula">
+          <b>HOUSEHOLD CIRCUIT CALCULATIONS</b>
+          <div>I = P / V &nbsp; · &nbsp; P = V × I</div>
+          <p>Appliances in parallel receive the same supply voltage. Their branch currents add to give the total line current.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="resetProtection">↻ Reset MCB / Replace fuse</button>
+          <button class="btn" id="resetAll">Reset experiment</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Safety devices — what do they protect against?</h3>
+        <span class="small">Compare their roles</span>
+      </div>
+      <div class="guide">
+        <div class="guide-step">
+          <div class="count">FUSE / MCB</div>
+          <div><strong>Overcurrent protection</strong><br>Disconnects a circuit when excessive current flows because of an overload or short circuit. A fuse melts; an MCB trips and can be reset after the fault is cleared.</div>
+        </div>
+        <div class="guide-step">
+          <div class="count">RCCB / RCD</div>
+          <div><strong>Residual-current protection</strong><br>Detects a difference between current flowing in live and returning through neutral. It can disconnect a circuit when leakage current exceeds its operating threshold.</div>
+        </div>
+        <div class="guide-step">
+          <div class="count">EARTH WIRE</div>
+          <div><strong>Protective earthing</strong><br>Connects exposed conductive parts to earth so a fault can create a protective fault path. It is not intended to carry normal operating current.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Guided practical</h3>
+        <div class="modebar">
+          <button class="btn active" id="guidedBtn">Guided</button>
+          <button class="btn" id="exploreBtn">Explore</button>
+        </div>
+      </div>
+      <div class="guide" id="guidedPanel">
+        <strong id="guideTitle">Task 1 — Parallel household loads</strong>
+        <div class="guide-step">
+          <div class="count" id="guideCount">TASK 1 OF 4</div>
+          <div id="guideText">Observe how selected household appliances are connected in parallel. Each receives the same supply voltage.</div>
+        </div>
+        <p id="guideHint">Switch one appliance off. The other parallel branches should remain powered.</p>
+        <div class="guide-actions">
+          <button class="btn primary" id="applyGuide">Apply task setup</button>
+          <button class="btn" id="nextGuide">Next task →</button>
+        </div>
+      </div>
+      <div class="guide" id="explorePanel" hidden>
+        <strong>Free exploration</strong>
+        <p>Select and deselect appliances, change the protection rating, disconnect earthing or RCCB, and simulate overload, short circuit and leakage faults.</p>
+        <p><strong>Investigate:</strong> Which safety device responds to overload? Does an RCCB detect leakage? Why should the earth wire not carry normal current?</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="card">
+      <div class="cardhead">
+        <h3>Prediction challenge</h3>
+        <span class="tag">TEST YOURSELF</span>
+      </div>
+      <div class="challenge">
+        <strong>Why are household appliances generally connected in parallel?</strong>
+        <p>Choose your answer:</p>
+        <div class="answers">
+          <button class="btn" data-answer="a">Each appliance receives the supply voltage and can operate independently</button>
+          <button class="btn" data-answer="b">All appliances must carry identical current</button>
+          <button class="btn" data-answer="c">One switch always turns every appliance on</button>
+        </div>
+        <div class="feedback" id="challengeFeedback"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">
+        <h3>Observation record</h3>
+        <button class="btn danger" id="clearRecords">Clear records</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Load</th><th>Current</th>
+              <th>Protection</th><th>Earth</th><th>RCCB</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody">
+            <tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">
+    Scientific model note: This is a simplified educational household circuit using an illustrative 230 V AC supply. Appliance current is estimated as P/V, treating listed power ratings as equivalent resistive loads. Real motor loads have power factor and changing current. MCB/fuse operation is simplified to an overcurrent threshold; real devices have time-current characteristics. The leakage demonstration uses an illustrative residual-current value and a simplified RCD response. Actual domestic wiring, protective-device selection and installation must be handled by qualified electricians and follow applicable local standards.
+  </p>
+</main>
+
+<script>
+(() => {
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const appliances = [
+ {id:"lights",name:"Lighting",detail:"3 × 20 W",watts:60,checked:true},
+ {id:"fans",name:"Ceiling fans",detail:"2 × 50 W",watts:100,checked:true},
+ {id:"tv",name:"Television",detail:"100 W",watts:100,checked:true},
+ {id:"iron",name:"Electric iron",detail:"1000 W",watts:1000,checked:false},
+ {id:"heater",name:"Room heater",detail:"1500 W",watts:1500,checked:false}
+];
+
+const S = {
+ voltage:230,
+ protection:"mcb",
+ rating:16,
+ supply:true,
+ main:true,
+ earth:true,
+ rcd:true,
+ short:false,
+ leak:false,
+ tripped:false,
+ tripReason:"",
+ tripCurrent:0,
+ records:[],
+ guideStep:0
+};
+
+const guides = [
+ {
+  title:"Task 1 — Parallel household loads",
+  count:"TASK 1 OF 4",
+  text:"Observe how selected household appliances are connected in parallel. Each receives the same supply voltage.",
+  hint:"Switch one appliance off. The other parallel branches should remain powered.",
+  setup:{loads:["lights","fans","tv"],rating:16,earth:true,rcd:true,short:false,leak:false,protection:"mcb"}
+ },
+ {
+  title:"Task 2 — Investigate an overload",
+  count:"TASK 2 OF 4",
+  text:"Choose all household appliances and use a 10 A illustrative protection rating. Observe how the total load current can exceed the rating.",
+  hint:"Several high-power appliances operating simultaneously can create an overload.",
+  setup:{loads:["lights","fans","tv","iron","heater"],rating:10,earth:true,rcd:true,short:false,leak:false,protection:"mcb"}
+ },
+ {
+  title:"Task 3 — Investigate a short circuit",
+  count:"TASK 3 OF 4",
+  text:"Remove the heavy loads and turn on the simulated short-circuit fault. Observe how the MCB or fuse disconnects the circuit.",
+  hint:"A short circuit creates an unintended low-resistance path and a very high current.",
+  setup:{loads:["lights"],rating:16,earth:true,rcd:true,short:true,leak:false,protection:"mcb"}
+ },
+ {
+  title:"Task 4 — Investigate earth leakage",
+  count:"TASK 4 OF 4",
+  text:"Switch off the short-circuit fault and simulate electrical leakage while earthing and RCCB protection are connected.",
+  hint:"An RCCB responds to current imbalance. MCB/fuse protection alone is not designed to detect small leakage currents.",
+  setup:{loads:["lights","fans"],rating:16,earth:true,rcd:true,short:false,leak:true,protection:"mcb"}
+ }
+];
+
+function selectedLoads(){
+ return appliances.filter(a=>a.checked);
+}
+
+function totalPower(){
+ return selectedLoads().reduce((sum,a)=>sum+a.watts,0);
+}
+
+function loadCurrent(){
+ return totalPower()/S.voltage;
+}
+
+function prospectiveCurrent(){
+ if(S.short) return S.voltage/1.5;
+ return loadCurrent()+(S.leak&&S.earth?0.045:0);
+}
+
+function activeCircuit(){
+ return S.supply&&S.main&&!S.tripped;
+}
+
+function normalOperatingCurrent(){
+ if(!activeCircuit()||S.short) return 0;
+ return loadCurrent()+(S.leak&&S.earth?0.045:0);
+}
+
+function trip(reason,current){
+ S.tripped=true;
+ S.tripReason=reason;
+ S.tripCurrent=current;
+}
+
+function runProtectionCheck(){
+ if(!S.supply||!S.main||S.tripped) return;
+
+ const I=prospectiveCurrent();
+
+ if(I>S.rating){
+  if(S.short){
+   trip("Short circuit: high fault current",I);
+  }else{
+   trip("Overload: total load current exceeds protection rating",I);
+  }
+  return;
+ }
+
+ // Simplified illustrative residual-current trip model.
+ if(S.leak&&S.earth&&S.rcd){
+  const leakage=0.045;
+  if(leakage>0.03){
+   trip("Earth leakage: illustrative RCCB threshold exceeded",I);
+  }
+ }
+}
+
+function loadLabel(){
+ const count=selectedLoads().length;
+ return count+" selected";
+}
+
+function protectionName(){
+ return S.protection==="mcb"?"MCB":"Fuse";
+}
+
+function getSafetyState(){
+ if(S.tripped){
+  if(S.tripReason.startsWith("Earth leakage")){
+   return {
+    type:"warn",
+    title:"RCCB / RCD TRIPPED",
+    text:"The model detects a residual-current imbalance above its illustrative threshold. The circuit has been disconnected."
+   };
+  }
+  return {
+   type:"danger",
+   title:protectionName()+" TRIPPED / FUSE BLOWN",
+   text:S.tripReason+". The protective device has disconnected the supply. Clear the fault or reduce the load before resetting."
+  };
+ }
+
+ if(!S.supply||!S.main){
+  return {
+   type:"warn",
+   title:"Circuit switched OFF",
+   text:"The circuit is not energised. No load current is flowing."
+  };
+ }
+
+ if(S.short){
+  return {
+   type:"danger",
+   title:"Short-circuit fault active",
+   text:"A low-resistance path between live and neutral creates a very high prospective current. The protective device should disconnect it."
+  };
+ }
+
+ if(S.leak&&!S.earth){
+  return {
+   type:"danger",
+   title:"Exposed casing may become live",
+   text:"The simulated leakage fault exists without a protective earth path. This is hazardous; the model does not simulate human contact."
+  };
+ }
+
+ if(S.leak&&!S.rcd){
+  return {
+   type:"danger",
+   title:"Leakage fault without RCCB protection",
+   text:"The leakage path is active, but the residual-current device is disabled. An overcurrent device may not respond to a small leakage current."
+  };
+ }
+
+ if(S.leak&&S.earth&&S.rcd){
+  return {
+   type:"warn",
+   title:"Leakage fault detected",
+   text:"The RCCB should detect the imbalance and disconnect the supply."
+  };
+ }
+
+ const I=loadCurrent();
+ if(I>S.rating){
+  return {
+   type:"warn",
+   title:"Overload risk",
+   text:"The selected appliances demand more current than the illustrative protection rating."
+  };
+ }
+
+ return {
+  type:"safe",
+  title:"Circuit operating normally",
+  text:"Selected appliances are in parallel. Their total load current is within the illustrative protection rating."
+ };
+}
+
+function setSafety(type,title,text){
+ const box=$("safetyBox");
+ box.className="safety "+type;
+ $("safetyTitle").textContent=title;
+ $("safetyText").textContent=text;
+}
+
+function renderLoadList(){
+ const container=$("loadList");
+ container.replaceChildren();
+
+ appliances.forEach(a=>{
+  const label=document.createElement("label");
+  label.className="load-option";
+
+  const input=document.createElement("input");
+  input.type="checkbox";
+  input.checked=a.checked;
+  input.addEventListener("change",()=>{
+   a.checked=input.checked;
+   runProtectionCheck();
+   render();
+  });
+
+  const text=document.createElement("span");
+  text.innerHTML=
+   `${a.name}<small>${a.detail}</small>`;
+
+  label.append(input,text);
+  container.appendChild(label);
+ });
+}
+
+function updateLabels(){
+ const power=totalPower();
+ const I=loadCurrent();
+ const actual=activeCircuit()?normalOperatingCurrent():0;
+ const safety=getSafetyState();
+
+ $("voltageVal").textContent=S.voltage+" V";
+ $("ratingVal").textContent=S.rating+" A";
+ $("loadCount").textContent=loadLabel();
+
+ $("powerValue").textContent=power.toLocaleString("en-IN");
+ $("loadCurrent").textContent=I.toFixed(2);
+ $("branchCount").textContent=selectedLoads().length;
+
+ $("actualCurrent").textContent=actual.toFixed(2);
+ $("ratedCurrent").textContent=S.rating;
+
+ $("protectionStatus").textContent=
+  S.tripped?"TRIPPED":activeCircuit()?"ON":"OFF";
+
+ $("protectionType").textContent=
+  S.tripped?protectionName()+" disconnected":protectionName()+" active";
+
+ $("supplyBtn").textContent=
+  S.supply?"⏻ Supply ON":"⏻ Supply OFF";
+ $("supplyBtn").classList.toggle("on",S.supply);
+ $("supplyBtn").classList.toggle("off",!S.supply);
+
+ $("mainSwitchBtn").textContent=
+  S.main?"◎ Main switch ON":"○ Main switch OFF";
+ $("mainSwitchBtn").classList.toggle("on",S.main);
+ $("mainSwitchBtn").classList.toggle("off",!S.main);
+
+ $("earthBtn").textContent=
+  S.earth?"⏚ Earth wire CONNECTED":"⏚ Earth wire DISCONNECTED";
+ $("earthBtn").classList.toggle("on",S.earth);
+ $("earthBtn").classList.toggle("off",!S.earth);
+ $("earthLabel").textContent=S.earth?"Connected":"Disconnected";
+
+ $("rcdBtn").textContent=
+  S.rcd?"◉ RCCB / RCD ON":"○ RCCB / RCD OFF";
+ $("rcdBtn").classList.toggle("on",S.rcd);
+ $("rcdBtn").classList.toggle("off",!S.rcd);
+ $("rcdLabel").textContent=S.rcd?"ON":"OFF";
+
+ $("shortBtn").textContent=
+  S.short?"⚠ Short circuit ON":"⚠ Short circuit OFF";
+ $("shortBtn").classList.toggle("off",S.short);
+
+ $("leakBtn").textContent=
+  S.leak?"⚠ Leakage ON":"⚠ Leakage OFF";
+ $("leakBtn").classList.toggle("off",S.leak);
+
+ $("liveStatus").textContent=
+  S.tripped?"● PROTECTION TRIPPED":
+  activeCircuit()?"● CIRCUIT ENERGISED":"● CIRCUIT OFF";
+
+ $("liveStatus").style.color=
+  S.tripped?"#b8444b":activeCircuit()?"#087e58":"#87601b";
+
+ $("liveStatus").style.background=
+  S.tripped?"#fff0f0":activeCircuit()?"#e4f8ed":"#fff8e8";
+
+ setSafety(safety.type,safety.title,safety.text);
+}
+
+function line(ctx,x1,y1,x2,y2,color,width=3,dash=[]){
+ ctx.strokeStyle=color;
+ ctx.lineWidth=width;
+ ctx.setLineDash(dash);
+ ctx.beginPath();
+ ctx.moveTo(x1,y1);
+ ctx.lineTo(x2,y2);
+ ctx.stroke();
+ ctx.setLineDash([]);
+}
+
+function arrow(ctx,x1,y1,x2,y2,color){
+ const a=Math.atan2(y2-y1,x2-x1);
+ line(ctx,x1,y1,x2,y2,color,2.5);
+ ctx.fillStyle=color;
+ ctx.beginPath();
+ ctx.moveTo(x2,y2);
+ ctx.lineTo(x2-8*Math.cos(a-Math.PI/6),y2-8*Math.sin(a-Math.PI/6));
+ ctx.lineTo(x2-8*Math.cos(a+Math.PI/6),y2-8*Math.sin(a+Math.PI/6));
+ ctx.closePath();
+ ctx.fill();
+}
+
+function drawDevice(ctx,x,y,active,a){
+ const w=94,h=35;
+ ctx.fillStyle=active?"#e5f7f0":"#f3f6f5";
+ ctx.strokeStyle=active?"#087e75":"#9badab";
+ ctx.lineWidth=1.5;
+ ctx.beginPath();
+ ctx.roundRect(x-w/2,y-h/2,w,h,7);
+ ctx.fill();
+ ctx.stroke();
+
+ ctx.fillStyle="#173332";
+ ctx.font="700 10px system-ui";
+ ctx.textAlign="center";
+ ctx.fillText(a.name,x,y-1);
+
+ ctx.fillStyle="#68817e";
+ ctx.font="9px system-ui";
+ ctx.fillText(a.watts+" W",x,y+12);
+}
+
+function drawCanvas(){
+ const canvas=$("circuitCanvas");
+ const ctx=canvas.getContext("2d");
+ const w=canvas.clientWidth,h=canvas.clientHeight;
+ const dpr=window.devicePixelRatio||1;
+
+ if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){
+  canvas.width=Math.round(w*dpr);
+  canvas.height=Math.round(h*dpr);
+ }
+
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.clearRect(0,0,w,h);
+
+ // Background grid
+ ctx.strokeStyle="#eaf2f0";
+ ctx.lineWidth=1;
+ for(let x=0;x<w;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+ for(let y=0;y<h;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+
+ const liveX=90;
+ const neutralX=w-75;
+ const earthX=w-22;
+ const top=91;
+ const bottom=h-44;
+ const active=activeCircuit();
+ const liveColor=active?"#d84b55":"#c2a1a2";
+ const neutralColor=active?"#3477ce":"#9bb3d3";
+ const earthColor=S.earth?"#26966d":"#b4c5bc";
+
+ // Supply symbol
+ ctx.beginPath();
+ ctx.arc(30,56,20,0,Math.PI*2);
+ ctx.fillStyle="#fff";
+ ctx.fill();
+ ctx.strokeStyle="#789b93";
+ ctx.lineWidth=2;
+ ctx.stroke();
+
+ ctx.fillStyle="#173332";
+ ctx.font="700 11px system-ui";
+ ctx.textAlign="center";
+ ctx.fillText("AC",30,60);
+ ctx.font="9px system-ui";
+ ctx.fillStyle="#607d78";
+ ctx.fillText("230 V",30,87);
+
+ // Main live feed, switch and protective device in series
+ line(ctx,50,48,62,48,liveColor,4);
+ line(ctx,62,48,70,39,liveColor,3);
+ line(ctx,83,48,103,48,liveColor,4);
+
+ // Switch symbol
+ ctx.fillStyle="#607d78";
+ ctx.font="9px system-ui";
+ ctx.fillText("MAIN SWITCH",77,22);
+
+ line(ctx,70,48,76,48,liveColor,2);
+ if(S.main){
+  line(ctx,76,48,85,48,liveColor,2);
+ }else{
+  line(ctx,76,48,84,38,liveColor,2);
+ }
+
+ // Fuse / MCB
+ ctx.fillStyle=S.tripped?"#fff0f0":"#f1faf6";
+ ctx.strokeStyle=S.tripped?"#d84b55":"#087e75";
+ ctx.lineWidth=1.5;
+ ctx.beginPath();
+ ctx.roundRect(99,32,49,31,6);
+ ctx.fill();
+ ctx.stroke();
+
+ ctx.fillStyle=S.tripped?"#b8444b":"#087e75";
+ ctx.font="700 9px system-ui";
+ ctx.fillText(S.protection==="mcb"?"MCB":"FUSE",123,45);
+ ctx.fillText(S.tripped?"TRIP":"OK",123,56);
+
+ line(ctx,148,48,liveX,48,liveColor,4);
+ line(ctx,liveX,48,liveX,top,liveColor,4);
+ line(ctx,neutralX,48,neutralX,bottom,neutralColor,4);
+ line(ctx,50,64,neutralX,64,neutralColor,3);
+ line(ctx,neutralX,64,neutralX,top,neutralColor,3);
+
+ // Main vertical buses
+ line(ctx,liveX,top,liveX,bottom,liveColor,4);
+ line(ctx,neutralX,top,neutralX,bottom,neutralColor,4);
+ line(ctx,earthX,top,earthX,bottom,earthColor,3);
+
+ ctx.textAlign="center";
+ ctx.font="700 10px system-ui";
+ ctx.fillStyle="#d84b55";
+ ctx.fillText("LIVE",liveX,top-12);
+ ctx.fillStyle="#3477ce";
+ ctx.fillText("NEUTRAL",neutralX,top-12);
+ ctx.fillStyle="#26966d";
+ ctx.fillText("EARTH",earthX,top-12);
+
+ const count=appliances.length;
+ const spacing=(bottom-top)/(count+1);
+ const middle=(liveX+neutralX)/2;
+
+ appliances.forEach((a,index)=>{
+  const y=top+spacing*(index+1);
+  const enabled=a.checked&&active&&!S.short;
+
+  line(ctx,liveX,y,middle-50,y,liveColor,2.5);
+  line(ctx,middle+50,y,neutralX,y,neutralColor,2.5);
+
+  drawDevice(ctx,middle,y,enabled,a);
+
+  // Appliance chassis earth connection: separate protective conductor.
+  const chassisY=y+23;
+  line(ctx,middle+47,chassisY,earthX,chassisY,earthColor,1.8,[4,3]);
+
+  if(S.earth){
+   ctx.fillStyle="#26966d";
+   ctx.beginPath();
+   ctx.arc(middle+47,chassisY,3,0,Math.PI*2);
+   ctx.fill();
+  }
+
+  if(enabled&&normalOperatingCurrent()>0){
+   arrow(ctx,liveX+4,y-7,middle-53,y-7,"#e58b26");
+  }
+
+  ctx.fillStyle=a.checked?"#087e75":"#96a8a3";
+  ctx.font="9px system-ui";
+  ctx.textAlign="left";
+  ctx.fillText(a.checked?"ON":"OFF",liveX+5,y-12);
+ });
+
+ // Earth terminal / ground symbol
+ line(ctx,earthX,bottom,earthX,h-25,earthColor,2.5);
+ line(ctx,earthX-13,h-25,earthX+13,h-25,earthColor,2);
+ line(ctx,earthX-9,h-20,earthX+9,h-20,earthColor,2);
+ line(ctx,earthX-5,h-15,earthX+5,h-15,earthColor,2);
+
+ // Fault indications
+ if(S.short){
+  ctx.fillStyle="#b8444b";
+  ctx.font="800 12px system-ui";
+  ctx.textAlign="center";
+  ctx.fillText("SHORT-CIRCUIT FAULT",middle,h-7);
+ }else if(S.leak&&!S.earth){
+  ctx.fillStyle="#b8444b";
+  ctx.font="800 11px system-ui";
+  ctx.textAlign="center";
+  ctx.fillText("APPLIANCE CASING MAY BE LIVE",middle,h-7);
+ }else{
+  ctx.fillStyle="#68817e";
+  ctx.font="10px system-ui";
+  ctx.textAlign="center";
+  ctx.fillText("PARALLEL HOUSEHOLD BRANCHES",middle,h-7);
+ }
+}
+
+function render(){
+ renderLoadList();
+ updateLabels();
+ drawCanvas();
+}
+
+function resetProtection(){
+ if(S.tripped){
+  S.tripped=false;
+  S.tripReason="";
+  S.tripCurrent=0;
+ }
+ runProtectionCheck();
+ render();
+}
+
+function resetAll(){
+ S.voltage=230;
+ S.protection="mcb";
+ S.rating=16;
+ S.supply=true;
+ S.main=true;
+ S.earth=true;
+ S.rcd=true;
+ S.short=false;
+ S.leak=false;
+ S.tripped=false;
+ S.tripReason="";
+ S.tripCurrent=0;
+
+ appliances.forEach(a=>{
+  a.checked=["lights","fans","tv"].includes(a.id);
+ });
+
+ $("voltage").value=230;
+ $("rating").value=16;
+ $("protection").value="mcb";
+ $("challengeFeedback").textContent="";
+ render();
+}
+
+function recordReading(){
+ const power=totalPower();
+ const I=activeCircuit()?normalOperatingCurrent():0;
+
+ S.records.push({
+  load:power,
+  current:I,
+  protection:protectionName(),
+  earth:S.earth?"Connected":"Disconnected",
+  rcd:S.rcd?"ON":"OFF",
+  status:S.tripped?"Tripped":activeCircuit()?"Running":"OFF"
+ });
+ renderRecords();
+}
+
+function renderRecords(){
+ const body=$("recordsBody");
+ if(!S.records.length){
+  body.innerHTML='<tr><td colspan="7" class="empty">No readings recorded yet.</td></tr>';
+  return;
+ }
+ body.innerHTML=S.records.map((r,i)=>`
+  <tr>
+   <td>${i+1}</td>
+   <td>${r.load} W</td>
+   <td>${r.current.toFixed(2)} A</td>
+   <td>${r.protection}</td>
+   <td>${r.earth}</td>
+   <td>${r.rcd}</td>
+   <td>${r.status}</td>
+  </tr>
+ `).join("");
+}
+
+function showGuide(){
+ const task=guides[S.guideStep];
+ $("guideTitle").textContent=task.title;
+ $("guideCount").textContent=task.count;
+ $("guideText").textContent=task.text;
+ $("guideHint").textContent=task.hint;
+ $("nextGuide").textContent=
+  S.guideStep===guides.length-1?"Restart tasks ↺":"Next task →";
+}
+
+function applyGuide(){
+ const setup=guides[S.guideStep].setup;
+
+ S.tripped=false;
+ S.tripReason="";
+ S.tripCurrent=0;
+
+ appliances.forEach(a=>{
+  a.checked=setup.loads.includes(a.id);
+ });
+
+ $("rating").value=setup.rating;
+ $("protection").value=setup.protection;
+
+ S.rating=setup.rating;
+ S.protection=setup.protection;
+ S.earth=setup.earth;
+ S.rcd=setup.rcd;
+ S.short=setup.short;
+ S.leak=setup.leak;
+ S.supply=true;
+ S.main=true;
+
+ runProtectionCheck();
+ render();
+}
+
+$("voltage").addEventListener("input",()=>{
+ S.voltage=Number($("voltage").value);
+ runProtectionCheck();
+ render();
+});
+
+$("rating").addEventListener("input",()=>{
+ S.rating=Number($("rating").value);
+ runProtectionCheck();
+ render();
+});
+
+$("protection").addEventListener("change",()=>{
+ S.protection=$("protection").value;
+ runProtectionCheck();
+ render();
+});
+
+$("supplyBtn").addEventListener("click",()=>{
+ S.supply=!S.supply;
+ runProtectionCheck();
+ render();
+});
+
+$("mainSwitchBtn").addEventListener("click",()=>{
+ S.main=!S.main;
+ runProtectionCheck();
+ render();
+});
+
+$("earthBtn").addEventListener("click",()=>{
+ S.earth=!S.earth;
+ runProtectionCheck();
+ render();
+});
+
+$("rcdBtn").addEventListener("click",()=>{
+ S.rcd=!S.rcd;
+ runProtectionCheck();
+ render();
+});
+
+$("shortBtn").addEventListener("click",()=>{
+ S.short=!S.short;
+ runProtectionCheck();
+ render();
+});
+
+$("leakBtn").addEventListener("click",()=>{
+ S.leak=!S.leak;
+ runProtectionCheck();
+ render();
+});
+
+$("resetProtection").addEventListener("click",resetProtection);
+$("resetAll").addEventListener("click",resetAll);
+$("recordBtn").addEventListener("click",recordReading);
+$("clearRecords").addEventListener("click",()=>{
+ S.records=[];
+ renderRecords();
+});
+
+$("nextGuide").addEventListener("click",()=>{
+ S.guideStep=(S.guideStep+1)%guides.length;
+ showGuide();
+});
+
+$("applyGuide").addEventListener("click",applyGuide);
+
+$("guidedBtn").addEventListener("click",()=>{
+ $("guidedBtn").classList.add("active");
+ $("exploreBtn").classList.remove("active");
+ $("guidedPanel").hidden=false;
+ $("explorePanel").hidden=true;
+});
+
+$("exploreBtn").addEventListener("click",()=>{
+ $("exploreBtn").classList.add("active");
+ $("guidedBtn").classList.remove("active");
+ $("guidedPanel").hidden=true;
+ $("explorePanel").hidden=false;
+});
+
+document.querySelectorAll("[data-answer]").forEach(button=>{
+ button.addEventListener("click",()=>{
+  const feedback=$("challengeFeedback");
+
+  if(button.dataset.answer==="a"){
+   feedback.textContent=
+    "✓ Correct! Parallel branches receive the supply voltage, and one appliance can be switched off without turning off the others.";
+   feedback.style.color="#087e58";
+  }else{
+   feedback.textContent=
+    "Not quite. In parallel circuits, each appliance receives the same supply voltage and can operate independently.";
+   feedback.style.color="#bd5960";
+  }
+ });
+});
+
+if("ResizeObserver" in window){
+ const observer=new ResizeObserver(drawCanvas);
+ observer.observe($("circuitCanvas"));
+}else{
+ window.addEventListener("resize",drawCanvas);
+}
+
+showGuide();
+render();
+
+})();
+</script>
+</body>
+</html>
