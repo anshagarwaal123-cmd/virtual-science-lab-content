@@ -296,15 +296,80 @@
       "simulationType": "2D",
       "simulationPath": "simulations/physics/ohms-law/"
     },
-    {
-      "id": "class-10-magnetic-effects-of-electric-current",
-      "title": "Magnetic Effects of Electric Current",
-      "class": 10,
-      "chapterNumber": 12,
-      "chapter": "Magnetic Effects of Electric Current",
-      "description": "Change current direction and coil turns to explore magnetic fields, electromagnets, motors and generators.",
-      "simulationType": "3D"
-    },
+    
+{
+  "id": "class-10-magnetic-field-straight-wire",
+  "title": "Magnetic Field Around a Straight Current-Carrying Conductor",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Change current direction and strength, move a compass and explore circular magnetic field lines around a straight wire.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-magnetic-field-circular-loop",
+  "title": "Magnetic Field of a Circular Current-Carrying Loop",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Change current and coil turns to investigate the magnetic field of a circular loop.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-solenoid-electromagnet",
+  "title": "Magnetic Field of a Solenoid and Electromagnet",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Explore magnetic field lines, coil turns, current direction and electromagnet strength.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-force-on-current-conductor",
+  "title": "Force on a Current-Carrying Conductor",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Change current and magnetic field direction to investigate force and Fleming's Left Hand Rule.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-electric-motor",
+  "title": "Electric Motor — Working Principle (Enrichment)",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Explore the rotating coil, magnetic force and split-ring commutator in a simple electric motor.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-electromagnetic-induction-generator",
+  "title": "Electromagnetic Induction and Electric Generator (Enrichment)",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Move a magnet or rotate a coil to investigate induced voltage and generator action.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-ac-and-dc-current",
+  "title": "Alternating Current and Direct Current",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Compare AC and DC, current direction, frequency and voltage-time waveforms.",
+  "simulationType": "2D"
+},
+{
+  "id": "class-10-domestic-electric-circuits",
+  "title": "Domestic Electric Circuits and Safety",
+  "class": 10,
+  "chapterNumber": 12,
+  "chapter": "Magnetic Effects of Electric Current",
+  "description": "Build a household circuit and investigate live, neutral and earth wires, fuse, short circuit and overloading.",
+  "simulationType": "2D"
+},
+
     {
       "id": "class-11-vernier-calipers-and-screw-gauge",
       "title": "Units and Measurements: Vernier Calipers and Screw Gauge",
