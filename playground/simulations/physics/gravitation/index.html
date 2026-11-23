@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#edf7ec">
+<title>Gravitation | Virtual Science Lab</title>
+<style>
+:root{
+ --bg:#edf7ec;--panel:#fff;--line:#d1e4d0;--text:#193b27;
+ --muted:#607b65;--teal:#087f87;--green:#258653;--blue:#4978c5;
+ --orange:#bd741b;--pink:#c85b79;--shadow:0 12px 34px rgba(43,91,48,.10)
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 5% 0%,#d9eed9 0,transparent 40%),linear-gradient(145deg,#eaf6e9,#f5fbf2 55%,#e5f2e3);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}
+.wrap{max-width:1440px;margin:auto;padding:22px clamp(12px,3vw,34px) 45px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:11px;color:#52715a;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(140deg,#bcebc9,#77c99a);display:grid;place-items:center;color:#17472b;font-weight:900;font-size:19px;box-shadow:0 7px 20px #5caa7840}
+.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pill,.tag{border:1px solid #c8ddc8;background:#f9fff8;color:#45664b;border-radius:100px;padding:7px 11px;font-size:11px;white-space:nowrap}
+.sound{border:1px solid #b8d7bf;background:#f8fff7;color:#23613a;border-radius:100px;padding:7px 11px;font-size:11px;font-weight:800}
+.sound.off{background:#f1f5ef;color:#748376;border-color:#d7e0d4}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:21px}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#27845a;font-weight:800}
+.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.05;letter-spacing:-.04em;margin:8px 0 10px;color:#173c27}
+.hero h1 span{color:var(--teal)}
+.hero p{margin:0;max-width:760px;color:#5e7964}
+.hero-side{text-align:right;color:#617b66;font-size:12px}
+.hero-side strong{display:block;font-size:20px;color:#1d482e}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:22px 0 16px}
+.tab{min-height:74px;text-align:left;padding:12px 14px;background:#fbfffa;border:1px solid #cfe1cd;color:#526e57;border-radius:14px;transition:.18s}
+.tab:hover{border-color:#8ebc93;background:#f3fbf1;transform:translateY(-1px)}
+.tab.active{background:linear-gradient(145deg,#d8f1dc,#c9ead0);border-color:#71b887;color:#174c2d;box-shadow:inset 0 0 0 1px #76bd8b44,0 5px 13px #3c875018}
+.tab small,.tab strong,.tab .num{display:block}
+.tab .num{font-size:10px;font-weight:800;color:#247b4e;margin-bottom:3px}
+.tab strong{font-size:13px}
+.tab small{font-size:10px;color:#68816c;margin-top:3px}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);gap:16px;align-items:start}
+.card{background:#fff;border:1px solid #d2e4d1;border-radius:19px;box-shadow:var(--shadow);overflow:hidden}
+.stage-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #e0ecdf}
+.stage-head h2{margin:0;font-size:17px;color:#1e462d}
+.stage-head p{margin:3px 0 0;color:#68816c;font-size:12px}
+.live{display:flex;align-items:center;gap:7px;color:#258653;font-size:10px;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:#35a565;box-shadow:0 0 10px #35a56555}
+.canvas-wrap{padding:13px 15px 5px}
+.canvas-shell{border:1px solid #c7dfc7;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#f7fcf5,#edf7ec)}
+canvas{display:block;width:100%}
+#scene{height:355px}
+.canvas-note{padding:0 3px 5px;color:#718a73;font-size:10px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:9px 15px 16px}
+.metric{min-width:0;background:#f5faf3;border:1px solid #dbe9d9;border-radius:11px;padding:10px}
+.metric label{display:block;color:#718773;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.metric strong{display:block;font-size:clamp(15px,2vw,21px);color:#1e4d31;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.metric em{font-style:normal;font-size:10px;color:#708571}
+.equations{display:grid;grid-template-columns:1.1fr 1fr;gap:10px;margin-top:14px}
+.equation,.notice{padding:14px 16px}
+.equation h3,.notice h3{font-size:12px;margin:0 0 7px;color:#2a6641}
+.eq{font:600 16px/1.65 ui-monospace,Consolas,monospace;color:#087d78;overflow-wrap:anywhere}
+.eq.result{font-size:12px;color:#3e6547}
+.notice p{margin:0;color:#607963;font-size:12px}
+.graph{margin-top:14px;padding:13px 15px}
+.graph-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px}
+.graph-head h3{font-size:13px;margin:0;color:#234a30}
+.graph-head span{font-size:10px;color:#718a74}
+#plot{height:180px;background:#f7fcf5;border:1px solid #dcebd9;border-radius:10px}
+.controls{padding:16px}
+.controls h3{font-size:16px;margin:0 0 3px}
+.sub{font-size:11px;color:#6b826d;margin:0 0 12px}
+.control{padding:10px 0;border-top:1px solid #e4eee2}
+.control:first-of-type{border-top:0}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.control label{font-size:12px;color:#365b3e}
+.value{font-size:12px;font-weight:800;color:#087d78;white-space:nowrap}
+.control input[type=range]{width:100%;accent-color:#3d9c69}
+.ends{display:flex;justify-content:space-between;color:#819783;font-size:9px}
+.control select,.guide select{width:100%;background:#f8fcf6;color:#21452d;border:1px solid #cbdcca;border-radius:9px;padding:9px}
+.btnrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.btn{padding:8px 12px;border:1px solid #bcd8bf;background:#e5f3e5;color:#245535;border-radius:9px;font-size:11px;font-weight:750}
+.btn.primary{background:linear-gradient(120deg,#3ca86d,#238c63);border-color:#278c5a;color:#fff}
+.btn.ghost{background:#f8fcf7}
+.below{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}
+.guide,.notebook{padding:16px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.sectionhead h3{font-size:14px;margin:0}
+.tag{font-size:9px;color:#277a4b;border-color:#c7e3cb;background:#eff9ef;padding:5px 8px}
+.guide p{font-size:11px;color:#657f69;margin:5px 0 10px}
+.mission{border:1px solid #d8e9d5;background:#f4faf2;border-radius:11px;padding:11px;margin:9px 0}
+.mission strong{font-size:11px;color:#2c663e}
+.mission p{margin:4px 0 0}
+.guide select{max-width:100%;padding:7px;font-size:10px}
+.notebook .sub{margin-bottom:8px}
+.notebook table{border-collapse:collapse;width:100%;font-size:10px}
+.notebook th{text-align:left;color:#617b65;padding:7px 5px;border-bottom:1px solid #dce9d9}
+.notebook td{padding:7px 5px;color:#35563b;border-bottom:1px solid #e6eee4;vertical-align:top}
+.notebook .empty{text-align:center;color:#829484;padding:17px 5px}
+.notebook .tablewrap{overflow-x:auto}
+.footer{text-align:center;color:#758c77;font-size:10px;margin-top:22px}
+.hidden{display:none!important}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.below{grid-template-columns:1fr}.hero-side{display:none}}
+@media(max-width:620px){
+ .wrap{padding:13px 11px 28px}.topline{align-items:flex-start}
+ .brand{font-size:10px}.pill{font-size:9px}
+ .hero h1{font-size:34px}.tabs{grid-template-columns:repeat(2,1fr);gap:7px}
+ .tab{min-height:67px;padding:9px}.tab strong{font-size:12px}.tab small{font-size:9px}
+ .stage-head{padding:12px}.canvas-wrap{padding:9px 8px 4px}
+ #scene{height:260px}.metrics{grid-template-columns:repeat(2,1fr);padding:8px}
+ .metric{padding:8px}.metric strong{font-size:18px}
+ .equations{grid-template-columns:1fr}.graph{padding:10px}#plot{height:165px}
+ .controls{padding:13px}.below{gap:10px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="topline">
+  <div class="brand"><div class="brand-mark">V</div><span>Virtual Science Lab · Physics</span></div>
+  <div class="top-actions">
+   <span class="pill">CLASS 11 · CHAPTER 7 · CBSE</span>
+   <button class="sound" id="soundBtn" type="button" aria-pressed="true">🔊 Sound ON</button>
+  </div>
+ </div>
+
+ <header class="hero">
+  <div>
+   <div class="eyebrow">Interactive Physics Laboratory</div>
+   <h1>Gravi<span>tation</span></h1>
+   <p>Explore the universal force of attraction, how gravity changes with altitude and depth, how much energy is needed to escape a planet, and how satellites stay in orbit.</p>
+  </div>
+  <div class="hero-side"><strong>4 INTERACTIVE LABS</strong>Explore · Measure · Explain</div>
+ </header>
+
+ <nav class="tabs" aria-label="Gravitation experiments">
+  <button class="tab active" data-tab="0"><span class="num">LAB 01</span><strong>Universal Gravitation</strong><small>Mass · distance · force</small></button>
+  <button class="tab" data-tab="1"><span class="num">LAB 02</span><strong>Acceleration due to Gravity</strong><small>Altitude · depth · weight</small></button>
+  <button class="tab" data-tab="2"><span class="num">LAB 03</span><strong>Potential & Escape Velocity</strong><small>Energy · potential · escape</small></button>
+  <button class="tab" data-tab="3"><span class="num">LAB 04</span><strong>Satellites & Kepler's Law</strong><small>Orbit · speed · time period</small></button>
+ </nav>
+
+ <main class="layout">
+  <section class="card">
+   <div class="stage-head">
+    <div>
+     <h2 id="stageTitle">Newton's Universal Law of Gravitation</h2>
+     <p id="stageDesc">Change the two masses and their separation to calculate the gravitational attraction.</p>
+    </div>
+    <div class="live"><i class="dot"></i><span id="state">LIVE MODEL</span></div>
+   </div>
+
+   <div class="canvas-wrap">
+    <div class="canvas-shell"><canvas id="scene" aria-label="Interactive gravitation model"></canvas></div>
+    <div class="canvas-note" id="sceneNote">Two spherical bodies · Force arrows are illustrative, not to scale</div>
+   </div>
+
+   <div class="metrics">
+    <div class="metric"><label id="lab0">Gravitational force</label><strong id="m0">6.67 × 10²¹ N</strong><em id="u0">F = Gm₁m₂/r²</em></div>
+    <div class="metric"><label id="lab1">Mass 1</label><strong id="m1">1.0 × 10²² kg</strong><em id="u1">m₁</em></div>
+    <div class="metric"><label id="lab2">Mass 2</label><strong id="m2">1.0 × 10²² kg</strong><em id="u2">m₂</em></div>
+    <div class="metric"><label id="lab3">Separation</label><strong id="m3">10,000 km</strong><em id="u3">centre to centre</em></div>
+   </div>
+
+   <div class="equations">
+    <div class="card equation">
+     <h3>LIVE EQUATION</h3>
+     <div class="eq" id="formula">F = Gm₁m₂ / r²</div>
+     <div class="eq result" id="calculation">F = 6.67 × 10²¹ N</div>
+    </div>
+    <div class="card notice">
+     <h3>WHAT TO NOTICE</h3>
+     <p id="explain">Gravitational force increases with either mass and decreases with the square of the distance between their centres.</p>
+    </div>
+   </div>
+
+   <div class="card graph">
+    <div class="graph-head"><h3 id="graphTitle">Gravitational force vs separation</h3><span id="graphCaption">Inverse-square relationship</span></div>
+    <canvas id="plot" aria-label="Live gravitation graph"></canvas>
+   </div>
+  </section>
+
+  <aside class="card controls">
+   <h3>Experiment controls</h3>
+   <p class="sub" id="controlHint">Change one variable at a time and observe how the gravitational force responds.</p>
+
+   <div class="panel" data-panel="0">
+    <div class="control">
+     <div class="control-top"><label for="gMass1">Mass of body 1</label><output class="value" id="gMass1Out">1.0 × 10²² kg</output></div>
+     <input id="gMass1" type="range" min="0.1" max="10" step="0.1" value="1">
+     <div class="ends"><span>0.1 × 10²² kg</span><span>10 × 10²² kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="gMass2">Mass of body 2</label><output class="value" id="gMass2Out">1.0 × 10²² kg</output></div>
+     <input id="gMass2" type="range" min="0.1" max="10" step="0.1" value="1">
+     <div class="ends"><span>0.1 × 10²² kg</span><span>10 × 10²² kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="gDistance">Centre-to-centre separation</label><output class="value" id="gDistanceOut">10,000 km</output></div>
+     <input id="gDistance" type="range" min="1000" max="100000" step="1000" value="10000">
+     <div class="ends"><span>1,000 km</span><span>100,000 km</span></div>
+    </div>
+    <div class="btnrow"><button class="btn ghost" id="gReset">Reset values</button></div>
+   </div>
+
+   <div class="panel hidden" data-panel="1">
+    <div class="control">
+     <div class="control-top"><label for="earthMode">Location to investigate</label></div>
+     <select id="earthMode">
+      <option value="altitude">Above Earth's surface · altitude</option>
+      <option value="depth">Below Earth's surface · depth</option>
+     </select>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="earthDistance">Altitude / depth</label><output class="value" id="earthDistanceOut">1,000 km</output></div>
+     <input id="earthDistance" type="range" min="0" max="20000" step="100" value="1000">
+     <div class="ends"><span>0 km</span><span id="earthMaxLabel">20,000 km</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="earthMass">Object mass</label><output class="value" id="earthMassOut">10 kg</output></div>
+     <input id="earthMass" type="range" min="1" max="1000" step="1" value="10">
+     <div class="ends"><span>1 kg</span><span>1,000 kg</span></div>
+    </div>
+    <div class="btnrow"><button class="btn ghost" id="earthReset">Reset values</button></div>
+   </div>
+
+   <div class="panel hidden" data-panel="2">
+    <div class="control">
+     <div class="control-top"><label for="pMass">Planet mass (Earth masses)</label><output class="value" id="pMassOut">1.0 M⊕</output></div>
+     <input id="pMass" type="range" min="0.1" max="10" step="0.1" value="1">
+     <div class="ends"><span>0.1 M⊕</span><span>10 M⊕</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="pRadius">Planet radius (Earth radii)</label><output class="value" id="pRadiusOut">1.0 R⊕</output></div>
+     <input id="pRadius" type="range" min="0.2" max="5" step="0.1" value="1">
+     <div class="ends"><span>0.2 R⊕</span><span>5 R⊕</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="pAltitude">Object altitude above surface</label><output class="value" id="pAltitudeOut">0 km</output></div>
+     <input id="pAltitude" type="range" min="0" max="1000000" step="10000" value="0">
+     <div class="ends"><span>0 km</span><span>1,000 km</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="pObjectMass">Object mass</label><output class="value" id="pObjectMassOut">10 kg</output></div>
+     <input id="pObjectMass" type="range" min="1" max="1000" step="1" value="10">
+     <div class="ends"><span>1 kg</span><span>1,000 kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="pLaunch">Launch speed</label><output class="value" id="pLaunchOut">11.2 km/s</output></div>
+     <input id="pLaunch" type="range" min="0" max="60" step="0.1" value="11.2">
+     <div class="ends"><span>0 km/s</span><span>60 km/s</span></div>
+    </div>
+    <div class="btnrow"><button class="btn primary" id="pLaunchBtn">▶ Test launch</button><button class="btn ghost" id="pReset">Reset</button></div>
+   </div>
+
+   <div class="panel hidden" data-panel="3">
+    <div class="control">
+     <div class="control-top"><label for="sPlanetMass">Planet mass (Earth masses)</label><output class="value" id="sPlanetMassOut">1.0 M⊕</output></div>
+     <input id="sPlanetMass" type="range" min="0.1" max="5" step="0.1" value="1">
+     <div class="ends"><span>0.1 M⊕</span><span>5 M⊕</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="sOrbitRadius">Orbital radius from centre</label><output class="value" id="sOrbitRadiusOut">2.0 R⊕</output></div>
+     <input id="sOrbitRadius" type="range" min="1.1" max="20" step="0.1" value="2">
+     <div class="ends"><span>1.1 R⊕</span><span>20 R⊕</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="sSatMass">Satellite mass</label><output class="value" id="sSatMassOut">1,000 kg</output></div>
+     <input id="sSatMass" type="range" min="100" max="10000" step="100" value="1000">
+     <div class="ends"><span>100 kg</span><span>10,000 kg</span></div>
+    </div>
+    <div class="btnrow"><button class="btn primary" id="sRun">▶ Animate orbit</button><button class="btn ghost" id="sPause">Pause</button><button class="btn ghost" id="sReset">Reset</button></div>
+   </div>
+  </aside>
+ </main>
+
+ <div class="below">
+  <section class="card guide">
+   <div class="sectionhead"><h3>Guided investigation</h3><span class="tag" id="modeTag">GUIDED MODE</span></div>
+   <p id="guideIntro">Choose a mission, adjust the parameters and predict the result before checking the simulation.</p>
+   <div class="mission"><strong id="missionTitle">Mission 1 · Double the mass</strong><p id="missionText">Double one mass while keeping separation fixed. What happens to gravitational force?</p></div>
+   <div class="btnrow">
+    <select id="challenge"><option value="0">Challenge 1</option><option value="1">Challenge 2</option><option value="2">Challenge 3</option></select>
+    <button class="btn" id="loadChallenge">Load challenge</button>
+    <button class="btn ghost" id="toggleMode">Switch to free exploration</button>
+   </div>
+  </section>
+
+  <section class="card notebook">
+   <div class="sectionhead"><h3>Experiment notebook</h3><span class="tag" id="trialCount">0 TRIALS</span></div>
+   <p class="sub">Record readings from any lab and export observations as CSV.</p>
+   <div class="btnrow" style="margin:0 0 8px">
+    <button class="btn primary" id="record">＋ Record trial</button>
+    <button class="btn" id="export">↓ Export CSV</button>
+    <button class="btn ghost" id="clear">Clear</button>
+   </div>
+   <div class="tablewrap">
+    <table><thead><tr><th>Experiment</th><th>Trial</th><th>Settings</th><th>Result</th></tr></thead><tbody id="records"><tr><td colspan="4" class="empty">No readings recorded yet.</td></tr></tbody></table>
+   </div>
+  </section>
+ </div>
+
+ <div class="footer">Virtual Science Lab · Idealised learning models · SI units · Earth reference values used where specified</div>
+</div>
+
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-11-gravitation",
+  "title": "Gravitation",
+  "class": 11,
+  "chapterNumber": 7,
+  "chapter": "Gravitation",
+  "description": "Interactive investigations of Newton's universal law of gravitation, variation of gravity with altitude and depth, gravitational potential energy, escape velocity, satellite orbits and Kepler's law.",
+  "simulationType": "2D"
+}
+</script>
+
+<script>
+(()=>{
+'use strict';
+
+const $=id=>document.getElementById(id);
+const scene=$('scene'),plot=$('plot'),ctx=scene.getContext('2d'),px=plot.getContext('2d');
+
+const G=6.67430e-11;
+const ME=5.972e24;
+const RE=6.371e6;
+const G0=9.81;
+
+let active=0,animation=null,lastFrame=0,elapsed=0,orbitAngle=0,launchProgress=0;
+let records=[],guided=true,soundOn=true,audio=null;
+
+const defaults={
+ gMass1:1,gMass2:1,gDistance:10000,
+ earthMode:'altitude',earthDistance:1000,earthMass:10,
+ pMass:1,pRadius:1,pAltitude:0,pObjectMass:10,pLaunch:11.2,
+ sPlanetMass:1,sOrbitRadius:2,sSatMass:1000
+};
+
+const titles=[
+ ["Newton's Universal Law of Gravitation","Change the two masses and their separation to calculate the gravitational attraction.","Gravitational force vs separation","Inverse-square relationship","Two spherical bodies · Force arrows are illustrative, not to scale"],
+ ["Acceleration due to Gravity: Altitude and Depth","Move an object above or below Earth's surface and compare gravitational acceleration and weight.","g vs altitude / depth","Altitude: inverse-square · Depth: uniform-density approximation","Earth reference radius = 6,371 km · Depth model assumes uniform density"],
+ ["Gravitational Potential and Escape Velocity","Explore the energy required to move an object away from a planet's gravitational field.","Gravitational potential vs distance","V = −GM/r · vₑ = √(2GM/r)","Spherical planet · Outside the planet · Neglect atmosphere and rotation"],
+ ["Satellite Motion and Kepler's Third Law","Change a satellite's orbital radius and planet mass to calculate orbital speed, period and gravity.","Orbital period vs orbital radius","T² ∝ r³ for a fixed central mass","Ideal circular orbit · Neglect atmosphere and other bodies"]
+];
+
+function audioContext(){
+ if(!soundOn)return null;
+ const A=window.AudioContext||window.webkitAudioContext;
+ if(!A)return null;
+ if(!audio)audio=new A();
+ if(audio.state==='suspended')audio.resume().catch(()=>{});
+ return audio;
+}
+function beep(freq=440,duration=.12,wave='sine',volume=.025,delay=0){
+ const ac=audioContext();if(!ac)return;
+ const osc=ac.createOscillator(),gain=ac.createGain(),t=ac.currentTime+delay;
+ osc.type=wave;osc.frequency.setValueAtTime(freq,t);
+ gain.gain.setValueAtTime(.0001,t);
+ gain.gain.linearRampToValueAtTime(volume,t+.012);
+ gain.gain.exponentialRampToValueAtTime(.0001,t+duration);
+ osc.connect(gain);gain.connect(ac.destination);
+ osc.start(t);osc.stop(t+duration+.03);
+}
+function cue(type){
+ if(!soundOn)return;
+ if(type==='start'){beep(280,.1,'triangle');beep(430,.12,'sine',.02,.1)}
+ if(type==='launch'){beep(200,.16,'triangle');beep(380,.14,'sine',.025,.12)}
+ if(type==='done'){beep(523,.12);beep(659,.13,'sine',.025,.13);beep(784,.18,'sine',.025,.27)}
+}
+$('soundBtn').addEventListener('click',()=>{
+ soundOn=!soundOn;
+ $('soundBtn').textContent=soundOn?'🔊 Sound ON':'🔇 Sound OFF';
+ $('soundBtn').classList.toggle('off',!soundOn);
+ $('soundBtn').setAttribute('aria-pressed',String(soundOn));
+ if(soundOn)beep(620,.07);
+});
+
+function n(id){return Number($(id).value)}
+function f(v,d=2){return Number.isFinite(v)?v.toFixed(d):'—'}
+function comma(v){return Math.round(v).toLocaleString('en-IN')}
+function sci(v){
+ if(!Number.isFinite(v))return '—';
+ if(v===0)return '0';
+ return v.toExponential(3).replace('e+',' × 10^').replace('e-',' × 10^-');
+}
+function out(id,value){$(id+'Out').textContent=value}
+function resize(canvas,c){
+ const r=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);
+ const w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));
+ if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}
+ c.setTransform(d,0,0,d,0,0);
+ return {w:r.width,h:r.height};
+}
+function clear(c,w,h){c.clearRect(0,0,w,h)}
+function line(c,x1,y1,x2,y2,color='#8ca88e',width=2,dash=[]){
+ c.save();c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dash);
+ c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.restore();
+}
+function text(c,s,x,y,color='#355d3d',size=11,align='left',weight='500'){
+ c.save();c.fillStyle=color;c.font=weight+' '+size+'px system-ui,sans-serif';
+ c.textAlign=align;c.fillText(s,x,y);c.restore();
+}
+function arrow(c,x1,y1,x2,y2,color='#087f87',width=3,head=9){
+ line(c,x1,y1,x2,y2,color,width);
+ const a=Math.atan2(y2-y1,x2-x1);
+ c.fillStyle=color;c.beginPath();c.moveTo(x2,y2);
+ c.lineTo(x2-head*Math.cos(a-.48),y2-head*Math.sin(a-.48));
+ c.lineTo(x2-head*Math.cos(a+.48),y2-head*Math.sin(a+.48));
+ c.closePath();c.fill();
+}
+function circle(c,x,y,r,color,stroke='#fff'){
+ c.beginPath();c.arc(x,y,r,0,Math.PI*2);
+ c.fillStyle=color;c.fill();c.strokeStyle=stroke;c.lineWidth=2;c.stroke();
+}
+function updateMetrics(labels,values,units){
+ for(let i=0;i<4;i++){
+  $('lab'+i).textContent=labels[i];
+  $('m'+i).textContent=values[i];
+  $('u'+i).textContent=units[i];
+ }
+}
+function graphAxes(c,L,R,T,B){
+ for(let i=0;i<=4;i++){
+  const y=T+(B-T)*i/4;
+  line(c,L,y,R,y,'#e2eee0',1);
+ }
+ line(c,L,T,L,B,'#8eaa91',1.2);
+ line(c,L,B,R,B,'#8eaa91',1.2);
+}
+function updateOutputs(){
+ const pairs=[
+ ['gMass1',f(n('gMass1'),1)+' × 10²² kg'],
+ ['gMass2',f(n('gMass2'),1)+' × 10²² kg'],
+ ['gDistance',comma(n('gDistance'))+' km'],
+ ['earthDistance',comma(n('earthDistance'))+' km'],
+ ['earthMass',comma(n('earthMass'))+' kg'],
+ ['pMass',f(n('pMass'),1)+' M⊕'],
+ ['pRadius',f(n('pRadius'),1)+' R⊕'],
+ ['pAltitude',comma(n('pAltitude')/1000)+' km'],
+ ['pObjectMass',comma(n('pObjectMass'))+' kg'],
+ ['pLaunch',f(n('pLaunch'),1)+' km/s'],
+ ['sPlanetMass',f(n('sPlanetMass'),1)+' M⊕'],
+ ['sOrbitRadius',f(n('sOrbitRadius'),1)+' R⊕'],
+ ['sSatMass',comma(n('sSatMass'))+' kg']
+ ];
+ pairs.forEach(([id,value])=>out(id,value));
+ $('earthDistance').max=$('earthMode').value==='depth'?RE/1000:20000;
+ $('earthMaxLabel').textContent=$('earthMode').value==='depth'?'6,371 km':'20,000 km';
+}
+
+function gravityData(){
+ const m1=n('gMass1')*1e22;
+ const m2=n('gMass2')*1e22;
+ const r=n('gDistance')*1000;
+ const F=G*m1*m2/(r*r);
+ return {m1,m2,r,F};
+}
+function earthData(){
+ const mode=$('earthMode').value;
+ const d=n('earthDistance')*1000;
+ const m=n('earthMass');
+ let g;
+ if(mode==='altitude'){
+  g=G0*Math.pow(RE/(RE+d),2);
+ }else{
+  // Uniform-density Earth approximation: g falls linearly with depth.
+  g=G0*Math.max(0,1-d/RE);
+ }
+ return {mode,d,m,g,weight:m*g,ratio:g/G0};
+}
+function potentialData(){
+ const M=n('pMass')*ME;
+ const R=n('pRadius')*RE;
+ const h=n('pAltitude');
+ const m=n('pObjectMass');
+ const v=n('pLaunch')*1000;
+ const r=R+h;
+ const mu=G*M;
+ const V=-mu/r;
+ const U=m*V;
+ const ve=Math.sqrt(2*mu/r);
+ const K=.5*m*v*v;
+ const E=K+U;
+ return {M,R,h,m,v,r,mu,V,U,ve,K,E,bound:E<0};
+}
+function satelliteData(){
+ const M=n('sPlanetMass')*ME;
+ const r=n('sOrbitRadius')*RE;
+ const m=n('sSatMass');
+ const v=Math.sqrt(G*M/r);
+ const T=2*Math.PI*Math.sqrt(r*r*r/(G*M));
+ const omega=2*Math.PI/T;
+ const F=G*M*m/(r*r);
+ const a=v*v/r;
+ const energy=-G*M*m/(2*r);
+ return {M,r,m,v,T,omega,F,a,energy};
+}
+
+function renderGravity(){
+ const d=gravityData(),z=resize(scene,ctx),w=z.w,h=z.h;
+ clear(ctx,w,h);
+ const y=h*.53,c1=w*.29,c2=w*.71;
+ const radius1=22+Math.min(22,Math.sqrt(n('gMass1'))*6);
+ const radius2=22+Math.min(22,Math.sqrt(n('gMass2'))*6);
+ line(ctx,c1+radius1,y,c2-radius2,y,'#9abb99',2,[5,5]);
+ circle(ctx,c1,y,radius1,'#4978c5');
+ circle(ctx,c2,y,radius2,'#bd741b');
+ circle(ctx,c1,y,5,'#fff','#fff');
+ circle(ctx,c2,y,5,'#fff','#fff');
+ arrow(ctx,c1+radius1+8,y-17,c1+radius1+65,y-17,'#087f87',3,9);
+ arrow(ctx,c2-radius2-8,y-17,c2-radius2-65,y-17,'#087f87',3,9);
+ text(ctx,'F₁₂',c1+radius1+70,y-23,'#087f87',11);
+ text(ctx,'F₂₁',c2-radius2-70,y-23,'#087f87',11,'right');
+ text(ctx,'m₁ = '+f(n('gMass1'),1)+' × 10²² kg',c1,y+radius1+24,'#4978c5',10,'center');
+ text(ctx,'m₂ = '+f(n('gMass2'),1)+' × 10²² kg',c2,y+radius2+24,'#bd741b',10,'center');
+ text(ctx,'r = '+comma(n('gDistance'))+' km',w/2,y+3,'#355d3d',11,'center');
+ text(ctx,'Equal and opposite interaction forces',w/2,29,'#258653',12,'center');
+ text(ctx,'F₁₂ = F₂₁ in magnitude',w/2,h*.91,'#258653',11,'center');
+ updateMetrics(
+  ['Gravitational force','Mass 1','Mass 2','Separation'],
+  [sci(d.F)+' N',sci(d.m1)+' kg',sci(d.m2)+' kg',comma(d.r/1000)+' km'],
+  ['F = Gm₁m₂/r²','m₁','m₂','centre to centre']
+ );
+ $('formula').textContent='F = Gm₁m₂ / r²';
+ $('calculation').textContent=`F = ${sci(d.F)} N`;
+ $('explain').textContent=`The gravitational attraction is ${sci(d.F)} N. Both bodies experience forces equal in magnitude and opposite in direction. If separation doubles, force becomes one-quarter; if one mass doubles, force doubles.`;
+ drawGravityGraph(d);
+}
+function drawGravityGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;
+ clear(px,w,h);
+ const L=48,R=w-14,T=22,B=h-30;
+ graphAxes(px,L,R,T,B);
+ const rMin=1000,rMax=100000;
+ const Fmax=G*d.m1*d.m2/Math.pow(rMin*1000,2);
+ px.beginPath();
+ for(let i=0;i<=70;i++){
+  const r=rMin+(rMax-rMin)*i/70;
+  const F=G*d.m1*d.m2/Math.pow(r*1000,2);
+  const x=L+(r-rMin)/(rMax-rMin)*(R-L);
+  const y=B-F/Fmax*(B-T);
+  if(i===0)px.moveTo(x,y);else px.lineTo(x,y);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();
+ const xx=L+(n('gDistance')-rMin)/(rMax-rMin)*(R-L);
+ const yy=B-d.F/Fmax*(B-T);
+ circle(px,xx,yy,4,'#bd741b');
+ text(px,'Force (relative)',7,13,'#718a76',9);
+ text(px,'Separation (km)',R,B+24,'#718a76',9,'right');
+ text(px,'Current: '+sci(d.F)+' N',R,14,'#087f87',9,'right');
+}
+
+function renderEarth(){
+ const d=earthData(),z=resize(scene,ctx),w=z.w,h=z.h;
+ clear(ctx,w,h);
+ const cx=w*.5,cy=h*.52,earthR=Math.min(104,h*.31,w*.24);
+ circle(ctx,cx,cy,earthR,'#8fc9a0','#4d9361');
+ ctx.beginPath();ctx.arc(cx,cy,earthR*.62,0,Math.PI*2);
+ ctx.strokeStyle='#d7eed5';ctx.lineWidth=1.3;ctx.stroke();
+ line(ctx,cx-earthR*.8,cy,cx+earthR*.8,cy,'#d2e7cc',1,[3,4]);
+ const atSurface=d.mode==='altitude';
+ const distanceScale=atSurface?Math.min(earthR*.95,d.d/(RE+20000)*earthR):earthR*(d.d/RE);
+ const px0=atSurface?cx+earthR+distanceScale+8:cx+earthR-distanceScale;
+ const py0=cy;
+ if(atSurface){
+  const pointX=Math.min(w-35,cx+earthR+distanceScale+15);
+  line(ctx,cx+earthR,cy,pointX,cy,'#bd741b',2,[4,4]);
+  circle(ctx,pointX,cy,9,'#bd741b');
+  arrow(ctx,pointX,cy-15,pointX,cy-47,'#087f87',2,7);
+  text(ctx,'Altitude',pointX,cy-60,'#087f87',10,'center');
+ }else{
+  line(ctx,cx,cy,cx+earthR-distanceScale,cy,'#bd741b',2,[4,4]);
+  circle(ctx,cx+earthR-distanceScale,cy,8,'#bd741b');
+  text(ctx,'Depth',cx+earthR-distanceScale,cy-18,'#bd741b',10,'center');
+ }
+ text(ctx,'EARTH',cx,cy+5,'#245d36',12,'center','700');
+ text(ctx,'R = 6,371 km',cx,cy+earthR+23,'#53765a',10,'center');
+ text(ctx,d.mode==='altitude'?'Above the surface':'Below the surface',w/2,27,'#355d3d',12,'center');
+ text(ctx,'g = '+f(d.g,4)+' m/s²',w/2,h*.91,'#087f87',13,'center','700');
+ updateMetrics(
+  ['Gravitational acceleration','Object weight','g / surface g','Altitude / depth'],
+  [f(d.g,4)+' m/s²',f(d.weight,2)+' N',f(d.ratio,4),comma(d.d/1000)+' km'],
+  ['local g','W = mg','relative to g₀','from surface']
+ );
+ $('formula').textContent=d.mode==='altitude'?'g(h) = g₀ [R / (R+h)]²':'g(d) = g₀ (1 − d/R)';
+ $('calculation').textContent=d.mode==='altitude'
+  ?`g = 9.81 × [6371 / (${f(RE/1000,0)} + ${f(d.d/1000,0)})]² = ${f(d.g,4)} m/s²`
+  :`g = 9.81 × (1 − ${f(d.d/1000,0)} / 6371) = ${f(d.g,4)} m/s²`;
+ $('explain').textContent=d.mode==='altitude'
+  ?'As altitude increases, gravitational acceleration decreases according to the inverse-square relationship. This formula assumes the object is outside Earth and Earth behaves like a spherical mass.'
+  :'Inside Earth, this simplified depth formula assumes uniform density. It predicts that g decreases linearly with depth and reaches zero at the centre.';
+ drawEarthGraph(d);
+}
+function drawEarthGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;
+ clear(px,w,h);
+ const L=48,R=w-14,T=22,B=h-30;
+ graphAxes(px,L,R,T,B);
+ const mode=d.mode;
+ const max=mode==='altitude'?20000:6371;
+ px.beginPath();
+ for(let i=0;i<=70;i++){
+  const xVal=max*i/70,dist=xVal*1000;
+  const g=mode==='altitude'?G0*Math.pow(RE/(RE+dist),2):G0*(1-dist/RE);
+  const xx=L+xVal/max*(R-L),yy=B-g/G0*(B-T);
+  if(i===0)px.moveTo(xx,yy);else px.lineTo(xx,yy);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();
+ const current=d.d/1000;
+ const xx=L+current/max*(R-L),yy=B-d.g/G0*(B-T);
+ circle(px,xx,yy,4,'#bd741b');
+ text(px,'g / g₀',7,13,'#718a76',9);
+ text(px,(mode==='altitude'?'Altitude':'Depth')+' (km)',R,B+24,'#718a76',9,'right');
+ text(px,'Current: '+f(d.g/G0,3)+' g₀',R,14,'#087f87',9,'right');
+}
+
+function renderPotential(){
+ const d=potentialData(),z=resize(scene,ctx),w=z.w,h=z.h;
+ clear(ctx,w,h);
+ const cx=w*.5,cy=h*.60,rad=Math.min(102,h*.28,w*.23);
+ circle(ctx,cx,cy,rad,'#91c59a','#548d60');
+ circle(ctx,cx,cy,rad*.55,'#a9d7ad','#75ad80');
+ text(ctx,'PLANET',cx,cy+4,'#245d36',12,'center','700');
+ const distPx=rad+40+Math.min(90,d.h/1000000*90);
+ const objX=Math.min(w-30,cx+distPx),objY=cy;
+ line(ctx,cx+rad,cy,objX,objY,'#bd741b',2,[5,4]);
+ circle(ctx,objX,objY,9,'#bd741b');
+ if(animation==='launch'){
+  const dx=launchProgress*50;
+  const x=Math.min(w-18,objX+dx);
+  circle(ctx,x,objY,7,'#bd741b');
+  arrow(ctx,x+9,objY-8,x+43,objY-8,'#087f87',2,7);
+ }
+ arrow(ctx,objX,objY-13,objX+55,objY-13,'#087f87',2,8);
+ text(ctx,'Launch speed',objX+55,objY-23,'#087f87',10);
+ text(ctx,'r = '+f(d.r/1000,0)+' km',cx,cy+rad+24,'#53765a',10,'center');
+ text(ctx,'Escape speed = '+f(d.ve/1000,3)+' km/s',w/2,28,'#087f87',12,'center','700');
+ const status=d.bound?'BOUND TRAJECTORY':'ESCAPE ENERGY REACHED';
+ text(ctx,status,w/2,h*.92,d.bound?'#bd741b':'#258653',12,'center','700');
+ updateMetrics(
+  ['Escape velocity','Gravitational potential','Potential energy','Total mechanical energy'],
+  [f(d.ve/1000,3)+' km/s',sci(d.V)+' J/kg',sci(d.U)+' J',sci(d.E)+' J'],
+  ['at current position','V = −GM/r','U = mV','K + U']
+ );
+ $('formula').textContent='vₑ = √(2GM/r)   ·   V = −GM/r';
+ $('calculation').textContent=`vₑ = ${f(d.ve/1000,3)} km/s · U = ${sci(d.U)} J`;
+ $('explain').textContent=d.bound
+  ?`The launch speed is below escape velocity. Total mechanical energy is negative (${sci(d.E)} J), so the ideal two-body model predicts a bound trajectory.`
+  :`The launch speed is at least the escape velocity. Total mechanical energy is zero or positive, so the object can escape in the ideal model.`;
+ drawPotentialGraph(d);
+}
+function drawPotentialGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;
+ clear(px,w,h);
+ const L=48,R=w-14,T=22,B=h-30;
+ graphAxes(px,L,R,T,B);
+ const minR=d.R,maxR=d.R+d.R*5,minV=-G*d.M/minR;
+ px.beginPath();
+ for(let i=0;i<=70;i++){
+  const r=minR+(maxR-minR)*i/70;
+  const V=-G*d.M/r;
+  const xx=L+(r-minR)/(maxR-minR)*(R-L);
+  const yy=B-(Math.abs(V)/Math.abs(minV))*(B-T);
+  if(i===0)px.moveTo(xx,yy);else px.lineTo(xx,yy);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();
+ const xx=L+(d.r-minR)/(maxR-minR)*(R-L);
+ const yy=B-(Math.abs(d.V)/Math.abs(minV))*(B-T);
+ circle(px,xx,yy,4,'#bd741b');
+ text(px,'Potential (relative)',7,13,'#718a76',9);
+ text(px,'Distance from centre (planet radii)',R,B+24,'#718a76',8,'right');
+ text(px,'Current V = '+sci(d.V)+' J/kg',R,14,'#087f87',9,'right');
+}
+
+function renderSatellite(){
+ const d=satelliteData(),z=resize(scene,ctx),w=z.w,h=z.h;
+ clear(ctx,w,h);
+ const cx=w*.49,cy=h*.49;
+ const orbitRad=Math.min(w*.34,h*.36);
+ const orbitScale=n('sOrbitRadius')/20;
+ const r=orbitRad*(.16+.84*orbitScale);
+ ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+ ctx.strokeStyle='#84ae8b';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);
+ const earthR=Math.min(42,r*.32);
+ circle(ctx,cx,cy,earthR,'#7cba8b','#4c9360');
+ text(ctx,'EARTH',cx,cy+4,'#245d36',10,'center','700');
+ const angle=orbitAngle;
+ const sx=cx+r*Math.cos(angle),sy=cy+r*Math.sin(angle);
+ circle(ctx,sx,sy,9,'#bd741b');
+ arrow(ctx,sx,sy,sx-22*Math.sin(angle),sy+22*Math.cos(angle),'#087f87',2.5,7);
+ arrow(ctx,sx,sy,cx+(sx-cx)*.72,cy+(sy-cy)*.72,'#c85b79',2.5,7);
+ text(ctx,'v',sx-24*Math.sin(angle)-7,sy+24*Math.cos(angle),'#087f87',10);
+ text(ctx,'Fᶜ',cx+(sx-cx)*.75+5,cy+(sy-cy)*.75,'#c85b79',10);
+ text(ctx,'r = '+f(d.r/1000,0)+' km',cx+r*.55,cy-r*.55,'#53765a',10);
+ text(ctx,'T = '+f(d.T/3600,2)+' hours',w/2,28,'#087f87',12,'center','700');
+ text(ctx,'Circular orbit · animated satellite',w/2,h*.91,'#53765a',10,'center');
+ updateMetrics(
+  ['Orbital speed','Time period','Gravitational force','Centripetal acceleration'],
+  [f(d.v/1000,3)+' km/s',f(d.T/3600,2)+' h',sci(d.F)+' N',f(d.a,3)+' m/s²'],
+  ['v = √(GM/r)','T = 2π√(r³/GM)','GMm/r²','v²/r']
+ );
+ $('formula').textContent='T² = (4π² / GM) r³';
+ $('calculation').textContent=`v = ${f(d.v/1000,3)} km/s · T = ${f(d.T/3600,2)} hours`;
+ $('explain').textContent=`For this circular orbit, the gravitational force provides the centripetal force. Increasing orbital radius increases the time period and decreases orbital speed. For the same planet, T² is proportional to r³.`;
+ drawSatelliteGraph(d);
+}
+function drawSatelliteGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;
+ clear(px,w,h);
+ const L=48,R=w-14,T=22,B=h-30;
+ graphAxes(px,L,R,T,B);
+ const rMin=1.1*RE,rMax=20*RE;
+ const tMax=2*Math.PI*Math.sqrt(rMax*rMax*rMax/(G*d.M));
+ px.beginPath();
+ for(let i=0;i<=70;i++){
+  const r=rMin+(rMax-rMin)*i/70;
+  const Tperiod=2*Math.PI*Math.sqrt(r*r*r/(G*d.M));
+  const xx=L+(r-rMin)/(rMax-rMin)*(R-L);
+  const yy=B-Tperiod/tMax*(B-T);
+  if(i===0)px.moveTo(xx,yy);else px.lineTo(xx,yy);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();
+ const xx=L+(d.r-rMin)/(rMax-rMin)*(R-L);
+ const yy=B-d.T/tMax*(B-T);
+ circle(px,xx,yy,4,'#bd741b');
+ text(px,'Period (relative)',7,13,'#718a76',9);
+ text(px,'Orbital radius (km)',R,B+24,'#718a76',9,'right');
+ text(px,'Current T = '+f(d.T/3600,2)+' h',R,14,'#087f87',9,'right');
+}
+
+function render(){
+ updateOutputs();
+ if(active===0)renderGravity();
+ else if(active===1)renderEarth();
+ else if(active===2)renderPotential();
+ else renderSatellite();
+}
+function stop(){
+ animation=null;
+ $('state').textContent='LIVE MODEL';
+}
+function frame(ts){
+ if(!animation)return;
+ const dt=Math.min(.05,(ts-lastFrame)/1000||0);
+ lastFrame=ts;
+ if(animation==='orbit'){
+  orbitAngle+=dt*1.1;
+ }
+ if(animation==='launch'){
+  launchProgress=Math.min(1,launchProgress+dt*.35);
+  if(launchProgress>=1){animation=null;cue('done')}
+ }
+ render();
+ if(animation)requestAnimationFrame(frame);
+ else $('state').textContent='MODEL COMPLETE';
+}
+function start(type){
+ stop();
+ animation=type;
+ elapsed=0;
+ launchProgress=0;
+ orbitAngle=0;
+ lastFrame=performance.now();
+ cue(type==='launch'?'launch':'start');
+ $('state').textContent='RUNNING';
+ requestAnimationFrame(frame);
+}
+function switchTab(i){
+ stop();
+ active=i;
+ orbitAngle=0;
+ launchProgress=0;
+ document.querySelectorAll('.tab').forEach((b,j)=>b.classList.toggle('active',i===j));
+ document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('hidden',Number(p.dataset.panel)!==i));
+ $('stageTitle').textContent=titles[i][0];
+ $('stageDesc').textContent=titles[i][1];
+ $('graphTitle').textContent=titles[i][2];
+ $('graphCaption').textContent=titles[i][3];
+ $('sceneNote').textContent=titles[i][4];
+ updateGuide();
+ render();
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(Number(b.dataset.tab))));
+document.querySelectorAll('.panel input,.panel select').forEach(el=>el.addEventListener('input',()=>{
+ if(animation)stop();
+ render();
+}));
+
+function reset(ids){
+ ids.forEach(id=>$(id).value=defaults[id]);
+ stop();
+ launchProgress=0;
+ orbitAngle=0;
+ if(active===1){
+  const depth=$('earthMode').value==='depth';
+  if(depth){$('earthDistance').max=RE/1000}
+  else{$('earthDistance').max=20000}
+ }
+ render();
+}
+$('gReset').addEventListener('click',()=>reset(['gMass1','gMass2','gDistance']));
+$('earthReset').addEventListener('click',()=>reset(['earthMode','earthDistance','earthMass']));
+$('pReset').addEventListener('click',()=>reset(['pMass','pRadius','pAltitude','pObjectMass','pLaunch']));
+$('sReset').addEventListener('click',()=>reset(['sPlanetMass','sOrbitRadius','sSatMass']));
+$('sRun').addEventListener('click',()=>start('orbit'));
+$('sPause').addEventListener('click',()=>{stop();render()});
+$('pLaunchBtn').addEventListener('click',()=>{
+ launchProgress=0;
+ start('launch');
+});
+$('earthMode').addEventListener('change',()=>{
+ $('earthDistance').value=0;
+ $('earthDistance').max=$('earthMode').value==='depth'?RE/1000:20000;
+ $('earthDistance').step=$('earthMode').value==='depth'?50:100;
+ render();
+});
+
+const missions=[
+ [
+  ['Mission 1 · Double one mass','Double the mass of body 1. Keep body 2 and separation fixed. What happens to force?'],
+  ['Mission 2 · Double the distance','Double the separation. Predict the new force using the inverse-square law.'],
+  ['Mission 3 · Double both masses','Double both masses without changing separation. By what factor does force change?']
+ ],
+ [
+  ['Mission 1 · Go higher','Increase altitude. Does gravitational acceleration become zero immediately above the surface?'],
+  ['Mission 2 · Go deeper','Switch to depth mode and move toward the centre. Observe the predicted value of g.'],
+  ['Mission 3 · Compare weight','Change object mass while keeping location fixed. Does g change or only weight?']
+ ],
+ [
+  ['Mission 1 · Escape threshold','Set launch speed equal to the displayed escape velocity. What happens to total mechanical energy?'],
+  ['Mission 2 · Higher altitude','Increase altitude. What happens to escape velocity at that position?'],
+  ['Mission 3 · Change planet mass','Increase the planet mass while keeping radius fixed. Predict the new escape velocity.']
+ ],
+ [
+  ['Mission 1 · Higher orbit','Increase orbital radius. Compare the satellite's speed and time period.'],
+  ['Mission 2 · Heavier planet','Increase planet mass while keeping orbital radius fixed. What happens to orbital speed?'],
+  ['Mission 3 · Kepler's law','Compare T²/r³ for two orbital radii around the same planet.']
+ ]
+];
+
+function updateGuide(){
+ const mission=missions[active][Number($('challenge').value)||0];
+ $('missionTitle').textContent=mission[0];
+ $('missionText').textContent=mission[1];
+ $('modeTag').textContent=guided?'GUIDED MODE':'FREE EXPLORATION';
+ $('guideIntro').textContent=guided
+  ?'Choose a mission, adjust the parameters and predict the result before checking the simulation.'
+  :'Explore freely. Change several parameters, compare the models and record your observations.';
+ $('toggleMode').textContent=guided?'Switch to free exploration':'Switch to guided mode';
+}
+$('challenge').addEventListener('change',updateGuide);
+$('toggleMode').addEventListener('click',()=>{guided=!guided;updateGuide()});
+$('loadChallenge').addEventListener('click',()=>{
+ const c=Number($('challenge').value)||0;
+ if(active===0){
+  if(c===0)$('gMass1').value=Math.min(10,n('gMass1')*2);
+  if(c===1)$('gDistance').value=Math.min(100000,n('gDistance')*2);
+  if(c===2){$('gMass1').value=2;$('gMass2').value=2}
+ }else if(active===1){
+  if(c===0){$('earthMode').value='altitude';$('earthDistance').value=5000}
+  if(c===1){$('earthMode').value='depth';$('earthDistance').max=RE/1000;$('earthDistance').value=3000}
+  if(c===2){$('earthMode').value='altitude';$('earthDistance').value=1000;$('earthMass').value=100}
+ }else if(active===2){
+  if(c===0){$('pLaunch').value=11.2;$('pMass').value=1;$('pRadius').value=1;$('pAltitude').value=0}
+  if(c===1)$('pAltitude').value=500000;
+  if(c===2)$('pMass').value=3;
+ }else{
+  if(c===0)$('sOrbitRadius').value=5;
+  if(c===1)$('sPlanetMass').value=3;
+  if(c===2)$('sOrbitRadius').value=4;
+ }
+ stop();
+ render();
+});
+
+function snapshot(){
+ if(active===0){
+  const d=gravityData();
+  return {name:'Universal Gravitation',settings:`m1=${sci(d.m1)} kg, m2=${sci(d.m2)} kg, r=${comma(d.r/1000)} km`,result:`F=${sci(d.F)} N`};
+ }
+ if(active===1){
+  const d=earthData();
+  return {name:'Gravity vs altitude/depth',settings:`mode=${d.mode}, distance=${comma(d.d/1000)} km, mass=${d.m} kg`,result:`g=${f(d.g,5)} m/s², weight=${f(d.weight,2)} N`};
+ }
+ if(active===2){
+  const d=potentialData();
+  return {name:'Potential & Escape Velocity',settings:`planet mass=${n('pMass')} M⊕, radius=${n('pRadius')} R⊕, altitude=${comma(d.h/1000)} km, launch=${f(d.v/1000,2)} km/s`,result:`escape=${f(d.ve/1000,3)} km/s, total energy=${sci(d.E)} J`};
+ }
+ const d=satelliteData();
+ return {name:'Satellite Motion',settings:`planet=${n('sPlanetMass')} M⊕, orbit radius=${n('sOrbitRadius')} R⊕, satellite mass=${d.m} kg`,result:`speed=${f(d.v/1000,3)} km/s, period=${f(d.T/3600,2)} h`};
+}
+function refreshRecords(){
+ $('trialCount').textContent=records.length+' TRIALS';
+ const body=$('records');
+ body.innerHTML='';
+ records.slice(0,8).forEach(r=>{
+  const tr=document.createElement('tr');
+  [r.name,'#'+r.trial,r.settings,r.result].forEach(value=>{
+   const td=document.createElement('td');
+   td.textContent=value;
+   tr.appendChild(td);
+  });
+  body.appendChild(tr);
+ });
+ if(!records.length)body.innerHTML='<tr><td colspan="4" class="empty">No readings recorded yet.</td></tr>';
+}
+$('record').addEventListener('click',()=>{
+ const s=snapshot();
+ records.unshift({...s,trial:records.length+1});
+ refreshRecords();
+});
+$('clear').addEventListener('click',()=>{records=[];refreshRecords()});
+$('export').addEventListener('click',()=>{
+ if(!records.length){alert('Record at least one trial before exporting.');return}
+ const rows=[['Experiment','Trial','Settings','Result'],...records.map(r=>[r.name,r.trial,r.settings,r.result])];
+ const csv=rows.map(row=>row.map(value=>'"'+String(value).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');
+ a.href=url;a.download='gravitation-lab-records.csv';a.click();
+ URL.revokeObjectURL(url);
+});
+
+window.addEventListener('resize',render);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&animation)stop()});
+updateGuide();
+switchTab(0);
+})();
+</script>
+</body>
+</html>
