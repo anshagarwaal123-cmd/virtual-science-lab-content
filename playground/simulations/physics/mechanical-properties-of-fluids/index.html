@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#edf7ec">
+<title>Mechanical Properties of Fluids | Virtual Science Lab</title>
+<style>
+:root{--bg:#edf7ec;--paper:#fff;--soft:#f4faf2;--line:#d5e6d2;--text:#193b27;--muted:#67806a;--teal:#087f87;--green:#258653;--blue:#4978c5;--orange:#bd741b;--pink:#c85b79;--shadow:0 12px 32px rgba(43,91,48,.09)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(ellipse at 5% 0%,#d9eed9 0,transparent 42%),linear-gradient(145deg,#eaf6e9,#f7fbf5 55%,#e5f2e3);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}.wrap{max-width:1480px;margin:auto;padding:22px clamp(12px,3vw,34px) 44px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:25px}.brand{display:flex;align-items:center;gap:11px;color:#52715a;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.brand-icon{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#bcebc9,#72c695);display:grid;place-items:center;color:#17472b;font-size:20px;font-weight:900;box-shadow:0 7px 20px #5caa7840}.top-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}.pill{border:1px solid #c8ddc8;background:#f9fff8;color:#45664b;border-radius:100px;padding:7px 12px;font-size:10px;font-weight:800;letter-spacing:.04em}.sound-btn{border:1px solid #b8d7bf;background:#f8fff7;color:#23613a;border-radius:100px;padding:8px 12px;font-size:11px;font-weight:800}.sound-btn.off{background:#f1f5ef;color:#748376;border-color:#d7e0d4}.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;margin-bottom:25px}.eyebrow{font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:#27845a;font-weight:900}.hero h1{font-size:clamp(32px,5vw,57px);line-height:1.03;letter-spacing:-.045em;margin:9px 0 12px;color:#173c27}.hero h1 span{color:var(--teal)}.hero p{margin:0;max-width:790px;color:#5e7964;font-size:14px}.hero-info{text-align:right;color:#67806a;font-size:11px;white-space:nowrap}.hero-info strong{display:block;color:#1d482e;font-size:23px}.lab-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}.lab-tab{min-height:88px;text-align:left;padding:13px 14px;border:1px solid #cfe1cd;border-radius:15px;background:#fbfffa;color:#526e57;transition:.2s;box-shadow:0 3px 9px #2b5b3007}.lab-tab:hover{border-color:#90bf95;background:#f4fbf2;transform:translateY(-2px)}.lab-tab.active{background:linear-gradient(145deg,#d8f1dc,#c9ead0);border-color:#71b887;color:#174c2d;box-shadow:inset 0 0 0 1px #76bd8b44,0 6px 16px #3c87501b}.lab-tab .num{font-size:10px;font-weight:900;color:#247b4e;display:block;margin-bottom:4px;letter-spacing:.07em}.lab-tab strong{display:block;font-size:13px}.lab-tab small{display:block;font-size:10px;color:#68816c;margin-top:4px}.workspace{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,.82fr);gap:16px;align-items:start}.card{background:var(--paper);border:1px solid #d2e4d1;border-radius:19px;box-shadow:var(--shadow);overflow:hidden}.stage-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:17px 19px;border-bottom:1px solid #e1ecdf}.stage-head h2{font-size:17px;margin:0;color:#1e462d}.stage-head p{font-size:11px;color:#68816c;margin:4px 0 0}.state-pill{display:flex;align-items:center;gap:7px;font-size:10px;color:#258653;font-weight:800;white-space:nowrap;border:1px solid #d3e9d4;background:#f3fbf2;padding:6px 9px;border-radius:100px}.state-dot{width:7px;height:7px;border-radius:50%;background:#35a565;box-shadow:0 0 9px #35a56566}.scene-area{padding:14px 15px 6px}.canvas-frame{position:relative;border:1px solid #cfe1cd;border-radius:15px;overflow:hidden;background:linear-gradient(180deg,#f9fcf7,#edf7ec)}#scene{display:block;width:100%;height:365px}.scene-footer{display:flex;justify-content:space-between;gap:8px;padding:7px 3px 5px;color:#819581;font-size:9px}.progress-wrap{padding:0 2px 6px}.progress-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:5px;color:#718773;font-size:9px}.progress-track{height:7px;border-radius:100px;background:#e4eee1;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#56b97a,#087f87);border-radius:100px;transition:width .06s linear}.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:9px 15px 16px}.metric{min-width:0;background:#f5faf3;border:1px solid #dbe9d9;border-radius:12px;padding:10px 11px}.metric label{display:block;color:#718773;font-size:9px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}.metric strong{display:block;font-size:clamp(15px,2vw,21px);color:#1e4d31;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metric em{display:block;font-style:normal;font-size:9px;color:#708571;margin-top:2px}.equation-row{display:grid;grid-template-columns:1.1fr 1fr;gap:10px;margin-top:14px}.equation-card,.insight-card{padding:15px 17px}.equation-card h3,.insight-card h3{font-size:11px;margin:0 0 7px;color:#2a6641;letter-spacing:.06em}.formula{font:600 16px/1.65 ui-monospace,Consolas,monospace;color:#087d78;overflow-wrap:anywhere}.formula-result{font:500 11px/1.6 ui-monospace,Consolas,monospace;color:#486b4c;margin-top:4px;overflow-wrap:anywhere}.insight-card p{margin:0;color:#607963;font-size:11px;line-height:1.6}.graph-card{margin-top:14px;padding:13px 15px 12px}.graph-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.graph-head h3{font-size:13px;margin:0;color:#234a30}.graph-head span{font-size:9px;color:#718a74}#plot{display:block;width:100%;height:175px;background:#f8fcf6;border:1px solid #e0ebde;border-radius:10px}.controls{padding:16px}.controls-head{margin-bottom:12px}.controls-head h3{font-size:16px;margin:0;color:#21482f}.controls-head p{font-size:11px;color:#718773;margin:3px 0 0}.control{padding:11px 0;border-top:1px solid #e4eee2}.control:first-of-type{border-top:0}.control-top{display:flex;justify-content:space-between;align-items:center;gap:9px;margin-bottom:7px}.control label{font-size:11px;color:#365b3e;font-weight:650}.value{font-size:11px;font-weight:850;color:#087d78;white-space:nowrap;font-variant-numeric:tabular-nums}.control input[type=range]{width:100%;accent-color:#3d9c69;cursor:pointer}.ends{display:flex;justify-content:space-between;color:#829783;font-size:9px}.control select,.guide select{width:100%;background:#f8fcf6;color:#21452d;border:1px solid #cbdcca;border-radius:9px;padding:9px;font-size:11px}.button-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.btn{border:1px solid #bcd8bf;background:#e5f3e5;color:#245535;border-radius:9px;padding:8px 12px;font-size:10px;font-weight:800;transition:.15s}.btn:hover{filter:brightness(.97);transform:translateY(-1px)}.btn.primary{background:linear-gradient(120deg,#3ca86d,#238c63);border-color:#278c5a;color:white}.btn.ghost{background:#f8fcf7}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.info-strip{margin-top:12px;padding:10px 11px;background:#f0f8ee;border:1px solid #d8e9d5;border-radius:11px;color:#58745e;font-size:10px;line-height:1.55}.lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:16px}.lower-card{padding:16px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.section-head h3{font-size:14px;margin:0;color:#21482f}.tag{border:1px solid #c7e3cb;background:#eff9ef;color:#277a4b;border-radius:100px;padding:5px 8px;font-size:9px;font-weight:850;white-space:nowrap}.guide-intro{font-size:11px;color:#657f69;margin:5px 0 10px}.mission{border:1px solid #d8e9d5;background:#f4faf2;border-radius:12px;padding:12px;margin:9px 0}.mission strong{font-size:11px;color:#2c663e}.mission p{font-size:11px;color:#657d68;margin:5px 0 0;line-height:1.55}.guide select{max-width:145px;padding:7px;font-size:10px}.notebook .sub{font-size:10px;color:#708571;margin:0 0 9px}.notebook table{border-collapse:collapse;width:100%;font-size:10px}.notebook th{text-align:left;color:#617b65;padding:7px 5px;border-bottom:1px solid #dce9d9}.notebook td{padding:8px 5px;color:#35563b;border-bottom:1px solid #e6eee4;vertical-align:top}.notebook .empty{text-align:center;color:#829484;padding:18px 5px}.table-wrap{overflow-x:auto}.footer{text-align:center;color:#758c77;font-size:10px;margin-top:22px}.hidden{display:none!important}
+@media(max-width:1000px){.workspace{grid-template-columns:1fr}.lower-grid{grid-template-columns:1fr}.hero-info{display:none}}
+@media(max-width:620px){.wrap{padding:13px 11px 27px}.topbar{align-items:flex-start}.brand{font-size:9px}.brand-icon{width:35px;height:35px}.pill{font-size:8px}.hero h1{font-size:35px}.hero p{font-size:12px}.lab-tabs{grid-template-columns:repeat(2,1fr);gap:7px}.lab-tab{min-height:71px;padding:9px}.lab-tab strong{font-size:11px}.lab-tab small{font-size:9px}.stage-head{padding:12px}.scene-area{padding:9px 8px 5px}#scene{height:275px}.metric-grid{grid-template-columns:repeat(2,1fr);padding:8px}.metric{padding:9px}.metric strong{font-size:18px}.equation-row{grid-template-columns:1fr}.graph-card{padding:10px}#plot{height:165px}.controls{padding:13px}.lower-grid{gap:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="topbar">
+ <div class="brand"><div class="brand-icon">V</div><span>Virtual Science Lab · Physics</span></div>
+ <div class="top-actions"><span class="pill">CLASS 11 · CHAPTER 9 · CBSE</span><button class="sound-btn" id="soundBtn" type="button" aria-pressed="true">🔊 Sound ON</button></div>
+</header>
+<section class="hero">
+ <div><div class="eyebrow">Interactive Physics Laboratory</div><h1>Mechanical Properties <span>of Fluids</span></h1><p>Explore pressure in liquids, hydraulic machines, fluid flow, Bernoulli's principle, viscosity, terminal velocity, surface tension and capillary action through interactive laboratory models.</p></div>
+ <div class="hero-info"><strong>04 LABS</strong>Explore · Measure · Investigate</div>
+</section>
+<nav class="lab-tabs" aria-label="Mechanical properties of fluids experiments">
+ <button class="lab-tab active" data-tab="0"><span class="num">LAB 01</span><strong>Pressure & Pascal's Law</strong><small>Depth · pressure · hydraulic lift</small></button>
+ <button class="lab-tab" data-tab="1"><span class="num">LAB 02</span><strong>Continuity & Bernoulli</strong><small>Flow speed · area · pressure</small></button>
+ <button class="lab-tab" data-tab="2"><span class="num">LAB 03</span><strong>Viscosity & Stokes' Law</strong><small>Fluid drag · falling sphere · terminal speed</small></button>
+ <button class="lab-tab" data-tab="3"><span class="num">LAB 04</span><strong>Surface Tension & Capillarity</strong><small>Capillary rise · droplets · soap bubbles</small></button>
+</nav>
+<main class="workspace">
+<section class="card">
+ <div class="stage-head"><div><h2 id="stageTitle">Pressure in a Liquid</h2><p id="stageDesc">Investigate how pressure increases with depth inside a liquid.</p></div><div class="state-pill"><i class="state-dot"></i><span id="state">READY TO TEST</span></div></div>
+ <div class="scene-area"><div class="canvas-frame"><canvas id="scene" aria-label="Interactive fluid mechanics experiment"></canvas></div><div class="scene-footer"><span id="sceneNote">Hydrostatic pressure · SI units</span><span id="sceneHint">Press Run test to start</span></div><div class="progress-wrap"><div class="progress-head"><span>TEST PROGRESS</span><strong id="progressLabel">0%</strong></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div></div>
+ <div class="metric-grid"><div class="metric"><label id="lab0">Pressure</label><strong id="m0">—</strong><em id="u0">P = ρgh</em></div><div class="metric"><label id="lab1">Depth</label><strong id="m1">—</strong><em id="u1">h</em></div><div class="metric"><label id="lab2">Fluid density</label><strong id="m2">—</strong><em id="u2">ρ</em></div><div class="metric"><label id="lab3">Force on surface</label><strong id="m3">—</strong><em id="u3">F = PA</em></div></div>
+ <div class="equation-row"><div class="card equation-card"><h3>LIVE PHYSICS EQUATION</h3><div class="formula" id="formula">P = ρgh</div><div class="formula-result" id="calculation">Run the experiment to see the calculation.</div></div><div class="card insight-card"><h3>OBSERVE & UNDERSTAND</h3><p id="explain">Change the settings and run the experiment to investigate the fluid behaviour.</p></div></div>
+ <div class="card graph-card"><div class="graph-head"><h3 id="graphTitle">Pressure vs depth</h3><span id="graphCaption">Slope = ρg</span></div><canvas id="plot" aria-label="Live scientific graph"></canvas></div>
+</section>
+<aside class="card controls">
+ <div class="controls-head"><h3>Experiment controls</h3><p id="controlHint">Set your parameters, then run the test.</p></div>
+ <!-- LAB 1 -->
+ <div class="panel" data-panel="0">
+  <div class="control"><div class="control-top"><label for="pressureMode">Experiment mode</label></div><select id="pressureMode"><option value="hydro">Hydrostatic pressure</option><option value="hydraulic">Hydraulic lift · Pascal's law</option></select></div>
+  <div id="hydroControls">
+   <div class="control"><div class="control-top"><label for="fluidDensity">Liquid density</label><output class="value" id="fluidDensityOut">1,000 kg/m³</output></div><input id="fluidDensity" type="range" min="700" max="1400" step="10" value="1000"><div class="ends"><span>700 kg/m³</span><span>1,400 kg/m³</span></div></div>
+   <div class="control"><div class="control-top"><label for="waterDepth">Probe depth</label><output class="value" id="waterDepthOut">3.0 m</output></div><input id="waterDepth" type="range" min="0" max="20" step="0.5" value="3"><div class="ends"><span>0 m</span><span>20 m</span></div></div>
+   <div class="control"><div class="control-top"><label for="probeArea">Probe surface area</label><output class="value" id="probeAreaOut">0.010 m²</output></div><input id="probeArea" type="range" min="0.001" max="0.05" step="0.001" value="0.01"><div class="ends"><span>0.001 m²</span><span>0.050 m²</span></div></div>
+  </div>
+  <div id="hydraulicControls" class="hidden">
+   <div class="control"><div class="control-top"><label for="inputForce">Input force F₁</label><output class="value" id="inputForceOut">100 N</output></div><input id="inputForce" type="range" min="10" max="1000" step="10" value="100"><div class="ends"><span>10 N</span><span>1,000 N</span></div></div>
+   <div class="control"><div class="control-top"><label for="smallArea">Small piston area A₁</label><output class="value" id="smallAreaOut">5 cm²</output></div><input id="smallArea" type="range" min="1" max="50" step="1" value="5"><div class="ends"><span>1 cm²</span><span>50 cm²</span></div></div>
+   <div class="control"><div class="control-top"><label for="largeArea">Large piston area A₂</label><output class="value" id="largeAreaOut">100 cm²</output></div><input id="largeArea" type="range" min="10" max="500" step="5" value="100"><div class="ends"><span>10 cm²</span><span>500 cm²</span></div></div>
+  </div>
+  <div class="info-strip" id="pressureInfo">Hydrostatic pressure depends on density, gravitational acceleration and depth: P = ρgh.</div>
+  <div class="button-row"><button class="btn primary" id="pressureRun">▶ Run test</button><button class="btn ghost" id="pressurePause">Ⅱ Pause</button><button class="btn ghost" id="pressureResetTest">↺ Reset test</button><button class="btn ghost" id="pressureReset">Reset settings</button></div>
+ </div>
+ <!-- LAB 2 -->
+ <div class="panel hidden" data-panel="1">
+  <div class="control"><div class="control-top"><label for="flowRate">Volume flow rate Q</label><output class="value" id="flowRateOut">1.0 L/s</output></div><input id="flowRate" type="range" min="0.1" max="2" step="0.05" value="1"><div class="ends"><span>0.1 L/s</span><span>2.0 L/s</span></div></div>
+  <div class="control"><div class="control-top"><label for="pipeDiameter">Inlet diameter D₁</label><output class="value" id="pipeDiameterOut">60 mm</output></div><input id="pipeDiameter" type="range" min="30" max="100" step="2" value="60"><div class="ends"><span>30 mm</span><span>100 mm</span></div></div>
+  <div class="control"><div class="control-top"><label for="throatRatio">Throat / inlet diameter ratio</label><output class="value" id="throatRatioOut">0.65</output></div><input id="throatRatio" type="range" min="0.5" max="1" step="0.01" value="0.65"><div class="ends"><span>0.50</span><span>1.00</span></div></div>
+  <div class="control"><div class="control-top"><label for="fluidPressure">Inlet absolute pressure</label><output class="value" id="fluidPressureOut">200 kPa</output></div><input id="fluidPressure" type="range" min="100" max="500" step="5" value="200"><div class="ends"><span>100 kPa</span><span>500 kPa</span></div></div>
+  <div class="control"><div class="control-top"><label for="fluidHeight">Outlet height above inlet</label><output class="value" id="fluidHeightOut">0.0 m</output></div><input id="fluidHeight" type="range" min="-2" max="2" step="0.1" value="0"><div class="ends"><span>−2 m</span><span>+2 m</span></div></div>
+  <div class="info-strip">Assumes steady, incompressible, non-viscous flow. Pressure is calculated using Bernoulli's equation between inlet and throat.</div>
+  <div class="button-row"><button class="btn primary" id="flowRun">▶ Start flow</button><button class="btn ghost" id="flowPause">Ⅱ Pause</button><button class="btn ghost" id="flowResetTest">↺ Reset test</button><button class="btn ghost" id="flowReset">Reset settings</button></div>
+ </div>
+ <!-- LAB 3 -->
+ <div class="panel hidden" data-panel="2">
+  <div class="control"><div class="control-top"><label for="sphereMaterial">Falling sphere material</label></div><select id="sphereMaterial"><option value="steel">Steel · 7,800 kg/m³</option><option value="glass">Glass · 2,500 kg/m³</option><option value="aluminium">Aluminium · 2,700 kg/m³</option><option value="lead">Lead · 11,340 kg/m³</option></select></div>
+  <div class="control"><div class="control-top"><label for="viscousFluid">Fluid type</label></div><select id="viscousFluid"><option value="glycerin">Glycerin · 1.20 Pa·s</option><option value="oil">Light oil · 0.080 Pa·s</option><option value="water">Water · 0.001 Pa·s</option><option value="honey">Honey · 5.00 Pa·s</option></select></div>
+  <div class="control"><div class="control-top"><label for="sphereRadius">Sphere radius</label><output class="value" id="sphereRadiusOut">0.50 mm</output></div><input id="sphereRadius" type="range" min="0.5" max="5" step="0.1" value="0.5"><div class="ends"><span>0.5 mm</span><span>5.0 mm</span></div></div>
+  <div class="control"><div class="control-top"><label for="gravityValue">Gravitational acceleration g</label><output class="value" id="gravityValueOut">9.81 m/s²</output></div><input id="gravityValue" type="range" min="1" max="20" step="0.1" value="9.81"><div class="ends"><span>1 m/s²</span><span>20 m/s²</span></div></div>
+  <div class="info-strip" id="viscosityInfo">Stokes' law assumes a small sphere, slow laminar motion and Reynolds number much less than 1. The falling animation is slowed for visibility.</div>
+  <div class="button-row"><button class="btn primary" id="viscosityRun">▶ Release sphere</button><button class="btn ghost" id="viscosityPause">Ⅱ Pause</button><button class="btn ghost" id="viscosityResetTest">↺ Reset test</button><button class="btn ghost" id="viscosityReset">Reset settings</button></div>
+ </div>
+ <!-- LAB 4 -->
+ <div class="panel hidden" data-panel="3">
+  <div class="control"><div class="control-top"><label for="surfaceMode">Surface tension experiment</label></div><select id="surfaceMode"><option value="capillary">Capillary rise / depression</option><option value="drop">Liquid droplet pressure</option><option value="bubble">Soap bubble pressure</option></select></div>
+  <div class="control"><div class="control-top"><label for="surfaceFluid">Liquid</label></div><select id="surfaceFluid"><option value="water">Water · 72.8 mN/m</option><option value="ethanol">Ethanol · 22.3 mN/m</option><option value="glycerin">Glycerin · 63.4 mN/m</option><option value="mercury">Mercury · 485.5 mN/m</option></select></div>
+  <div class="control"><div class="control-top"><label for="surfaceRadius" id="surfaceRadiusLabel">Capillary tube radius</label><output class="value" id="surfaceRadiusOut">0.50 mm</output></div><input id="surfaceRadius" type="range" min="0.1" max="3" step="0.05" value="0.5"><div class="ends"><span>0.10 mm</span><span>3.00 mm</span></div></div>
+  <div class="control" id="contactControl"><div class="control-top"><label for="contactAngle">Contact angle θ</label><output class="value" id="contactAngleOut">0°</output></div><input id="contactAngle" type="range" min="0" max="150" step="1" value="0"><div class="ends"><span>0° · rise</span><span>150° · depression</span></div></div>
+  <div class="control"><div class="control-top"><label for="surfaceGravity">Gravitational acceleration</label><output class="value" id="surfaceGravityOut">9.81 m/s²</output></div><input id="surfaceGravity" type="range" min="1" max="20" step="0.1" value="9.81"><div class="ends"><span>1 m/s²</span><span>20 m/s²</span></div></div>
+  <div class="info-strip" id="surfaceInfo">Capillary rise depends on surface tension, contact angle, liquid density, gravity and tube radius.</div>
+  <div class="button-row"><button class="btn primary" id="surfaceRun">▶ Run experiment</button><button class="btn ghost" id="surfacePause">Ⅱ Pause</button><button class="btn ghost" id="surfaceResetTest">↺ Reset test</button><button class="btn ghost" id="surfaceReset">Reset settings</button></div>
+ </div>
+</aside>
+</main>
+
+<div class="lower-grid">
+ <section class="card lower-card guide">
+  <div class="section-head"><h3>Guided investigation</h3><span class="tag" id="modeTag">GUIDED MODE</span></div>
+  <p class="guide-intro" id="guideIntro">Choose a mission, adjust parameters and predict the result before checking the simulation.</p>
+  <div class="mission"><strong id="missionTitle">Mission 1 · Increase depth</strong><p id="missionText">Keep liquid density fixed and increase depth. How does hydrostatic pressure change?</p></div>
+  <div class="button-row"><select id="challenge"><option value="0">Challenge 1</option><option value="1">Challenge 2</option><option value="2">Challenge 3</option></select><button class="btn" id="loadChallenge">Load challenge</button><button class="btn ghost" id="toggleMode">Switch to free exploration</button></div>
+ </section>
+ <section class="card lower-card notebook">
+  <div class="section-head"><h3>Experiment notebook</h3><span class="tag" id="trialCount">0 TRIALS</span></div>
+  <p class="sub">Save readings from any lab and export observations as a CSV spreadsheet.</p>
+  <div class="button-row" style="margin:0 0 9px"><button class="btn primary" id="record">＋ Record trial</button><button class="btn" id="export">↓ Export CSV</button><button class="btn ghost" id="clearRecords">Clear</button></div>
+  <div class="table-wrap"><table><thead><tr><th>Experiment</th><th>Trial</th><th>Settings</th><th>Result</th></tr></thead><tbody id="records"><tr><td colspan="4" class="empty">No readings recorded yet.</td></tr></tbody></table></div>
+ </section>
+</div>
+<footer class="footer">Virtual Science Lab · Idealised fluid models · SI units · Educational approximations, not industrial design data</footer>
+</div>
+
+<script id="experiment-metadata" type="application/json">
+{
+ "id":"class-11-mechanical-properties-of-fluids",
+ "title":"Mechanical Properties of Fluids",
+ "class":11,
+ "chapterNumber":9,
+ "chapter":"Mechanical Properties of Fluids",
+ "description":"Interactive investigations of hydrostatic pressure, Pascal's law and hydraulic lift, continuity equation, Bernoulli's principle, viscosity, Stokes' law, terminal velocity, surface tension and capillary action.",
+ "simulationType":"2D"
+}
+</script>
+
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const scene=$('scene'),plot=$('plot'),ctx=scene.getContext('2d'),px=plot.getContext('2d');
+const G=9.81;
+const fluids={water:{name:'Water',rho:1000,eta:.001,gamma:.0728},ethanol:{name:'Ethanol',rho:789,eta:.0012,gamma:.0223},glycerin:{name:'Glycerin',rho:1260,eta:1.2,gamma:.0634},honey:{name:'Honey',rho:1420,eta:5,gamma:.075},mercury:{name:'Mercury',rho:13534,eta:.0015,gamma:.4855}};
+const sphereDensities={steel:7800,glass:2500,aluminium:2700,lead:11340};
+const defaults={pressureMode:'hydro',fluidDensity:1000,waterDepth:3,probeArea:.01,inputForce:100,smallArea:5,largeArea:100,flowRate:1,pipeDiameter:60,throatRatio:.65,fluidPressure:200,fluidHeight:0,sphereMaterial:'steel',viscousFluid:'glycerin',sphereRadius:.5,gravityValue:9.81,surfaceMode:'capillary',surfaceFluid:'water',surfaceRadius:.5,contactAngle:0,surfaceGravity:9.81};
+const desc=[
+ {title:'Pressure in Liquids & Pascal’s Law',subtitle:'Investigate hydrostatic pressure and force multiplication in a hydraulic lift.',graph:'Pressure vs depth',caption:'Hydrostatic pressure increases linearly with depth',note:'Pressure values are gauge pressure unless stated',hint:'Run the test to increase pressure or hydraulic input force progressively.'},
+ {title:'Continuity Equation & Bernoulli’s Principle',subtitle:'Watch fluid flow through a Venturi tube and compare speed and pressure.',graph:'Pressure along the Venturi tube',caption:'Higher flow speed is associated with lower static pressure',note:'Steady incompressible ideal-flow model',hint:'Start the flow to animate fluid particles through the narrowing pipe.'},
+ {title:'Viscosity, Stokes’ Law & Terminal Velocity',subtitle:'Release a sphere into a viscous fluid and observe its falling motion.',graph:'Drag force vs sphere speed',caption:'Stokes drag: Fd = 6πηrv',note:'Stokes terminal-speed estimate · visual fall is illustrative · Re ≪ 1 for validity',hint:'Release the sphere; its falling path is illustrative while terminal speed is calculated from Stokes’ law.'},
+ {title:'Surface Tension & Capillary Action',subtitle:'Investigate capillary rise, liquid droplets and soap bubble pressure.',graph:'Capillary rise vs tube radius',caption:'For a wetting liquid, rise is inversely proportional to radius',note:'Ideal liquid interface · SI calculations',hint:'Run the experiment to reveal the capillary rise or surface-force effect.'}
+];
+let active=0,animation=null,lastFrame=0,testProgress=0,animTime=0,flowOffset=0,records=[],guided=true,soundOn=true,audio=null;
+
+function audioContext(){if(!soundOn)return null;const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;if(!audio)audio=new A();if(audio.state==='suspended')audio.resume().catch(()=>{});return audio}
+function beep(freq=440,dur=.12,wave='sine',volume=.023,delay=0){const ac=audioContext();if(!ac)return;const o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime+delay;o.type=wave;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(volume,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+dur+.03)}
+function cue(k){if(!soundOn)return;if(k==='start'){beep(270,.1,'triangle');beep(430,.12,'sine',.02,.1)}if(k==='done'){beep(523,.12);beep(659,.13,'sine',.024,.13);beep(784,.18,'sine',.024,.27)}}
+$('soundBtn').addEventListener('click',()=>{soundOn=!soundOn;$('soundBtn').textContent=soundOn?'🔊 Sound ON':'🔇 Sound OFF';$('soundBtn').classList.toggle('off',!soundOn);$('soundBtn').setAttribute('aria-pressed',String(soundOn));if(soundOn)beep(620,.07)});
+
+function N(id){return Number($(id).value)}
+function f(v,d=2){return Number.isFinite(v)?v.toFixed(d):'—'}
+function comma(v){return Math.round(v).toLocaleString('en-IN')}
+function sci(v,d=3){if(!Number.isFinite(v))return '—';if(v===0)return '0';const e=Math.floor(Math.log10(Math.abs(v))),m=v/Math.pow(10,e),sup={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};return m.toFixed(d)+' × 10'+String(e).split('').map(c=>sup[c]||c).join('')}
+function out(id,v){$(id+'Out').textContent=v}
+function resize(canvas,c){const r=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2),w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}c.setTransform(d,0,0,d,0,0);return {w:r.width,h:r.height}}
+function clear(c,w,h){c.clearRect(0,0,w,h)}
+function line(c,x1,y1,x2,y2,color='#8ca88e',width=2,dash=[]){c.save();c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dash);c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.restore()}
+function txt(c,s,x,y,color='#355d3d',size=11,align='left',weight='500'){c.save();c.fillStyle=color;c.font=weight+' '+size+'px system-ui,sans-serif';c.textAlign=align;c.fillText(s,x,y);c.restore()}
+function arrow(c,x1,y1,x2,y2,color='#087f87',width=3,head=9){line(c,x1,y1,x2,y2,color,width);const a=Math.atan2(y2-y1,x2-x1);c.fillStyle=color;c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-head*Math.cos(a-.48),y2-head*Math.sin(a-.48));c.lineTo(x2-head*Math.cos(a+.48),y2-head*Math.sin(a+.48));c.closePath();c.fill()}
+function circle(c,x,y,r,fill,stroke='#fff'){c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle=fill;c.fill();c.strokeStyle=stroke;c.lineWidth=2;c.stroke()}
+function polygon(c,p,fill,stroke='#6d956f',width=1.5){c.beginPath();p.forEach((v,i)=>i?c.lineTo(v[0],v[1]):c.moveTo(v[0],v[1]));c.closePath();c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke()}}
+function metrics(labels,values,units){for(let i=0;i<4;i++){$('lab'+i).textContent=labels[i];$('m'+i).textContent=values[i];$('u'+i).textContent=units[i]}}
+function axes(c,L,R,T,B){for(let i=0;i<=4;i++){const y=T+(B-T)*i/4;line(c,L,y,R,y,'#e2eee0',1)}line(c,L,T,L,B,'#8eaa91',1.2);line(c,L,B,R,B,'#8eaa91',1.2)}
+function updateOutputs(){const pairs=[['fluidDensity',comma(N('fluidDensity'))+' kg/m³'],['waterDepth',f(N('waterDepth'),1)+' m'],['probeArea',f(N('probeArea'),3)+' m²'],['inputForce',comma(N('inputForce'))+' N'],['smallArea',N('smallArea')+' cm²'],['largeArea',N('largeArea')+' cm²'],['flowRate',f(N('flowRate'),2)+' L/s'],['pipeDiameter',N('pipeDiameter')+' mm'],['throatRatio',f(N('throatRatio'),2)],['fluidPressure',N('fluidPressure')+' kPa'],['fluidHeight',f(N('fluidHeight'),1)+' m'],['sphereRadius',f(N('sphereRadius'),2)+' mm'],['gravityValue',f(N('gravityValue'),2)+' m/s²'],['surfaceRadius',f(N('surfaceRadius'),2)+' mm'],['contactAngle',N('contactAngle')+'°'],['surfaceGravity',f(N('surfaceGravity'),2)+' m/s²']];pairs.forEach(([id,v])=>out(id,v))}
+
+/* LAB 1 CALCULATIONS */
+function pressureData(){
+ const mode=$('pressureMode').value;
+ if(mode==='hydro'){
+  const rho=N('fluidDensity'),targetH=N('waterDepth'),h=targetH*testProgress,A=N('probeArea'),P=rho*G*h,F=P*A;
+  return {mode,rho,targetH,h,A,P,F};
+ }
+ const targetF=N('inputForce'),F1=targetF*testProgress,A1=N('smallArea')*1e-4,A2=N('largeArea')*1e-4,P=F1/A1,F2=P*A2;
+ const ratio=A2/A1;
+ return {mode,targetF,F1,A1,A2,P,F2,ratio,travelSmall:0.08*testProgress,travelLarge:0.08*testProgress/ratio};
+}
+function renderHydro(){
+ const d=pressureData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const tankX=w*.13,tankY=55,tankW=w*.38,tankH=h*.7,waterY=tankY+34;
+ ctx.fillStyle='#e6f3e2';ctx.fillRect(tankX+2,waterY,tankW-4,tankH-(waterY-tankY)-2);
+ const water=ctx.createLinearGradient(0,waterY,0,tankY+tankH);water.addColorStop(0,'#c5e8ed');water.addColorStop(1,'#8acbd3');ctx.fillStyle=water;ctx.fillRect(tankX+2,waterY,tankW-4,tankY+tankH-waterY-2);
+ ctx.strokeStyle='#6e9b77';ctx.lineWidth=5;ctx.strokeRect(tankX,tankY,tankW,tankH);
+ txt(ctx,'LIQUID TANK',tankX+tankW/2,tankY-17,'#258653',11,'center','900');
+ if(d.mode==='hydro'){
+  const probeY=waterY+Math.min(tankH-85,d.h/(20||1)*(tankH-100));
+  const probeX=tankX+tankW*.57;
+  line(ctx,probeX-19,waterY,probeX-19,probeY,'#bd741b',2,[4,4]);
+  circle(ctx,probeX,probeY,11,'#bd741b');
+  arrow(ctx,probeX+22,probeY,probeX+52,probeY,'#087f87',3,8);
+  arrow(ctx,probeX-22,probeY,probeX-52,probeY,'#087f87',3,8);
+  txt(ctx,'PRESSURE PROBE',probeX+62,probeY+4,'#087f87',9);
+  txt(ctx,'h = '+f(d.h,2)+' m',tankX+12,probeY-12,'#355d3d',10);
+  txt(ctx,'P = '+f(d.P/1000,3)+' kPa',w*.77,100,'#087f87',16,'center','900');
+  txt(ctx,'Pressure at the probe',w*.77,78,'#6d856f',10,'center');
+  txt(ctx,'Force = '+f(d.F,3)+' N',w*.77,125,'#bd741b',12,'center','800');
+  txt(ctx,'on area '+f(d.A,3)+' m²',w*.77,143,'#718a76',9,'center');
+  txt(ctx,'Depth increases ↓',tankX+tankW/2,tankY+tankH+22,'#56765d',10,'center');
+  metrics(['Gauge pressure','Probe depth','Liquid density','Force on probe'],[f(d.P/1000,3)+' kPa',f(d.h,2)+' m',comma(d.rho)+' kg/m³',f(d.F,3)+' N'],['P = ρgh','below surface','ρ','F = PA']);
+  $('formula').textContent='P = ρgh   ·   F = PA';
+  $('calculation').textContent=`P = ${d.rho} × 9.81 × ${f(d.h,2)} = ${f(d.P,2)} Pa`;
+  $('explain').textContent=`At depth ${f(d.h,2)} m, gauge pressure is ${f(d.P/1000,3)} kPa. Pressure increases linearly with depth for a liquid of constant density. At the same depth, pressure does not depend on the tank's shape.`;
+  drawHydroGraph(d);
+ }else{
+  const baseY=tankY+tankH-35,fluidY=tankY+55;
+  // Connected hydraulic chamber
+  ctx.fillStyle='#c6e8e7';ctx.fillRect(tankX+2,fluidY,tankW-4,baseY-fluidY);
+  const sx=tankX+tankW*.24,lx=tankX+tankW*.76;
+  const smallW=22,largeW=58;
+  const y1=baseY-70-d.travelSmall*180,y2=baseY-70-d.travelLarge*180;
+  ctx.fillStyle='#d9e9d4';ctx.fillRect(sx-smallW/2,y1-85,smallW,85);
+  ctx.fillStyle='#d9e9d4';ctx.fillRect(lx-largeW/2,y2-105,largeW,105);
+  ctx.fillStyle='#c7d9ce';ctx.fillRect(sx-smallW/2-5,y1-7,smallW+10,8);ctx.fillRect(lx-largeW/2-5,y2-7,largeW+10,8);
+  line(ctx,tankX+2,baseY,tankX+tankW-2,baseY,'#6e9b77',4);
+  line(ctx,sx,baseY+7,sx,baseY+31,'#87bdb8',4);
+  line(ctx,lx,baseY+7,lx,baseY+31,'#87bdb8',4);
+  arrow(ctx,sx,y1-45,sx,y1-10,'#bd741b',3,8);
+  arrow(ctx,lx,y2-47,lx,y2-10,'#087f87',3,8);
+  txt(ctx,'F₁ = '+f(d.F1,1)+' N',sx,y1-57,'#bd741b',10,'center');
+  txt(ctx,'F₂ = '+f(d.F2,1)+' N',lx,y2-59,'#087f87',11,'center','800');
+  txt(ctx,'A₁',sx,baseY+48,'#4978c5',11,'center','800');txt(ctx,'A₂',lx,baseY+48,'#4978c5',11,'center','800');
+  txt(ctx,'HYDRAULIC LIFT',w*.77,64,'#258653',11,'center','900');
+  txt(ctx,'Pressure = '+f(d.P/1000,2)+' kPa',w*.77,92,'#087f87',12,'center','800');
+  txt(ctx,'Force multiplication',w*.77,123,'#718a76',9,'center');
+  txt(ctx,'× '+f(d.ratio,2),w*.77,146,'#bd741b',18,'center','900');
+  metrics(['Fluid pressure','Input force','Output force','Force ratio'],[f(d.P/1000,2)+' kPa',f(d.F1,2)+' N',f(d.F2,2)+' N',f(d.ratio,2)+' ×'],['P = F₁/A₁','F₁','F₂ = PA₂','A₂ / A₁']);
+  $('formula').textContent='F₁/A₁ = F₂/A₂';
+  $('calculation').textContent=`F₂ = ${f(d.F1,2)} × (${d.A2*1e4}/${d.A1*1e4}) = ${f(d.F2,2)} N`;
+  $('explain').textContent=`Pascal's law: pressure applied to a confined fluid is transmitted throughout the fluid. The larger piston produces ${f(d.ratio,2)} times the input force, while moving a shorter distance. Ideal energy is conserved.`;
+  drawHydraulicGraph(d);
+ }
+}
+function drawHydroGraph(d){const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);const L=52,R=w-15,T=22,B=h-31;axes(px,L,R,T,B);const maxD=20,maxP=d.rho*G*maxD;px.beginPath();for(let i=0;i<=60;i++){const depth=maxD*i/60,p=d.rho*G*depth,x=L+depth/maxD*(R-L),y=B-p/maxP*(B-T);if(i===0)px.moveTo(x,y);else px.lineTo(x,y)}px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();const xx=L+d.h/maxD*(R-L),yy=B-d.P/maxP*(B-T);circle(px,xx,yy,4,'#bd741b');txt(px,'Gauge pressure (Pa)',7,13,'#718a76',9);txt(px,'Depth (m)',R,B+24,'#718a76',9,'right');txt(px,'Current '+f(d.P/1000,3)+' kPa',R,14,'#087f87',9,'right')}
+function drawHydraulicGraph(d){const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);const L=52,R=w-15,T=22,B=h-31;axes(px,L,R,T,B);const maxF=Math.max(1000,d.targetF*1.1),maxOut=maxF*d.ratio;px.beginPath();for(let i=0;i<=60;i++){const xF=maxF*i/60,out=xF*d.ratio,x=L+xF/maxF*(R-L),y=B-out/maxOut*(B-T);if(i===0)px.moveTo(x,y);else px.lineTo(x,y)}px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();circle(px,L+d.F1/maxF*(R-L),B-d.F2/maxOut*(B-T),4,'#bd741b');txt(px,'Output force (N)',7,13,'#718a76',9);txt(px,'Input force (N)',R,B+24,'#718a76',9,'right');txt(px,'Current F₂ '+f(d.F2,1)+' N',R,14,'#087f87',9,'right')}
+
+/* LAB 2: CONTINUITY AND BERNOULLI */
+function flowData(){const Q=N('flowRate')/1000,D1=N('pipeDiameter')/1000,D2=D1*N('throatRatio'),A1=Math.PI*D1*D1/4,A2=Math.PI*D2*D2/4,v1=Q/A1,v2=Q/A2,rho=1000,p1=N('fluidPressure')*1000,dz=N('fluidHeight'),p2=p1+.5*rho*(v1*v1-v2*v2)-rho*G*dz,p3=p1-rho*G*dz;return {Q,D1,D2,A1,A2,v1,v2,rho,p1,p2,p3,dz,deltaP:p1-p2}}
+function renderFlow(){const d=flowData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);const L=24,R=w-24,mid=h*.51,x1=w*.26,x2=w*.57,x3=w*.79,pipeH1=68,pipeH2=pipeH1*N('throatRatio');
+ // Pipe filled with liquid
+ ctx.beginPath();ctx.moveTo(L,mid-pipeH1);ctx.lineTo(x1,mid-pipeH1);ctx.quadraticCurveTo(x2,mid-pipeH2,x3,mid-pipeH2);ctx.lineTo(R,mid-pipeH2);ctx.lineTo(R,mid+pipeH2);ctx.lineTo(x3,mid+pipeH2);ctx.quadraticCurveTo(x2,mid+pipeH1,x1,mid+pipeH1);ctx.lineTo(L,mid+pipeH1);ctx.closePath();ctx.fillStyle='#c4e9eb';ctx.fill();ctx.strokeStyle='#639d92';ctx.lineWidth=3;ctx.stroke();
+ // Flow particles move in the same direction; spacing illustrates speed increase at throat.
+ for(let i=0;i<9;i++){const phase=((flowOffset+i/9)%1);const x=L+phase*(R-L);let localHalf=pipeH1;if(x>x1&&x<x3){const q=(x-x1)/(x3-x1);localHalf=pipeH1-(pipeH1-pipeH2)*Math.sin(q*Math.PI/2)}else if(x>=x3)localHalf=pipeH2;const y=mid+Math.sin(i*2.3+phase*5)*localHalf*.55;circle(ctx,x,y,3.2,'#3b9aa5','#eaf9f5')}
+ const gauge=(x,label,p)=>{line(ctx,x,mid-pipeH1-4,x,mid-115,'#92ae92',2);line(ctx,x-8,mid-115,x+8,mid-115,'#92ae92',2);const height=Math.max(6,Math.min(80,p/500000*80));ctx.fillStyle='#7fc3c6';ctx.fillRect(x-5,mid-115+80-height,10,height);txt(ctx,label,x,mid-128,'#56765d',9,'center');txt(ctx,f(p/1000,1)+' kPa',x,mid-137,'#087f87',9,'center')};
+ gauge(x1,'INLET',d.p1);gauge(x2,'THROAT',d.p2);
+ arrow(ctx,x1-35,mid,x1+23,mid,'#087f87',3,8);arrow(ctx,x2-25,mid,x2+33,mid,'#bd741b',3,8);arrow(ctx,x3+5,mid,x3+56,mid,'#087f87',3,8);
+ txt(ctx,'v₁ = '+f(d.v1,2)+' m/s',x1,mid+pipeH1+24,'#087f87',10,'center');txt(ctx,'v₂ = '+f(d.v2,2)+' m/s',x2,mid+pipeH2+24,'#bd741b',10,'center');txt(ctx,'v₃ = v₁',x3,mid+pipeH2+24,'#087f87',10,'center');
+ txt(ctx,'VENTURI FLOW · Q = '+f(d.Q*1000,2)+' L/s',w/2,26,'#258653',11,'center','900');txt(ctx,'Narrower pipe → higher fluid speed → lower static pressure',w/2,h*.93,'#56765d',10,'center');
+ metrics(['Inlet speed','Throat speed','Inlet pressure','Throat pressure'],[f(d.v1,3)+' m/s',f(d.v2,3)+' m/s',f(d.p1/1000,2)+' kPa',f(d.p2/1000,2)+' kPa'],['v₁ = Q/A₁','v₂ = Q/A₂','P₁','P₂ from Bernoulli']);
+ $('formula').textContent='A₁v₁ = A₂v₂';$('calculation').textContent=`v₁ = ${f(d.v1,3)} m/s · v₂ = ${f(d.v2,3)} m/s · P₂ = ${f(d.p2/1000,2)} kPa`;
+ $('explain').textContent=`The throat area is ${f(d.A2*1e4,2)} cm² compared with inlet area ${f(d.A1*1e4,2)} cm². Continuity makes the fluid move faster in the throat. For horizontal flow, Bernoulli's principle predicts lower static pressure where speed is higher. ${d.p2<0?'The calculated throat pressure is below zero absolute, which is not physically possible; cavitation and non-ideal effects would limit this setting, so treat it as outside the simple model.':'The calculated pressure remains positive in this ideal model.'}`;
+ drawFlowGraph(d);
+}
+function drawFlowGraph(d){const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);const L=50,R=w-15,T=24,B=h-31;axes(px,L,R,T,B);const minP=Math.min(d.p2,d.p1,d.p3)*.94,maxP=Math.max(d.p1,d.p2,d.p3)*1.05,span=Math.max(1,maxP-minP);const pts=[[L,d.p1],[L+(R-L)*.28,d.p1*.9+d.p2*.1],[L+(R-L)*.5,d.p2],[L+(R-L)*.72,d.p2*.1+d.p3*.9],[R,d.p3]];px.beginPath();pts.forEach((p,i)=>{const x=p[0],y=B-(p[1]-minP)/span*(B-T);if(i===0)px.moveTo(x,y);else px.lineTo(x,y)});px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();circle(px,L+(R-L)*.5,B-(d.p2-minP)/span*(B-T),4,'#bd741b');txt(px,'Static pressure (Pa)',7,14,'#718a76',9);txt(px,'Along pipe →',R,B+24,'#718a76',9,'right');txt(px,'Inlet '+f(d.p1/1000,1)+' kPa · throat '+f(d.p2/1000,1)+' kPa',R,14,'#087f87',9,'right')}
+
+/* LAB 3: VISCOSITY AND STOKES' LAW */
+function viscosityData(){const sphereR=N('sphereRadius')/1000,rhoS=sphereDensities[$('sphereMaterial').value],fluid=fluids[$('viscousFluid').value],eta=fluid.eta,rhoF=fluid.rho,g=N('gravityValue'),difference=rhoS-rhoF;const vt=2*sphereR*sphereR*difference*g/(9*eta);const speed=Math.max(0,vt)*(1-Math.exp(-testProgress*6));const drag=6*Math.PI*eta*sphereR*speed;const volume=4*Math.PI*Math.pow(sphereR,3)/3,mass=rhoS*volume;const reynolds=rhoF*Math.abs(vt)*(2*sphereR)/eta;const buoyancy=rhoF*volume*g,weight=rhoS*volume*g;const tau=mass/(6*Math.PI*eta*sphereR);return {sphereR,rhoS,fluid,eta,rhoF,g,difference,vt,speed,drag,volume,mass,reynolds,buoyancy,weight,tau,rising:difference<0}}
+function renderViscosity(){const d=viscosityData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);const tankX=w*.33,tankY=38,tankW=140,tankH=290,level=tankY+15;ctx.fillStyle='#d4eff0';ctx.fillRect(tankX+4,level,tankW-8,tankH-20);ctx.strokeStyle='#78a98c';ctx.lineWidth=4;ctx.strokeRect(tankX,tankY,tankW,tankH);txt(ctx,d.fluid.name.toUpperCase()+' · η = '+f(d.eta,3)+' Pa·s',tankX+tankW/2,tankY-12,'#258653',10,'center','800');const travel=Math.max(0,tankH-75);const q=testProgress*6;const denominator=6-(1-Math.exp(-6));const visualProgress=testProgress<=0?0:(q-(1-Math.exp(-q)))/denominator;const cy=level+35+travel*visualProgress;const ballR=8+Math.min(10,N('sphereRadius')*1.1);circle(ctx,tankX+tankW/2,cy,ballR,'#bd741b','#9b671f');if(testProgress>0){arrow(ctx,tankX+tankW/2+24,cy-10,tankX+tankW/2+24,cy+28,'#bd741b',2.5,7);txt(ctx,'weight',tankX+tankW/2+37,cy+14,'#bd741b',9);arrow(ctx,tankX+tankW/2-24,cy+10,tankX+tankW/2-24,cy-25,'#087f87',2.5,7);txt(ctx,'drag + buoyancy',tankX+tankW/2-33,cy-36,'#087f87',9,'right')}
+ const ix=w*.78;txt(ctx,'TERMINAL SPEED',ix,69,'#718a76',9,'center','800');txt(ctx,f(Math.abs(d.vt)*1000,4)+' mm/s',ix,92,'#087f87',17,'center','900');txt(ctx,'CURRENT SPEED',ix,131,'#718a76',9,'center','800');txt(ctx,f(Math.abs(d.speed)*1000,4)+' mm/s',ix,152,'#355d3d',13,'center','800');txt(ctx,'REYNOLDS NUMBER',ix,194,'#718a76',9,'center','800');txt(ctx,f(d.reynolds,4),ix,216,'#bd741b',14,'center','900');txt(ctx,d.rising?'SPHERE RISES':'SPHERE FALLS',ix,251,d.rising?'#4978c5':'#258653',10,'center','900');txt(ctx,'Schematic falling animation · terminal speed calculated from Stokes’ law',w/2,h*.92,'#56765d',9,'center');
+ const sign=d.rising?'upward':'downward';metrics(['Terminal velocity','Viscous drag at current speed','Sphere weight','Reynolds number'],[f(d.vt,6)+' m/s',sci(d.drag)+' N',f(d.weight,6)+' N',f(d.reynolds,4)],['Stokes estimate','6πηrv','ρₛVg','Re = ρv(2r)/η']);$('formula').textContent='vₜ = 2r²(ρₛ − ρf)g / (9η)';$('calculation').textContent=`vₜ = ${f(d.vt,7)} m/s · Re = ${f(d.reynolds,5)} · τ = ${sci(d.tau)} s`;
+ $('explain').textContent=d.difference<=0?'The sphere is not denser than the fluid, so the simple Stokes settling formula predicts zero or upward terminal motion. Select a denser sphere or lighter fluid to investigate falling.':`The sphere ${sign} through the fluid. Stokes' law estimates terminal speed from the balance of weight, buoyancy and viscous drag. ${d.reynolds<0.1?'Re is small, so the creeping-flow assumption is well supported.':d.reynolds<1?'Re is below 1 but not extremely small; treat the Stokes estimate with caution.':'Re is greater than 1, so Stokes drag is not reliable for this setting. The displayed terminal speed is only a theoretical Stokes estimate.'}`;
+ $('viscosityInfo').textContent=`Sphere density ${comma(d.rhoS)} kg/m³ · Fluid density ${comma(d.rhoF)} kg/m³ · Dynamic viscosity ${f(d.eta,4)} Pa·s. Stokes validity: ideally Re ≪ 1. The animated path is a visual teaching model, not a stopwatch-scale fall; the displayed terminal-speed estimate is calculated separately.`;
+ drawViscosityGraph(d);
+}
+function drawViscosityGraph(d){const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);const L=52,R=w-15,T=22,B=h-31;axes(px,L,R,T,B);const vmax=Math.max(.0001,Math.abs(d.vt)*1.25),dragMax=6*Math.PI*d.eta*d.sphereR*vmax;px.beginPath();for(let i=0;i<=60;i++){const v=vmax*i/60,drag=6*Math.PI*d.eta*d.sphereR*v,x=L+v/vmax*(R-L),y=B-drag/dragMax*(B-T);if(i===0)px.moveTo(x,y);else px.lineTo(x,y)}px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();const xx=L+Math.abs(d.speed)/vmax*(R-L),yy=B-d.drag/dragMax*(B-T);circle(px,xx,yy,4,'#bd741b');txt(px,'Viscous drag (relative)',7,13,'#718a76',9);txt(px,'Sphere speed (m/s)',R,B+24,'#718a76',9,'right');txt(px,'Current drag '+sci(d.drag)+' N',R,14,'#087f87',9,'right')}
+
+/* LAB 4: SURFACE TENSION */
+function surfaceData(){const fluid=fluids[$('surfaceFluid').value],mode=$('surfaceMode').value,r=N('surfaceRadius')/1000,theta=N('contactAngle')*Math.PI/180,g=N('surfaceGravity');const cos=Math.cos(theta),h=2*fluid.gamma*cos/(fluid.rho*g*r),dropPressure=2*fluid.gamma/r,bubblePressure=4*fluid.gamma/r;return {fluid,mode,r,theta,g,cos,h,dropPressure,bubblePressure,pressure:mode==='bubble'?bubblePressure:dropPressure}} 
+function renderSurface(){const d=surfaceData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);const cx=w*.45;
+ if(d.mode==='capillary'){
+  const tankX=60,tankY=126,tankW=w*.72,tankH=190,outerY=tankY+70;ctx.fillStyle='#d2edef';ctx.fillRect(tankX+2,outerY,tankW-4,tankH);ctx.strokeStyle='#7da78b';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(tankX,tankY);ctx.lineTo(tankX,tankY+tankH);ctx.lineTo(tankX+tankW,tankY+tankH);ctx.lineTo(tankX+tankW,tankY);ctx.stroke();const tubeX=cx,tubeW=36;ctx.fillStyle='#f8fcf6';ctx.fillRect(tubeX-tubeW/2,tankY-70,tubeW,tankH+70);line(ctx,tubeX-tubeW/2,tankY-70,tubeX-tubeW/2,tankY+tankH,'#7caa8d',3);line(ctx,tubeX+tubeW/2,tankY-70,tubeX+tubeW/2,tankY+tankH,'#7caa8d',3);const maxVisual=135,visualH=Math.sign(d.h)*Math.min(maxVisual,Math.abs(d.h)*1000)*testProgress;const liquidBase=outerY;const innerY=liquidBase-visualH;ctx.fillStyle='#9bd5dc';const top= Math.min(innerY,liquidBase),bottom=Math.max(innerY,liquidBase);ctx.fillRect(tubeX-tubeW/2+2,top,tubeW-4,Math.max(2,bottom-top));ctx.fillStyle='#9bd5dc';ctx.fillRect(tankX+2,outerY,tankW-4,tankY+tankH-outerY);line(ctx,tankX+2,outerY,tubeX-tubeW/2,outerY,'#4a9da3',2);line(ctx,tubeX+tubeW/2,outerY,tankX+tankW-2,outerY,'#4a9da3',2);line(ctx,tubeX+27,outerY,tubeX+27,innerY,'#bd741b',2,[4,3]);txt(ctx,(d.h>=0?'Rise ':'Depression ')+f(Math.abs(d.h),4)+' m',tubeX+38,(outerY+innerY)/2,'#bd741b',10);txt(ctx,'θ = '+N('contactAngle')+'°',tubeX,innerY-17,'#087f87',10,'center');txt(ctx,d.h>=0?'CAPILLARY RISE':'CAPILLARY DEPRESSION',w/2,28,'#258653',11,'center','900');txt(ctx,'Outside liquid level',tankX+6,outerY+18,'#56765d',9);txt(ctx,'Liquid column inside tube',tubeX+48,innerY+14,'#56765d',9);
+  metrics(['Capillary height','Surface tension','Contact angle','Liquid density'],[f(d.h*1000,3)+' mm',f(d.fluid.gamma*1000,1)+' mN/m',N('contactAngle')+'°',comma(d.fluid.rho)+' kg/m³'],['h = 2γcosθ/(ρgr)','γ','θ','ρ']);$('formula').textContent='h = 2γ cos θ / (ρgr)';$('calculation').textContent=`h = ${f(d.h*1000,4)} mm · sign = ${d.h>=0?'rise':'depression'}`;$('explain').textContent=d.h>=0?'The liquid wets the capillary wall (contact angle below 90°), so surface tension pulls the liquid up the narrow tube. A narrower tube gives a greater rise.':'The contact angle is above 90°, so the liquid level is depressed inside the capillary tube. Mercury is a familiar example in glass.';
+ }else{
+  const radius=45+Math.min(38,d.r*100000)*testProgress;const cy=h*.48;
+  const grad=ctx.createRadialGradient(cx-radius*.35,cy-radius*.4,3,cx,cy,radius);grad.addColorStop(0,'#e6f6eb');grad.addColorStop(.7,'#a8d8c2');grad.addColorStop(1,'#60a98e');circle(ctx,cx,cy,radius,grad,'#4d9b7b');
+  const count=d.mode==='bubble'?12:8;for(let i=0;i<count;i++){const a=i*Math.PI*2/count,x=cx+Math.cos(a)*(radius+10),y=cy+Math.sin(a)*(radius+10),x2=cx+Math.cos(a)*(radius-13),y2=cy+Math.sin(a)*(radius-13);arrow(ctx,x,y,x2,y2,'#087f87',2,6)}
+  txt(ctx,d.mode==='bubble'?'SOAP BUBBLE':'LIQUID DROPLET',cx,cy+4,'#28634a',12,'center','900');txt(ctx,'R = '+f(d.r*1000,2)+' mm',cx,cy+radius+24,'#56765d',10,'center');txt(ctx,'EXCESS PRESSURE',w*.79,76,'#718a76',9,'center','800');txt(ctx,f(d.pressure/1000,3)+' kPa',w*.79,101,'#087f87',17,'center','900');txt(ctx,d.mode==='bubble'?'Two liquid surfaces':'One liquid surface',w*.79,128,'#56765d',9,'center');
+  metrics(['Excess pressure','Surface tension','Radius','Interfaces'],[f(d.pressure/1000,3)+' kPa',f(d.fluid.gamma*1000,2)+' mN/m',f(d.r*1000,2)+' mm',d.mode==='bubble'?'2':'1'],[d.mode==='bubble'?'ΔP = 4γ/R':'ΔP = 2γ/R','γ','R','liquid surface count']);$('formula').textContent=d.mode==='bubble'?'ΔP = 4γ/R':'ΔP = 2γ/R';$('calculation').textContent=`ΔP = ${f(d.pressure,2)} Pa = ${f(d.pressure/1000,4)} kPa`;$('explain').textContent=d.mode==='bubble'?'A soap bubble has two liquid surfaces: inner and outer. Both contribute to excess pressure, giving ΔP = 4γ/R.':'A liquid droplet has one liquid–air interface. Surface tension produces an excess internal pressure ΔP = 2γ/R.';
+ }
+ $('surfaceInfo').textContent=`${d.fluid.name}: surface tension γ = ${f(d.fluid.gamma*1000,2)} mN/m · density ρ = ${comma(d.fluid.rho)} kg/m³. Visual deformation is enlarged; calculations use SI units.`;
+ drawSurfaceGraph(d);
+}
+function drawSurfaceGraph(d){const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);const L=52,R=w-15,T=22,B=h-31;axes(px,L,R,T,B);
+ if(d.mode==='capillary'){
+  const minR=.1,maxR=3,maxH=Math.abs(2*d.fluid.gamma*Math.cos(d.theta)/(d.fluid.rho*d.g*(minR/1000)))*1.1;px.beginPath();for(let i=0;i<=60;i++){const radius=minR+(maxR-minR)*i/60,hv=2*d.fluid.gamma*Math.cos(d.theta)/(d.fluid.rho*d.g*(radius/1000)),x=L+(radius-minR)/(maxR-minR)*(R-L),y=B-Math.abs(hv)/Math.max(.000001,maxH)*(B-T);if(i===0)px.moveTo(x,y);else px.lineTo(x,y)}px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();const rr=d.r*1000,xx=L+(rr-minR)/(maxR-minR)*(R-L),yy=B-Math.abs(d.h)/Math.max(.000001,maxH)*(B-T);circle(px,xx,yy,4,'#bd741b');txt(px,'|Capillary height| (m)',7,13,'#718a76',9);txt(px,'Tube radius (mm)',R,B+24,'#718a76',9,'right');txt(px,'Current h = '+f(d.h*1000,3)+' mm',R,14,'#087f87',9,'right');
+ }else{
+  const minR=.1,maxR=3,maxP=(d.mode==='bubble'?4:2)*d.fluid.gamma/(minR/1000)*1.1;px.beginPath();for(let i=0;i<=60;i++){const r=minR+(maxR-minR)*i/60,p=(d.mode==='bubble'?4:2)*d.fluid.gamma/(r/1000),x=L+(r-minR)/(maxR-minR)*(R-L),y=B-p/maxP*(B-T);if(i===0)px.moveTo(x,y);else px.lineTo(x,y)}px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();const xx=L+(d.r*1000-minR)/(maxR-minR)*(R-L),yy=B-d.pressure/maxP*(B-T);circle(px,xx,yy,4,'#bd741b');txt(px,'Excess pressure (Pa)',7,13,'#718a76',9);txt(px,'Radius (mm)',R,B+24,'#718a76',9,'right');txt(px,'Current ΔP = '+f(d.pressure,1)+' Pa',R,14,'#087f87',9,'right');
+ }
+}
+
+/* PROGRESSIVE RUN / PAUSE / RESET */
+const runIds=['pressureRun','flowRun','viscosityRun','surfaceRun'];
+function status(){const running=!!animation;const flowPaused=active===1&&!running&&testProgress>=1;$('state').textContent=running?'SIMULATION RUNNING':flowPaused?'FLOW PAUSED':testProgress>=1?'TEST COMPLETE':testProgress>0?'PAUSED':'READY TO TEST';$('progressLabel').textContent=Math.round(testProgress*100)+'%';$('progressFill').style.width=(testProgress*100)+'%';const button=$(runIds[active]);button.textContent=running?(active===1?'● Flowing…':'● Running…'):flowPaused?'▶ Resume flow':testProgress>=1?'↻ Run again':testProgress>0?'▶ Resume test':active===1?'▶ Start flow':active===2?'▶ Release sphere':'▶ Run test';$('sceneHint').textContent=running?(active===1?'Fluid particles are moving through the pipe':'Load is increasing — readings update live'):flowPaused?'Flow is paused. Resume to continue moving the fluid particles.':testProgress>=1?'Target condition reached — test complete':testProgress>0?'Test paused — press Resume to continue':desc[active].hint}
+function render(){updateOutputs();if(active===0)renderHydro();else if(active===1)renderFlow();else if(active===2)renderViscosity();else renderSurface();status()}
+function start(){if(animation)return;if(testProgress>=1&&active!==1)testProgress=0;animation='test';lastFrame=performance.now();cue('start');status();requestAnimationFrame(frame)}
+function pause(){if(!animation)return;animation=null;status()}
+function resetTest(){animation=null;testProgress=0;animTime=0;flowOffset=0;render()}
+function frame(timestamp){if(!animation)return;const dt=Math.min(.05,(timestamp-lastFrame)/1000||0);lastFrame=timestamp;animTime+=dt;testProgress=Math.min(1,testProgress+dt/4.2);if(active===1)flowOffset=(flowOffset+dt*.16)%1;render();if(testProgress>=1&&active!==1){animation=null;cue('done');status()}else requestAnimationFrame(frame)}
+function settingsChanged(){if(animation)animation=null;testProgress=0;animTime=0;render()}
+function switchTab(index){animation=null;active=index;testProgress=0;animTime=0;flowOffset=0;document.querySelectorAll('.lab-tab').forEach((b,i)=>b.classList.toggle('active',i===index));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('hidden',Number(p.dataset.panel)!==index));$('stageTitle').textContent=desc[index].title;$('stageDesc').textContent=desc[index].subtitle;$('graphTitle').textContent=desc[index].graph;$('graphCaption').textContent=desc[index].caption;$('sceneNote').textContent=desc[index].note;$('controlHint').textContent=desc[index].hint;updateGuide();render()}
+document.querySelectorAll('.lab-tab').forEach(b=>b.addEventListener('click',()=>switchTab(Number(b.dataset.tab))));
+document.querySelectorAll('.panel input,.panel select').forEach(el=>el.addEventListener('input',settingsChanged));
+runIds.forEach(id=>$(id).addEventListener('click',start));
+['pressurePause','flowPause','viscosityPause','surfacePause'].forEach(id=>$(id).addEventListener('click',pause));
+['pressureResetTest','flowResetTest','viscosityResetTest','surfaceResetTest'].forEach(id=>$(id).addEventListener('click',resetTest));
+function resetSettings(ids){ids.forEach(id=>$(id).value=defaults[id]);syncPressureMode();syncSurfaceMode();resetTest()}
+$('pressureReset').addEventListener('click',()=>resetSettings(['pressureMode','fluidDensity','waterDepth','probeArea','inputForce','smallArea','largeArea']));
+$('flowReset').addEventListener('click',()=>resetSettings(['flowRate','pipeDiameter','throatRatio','fluidPressure','fluidHeight']));
+$('viscosityReset').addEventListener('click',()=>resetSettings(['sphereMaterial','viscousFluid','sphereRadius','gravityValue']));
+$('surfaceReset').addEventListener('click',()=>resetSettings(['surfaceMode','surfaceFluid','surfaceRadius','contactAngle','surfaceGravity']));
+function syncPressureMode(){const hydraulic=$('pressureMode').value==='hydraulic';$('hydroControls').classList.toggle('hidden',hydraulic);$('hydraulicControls').classList.toggle('hidden',!hydraulic);$('pressureInfo').textContent=hydraulic?'Pascal’s law: pressure applied to an enclosed fluid is transmitted equally throughout it.':'Hydrostatic pressure depends on liquid density, gravitational acceleration and depth: P = ρgh.'}
+function syncSurfaceMode(){$('contactControl').classList.toggle('hidden',$('surfaceMode').value!=='capillary');$('surfaceRadiusLabel').textContent=$('surfaceMode').value==='capillary'?'Capillary tube radius':'Droplet / bubble radius'}
+$('pressureMode').addEventListener('change',()=>{syncPressureMode();settingsChanged()});
+$('surfaceMode').addEventListener('change',()=>{syncSurfaceMode();settingsChanged()});
+$('surfaceFluid').addEventListener('change',()=>{if($('surfaceFluid').value==='mercury'&&N('contactAngle')<90)$('contactAngle').value=130;else if($('surfaceFluid').value!=='mercury'&&N('contactAngle')>90)$('contactAngle').value=0;settingsChanged()});
+
+/* GUIDED MISSIONS */
+const missions=[
+ [
+  ['Mission 1 · Increase depth','Keep liquid density fixed and increase depth. How does hydrostatic pressure change?'],
+  ['Mission 2 · Hydraulic advantage','Switch to hydraulic lift. Increase the large piston area while keeping the small piston fixed. What happens to output force?'],
+  ['Mission 3 · Compare liquids','Compare two liquids with different densities at the same depth. Which creates greater pressure?']
+ ],
+ [
+  ['Mission 1 · Narrow the pipe','Reduce throat diameter. Predict the changes in fluid speed and static pressure.'],
+  ['Mission 2 · Double flow rate','Increase flow rate while keeping pipe geometry fixed. How do inlet and throat speeds change?'],
+  ['Mission 3 · Raise the outlet','Change the outlet height. Explain the gravitational potential-energy term in Bernoulli’s equation.']
+ ],
+ [
+  ['Mission 1 · More viscous fluid','Change from light oil to honey. Compare the theoretical terminal speed.'],
+  ['Mission 2 · Change sphere radius','Increase sphere radius. How strongly does Stokes terminal speed depend on radius?'],
+  ['Mission 3 · Check Stokes validity','Increase sphere radius and inspect Reynolds number. When does the creeping-flow approximation become questionable?']
+ ],
+ [
+  ['Mission 1 · Narrow capillary','Reduce tube radius. What happens to the capillary rise?'],
+  ['Mission 2 · Change contact angle','Increase the contact angle beyond 90°. Does the liquid rise or become depressed?'],
+  ['Mission 3 · Soap bubble','Switch from droplet to soap bubble. Why is the pressure difference doubled for the same radius?']
+ ]
+];
+function updateGuide(){const m=missions[active][Number($('challenge').value)||0];$('missionTitle').textContent=m[0];$('missionText').textContent=m[1];$('modeTag').textContent=guided?'GUIDED MODE':'FREE EXPLORATION';$('guideIntro').textContent=guided?'Choose a mission, adjust parameters and predict the result before checking the simulation.':'Explore freely. Change the settings, compare the results and record your observations.';$('toggleMode').textContent=guided?'Switch to free exploration':'Switch to guided mode'}
+$('challenge').addEventListener('change',updateGuide);$('toggleMode').addEventListener('click',()=>{guided=!guided;updateGuide()});
+$('loadChallenge').addEventListener('click',()=>{const c=Number($('challenge').value)||0;if(active===0){if(c===0){$('pressureMode').value='hydro';$('waterDepth').value=10;$('fluidDensity').value=1000}if(c===1){$('pressureMode').value='hydraulic';$('smallArea').value=5;$('largeArea').value=250}if(c===2){$('pressureMode').value='hydro';$('fluidDensity').value=1300;$('waterDepth').value=5}}else if(active===1){if(c===0)$('throatRatio').value=.5;if(c===1)$('flowRate').value=2;if(c===2)$('fluidHeight').value=1.5}else if(active===2){if(c===0)$('viscousFluid').value='honey';if(c===1)$('sphereRadius').value=3;if(c===2)$('sphereRadius').value=5}else{if(c===0)$('surfaceRadius').value=.2;if(c===1)$('contactAngle').value=120;if(c===2)$('surfaceMode').value='bubble'}syncPressureMode();syncSurfaceMode();settingsChanged()});
+
+/* NOTEBOOK */
+function snapshot(){if(active===0){const d=pressureData();return d.mode==='hydro'?{name:'Hydrostatic Pressure',settings:`ρ=${d.rho} kg/m³, depth=${f(d.h,2)} m, area=${d.A} m²`,result:`P=${f(d.P,2)} Pa, force=${f(d.F,4)} N`}:{name:'Pascal Hydraulic Lift',settings:`F₁=${f(d.F1,2)} N, A₁=${d.A1*1e4} cm², A₂=${d.A2*1e4} cm²`,result:`P=${f(d.P,2)} Pa, output force=${f(d.F2,2)} N`}}if(active===1){const d=flowData();return {name:'Continuity & Bernoulli',settings:`Q=${f(d.Q*1000,2)} L/s, D₁=${d.D1*1000} mm, D₂=${d.D2*1000} mm, Δz=${d.dz} m`,result:`v₁=${f(d.v1,3)} m/s, v₂=${f(d.v2,3)} m/s, P₂=${f(d.p2/1000,3)} kPa`}}if(active===2){const d=viscosityData();return {name:'Viscosity & Stokes',settings:`sphere=${$('sphereMaterial').value}, fluid=${d.fluid.name}, r=${d.sphereR*1000} mm, η=${d.eta} Pa·s`,result:`vₜ=${f(d.vt,7)} m/s, Re=${f(d.reynolds,5)}, Stokes ${d.reynolds<.1?'well-supported':'use caution'}`}}const d=surfaceData();return {name:'Surface Tension',settings:`mode=${d.mode}, liquid=${d.fluid.name}, radius=${d.r*1000} mm, γ=${d.fluid.gamma} N/m, θ=${N('contactAngle')}°`,result:d.mode==='capillary'?`capillary height=${f(d.h*1000,5)} mm`:`excess pressure=${f(d.pressure,3)} Pa`}}
+function refreshRecords(){$('trialCount').textContent=records.length+' TRIALS';const body=$('records');body.innerHTML='';records.slice(0,8).forEach(r=>{const tr=document.createElement('tr');[r.name,'#'+r.trial,r.settings,r.result].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});body.appendChild(tr)});if(!records.length)body.innerHTML='<tr><td colspan="4" class="empty">No readings recorded yet.</td></tr>'}
+$('record').addEventListener('click',()=>{const d=snapshot();records.unshift({...d,trial:records.length+1});refreshRecords()});$('clearRecords').addEventListener('click',()=>{records=[];refreshRecords()});$('export').addEventListener('click',()=>{if(!records.length){alert('Record at least one trial before exporting.');return}const rows=[['Experiment','Trial','Settings','Result'],...records.map(r=>[r.name,r.trial,r.settings,r.result])];const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='mechanical-properties-fluids-records.csv';a.click();URL.revokeObjectURL(url)});
+window.addEventListener('resize',render);document.addEventListener('visibilitychange',()=>{if(document.hidden&&animation)pause()});
+syncPressureMode();syncSurfaceMode();
+updateGuide();switchTab(0);
+})();
+</script>
+</body>
+</html>
