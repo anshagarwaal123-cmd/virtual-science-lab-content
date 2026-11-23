@@ -6,21 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#edf7ec">
 <title>Mechanical Properties of Solids | Virtual Science Lab</title>
-
 <style>
-:root{
- --bg:#edf7ec;--paper:#fff;--soft:#f4faf2;--line:#d5e6d2;
- --text:#193b27;--muted:#67806a;--teal:#087f87;--green:#258653;
- --blue:#4978c5;--orange:#bd741b;--pink:#c85b79;
- --shadow:0 12px 32px rgba(43,91,48,.09)
-}
+:root{--bg:#edf7ec;--paper:#fff;--soft:#f4faf2;--line:#d5e6d2;--text:#193b27;--muted:#67806a;--teal:#087f87;--green:#258653;--blue:#4978c5;--orange:#bd741b;--pink:#c85b79;--shadow:0 12px 32px rgba(43,91,48,.09)}
 *{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;color:var(--text);
- background:radial-gradient(ellipse at 5% 0%,#d9eed9 0,transparent 42%),
- linear-gradient(145deg,#eaf6e9,#f7fbf5 55%,#e5f2e3);
- font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif
-}
+body{margin:0;min-height:100vh;color:var(--text);background:radial-gradient(ellipse at 5% 0%,#d9eed9 0,transparent 42%),linear-gradient(145deg,#eaf6e9,#f7fbf5 55%,#e5f2e3);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
 button,input,select{font:inherit}
 button{cursor:pointer}
 .wrap{max-width:1480px;margin:auto;padding:22px clamp(12px,3vw,34px) 44px}
@@ -55,7 +44,11 @@ button{cursor:pointer}
 .scene-area{padding:14px 15px 6px}
 .canvas-frame{position:relative;border:1px solid #cfe1cd;border-radius:15px;overflow:hidden;background:linear-gradient(180deg,#f9fcf7,#edf7ec)}
 #scene{display:block;width:100%;height:365px}
-.scene-footer{display:flex;justify-content:space-between;gap:8px;padding:7px 3px 2px;color:#819581;font-size:9px}
+.scene-footer{display:flex;justify-content:space-between;gap:8px;padding:7px 3px 5px;color:#819581;font-size:9px}
+.progress-wrap{padding:0 2px 6px}
+.progress-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:5px;color:#718773;font-size:9px}
+.progress-track{height:7px;border-radius:100px;background:#e4eee1;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#56b97a,#087f87);border-radius:100px;transition:width .06s linear}
 .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:9px 15px 16px}
 .metric{min-width:0;background:#f5faf3;border:1px solid #dbe9d9;border-radius:12px;padding:10px 11px}
 .metric label{display:block;color:#718773;font-size:9px;letter-spacing:.08em;text-transform:uppercase;font-weight:800}
@@ -89,6 +82,7 @@ button{cursor:pointer}
 .btn:hover{filter:brightness(.97);transform:translateY(-1px)}
 .btn.primary{background:linear-gradient(120deg,#3ca86d,#238c63);border-color:#278c5a;color:white}
 .btn.ghost{background:#f8fcf7}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .info-strip{margin-top:12px;padding:10px 11px;background:#f0f8ee;border:1px solid #d8e9d5;border-radius:11px;color:#58745e;font-size:10px;line-height:1.55}
 .lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:16px}
 .lower-card{padding:16px}
@@ -143,306 +137,104 @@ button{cursor:pointer}
  <div>
   <div class="eyebrow">Interactive Physics Laboratory</div>
   <h1>Mechanical Properties <span>of Solids</span></h1>
-  <p>Stretch a wire, compress a solid, deform a block and investigate springs. Discover how solids respond to external forces through elasticity, stress, strain and elastic energy.</p>
+  <p>Stretch a wire, compress a solid, deform a block and investigate springs. Explore elasticity, stress, strain, elastic limits and the energy stored in deformed materials.</p>
  </div>
  <div class="hero-info"><strong>04 LABS</strong>Explore · Measure · Investigate</div>
 </section>
 
 <nav class="lab-tabs" aria-label="Mechanical properties experiments">
- <button class="lab-tab active" data-tab="0">
-  <span class="num">LAB 01</span>
-  <strong>Hooke's Law & Springs</strong>
-  <small>Spring constant · extension · energy</small>
- </button>
- <button class="lab-tab" data-tab="1">
-  <span class="num">LAB 02</span>
-  <strong>Stress–Strain & Young's Modulus</strong>
-  <small>Elasticity · yield · wire stretching</small>
- </button>
- <button class="lab-tab" data-tab="2">
-  <span class="num">LAB 03</span>
-  <strong>Bulk Modulus</strong>
-  <small>Pressure · volume compression</small>
- </button>
- <button class="lab-tab" data-tab="3">
-  <span class="num">LAB 04</span>
-  <strong>Shear Modulus & Energy</strong>
-  <small>Shear deformation · elastic energy</small>
- </button>
+ <button class="lab-tab active" data-tab="0"><span class="num">LAB 01</span><strong>Hooke's Law & Springs</strong><small>Spring constant · extension · energy</small></button>
+ <button class="lab-tab" data-tab="1"><span class="num">LAB 02</span><strong>Stress–Strain & Young's Modulus</strong><small>Elasticity · yield · wire stretching</small></button>
+ <button class="lab-tab" data-tab="2"><span class="num">LAB 03</span><strong>Bulk Modulus</strong><small>Pressure · volume compression</small></button>
+ <button class="lab-tab" data-tab="3"><span class="num">LAB 04</span><strong>Shear Modulus & Energy</strong><small>Shear deformation · stored energy</small></button>
 </nav>
 
 <main class="workspace">
-
 <section class="card">
  <div class="stage-head">
-  <div>
-   <h2 id="stageTitle">Hooke's Law: Force and Extension</h2>
-   <p id="stageDesc">Apply force to a spring and investigate how much it extends.</p>
-  </div>
-  <div class="state-pill">
-   <i class="state-dot"></i>
-   <span id="state">LIVE MODEL</span>
-  </div>
+  <div><h2 id="stageTitle">Hooke's Law: Force and Extension</h2><p id="stageDesc">Apply force to a spring system and investigate its extension.</p></div>
+  <div class="state-pill"><i class="state-dot"></i><span id="state">READY TO TEST</span></div>
  </div>
-
  <div class="scene-area">
-  <div class="canvas-frame">
-   <canvas id="scene" aria-label="Interactive mechanical properties experiment"></canvas>
-  </div>
-  <div class="scene-footer">
-   <span id="sceneNote">Ideal spring model · SI units</span>
-   <span>LIVE VISUALISATION</span>
+  <div class="canvas-frame"><canvas id="scene" aria-label="Interactive mechanical properties simulation"></canvas></div>
+  <div class="scene-footer"><span id="sceneNote">Ideal spring model · Linear elastic range</span><span id="sceneHint">Press Run test to apply the load progressively</span></div>
+  <div class="progress-wrap">
+   <div class="progress-head"><span>TEST PROGRESS</span><strong id="progressLabel">0%</strong></div>
+   <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   </div>
  </div>
-
  <div class="metric-grid">
-  <div class="metric"><label id="lab0">Spring extension</label><strong id="m0">—</strong><em id="u0">x = F / k</em></div>
+  <div class="metric"><label id="lab0">Spring extension</label><strong id="m0">0.000 m</strong><em id="u0">x = F / k</em></div>
   <div class="metric"><label id="lab1">Effective stiffness</label><strong id="m1">—</strong><em id="u1">Equivalent k</em></div>
-  <div class="metric"><label id="lab2">Applied force</label><strong id="m2">—</strong><em id="u2">F</em></div>
-  <div class="metric"><label id="lab3">Elastic energy</label><strong id="m3">—</strong><em id="u3">U = ½kx²</em></div>
+  <div class="metric"><label id="lab2">Applied force</label><strong id="m2">0 N</strong><em id="u2">F</em></div>
+  <div class="metric"><label id="lab3">Elastic energy</label><strong id="m3">0 J</strong><em id="u3">U = ½kx²</em></div>
  </div>
-
  <div class="equation-row">
-  <div class="card equation-card">
-   <h3>LIVE PHYSICS EQUATION</h3>
-   <div class="formula" id="formula">F = kx</div>
-   <div class="formula-result" id="calculation">Calculating…</div>
-  </div>
-  <div class="card insight-card">
-   <h3>OBSERVE & UNDERSTAND</h3>
-   <p id="explain">Change the spring stiffness or force to see how extension and stored energy change.</p>
-  </div>
+  <div class="card equation-card"><h3>LIVE PHYSICS EQUATION</h3><div class="formula" id="formula">F = kx</div><div class="formula-result" id="calculation">Run the experiment to see the calculation.</div></div>
+  <div class="card insight-card"><h3>OBSERVE & UNDERSTAND</h3><p id="explain">The load is not applied yet. Press Run test to watch the experiment progress from zero force to your selected value.</p></div>
  </div>
-
  <div class="card graph-card">
-  <div class="graph-head">
-   <h3 id="graphTitle">Force vs extension</h3>
-   <span id="graphCaption">Slope = spring constant</span>
-  </div>
+  <div class="graph-head"><h3 id="graphTitle">Force vs extension</h3><span id="graphCaption">Slope = effective spring constant</span></div>
   <canvas id="plot" aria-label="Live scientific graph"></canvas>
  </div>
 </section>
 
 <aside class="card controls">
- <div class="controls-head">
-  <h3>Experiment controls</h3>
-  <p id="controlHint">Change the values and observe the response.</p>
- </div>
+ <div class="controls-head"><h3>Experiment controls</h3><p id="controlHint">Choose settings, then run the test to apply the load.</p></div>
 
- <!-- LAB 01: HOOKE'S LAW -->
  <div class="panel" data-panel="0">
-  <div class="control">
-   <div class="control-top">
-    <label for="springMode">Spring arrangement</label>
-   </div>
-   <select id="springMode">
-    <option value="single">Single spring</option>
-    <option value="series">Two springs in series</option>
-    <option value="parallel">Two springs in parallel</option>
-   </select>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="springK1">Spring constant k₁</label>
-    <output class="value" id="springK1Out">50 N/m</output>
-   </div>
-   <input id="springK1" type="range" min="10" max="300" step="5" value="50">
-   <div class="ends"><span>10 N/m</span><span>300 N/m</span></div>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="springK2">Spring constant k₂</label>
-    <output class="value" id="springK2Out">100 N/m</output>
-   </div>
-   <input id="springK2" type="range" min="10" max="300" step="5" value="100">
-   <div class="ends"><span>10 N/m</span><span>300 N/m</span></div>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="springForce">Applied force</label>
-    <output class="value" id="springForceOut">10 N</output>
-   </div>
-   <input id="springForce" type="range" min="0" max="100" step="1" value="10">
-   <div class="ends"><span>0 N</span><span>100 N</span></div>
-  </div>
-  <div class="info-strip">
-   Series: 1/k = 1/k₁ + 1/k₂. Parallel: k = k₁ + k₂. The model assumes ideal springs within their elastic range.
-  </div>
-  <div class="button-row">
-   <button class="btn primary" id="springRun">▶ Apply load</button>
-   <button class="btn ghost" id="springReset">Reset</button>
-  </div>
+  <div class="control"><div class="control-top"><label for="springMode">Spring arrangement</label></div><select id="springMode"><option value="single">Single spring</option><option value="series">Two springs in series</option><option value="parallel">Two springs in parallel</option></select></div>
+  <div class="control"><div class="control-top"><label for="springK1">Spring constant k₁</label><output class="value" id="springK1Out">50 N/m</output></div><input id="springK1" type="range" min="10" max="300" step="5" value="50"><div class="ends"><span>10 N/m</span><span>300 N/m</span></div></div>
+  <div class="control"><div class="control-top"><label for="springK2">Spring constant k₂</label><output class="value" id="springK2Out">100 N/m</output></div><input id="springK2" type="range" min="10" max="300" step="5" value="100"><div class="ends"><span>10 N/m</span><span>300 N/m</span></div></div>
+  <div class="control"><div class="control-top"><label for="springForce">Target applied force</label><output class="value" id="springForceOut">10 N</output></div><input id="springForce" type="range" min="0" max="100" step="1" value="10"><div class="ends"><span>0 N</span><span>100 N</span></div></div>
+  <div class="info-strip">Series: 1/k = 1/k₁ + 1/k₂. Parallel: k = k₁ + k₂. Ideal springs are assumed to remain within their elastic range.</div>
+  <div class="button-row"><button class="btn primary run-btn" id="springRun">▶ Run test</button><button class="btn ghost pause-btn" id="springPause">Ⅱ Pause</button><button class="btn ghost reset-test" id="springResetTest">↺ Reset test</button><button class="btn ghost" id="springReset">Reset settings</button></div>
  </div>
 
- <!-- LAB 02: YOUNG'S MODULUS -->
  <div class="panel hidden" data-panel="1">
-  <div class="control">
-   <div class="control-top"><label for="youngMaterial">Wire material</label></div>
-   <select id="youngMaterial">
-    <option value="steel">Steel</option>
-    <option value="aluminium">Aluminium</option>
-    <option value="copper">Copper</option>
-   </select>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="wireForce">Tensile force</label>
-    <output class="value" id="wireForceOut">5,000 N</output>
-   </div>
-   <input id="wireForce" type="range" min="0" max="50000" step="250" value="5000">
-   <div class="ends"><span>0 N</span><span>50,000 N</span></div>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="wireArea">Cross-sectional area</label>
-    <output class="value" id="wireAreaOut">20 mm²</output>
-   </div>
-   <input id="wireArea" type="range" min="5" max="100" step="1" value="20">
-   <div class="ends"><span>5 mm²</span><span>100 mm²</span></div>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="wireLength">Original wire length</label>
-    <output class="value" id="wireLengthOut">2.0 m</output>
-   </div>
-   <input id="wireLength" type="range" min="0.5" max="5" step="0.1" value="2">
-   <div class="ends"><span>0.5 m</span><span>5 m</span></div>
-  </div>
-  <div class="info-strip" id="youngMaterialInfo">
-   Steel model: Young's modulus = 200 GPa. The stress–strain curve is an idealised teaching model.
-  </div>
-  <div class="button-row">
-   <button class="btn primary" id="youngRun">▶ Perform tensile test</button>
-   <button class="btn ghost" id="youngReset">Reset</button>
-  </div>
+  <div class="control"><div class="control-top"><label for="youngMaterial">Wire material</label></div><select id="youngMaterial"><option value="steel">Steel</option><option value="aluminium">Aluminium</option><option value="copper">Copper</option></select></div>
+  <div class="control"><div class="control-top"><label for="wireForce">Target tensile force</label><output class="value" id="wireForceOut">5,000 N</output></div><input id="wireForce" type="range" min="0" max="50000" step="250" value="5000"><div class="ends"><span>0 N</span><span>50,000 N</span></div></div>
+  <div class="control"><div class="control-top"><label for="wireArea">Cross-sectional area</label><output class="value" id="wireAreaOut">20 mm²</output></div><input id="wireArea" type="range" min="5" max="100" step="1" value="20"><div class="ends"><span>5 mm²</span><span>100 mm²</span></div></div>
+  <div class="control"><div class="control-top"><label for="wireLength">Original wire length</label><output class="value" id="wireLengthOut">2.0 m</output></div><input id="wireLength" type="range" min="0.5" max="5" step="0.1" value="2"><div class="ends"><span>0.5 m</span><span>5 m</span></div></div>
+  <div class="info-strip" id="youngMaterialInfo">Steel: Young's modulus 200 GPa. The tensile test animates the force from zero to the selected load and traces the stress–strain curve.</div>
+  <div class="button-row"><button class="btn primary run-btn" id="youngRun">▶ Run tensile test</button><button class="btn ghost pause-btn" id="youngPause">Ⅱ Pause</button><button class="btn ghost reset-test" id="youngResetTest">↺ Reset test</button><button class="btn ghost" id="youngReset">Reset settings</button></div>
  </div>
 
- <!-- LAB 03: BULK MODULUS -->
  <div class="panel hidden" data-panel="2">
-  <div class="control">
-   <div class="control-top"><label for="bulkMaterial">Solid material</label></div>
-   <select id="bulkMaterial">
-    <option value="steel">Steel</option>
-    <option value="aluminium">Aluminium</option>
-    <option value="copper">Copper</option>
-    <option value="glass">Glass</option>
-   </select>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="bulkPressure">Applied pressure</label>
-    <output class="value" id="bulkPressureOut">100 MPa</output>
-   </div>
-   <input id="bulkPressure" type="range" min="0" max="500" step="5" value="100">
-   <div class="ends"><span>0 MPa</span><span>500 MPa</span></div>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="bulkVolume">Initial volume</label>
-    <output class="value" id="bulkVolumeOut">1.0 L</output>
-   </div>
-   <input id="bulkVolume" type="range" min="0.1" max="10" step="0.1" value="1">
-   <div class="ends"><span>0.1 L</span><span>10 L</span></div>
-  </div>
-  <div class="info-strip" id="bulkMaterialInfo">
-   Bulk modulus describes resistance to uniform compression. The model uses ΔV/V = −P/B for small compression.
-  </div>
-  <div class="button-row">
-   <button class="btn primary" id="bulkRun">▶ Apply pressure</button>
-   <button class="btn ghost" id="bulkReset">Reset</button>
-  </div>
+  <div class="control"><div class="control-top"><label for="bulkMaterial">Solid material</label></div><select id="bulkMaterial"><option value="steel">Steel</option><option value="aluminium">Aluminium</option><option value="copper">Copper</option><option value="glass">Glass</option></select></div>
+  <div class="control"><div class="control-top"><label for="bulkPressure">Target applied pressure</label><output class="value" id="bulkPressureOut">100 MPa</output></div><input id="bulkPressure" type="range" min="0" max="500" step="5" value="100"><div class="ends"><span>0 MPa</span><span>500 MPa</span></div></div>
+  <div class="control"><div class="control-top"><label for="bulkVolume">Initial volume</label><output class="value" id="bulkVolumeOut">1.0 L</output></div><input id="bulkVolume" type="range" min="0.1" max="10" step="0.1" value="1"><div class="ends"><span>0.1 L</span><span>10 L</span></div></div>
+  <div class="info-strip" id="bulkMaterialInfo">Bulk modulus describes resistance to uniform compression. The model uses ΔV/V = −P/B for small compression.</div>
+  <div class="button-row"><button class="btn primary run-btn" id="bulkRun">▶ Run compression test</button><button class="btn ghost pause-btn" id="bulkPause">Ⅱ Pause</button><button class="btn ghost reset-test" id="bulkResetTest">↺ Reset test</button><button class="btn ghost" id="bulkReset">Reset settings</button></div>
  </div>
 
- <!-- LAB 04: SHEAR MODULUS -->
  <div class="panel hidden" data-panel="3">
-  <div class="control">
-   <div class="control-top"><label for="shearMaterial">Block material</label></div>
-   <select id="shearMaterial">
-    <option value="steel">Steel</option>
-    <option value="aluminium">Aluminium</option>
-    <option value="copper">Copper</option>
-   </select>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="shearForce">Tangential force</label>
-    <output class="value" id="shearForceOut">20,000 N</output>
-   </div>
-   <input id="shearForce" type="range" min="0" max="100000" step="1000" value="20000">
-   <div class="ends"><span>0 N</span><span>100,000 N</span></div>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="shearArea">Top surface area</label>
-    <output class="value" id="shearAreaOut">0.05 m²</output>
-   </div>
-   <input id="shearArea" type="range" min="0.01" max="0.2" step="0.005" value="0.05">
-   <div class="ends"><span>0.01 m²</span><span>0.20 m²</span></div>
-  </div>
-  <div class="control">
-   <div class="control-top">
-    <label for="shearThickness">Block height</label>
-    <output class="value" id="shearThicknessOut">0.20 m</output>
-   </div>
-   <input id="shearThickness" type="range" min="0.05" max="1" step="0.05" value="0.2">
-   <div class="ends"><span>0.05 m</span><span>1 m</span></div>
-  </div>
-  <div class="info-strip" id="shearMaterialInfo">
-   Shear modulus G relates shear stress to shear strain. The model assumes small elastic deformation.
-  </div>
-  <div class="button-row">
-   <button class="btn primary" id="shearRun">▶ Apply shear force</button>
-   <button class="btn ghost" id="shearReset">Reset</button>
-  </div>
+  <div class="control"><div class="control-top"><label for="shearMaterial">Block material</label></div><select id="shearMaterial"><option value="steel">Steel</option><option value="aluminium">Aluminium</option><option value="copper">Copper</option></select></div>
+  <div class="control"><div class="control-top"><label for="shearForce">Target tangential force</label><output class="value" id="shearForceOut">20,000 N</output></div><input id="shearForce" type="range" min="0" max="100000" step="1000" value="20000"><div class="ends"><span>0 N</span><span>100,000 N</span></div></div>
+  <div class="control"><div class="control-top"><label for="shearArea">Top surface area</label><output class="value" id="shearAreaOut">0.050 m²</output></div><input id="shearArea" type="range" min="0.01" max="0.2" step="0.005" value="0.05"><div class="ends"><span>0.01 m²</span><span>0.20 m²</span></div></div>
+  <div class="control"><div class="control-top"><label for="shearThickness">Block height</label><output class="value" id="shearThicknessOut">0.20 m</output></div><input id="shearThickness" type="range" min="0.05" max="1" step="0.05" value="0.2"><div class="ends"><span>0.05 m</span><span>1 m</span></div></div>
+  <div class="info-strip" id="shearMaterialInfo">Shear modulus G relates shear stress to shear strain. The deformation shown is visually amplified for clarity.</div>
+  <div class="button-row"><button class="btn primary run-btn" id="shearRun">▶ Run shear test</button><button class="btn ghost pause-btn" id="shearPause">Ⅱ Pause</button><button class="btn ghost reset-test" id="shearResetTest">↺ Reset test</button><button class="btn ghost" id="shearReset">Reset settings</button></div>
  </div>
 </aside>
 </main>
 
 <div class="lower-grid">
  <section class="card lower-card guide">
-  <div class="section-head">
-   <h3>Guided investigation</h3>
-   <span class="tag" id="modeTag">GUIDED MODE</span>
-  </div>
+  <div class="section-head"><h3>Guided investigation</h3><span class="tag" id="modeTag">GUIDED MODE</span></div>
   <p class="guide-intro" id="guideIntro">Choose a mission, adjust parameters and predict the result before checking the simulation.</p>
-  <div class="mission">
-   <strong id="missionTitle">Mission 1 · Change spring stiffness</strong>
-   <p id="missionText">Keep the force constant and increase spring stiffness. Does the extension increase or decrease?</p>
-  </div>
-  <div class="button-row">
-   <select id="challenge">
-    <option value="0">Challenge 1</option>
-    <option value="1">Challenge 2</option>
-    <option value="2">Challenge 3</option>
-   </select>
-   <button class="btn" id="loadChallenge">Load challenge</button>
-   <button class="btn ghost" id="toggleMode">Switch to free exploration</button>
-  </div>
+  <div class="mission"><strong id="missionTitle">Mission 1 · Change spring stiffness</strong><p id="missionText">Keep force constant and increase spring stiffness. Does extension increase or decrease?</p></div>
+  <div class="button-row"><select id="challenge"><option value="0">Challenge 1</option><option value="1">Challenge 2</option><option value="2">Challenge 3</option></select><button class="btn" id="loadChallenge">Load challenge</button><button class="btn ghost" id="toggleMode">Switch to free exploration</button></div>
  </section>
 
  <section class="card lower-card notebook">
-  <div class="section-head">
-   <h3>Experiment notebook</h3>
-   <span class="tag" id="trialCount">0 TRIALS</span>
-  </div>
-  <p class="sub">Save readings from any lab. Export your observations as a CSV spreadsheet.</p>
-  <div class="button-row" style="margin:0 0 9px">
-   <button class="btn primary" id="record">＋ Record trial</button>
-   <button class="btn" id="export">↓ Export CSV</button>
-   <button class="btn ghost" id="clearRecords">Clear</button>
-  </div>
-  <div class="table-wrap">
-   <table>
-    <thead><tr><th>Experiment</th><th>Trial</th><th>Settings</th><th>Result</th></tr></thead>
-    <tbody id="records"><tr><td colspan="4" class="empty">No readings recorded yet.</td></tr></tbody>
-   </table>
-  </div>
+  <div class="section-head"><h3>Experiment notebook</h3><span class="tag" id="trialCount">0 TRIALS</span></div>
+  <p class="sub">Record readings from any lab. Export your observations as a CSV spreadsheet.</p>
+  <div class="button-row" style="margin:0 0 9px"><button class="btn primary" id="record">＋ Record trial</button><button class="btn" id="export">↓ Export CSV</button><button class="btn ghost" id="clearRecords">Clear</button></div>
+  <div class="table-wrap"><table><thead><tr><th>Experiment</th><th>Trial</th><th>Settings</th><th>Result</th></tr></thead><tbody id="records"><tr><td colspan="4" class="empty">No readings recorded yet.</td></tr></tbody></table></div>
  </section>
 </div>
-
-<footer class="footer">
- Virtual Science Lab · Idealised material models · SI units · Values are educational approximations
-</footer>
+<footer class="footer">Virtual Science Lab · Idealised material models · SI units · Educational approximations, not structural design data</footer>
 </div>
 
 <script id="experiment-metadata" type="application/json">
@@ -465,32 +257,11 @@ const $=id=>document.getElementById(id);
 const scene=$('scene'),plot=$('plot');
 const ctx=scene.getContext('2d'),px=plot.getContext('2d');
 
-let active=0;
-let animation=null;
-let lastFrame=0;
-let animTime=0;
-let records=[];
-let guided=true;
-let soundOn=true;
-let audio=null;
-
 const materials={
- steel:{
-  name:'Steel',E:200e9,yield:250e6,ultimate:400e6,
-  B:160e9,G:79e9,nu:.30
- },
- aluminium:{
-  name:'Aluminium',E:70e9,yield:95e6,ultimate:150e6,
-  B:76e9,G:26e9,nu:.34
- },
- copper:{
-  name:'Copper',E:110e9,yield:70e6,ultimate:210e6,
-  B:140e9,G:41e9,nu:.34
- },
- glass:{
-  name:'Glass',E:70e9,yield:40e6,ultimate:50e6,
-  B:35e9,G:29e9,nu:.20
- }
+ steel:{name:'Steel',E:200e9,yield:250e6,ultimate:400e6,B:160e9,G:79e9,tangentRatio:.02},
+ aluminium:{name:'Aluminium',E:69e9,yield:95e6,ultimate:150e6,B:76e9,G:26e9,tangentRatio:.02},
+ copper:{name:'Copper',E:110e9,yield:70e6,ultimate:210e6,B:140e9,G:45e9,tangentRatio:.02},
+ glass:{name:'Glass',E:70e9,yield:40e6,ultimate:50e6,B:35e9,G:29e9,tangentRatio:.02}
 };
 
 const defaults={
@@ -501,38 +272,23 @@ const defaults={
 };
 
 const descriptions=[
- {
-  title:"Hooke's Law: Force and Extension",
-  subtitle:"Apply a force to a spring system and investigate how much it extends.",
-  graph:"Force vs extension",
-  caption:"Slope = effective spring constant",
-  note:"Ideal spring model · Linear elastic range"
- },
- {
-  title:"Stress–Strain Curve and Young's Modulus",
-  subtitle:"Stretch a wire and compare stress, strain, extension and material behaviour.",
-  graph:"Stress vs strain",
-  caption:"Idealised elastic and plastic regions",
-  note:"Uniaxial tensile test · Engineering stress and strain"
- },
- {
-  title:"Bulk Modulus: Compression of a Solid",
-  subtitle:"Apply uniform pressure and measure the small change in volume.",
-  graph:"Volume compression vs pressure",
-  caption:"Slope magnitude = 1 / bulk modulus",
-  note:"Uniform pressure · Small-compression approximation"
- },
- {
-  title:"Shear Modulus and Elastic Potential Energy",
-  subtitle:"Apply a sideways force to the top face of a solid block.",
-  graph:"Shear force vs displacement",
-  caption:"Slope depends on G, area and thickness",
-  note:"Small elastic shear deformation · Ideal block model"
- }
+ {title:"Hooke's Law: Force and Extension",subtitle:'Apply force to a spring system and investigate its extension.',graph:'Force vs extension',caption:'Slope = effective spring constant',note:'Ideal spring model · Linear elastic range',hint:'Run the test to watch the load stretch the spring.'},
+ {title:"Stress–Strain Curve and Young's Modulus",subtitle:'Stretch a wire gradually and observe the elastic and plastic response.',graph:'Stress vs strain',caption:'Live point follows the stress–strain curve',note:'Uniaxial tensile test · Wire deformation visually amplified',hint:'The wire starts unloaded. Run the tensile test to stretch it.'},
+ {title:'Bulk Modulus: Compression of a Solid',subtitle:'Apply uniform pressure and measure the small change in volume.',graph:'Volume compression vs pressure',caption:'Slope magnitude = 1 / bulk modulus',note:'Uniform pressure · Small-compression approximation',hint:'Run the test to increase pressure gradually from zero.'},
+ {title:'Shear Modulus and Elastic Potential Energy',subtitle:'Apply a sideways force to the top face of a solid block.',graph:'Shear force vs displacement',caption:'Slope depends on G, area and height',note:'Small elastic shear deformation · Visual displacement amplified',hint:'Run the test to apply tangential force gradually.'}
 ];
 
-/* SOUND EFFECTS */
+let active=0;
+let animation=null;
+let lastFrame=0;
+let testProgress=0;
+let animTime=0;
+let records=[];
+let guided=true;
+let soundOn=true;
+let audio=null;
 
+/* Optional experiment sounds */
 function audioContext(){
  if(!soundOn)return null;
  const A=window.AudioContext||window.webkitAudioContext;
@@ -542,32 +298,19 @@ function audioContext(){
  return audio;
 }
 function beep(freq=440,duration=.12,wave='sine',volume=.024,delay=0){
- const ac=audioContext();
- if(!ac)return;
- const osc=ac.createOscillator();
- const gain=ac.createGain();
- const t=ac.currentTime+delay;
- osc.type=wave;
- osc.frequency.setValueAtTime(freq,t);
+ const ac=audioContext();if(!ac)return;
+ const osc=ac.createOscillator(),gain=ac.createGain(),t=ac.currentTime+delay;
+ osc.type=wave;osc.frequency.setValueAtTime(freq,t);
  gain.gain.setValueAtTime(.0001,t);
  gain.gain.linearRampToValueAtTime(volume,t+.012);
  gain.gain.exponentialRampToValueAtTime(.0001,t+duration);
- osc.connect(gain);
- gain.connect(ac.destination);
- osc.start(t);
- osc.stop(t+duration+.03);
+ osc.connect(gain);gain.connect(ac.destination);
+ osc.start(t);osc.stop(t+duration+.03);
 }
 function cue(type){
  if(!soundOn)return;
- if(type==='start'){
-  beep(280,.1,'triangle');
-  beep(430,.12,'sine',.02,.1);
- }
- if(type==='complete'){
-  beep(523,.12);
-  beep(659,.13,'sine',.025,.13);
-  beep(784,.18,'sine',.025,.27);
- }
+ if(type==='start'){beep(280,.1,'triangle');beep(430,.12,'sine',.02,.1)}
+ if(type==='complete'){beep(523,.12);beep(659,.13,'sine',.025,.13);beep(784,.18,'sine',.025,.27)}
 }
 $('soundBtn').addEventListener('click',()=>{
  soundOn=!soundOn;
@@ -577,8 +320,7 @@ $('soundBtn').addEventListener('click',()=>{
  if(soundOn)beep(620,.07);
 });
 
-/* COMMON HELPERS */
-
+/* Canvas, number and display helpers */
 function num(id){return Number($(id).value)}
 function fixed(value,d=2){return Number.isFinite(value)?value.toFixed(d):'—'}
 function comma(value){return Math.round(value).toLocaleString('en-IN')}
@@ -593,825 +335,545 @@ function sci(value,d=3){
 }
 function output(id,value){$(id+'Out').textContent=value}
 function resize(canvas,c){
- const rect=canvas.getBoundingClientRect();
- const d=Math.min(window.devicePixelRatio||1,2);
- const w=Math.max(1,Math.round(rect.width*d));
- const h=Math.max(1,Math.round(rect.height*d));
- if(canvas.width!==w||canvas.height!==h){
-  canvas.width=w;
-  canvas.height=h;
- }
+ const rect=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);
+ const w=Math.max(1,Math.round(rect.width*d)),h=Math.max(1,Math.round(rect.height*d));
+ if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}
  c.setTransform(d,0,0,d,0,0);
  return {w:rect.width,h:rect.height};
 }
 function clear(c,w,h){c.clearRect(0,0,w,h)}
 function line(c,x1,y1,x2,y2,color='#8ca88e',width=2,dash=[]){
- c.save();
- c.strokeStyle=color;
- c.lineWidth=width;
- c.setLineDash(dash);
- c.beginPath();
- c.moveTo(x1,y1);
- c.lineTo(x2,y2);
- c.stroke();
- c.restore();
+ c.save();c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dash);
+ c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.restore();
 }
 function text(c,s,x,y,color='#355d3d',size=11,align='left',weight='500'){
- c.save();
- c.fillStyle=color;
- c.font=weight+' '+size+'px system-ui,sans-serif';
- c.textAlign=align;
- c.fillText(s,x,y);
- c.restore();
+ c.save();c.fillStyle=color;c.font=weight+' '+size+'px system-ui,sans-serif';c.textAlign=align;c.fillText(s,x,y);c.restore();
 }
 function arrow(c,x1,y1,x2,y2,color='#087f87',width=3,head=9){
  line(c,x1,y1,x2,y2,color,width);
  const angle=Math.atan2(y2-y1,x2-x1);
- c.fillStyle=color;
- c.beginPath();
- c.moveTo(x2,y2);
+ c.fillStyle=color;c.beginPath();c.moveTo(x2,y2);
  c.lineTo(x2-head*Math.cos(angle-.48),y2-head*Math.sin(angle-.48));
  c.lineTo(x2-head*Math.cos(angle+.48),y2-head*Math.sin(angle+.48));
- c.closePath();
- c.fill();
+ c.closePath();c.fill();
 }
 function circle(c,x,y,r,color,stroke='#fff'){
- c.beginPath();
- c.arc(x,y,r,0,Math.PI*2);
- c.fillStyle=color;
- c.fill();
- c.strokeStyle=stroke;
- c.lineWidth=2;
- c.stroke();
+ c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fillStyle=color;c.fill();c.strokeStyle=stroke;c.lineWidth=2;c.stroke();
 }
 function polygon(c,points,fill,stroke='#759b7a',width=1.5){
- c.beginPath();
- points.forEach((p,i)=>i===0?c.moveTo(p[0],p[1]):c.lineTo(p[0],p[1]));
- c.closePath();
- c.fillStyle=fill;
- c.fill();
+ c.beginPath();points.forEach((p,i)=>i===0?c.moveTo(p[0],p[1]):c.lineTo(p[0],p[1]));
+ c.closePath();c.fillStyle=fill;c.fill();
  if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke()}
 }
 function metrics(labels,values,units){
- for(let i=0;i<4;i++){
-  $('lab'+i).textContent=labels[i];
-  $('m'+i).textContent=values[i];
-  $('u'+i).textContent=units[i];
- }
+ for(let i=0;i<4;i++){$('lab'+i).textContent=labels[i];$('m'+i).textContent=values[i];$('u'+i).textContent=units[i]}
 }
 function axes(c,L,R,T,B){
- for(let i=0;i<=4;i++){
-  const y=T+(B-T)*i/4;
-  line(c,L,y,R,y,'#e2eee0',1);
- }
- line(c,L,T,L,B,'#8eaa91',1.2);
- line(c,L,B,R,B,'#8eaa91',1.2);
+ for(let i=0;i<=4;i++){const y=T+(B-T)*i/4;line(c,L,y,R,y,'#e2eee0',1)}
+ line(c,L,T,L,B,'#8eaa91',1.2);line(c,L,B,R,B,'#8eaa91',1.2);
 }
-function springPath(c,x,y1,y2,width,coils=10){
- const length=y2-y1;
- const step=length/(coils*2);
- c.beginPath();
- c.moveTo(x,y1);
- for(let i=0;i<coils*2;i++){
-  const xx=x+(i%2===0?width:-width);
-  c.lineTo(xx,y1+(i+1)*step);
- }
- c.lineTo(x,y2);
- c.strokeStyle='#477e58';
- c.lineWidth=2.5;
- c.stroke();
+function springCoils(c,x,top,bottom,width,coils,color='#397c53'){
+ const length=Math.max(12,bottom-top),step=length/(coils*2);
+ c.beginPath();c.moveTo(x,top);
+ for(let i=0;i<coils*2;i++)c.lineTo(x+(i%2===0?width:-width),top+(i+1)*step);
+ c.lineTo(x,bottom);c.strokeStyle=color;c.lineWidth=2.4;c.stroke();
 }
 
-/* CONTROL OUTPUTS */
+/* Progress and run-state handling: every experiment starts at zero load. */
+const runButtons={0:'springRun',1:'youngRun',2:'bulkRun',3:'shearRun'};
+function statusText(){
+ let state='READY TO TEST';
+ if(animation)state='TEST RUNNING';
+ else if(testProgress>=1)state='TEST COMPLETE';
+ else if(testProgress>0)state='PAUSED';
+ $('state').textContent=state;
+ $('progressLabel').textContent=Math.round(testProgress*100)+'%';
+ $('progressFill').style.width=(testProgress*100)+'%';
+ const button=$(runButtons[active]);
+ if(button){
+  button.textContent=animation?'● Running…':testProgress>=1?'↻ Run again':testProgress>0?'▶ Resume test':'▶ Run test';
+ }
+ $('sceneHint').textContent=animation?'Load is increasing — live readings are updating':testProgress>=1?'Target load reached — test complete':testProgress>0?'Test paused — resume to continue':'Press Run test to apply the load progressively';
+}
+function stopAnimation(){animation=null;statusText()}
+function startAnimation(type){
+ if(animation)return;
+ if(testProgress>=1)testProgress=0;
+ animation=type;lastFrame=performance.now();
+ cue('start');statusText();requestAnimationFrame(frame);
+}
+function pauseAnimation(){if(!animation)return;animation=null;statusText()}
+function resetTest(){animation=null;testProgress=0;animTime=0;statusText();render()}
+function frame(timestamp){
+ if(!animation)return;
+ const dt=Math.min(.05,(timestamp-lastFrame)/1000||0);lastFrame=timestamp;
+ animTime+=dt;
+ testProgress=Math.min(1,testProgress+dt/3.6);
+ render();
+ if(testProgress>=1){animation=null;cue('complete');statusText();}
+ else requestAnimationFrame(frame);
+}
+function onSettingChange(){
+ if(animation)animation=null;
+ testProgress=0;animTime=0;
+ render();statusText();
+}
 
 function updateOutputs(){
  const pairs=[
-  ['springK1',num('springK1')+' N/m'],
-  ['springK2',num('springK2')+' N/m'],
-  ['springForce',num('springForce')+' N'],
-  ['wireForce',comma(num('wireForce'))+' N'],
-  ['wireArea',num('wireArea')+' mm²'],
-  ['wireLength',fixed(num('wireLength'),1)+' m'],
-  ['bulkPressure',num('bulkPressure')+' MPa'],
-  ['bulkVolume',fixed(num('bulkVolume'),1)+' L'],
-  ['shearForce',comma(num('shearForce'))+' N'],
-  ['shearArea',fixed(num('shearArea'),3)+' m²'],
-  ['shearThickness',fixed(num('shearThickness'),2)+' m']
+  ['springK1',num('springK1')+' N/m'],['springK2',num('springK2')+' N/m'],['springForce',num('springForce')+' N'],
+  ['wireForce',comma(num('wireForce'))+' N'],['wireArea',num('wireArea')+' mm²'],['wireLength',fixed(num('wireLength'),1)+' m'],
+  ['bulkPressure',num('bulkPressure')+' MPa'],['bulkVolume',fixed(num('bulkVolume'),1)+' L'],
+  ['shearForce',comma(num('shearForce'))+' N'],['shearArea',fixed(num('shearArea'),3)+' m²'],['shearThickness',fixed(num('shearThickness'),2)+' m']
  ];
  pairs.forEach(([id,value])=>output(id,value));
 }
 
-/* ---------- LAB 01: SPRING SYSTEM ---------- */
-
+/* LAB 01: HOOKE'S LAW AND SPRINGS */
 function springData(){
- const k1=num('springK1');
- const k2=num('springK2');
- const F=num('springForce');
- const mode=$('springMode').value;
-
- let k;
- if(mode==='series')k=(k1*k2)/(k1+k2);
- else if(mode==='parallel')k=k1+k2;
- else k=k1;
-
+ const k1=num('springK1'),k2=num('springK2'),targetF=num('springForce');
+ const mode=$('springMode').value,F=targetF*testProgress;
+ let k=mode==='series'?(k1*k2)/(k1+k2):mode==='parallel'?k1+k2:k1;
  const extension=F/k;
  const energy=.5*k*extension*extension;
- const x1=mode==='parallel'?extension:mode==='series'?F/k1:extension;
+ const x1=mode==='series'?F/k1:extension;
  const x2=mode==='series'?F/k2:0;
-
- return {k1,k2,F,mode,k,extension,energy,x1,x2};
+ return {k1,k2,targetF,F,mode,k,extension,energy,x1,x2};
 }
-
-function drawSpringCoils(c,x,top,bottom,width,coils,color='#397c53'){
- const length=Math.max(12,bottom-top);
- const step=length/(coils*2);
- c.beginPath();
- c.moveTo(x,top);
- for(let i=0;i<coils*2;i++){
-  const side=i%2===0?1:-1;
-  c.lineTo(x+width*side,top+(i+1)*step);
- }
- c.lineTo(x,bottom);
- c.strokeStyle=color;
- c.lineWidth=2.4;
- c.stroke();
+function drawSpringCoil(c,x,top,bottom,width,color){
+ springCoils(c,x,top,bottom,width,10,color);
 }
-
 function renderSpring(){
- const d=springData();
- const z=resize(scene,ctx),w=z.w,h=z.h;
- clear(ctx,w,h);
-
- const cx=w*.5;
- const top=70;
- const baseY=250;
- const visualExtension=Math.min(105,d.extension*8);
- const movement=animation==='spring'?Math.sin(animTime*10)*3:0;
- const bottom=baseY+visualExtension+movement;
-
- // Fixed ceiling
- line(ctx,cx-95,top-18,cx+95,top-18,'#729979',6);
- for(let x=cx-80;x<=cx+80;x+=16){
-  line(ctx,x,top-17,x-8,top-4,'#adc9ad',2);
- }
-
- // Spring arrangement
- if(d.mode==='series'){
-  const middle=(top+bottom)/2;
-  drawSpringCoils(ctx,cx,top,middle-5,12,6);
-  line(ctx,cx,middle-5,cx,middle+5,'#779a79',3);
-  drawSpringCoils(ctx,cx,middle+5,bottom-8,12,6);
+ const d=springData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const top=55,base=235,cx=w*.48,scale=Math.min(95,Math.max(0,d.extension*15)),blockY=base+scale;
+ const jitter=animation==='spring'?Math.sin(animTime*12)*1.2:0;
+ const end=blockY+jitter;
+ line(ctx,cx-100,top-12,cx+100,top-12,'#729979',6);
+ for(let x=cx-88;x<=cx+88;x+=16)line(ctx,x,top-12,x-8,top,'#adc9ad',2);
+ if(d.mode==='single'){
+  drawSpringCoil(ctx,cx,top,end-4,18,'#397c53');
+ }else if(d.mode==='series'){
+  const middle=top+(end-top)*(d.x1/(d.x1+d.x2||1));
+  drawSpringCoil(ctx,cx,top,middle-3,15,'#4978c5');
+  circle(ctx,cx,middle,4,'#bd741b');
+  drawSpringCoil(ctx,cx,middle+3,end-4,15,'#bd741b');
   text(ctx,'k₁',cx+25,(top+middle)/2,'#4978c5',10);
-  text(ctx,'k₂',cx+25,(middle+bottom)/2,'#bd741b',10);
- }else if(d.mode==='parallel'){
-  drawSpringCoils(ctx,cx-18,top,bottom-8,9,10,'#4978c5');
-  drawSpringCoils(ctx,cx+18,top,bottom-8,9,10,'#bd741b');
-  text(ctx,'k₁',cx-43,(top+bottom)/2,'#4978c5',10);
-  text(ctx,'k₂',cx+43,(top+bottom)/2,'#bd741b',10);
+  text(ctx,'k₂',cx+25,(middle+end)/2,'#bd741b',10);
  }else{
-  drawSpringCoils(ctx,cx,top,bottom-8,18,12);
+  drawSpringCoil(ctx,cx-16,top,end-4,9,'#4978c5');
+  drawSpringCoil(ctx,cx+16,top,end-4,9,'#bd741b');
  }
-
- // Weight block
- const blockW=78,blockH=48;
- ctx.fillStyle='#80b98d';
- ctx.fillRect(cx-blockW/2,bottom-5,blockW,blockH);
- ctx.strokeStyle='#4a895c';
- ctx.lineWidth=2;
- ctx.strokeRect(cx-blockW/2,bottom-5,blockW,blockH);
- text(ctx,'LOAD',cx,bottom+24,'#205b38',11,'center','900');
-
- // Force vector
- if(d.F>0){
-  arrow(ctx,cx+65,bottom+18,cx+65,bottom+67,'#bd741b',3,9);
-  text(ctx,'F = '+d.F+' N',cx+81,bottom+52,'#bd741b',10);
- }
-
- line(ctx,cx-110,top,cx-110,bottom,'#8da98e',1,[4,4]);
- line(ctx,cx-118,top,cx-102,top,'#8da98e',1.5);
- line(ctx,cx-118,bottom,cx-102,bottom,'#8da98e',1.5);
- text(ctx,'x = '+fixed(d.extension,3)+' m',cx-120,(top+bottom)/2,'#087f87',10,'right');
-
- text(ctx,'SPRING SYSTEM',w/2,29,'#258653',11,'center','900');
- text(ctx,'Effective stiffness k = '+fixed(d.k,2)+' N/m',w/2,h*.88,'#355d3d',11,'center');
-
- metrics(
-  ['Spring extension','Effective stiffness','Applied force','Elastic energy'],
-  [fixed(d.extension,3)+' m',fixed(d.k,2)+' N/m',d.F+' N',fixed(d.energy,3)+' J'],
-  ['x = F / k','equivalent k','F','U = ½kx²']
- );
-
- $('formula').textContent=d.mode==='series'
-  ?'1/k = 1/k₁ + 1/k₂'
-  :d.mode==='parallel'?'k = k₁ + k₂':'F = kx';
- $('calculation').textContent=
-  `k = ${fixed(d.k,2)} N/m · x = ${fixed(d.extension,3)} m · U = ${fixed(d.energy,3)} J`;
-
- $('explain').textContent=
-  d.mode==='series'
-  ?'Two springs in series have a smaller effective stiffness than either spring alone. The same force acts through both springs, and their extensions add.'
-  :d.mode==='parallel'
-  ?'Two springs in parallel share the applied load while their stiffnesses add. The equivalent spring is stiffer, so extension is smaller for the same force.'
-  :'Within the elastic limit, extension is proportional to applied force. Increasing stiffness reduces extension for the same applied force.';
-
+ const bw=105,bh=43;
+ ctx.fillStyle='#85bd91';ctx.fillRect(cx-bw/2,end-3,bw,bh);
+ ctx.strokeStyle='#4c895d';ctx.lineWidth=2;ctx.strokeRect(cx-bw/2,end-3,bw,bh);
+ text(ctx,'LOAD',cx,end+24,'#205b38',11,'center','900');
+ if(d.F>0)arrow(ctx,cx+68,end+bh+3,cx+68,end+bh+42,'#bd741b',3,8);
+ text(ctx,'F = '+fixed(d.F,1)+' N',cx+83,end+bh+28,'#bd741b',10);
+ line(ctx,cx-112,top,cx-112,end,'#8da98e',1,[4,4]);
+ line(ctx,cx-120,top,cx-104,top,'#8da98e',1.4);line(ctx,cx-120,end,cx-104,end,'#8da98e',1.4);
+ text(ctx,'x = '+fixed(d.extension,4)+' m',cx-122,(top+end)/2,'#087f87',10,'right');
+ text(ctx,'EFFECTIVE STIFFNESS  '+fixed(d.k,1)+' N/m',w/2,29,'#258653',11,'center','900');
+ text(ctx,d.mode==='series'?'Two springs share the same force':'Ideal spring arrangement',w/2,h*.89,'#56765d',10,'center');
+ metrics(['Extension','Effective stiffness','Applied force','Elastic energy'],[fixed(d.extension,4)+' m',fixed(d.k,2)+' N/m',fixed(d.F,2)+' N',fixed(d.energy,4)+' J'],['x = F/k','equivalent k','F = target × progress','U = ½kx²']);
+ $('formula').textContent=d.mode==='series'?'1/k = 1/k₁ + 1/k₂':d.mode==='parallel'?'k = k₁ + k₂':'F = kx';
+ $('calculation').textContent=`F = ${fixed(d.F,2)} N · x = ${fixed(d.extension,5)} m · U = ${fixed(d.energy,5)} J`;
+ $('explain').textContent=d.mode==='series'?'In series, the same force acts through both springs and their extensions add. The equivalent stiffness is smaller than either spring stiffness.':d.mode==='parallel'?'In parallel, both springs extend by the same amount and their stiffnesses add. The arrangement is stiffer, so the same force produces less extension.':'Within the elastic range, extension is directly proportional to force. The straight-line force–extension graph has slope equal to the spring constant.';
  drawSpringGraph(d);
 }
 function drawSpringGraph(d){
- const z=resize(plot,px),w=z.w,h=z.h;
- clear(px,w,h);
- const L=48,R=w-15,T=22,B=h-31;
- axes(px,L,R,T,B);
-
- const maxF=100;
- const maxX=maxF/d.k;
- px.beginPath();
- for(let i=0;i<=60;i++){
-  const F=maxF*i/60;
-  const x=F/d.k;
-  const xx=L+F/maxF*(R-L);
-  const yy=B-x/maxX*(B-T);
-  if(i===0)px.moveTo(xx,yy);else px.lineTo(xx,yy);
- }
- px.strokeStyle='#087f87';
- px.lineWidth=2.5;
- px.stroke();
-
- const xx=L+d.F/maxF*(R-L);
- const yy=B-d.extension/maxX*(B-T);
- circle(px,xx,yy,4,'#bd741b');
-
- text(px,'Extension (m)',7,13,'#718a76',9);
- text(px,'Force (N)',R,B+24,'#718a76',9,'right');
- text(px,'Current: '+fixed(d.extension,3)+' m',R,14,'#087f87',9,'right');
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);const L=50,R=w-15,T=22,B=h-31;axes(px,L,R,T,B);
+ const maxF=Math.max(100,d.targetF*1.15),maxX=maxF/d.k;
+ px.beginPath();for(let i=0;i<=60;i++){const F=maxF*i/60,x=F/d.k,xx=L+F/maxF*(R-L),yy=B-x/maxX*(B-T);if(i===0)px.moveTo(xx,yy);else px.lineTo(xx,yy)}
+ px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();
+ const xx=L+d.F/maxF*(R-L),yy=B-d.extension/maxX*(B-T);circle(px,xx,yy,4,'#bd741b');
+ text(px,'Extension (m)',7,13,'#718a76',9);text(px,'Force (N)',R,B+24,'#718a76',9,'right');text(px,'Current '+fixed(d.F,1)+' N',R,14,'#087f87',9,'right');
 }
 
-/* ---------- LAB 02: YOUNG'S MODULUS ---------- */
-
+/* LAB 02: TENSILE TEST WITH REAL PROGRESSIVE ANIMATION */
+function youngCurvePoint(stress,mat){
+ const tangent=mat.E*mat.tangentRatio;
+ const yieldStrain=mat.yield/mat.E;
+ const ultimateStrain=yieldStrain+(mat.ultimate-mat.yield)/tangent;
+ if(stress<=mat.yield)return {strain:stress/mat.E,region:'Elastic region',fractured:false,yieldStrain,ultimateStrain};
+ if(stress<=mat.ultimate)return {strain:yieldStrain+(stress-mat.yield)/tangent,region:'Plastic region · simplified hardening',fractured:false,yieldStrain,ultimateStrain};
+ return {strain:ultimateStrain,region:'Ultimate strength exceeded · fracture',fractured:true,yieldStrain,ultimateStrain};
+}
 function youngData(){
  const mat=materials[$('youngMaterial').value];
- const F=num('wireForce');
- const area=num('wireArea')*1e-6;
- const L=num('wireLength');
-
- const stress=F/area;
- const yieldStrain=mat.yield/mat.E;
- const ultimateStrain=yieldStrain+(mat.ultimate-mat.yield)/(.04*mat.E);
-
- let strain=0;
- let state='Elastic region';
- let broken=false;
-
- if(stress<=mat.yield){
-  strain=stress/mat.E;
- }else if(stress<=mat.ultimate){
-  strain=yieldStrain+(stress-mat.yield)/(.04*mat.E);
-  state='Plastic region · simplified hardening';
- }else{
-  strain=ultimateStrain;
-  broken=true;
-  state='Beyond ultimate strength · fracture';
- }
-
- const extension=strain*L;
- const deltaU=.5*F*extension;
-
- return {
-  mat,F,area,L,stress,strain,extension,deltaU,
-  yieldStrain,ultimateStrain,broken,state
- };
+ const targetForce=num('wireForce'),F=targetForce*testProgress;
+ const area=num('wireArea')*1e-6,L=num('wireLength');
+ const stress=area>0?F/area:0;
+ const point=youngCurvePoint(stress,mat);
+ const extension=point.strain*L;
+ const energy=point.fractured?NaN:.5*F*extension;
+ return {mat,targetForce,F,area,L,stress,strain:point.strain,extension,energy,region:point.region,fractured:point.fractured,yieldStrain:point.yieldStrain,ultimateStrain:point.ultimateStrain};
 }
-
 function renderYoung(){
- const d=youngData();
- const z=resize(scene,ctx),w=z.w,h=z.h;
- clear(ctx,w,h);
+ const d=youngData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const cx=w*.43,top=47,baseBottom=259;
+ const visualExtension=Math.min(116,d.extension*1000*12);
+ const bottom=baseBottom+visualExtension;
+ const fractured=d.fractured;
+ const wireX=cx;
 
- const cx=w*.47;
- const top=58;
- const bottomBase=270;
- const extensionVisual=Math.min(100,d.extension*2500);
- const pulse=animation==='young'?Math.sin(animTime*8)*2:0;
- const bottom=bottomBase+extensionVisual+pulse;
+ // Top clamp and frame
+ ctx.fillStyle='#779d79';ctx.fillRect(cx-72,top-13,144,16);
+ ctx.strokeStyle='#4f815a';ctx.lineWidth=2;ctx.strokeRect(cx-72,top-13,144,16);
+ for(let i=0;i<8;i++)line(ctx,cx-64+i*18,top-12,cx-70+i*18,top,'#d8ead5',1.5);
 
- // Top clamp
- ctx.fillStyle='#87b18b';
- ctx.fillRect(cx-63,top-16,126,17);
- ctx.strokeStyle='#54835e';
- ctx.lineWidth=2;
- ctx.strokeRect(cx-63,top-16,126,17);
- for(let i=0;i<7;i++){
-  line(ctx,cx-52+i*17,top-15,cx-58+i*17,top-3,'#d6ead2',1.5);
- }
+ // Unstretched reference wire
+ line(ctx,cx+28,top+3,cx+28,baseBottom,'#c6d9c3',1,[3,4]);
 
- // Wire
- ctx.strokeStyle=d.broken?'#c85b79':'#4978c5';
- ctx.lineWidth=4;
+ // Animated wire: physical extension changes throughout the test
+ const pulse=animation==='young'?Math.sin(animTime*18)*.8:0;
+ const wireWidth=3+Math.min(2,d.stress/Math.max(1,d.mat.ultimate)*2);
+ ctx.strokeStyle=fractured?'#c85b79':'#4978c5';
+ ctx.lineWidth=wireWidth;
+ ctx.lineCap='round';
  ctx.beginPath();
- ctx.moveTo(cx,top);
- ctx.lineTo(cx,bottom);
- ctx.stroke();
-
- if(!d.broken){
-  circle(ctx,cx,bottom,5,'#4978c5');
-  ctx.fillStyle='#d4e7d1';
-  ctx.fillRect(cx-34,bottom,68,45);
-  ctx.strokeStyle='#66976e';
-  ctx.strokeRect(cx-34,bottom,68,45);
-  text(ctx,'LOAD',cx,bottom+26,'#315b38',10,'center','900');
+ ctx.moveTo(wireX,top+3);
+ if(fractured){
+  ctx.lineTo(wireX,top+3+(bottom-top-18)*.48);
+  ctx.moveTo(wireX,top+3+(bottom-top-18)*.58);
+  ctx.lineTo(wireX,bottom-13);
  }else{
-  circle(ctx,cx,bottom-10,5,'#c85b79');
-  line(ctx,cx-8,bottom-1,cx+8,bottom+12,'#c85b79',2);
-  text(ctx,'FRACTURE',cx+45,bottom+12,'#c85b79',10);
+  ctx.lineTo(wireX,bottom-13+pulse);
+ }
+ ctx.stroke();
+ ctx.lineCap='butt';
+
+ // Load platform moves down as the wire stretches
+ if(!fractured){
+  const plateY=bottom-8;
+  ctx.fillStyle='#8abf93';
+  ctx.fillRect(cx-43,plateY,86,31);
+  ctx.strokeStyle='#538c62';
+  ctx.lineWidth=2;
+  ctx.strokeRect(cx-43,plateY,86,31);
+  text(ctx,'LOAD',cx,plateY+20,'#245c37',10,'center','900');
+ }else{
+  circle(ctx,cx,bottom-8,7,'#c85b79');
+  text(ctx,'WIRE FRACTURED',cx+16,bottom+16,'#c85b79',10,'left','900');
  }
 
- arrow(ctx,cx+50,bottom+7,cx+50,bottom+48,'#bd741b',3,8);
- text(ctx,'F = '+comma(d.F)+' N',cx+66,bottom+32,'#bd741b',10);
+ // Force arrow
+ if(d.F>0){
+  arrow(ctx,cx+70,bottom+4,cx+70,bottom+45,'#bd741b',3,8);
+  text(ctx,'F = '+comma(d.F)+' N',cx+86,bottom+31,'#bd741b',10);
+ }
 
- line(ctx,cx-70,top,cx-70,bottom,'#8da98e',1,[4,4]);
- line(ctx,cx-78,top,cx-62,top,'#8da98e',1.5);
- line(ctx,cx-78,bottom,cx-62,bottom,'#8da98e',1.5);
- text(ctx,'L = '+fixed(d.L,2)+' m',cx-82,(top+bottom)/2-8,'#56765d',10,'right');
- text(ctx,'ΔL = '+fixed(d.extension*1000,4)+' mm',cx-82,(top+bottom)/2+9,'#087f87',10,'right');
+ // Extension indicator
+ line(ctx,cx-82,baseBottom,cx-82,bottom-10,'#8da98e',1.2,[4,3]);
+ line(ctx,cx-90,baseBottom,cx-74,baseBottom,'#8da98e',1.3);
+ line(ctx,cx-90,bottom-10,cx-74,bottom-10,'#8da98e',1.3);
+ text(ctx,'ΔL = '+fixed(d.extension*1000,4)+' mm',cx-93,(baseBottom+bottom)/2,'#087f87',10,'right');
+ text(ctx,'L₀ = '+fixed(d.L,2)+' m',cx-93,baseBottom-8,'#56765d',9,'right');
 
- text(ctx,d.mat.name.toUpperCase()+' TENSILE TEST',w/2,27,'#258653',11,'center','900');
- text(ctx,'Young modulus E = '+fixed(d.mat.E/1e9,1)+' GPa',w/2,h*.88,'#355d3d',11,'center');
- text(ctx,d.state,w/2,h*.94,d.broken?'#bd741b':'#258653',10,'center','800');
+ // Live applied-force meter
+ const gx=w*.75,gy=93,gw=Math.min(155,w*.25),gh=13;
+ text(ctx,'APPLIED FORCE',gx+gw/2,55,'#718a76',9,'center','900');
+ text(ctx,comma(d.F)+' / '+comma(d.targetForce)+' N',gx+gw/2,75,'#355d3d',11,'center','800');
+ ctx.fillStyle='#e2ede0';
+ ctx.beginPath();ctx.roundRect(gx,gy,gw,gh,7);ctx.fill();
+ ctx.fillStyle=fractured?'#c85b79':'#258653';
+ ctx.beginPath();ctx.roundRect(gx,gy,gw*testProgress,gh,7);ctx.fill();
+
+ text(ctx,'STRESS',gx+gw/2,136,'#718a76',9,'center','900');
+ text(ctx,fixed(d.stress/1e6,2)+' MPa',gx+gw/2,155,'#087f87',14,'center','900');
+ text(ctx,'STRAIN',gx+gw/2,190,'#718a76',9,'center','900');
+ text(ctx,fixed(d.strain,6),gx+gw/2,209,'#bd741b',12,'center','900');
+ text(ctx,'Y = '+fixed(d.mat.E/1e9,1)+' GPa',gx+gw/2,239,'#496e51',10,'center');
+
+ text(ctx,'TENSILE TEST · '+d.mat.name.toUpperCase(),w/2,27,'#258653',11,'center','900');
+ text(ctx,d.region,w/2,h*.91,fractured?'#c85b79':d.stress>d.mat.yield?'#bd741b':'#258653',10,'center','800');
 
  metrics(
-  ['Tensile stress','Longitudinal strain','Extension','Young modulus'],
-  [fixed(d.stress/1e6,2)+' MPa',fixed(d.strain,6),fixed(d.extension*1000,4)+' mm',fixed(d.mat.E/1e9,1)+' GPa'],
-  ['σ = F / A','ε = ΔL / L','ΔL = εL','E = σ / ε (elastic)']
+  ['Tensile stress','Longitudinal strain','Wire extension','Young modulus'],
+  [fixed(d.stress/1e6,3)+' MPa',fixed(d.strain,7),fixed(d.extension*1000,4)+' mm',fixed(d.mat.E/1e9,1)+' GPa'],
+  ['σ = F/A','ε = ΔL/L₀','ΔL = εL₀','Y = σ/ε in elastic region']
  );
 
- $('formula').textContent='Y = stress / strain = (F/A) / (ΔL/L)';
- $('calculation').textContent=
-  `σ = ${fixed(d.stress/1e6,2)} MPa · ε = ${fixed(d.strain,6)} · ΔL = ${fixed(d.extension*1000,4)} mm`;
+ $('formula').textContent='Y = stress / strain = (F/A) / (ΔL/L₀)';
+ $('calculation').textContent=`σ = ${fixed(d.stress/1e6,3)} MPa · ε = ${fixed(d.strain,7)} · ΔL = ${fixed(d.extension*1000,4)} mm`;
 
- $('explain').textContent=d.broken
-  ?`The applied stress exceeds the model's ultimate tensile strength of ${fixed(d.mat.ultimate/1e6,1)} MPa. The wire is marked fractured. This simplified curve is for learning, not structural design.`
-  :`The material is in the ${d.state.toLowerCase()}. Young's modulus is ${fixed(d.mat.E/1e9,1)} GPa. The linear relation σ = Yε applies in the elastic region; beyond yield, permanent deformation is represented approximately.`;
+ $('explain').textContent=d.fractured
+  ?`The applied stress has exceeded the model's ultimate tensile strength (${fixed(d.mat.ultimate/1e6,1)} MPa). The wire is shown fractured. Strain after fracture is not defined by this simple model; the display marks the last point at the fracture threshold.`
+  :d.stress<=d.mat.yield
+   ?`The material is in its elastic region. It returns to its original length when the load is removed in the ideal model. Stress is proportional to strain, and the slope is Young's modulus (${fixed(d.mat.E/1e9,1)} GPa).`
+   :`The material has passed the yield point. The schematic model now shows permanent deformation through a simplified strain-hardening segment. The curve is educational, not a certified engineering material curve.`;
 
- $('youngMaterialInfo').textContent=
-  `${d.mat.name}: Y = ${fixed(d.mat.E/1e9,1)} GPa · Yield strength ≈ ${fixed(d.mat.yield/1e6,0)} MPa · Ultimate strength ≈ ${fixed(d.mat.ultimate/1e6,0)} MPa.`;
+ $('youngMaterialInfo').textContent=`${d.mat.name}: Y ≈ ${fixed(d.mat.E/1e9,1)} GPa · yield stress ≈ ${fixed(d.mat.yield/1e6,1)} MPa · ultimate stress ≈ ${fixed(d.mat.ultimate/1e6,1)} MPa. Curve beyond yield is simplified.`;
 
  drawYoungGraph(d);
 }
-
-function strainAtStress(stress,mat){
- const ys=mat.yield/mat.E;
- const us=ys+(mat.ultimate-mat.yield)/(.04*mat.E);
- if(stress<=mat.yield)return stress/mat.E;
- if(stress<=mat.ultimate)return ys+(stress-mat.yield)/(.04*mat.E);
- return us;
-}
 function drawYoungGraph(d){
- const z=resize(plot,px),w=z.w,h=z.h;
- clear(px,w,h);
- const L=52,R=w-15,T=24,B=h-31;
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);
+ const L=54,R=w-15,T=24,B=h-31;
  axes(px,L,R,T,B);
-
- const mat=d.mat;
- const maxStress=mat.ultimate*1.15;
- const maxStrain=(mat.ultimate/mat.E)*3.2;
- const mapX=s=>L+s/maxStrain*(R-L);
- const mapY=s=>B-s/maxStress*(B-T);
-
+ const mat=d.mat,tangent=mat.E*mat.tangentRatio;
  const yieldStrain=mat.yield/mat.E;
- const ultimateStrain=yieldStrain+(mat.ultimate-mat.yield)/(.04*mat.E);
+ const ultimateStrain=yieldStrain+(mat.ultimate-mat.yield)/tangent;
+ const maxStrain=ultimateStrain*1.16,maxStress=mat.ultimate*1.15;
+ const X=e=>L+e/maxStrain*(R-L);
+ const Y=s=>B-s/maxStress*(B-T);
 
+ // Elastic straight section
  px.beginPath();
- for(let i=0;i<=100;i++){
-  const strain=maxStrain*i/100;
-  let stress;
-  if(strain<=yieldStrain)stress=mat.E*strain;
-  else if(strain<=ultimateStrain)stress=mat.yield+(strain-yieldStrain)*(.04*mat.E);
-  else stress=mat.ultimate;
-  const x=mapX(strain),y=mapY(stress);
-  if(i===0)px.moveTo(x,y);else px.lineTo(x,y);
- }
+ px.moveTo(X(0),Y(0));
+ px.lineTo(X(yieldStrain),Y(mat.yield));
  px.strokeStyle='#087f87';
- px.lineWidth=2.5;
+ px.lineWidth=2.7;
  px.stroke();
 
- line(px,mapX(yieldStrain),T,mapX(yieldStrain),B,'#bd741b',1,[4,4]);
- line(px,mapX(ultimateStrain),T,mapX(ultimateStrain),B,'#c85b79',1,[4,4]);
- text(px,'Yield',mapX(yieldStrain),T+10,'#bd741b',8,'center');
- text(px,'Ultimate',mapX(ultimateStrain),T+21,'#c85b79',8,'center');
+ // Simplified strain-hardening section
+ px.beginPath();
+ px.moveTo(X(yieldStrain),Y(mat.yield));
+ px.lineTo(X(ultimateStrain),Y(mat.ultimate));
+ px.strokeStyle='#4978c5';
+ px.lineWidth=2.7;
+ px.stroke();
 
- const currentStrain=d.broken?ultimateStrain:d.strain;
- const currentStress=d.broken?mat.ultimate:d.stress;
- circle(px,mapX(currentStrain),mapY(currentStress),4,'#bd741b');
+ // Yield and fracture indicators
+ line(px,X(yieldStrain),T,X(yieldStrain),B,'#bd741b',1,[4,4]);
+ line(px,X(ultimateStrain),T,X(ultimateStrain),B,'#c85b79',1,[4,4]);
+ text(px,'Yield',X(yieldStrain),T+10,'#bd741b',8,'center');
+ text(px,'Ultimate',X(ultimateStrain),T+10,'#c85b79',8,'center');
 
+ // Moving experimental point
+ const point=d.fractured
+  ?{strain:ultimateStrain,stress:mat.ultimate}
+  :{strain:d.strain,stress:d.stress};
+
+ circle(px,X(point.strain),Y(point.stress),5,d.fractured?'#c85b79':'#bd741b');
  text(px,'Stress (MPa)',7,14,'#718a76',9);
  text(px,'Strain (%)',R,B+24,'#718a76',9,'right');
- text(px,'Current: '+fixed(currentStress/1e6,1)+' MPa',R,14,'#087f87',9,'right');
+ text(px,'Current: '+fixed(point.stress/1e6,2)+' MPa',R,14,'#087f87',9,'right');
 }
 
-/* ---------- LAB 03: BULK MODULUS ---------- */
-
+/* LAB 03: BULK MODULUS */
 function bulkData(){
  const mat=materials[$('bulkMaterial').value];
- const P=num('bulkPressure')*1e6;
+ const targetP=num('bulkPressure')*1e6;
+ const P=targetP*testProgress;
  const V0=num('bulkVolume')/1000;
  const fraction=P/mat.B;
  const deltaV=-fraction*V0;
  const finalV=V0+deltaV;
- const compressibility=1/mat.B;
-
- return {
-  mat,P,V0,fraction,deltaV,finalV,
-  compressibility,
-  pressureMPa:P/1e6,
-  compressionPercent:fraction*100
- };
+ return {mat,targetP,P,V0,fraction,deltaV,finalV,pressureMPa:P/1e6,compressionPercent:fraction*100};
 }
-
 function renderBulk(){
- const d=bulkData();
- const z=resize(scene,ctx),w=z.w,h=z.h;
- clear(ctx,w,h);
+ const d=bulkData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const cx=w*.43,cy=h*.52;
+ const baseSize=130;
+ const linearCompression=Math.min(14,(d.fraction/3)*900);
+ const half=baseSize/2-linearCompression;
+ const depth=35-linearCompression*.2;
+ const front=[[cx-half,cy-half],[cx+half,cy-half],[cx+half,cy+half],[cx-half,cy+half]];
 
- const cx=w*.43,cy=h*.51;
- const size=150;
- const compressionVisual=Math.min(18,d.compressionPercent*4);
- const halfX=size*.5-compressionVisual;
- const halfY=size*.5-compressionVisual*.55;
- const depth=37;
+ polygon(ctx,[front[0],front[1],[front[1][0]+depth,front[1][1]-depth*.62],[front[0][0]+depth,front[0][1]-depth*.62]],'#cde8c9','#5f9b6a',1.5);
+ polygon(ctx,[front[1],[front[1][0]+depth,front[1][1]-depth*.62],[front[1][0]+depth,front[1][1]+half*.88],front[2]],'#83bd8d','#4f8d5f',1.5);
+ polygon(ctx,front,'#a6d5a8','#538e61',2);
 
- // Compressed 3D cube
- const front=[
-  [cx-halfX,cy-halfY],
-  [cx+halfX,cy-halfY],
-  [cx+halfX,cy+halfY],
-  [cx-halfX,cy+halfY]
- ];
- polygon(ctx,front,'#a8d8ad','#4e9060',2);
- polygon(ctx,[
-  front[0],front[1],
-  [front[1][0]+depth,front[1][1]-depth*.65],
-  [front[0][0]+depth,front[0][1]-depth*.65]
- ],'#cce7c7','#5f9a69',1.5);
- polygon(ctx,[
-  front[1],[front[1][0]+depth,front[1][1]-depth*.65],
-  [front[1][0]+depth,front[1][1]+halfY*.75],
-  front[2]
- ],'#82bd8c','#4e9060',1.5);
+ const arrowSize=23+testProgress*18;
+ arrow(ctx,cx-baseSize*.5-arrowSize-8,cy,cx-baseSize*.5-5,cy,'#087f87',3,8);
+ arrow(ctx,cx+baseSize*.5+arrowSize+8,cy,cx+baseSize*.5+5,cy,'#087f87',3,8);
+ arrow(ctx,cx,cy-baseSize*.5-arrowSize-8,cx,cy-baseSize*.5-5,'#087f87',3,8);
+ arrow(ctx,cx,cy+baseSize*.5+arrowSize+8,cx,cy+baseSize*.5+5,'#087f87',3,8);
 
- // Pressure arrows from four directions
- const arrowLength=40+Math.min(34,d.pressureMPa/500*34);
- arrow(ctx,cx-size*.5-arrowLength-10,cy,cx-size*.5-8,cy,'#087f87',3,9);
- arrow(ctx,cx+size*.5+arrowLength+10,cy,cx+size*.5+8,cy,'#087f87',3,9);
- arrow(ctx,cx,cy-size*.5-arrowLength-8,cx,cy-size*.5-5,'#087f87',3,9);
- arrow(ctx,cx,cy+size*.5+arrowLength+8,cx,cy+size*.5+5,'#087f87',3,9);
-
- text(ctx,'PRESSURE',cx,34,'#258653',11,'center','900');
- text(ctx,'P = '+fixed(d.pressureMPa,1)+' MPa',cx,cy+size*.5+33,'#087f87',11,'center');
+ text(ctx,'UNIFORM PRESSURE',cx,30,'#258653',11,'center','900');
  text(ctx,d.mat.name.toUpperCase(),cx,cy+5,'#245d36',12,'center','900');
+ text(ctx,'P = '+fixed(d.pressureMPa,2)+' MPa',cx,cy+half+27,'#087f87',11,'center');
 
- const infoX=w*.77;
- text(ctx,'INITIAL VOLUME',infoX,75,'#718a76',9,'center','800');
- text(ctx,fixed(d.V0*1000,3)+' L',infoX,95,'#355d3d',14,'center','800');
- text(ctx,'FINAL VOLUME',infoX,133,'#718a76',9,'center','800');
- text(ctx,fixed(d.finalV*1000,5)+' L',infoX,153,'#087f87',14,'center','800');
- text(ctx,'COMPRESSION',infoX,192,'#718a76',9,'center','800');
- text(ctx,fixed(d.compressionPercent,5)+' %',infoX,212,'#bd741b',13,'center','800');
-
- text(ctx,'Volume decreases under uniform pressure',w/2,h*.91,'#56765d',10,'center');
+ const ix=w*.79;
+ text(ctx,'INITIAL VOLUME',ix,77,'#718a76',9,'center','800');
+ text(ctx,fixed(d.V0*1000,3)+' L',ix,97,'#355d3d',14,'center','800');
+ text(ctx,'CURRENT VOLUME',ix,135,'#718a76',9,'center','800');
+ text(ctx,fixed(d.finalV*1000,6)+' L',ix,155,'#087f87',14,'center','800');
+ text(ctx,'VOLUME REDUCTION',ix,194,'#718a76',9,'center','800');
+ text(ctx,fixed(d.compressionPercent,6)+' %',ix,214,'#bd741b',13,'center','800');
+ text(ctx,'Cube deformation visually exaggerated',w/2,h*.91,'#56765d',10,'center');
 
  metrics(
   ['Bulk modulus','Volume decrease','Fractional compression','Final volume'],
-  [fixed(d.mat.B/1e9,2)+' GPa',fixed(-d.deltaV*1000,6)+' L',fixed(d.fraction,7),fixed(d.finalV*1000,5)+' L'],
-  ['B = −P / (ΔV/V)','|ΔV|','P / B','V₀ + ΔV']
+  [fixed(d.mat.B/1e9,2)+' GPa',fixed(-d.deltaV*1000,7)+' L',fixed(d.fraction,9),fixed(d.finalV*1000,6)+' L'],
+  ['B = −P/(ΔV/V)','|ΔV|','P/B','V₀ + ΔV']
  );
 
  $('formula').textContent='B = −P / (ΔV/V)';
- $('calculation').textContent=
-  `ΔV/V = −P/B = −${fixed(d.fraction,7)} · ΔV = ${sci(d.deltaV)} m³`;
-
- $('explain').textContent=
-  `${d.mat.name} has a model bulk modulus of ${fixed(d.mat.B/1e9,1)} GPa. A larger bulk modulus means greater resistance to compression. Increasing pressure causes a proportional volume decrease in this small-compression approximation.`;
-
- $('bulkMaterialInfo').textContent=
-  `${d.mat.name}: bulk modulus B ≈ ${fixed(d.mat.B/1e9,1)} GPa. The simulation uses ΔV/V = −P/B and assumes a uniform pressure field and small compression.`;
-
+ $('calculation').textContent=`ΔV/V = −${fixed(d.fraction,9)} · ΔV = ${sci(d.deltaV)} m³`;
+ $('explain').textContent=`${d.mat.name} has a model bulk modulus of ${fixed(d.mat.B/1e9,1)} GPa. A larger B means greater resistance to uniform compression. The volume reduction is ${fixed(d.compressionPercent,6)}% at the current pressure.`;
+ $('bulkMaterialInfo').textContent=`${d.mat.name}: bulk modulus B ≈ ${fixed(d.mat.B/1e9,1)} GPa. Small-compression model: ΔV/V = −P/B. The visual cube distortion is magnified; the numerical volume change is calculated from the equation.`;
  drawBulkGraph(d);
 }
-
 function drawBulkGraph(d){
- const z=resize(plot,px),w=z.w,h=z.h;
- clear(px,w,h);
- const L=52,R=w-15,T=22,B=h-31;
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);
+ const L=54,R=w-15,T=22,B=h-31;
  axes(px,L,R,T,B);
-
- const maxP=500;
- const maxCompression=500e6/d.mat.B*1.1;
+ const maxP=Math.max(500,d.targetP/1e6*1.1);
+ const maxComp=(maxP*1e6/d.mat.B)*1.12;
  px.beginPath();
  for(let i=0;i<=70;i++){
-  const p=maxP*i/70;
-  const fraction=(p*1e6)/d.mat.B;
-  const x=L+p/maxP*(R-L);
-  const y=B-fraction/maxCompression*(B-T);
+  const p=maxP*i/70,comp=p*1e6/d.mat.B;
+  const x=L+p/maxP*(R-L),y=B-comp/maxComp*(B-T);
   if(i===0)px.moveTo(x,y);else px.lineTo(x,y);
  }
- px.strokeStyle='#087f87';
- px.lineWidth=2.5;
- px.stroke();
-
+ px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();
  const xx=L+d.pressureMPa/maxP*(R-L);
- const yy=B-d.fraction/maxCompression*(B-T);
+ const yy=B-d.fraction/maxComp*(B-T);
  circle(px,xx,yy,4,'#bd741b');
-
- text(px,'Compression ratio',7,13,'#718a76',9);
+ text(px,'Volume reduction ratio',7,13,'#718a76',9);
  text(px,'Pressure (MPa)',R,B+24,'#718a76',9,'right');
- text(px,'Current: '+fixed(d.compressionPercent,5)+' %',R,14,'#087f87',9,'right');
+ text(px,'Current '+fixed(d.compressionPercent,5)+'%',R,14,'#087f87',9,'right');
 }
 
-/* ---------- LAB 04: SHEAR MODULUS ---------- */
-
+/* LAB 04: SHEAR MODULUS */
 function shearData(){
  const mat=materials[$('shearMaterial').value];
- const F=num('shearForce');
+ const targetF=num('shearForce');
+ const F=targetF*testProgress;
  const A=num('shearArea');
  const L=num('shearThickness');
-
  const stress=F/A;
  const strain=stress/mat.G;
  const displacement=strain*L;
  const energy=.5*F*displacement;
-
- return {
-  mat,F,A,L,stress,strain,displacement,energy
- };
+ return {mat,targetF,F,A,L,stress,strain,displacement,energy};
 }
-
 function renderShear(){
- const d=shearData();
- const z=resize(scene,ctx),w=z.w,h=z.h;
- clear(ctx,w,h);
+ const d=shearData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const cx=w*.42,baseY=268,blockW=155,blockH=121;
+ const visualShift=Math.min(65,d.displacement*100000);
+ const left=cx-blockW/2,right=cx+blockW/2;
+ const baseLeft=left,baseRight=right;
+ const topLeft=left+visualShift,topRight=right+visualShift;
 
- const cx=w*.45;
- const baseY=275;
- const blockW=160;
- const blockH=125;
- const shift=Math.min(55,d.displacement*1500);
- const xLeft=cx-blockW/2;
- const xRight=cx+blockW/2;
+ polygon(ctx,[[topLeft,baseY-blockH],[topRight,baseY-blockH],[topRight+28,baseY-blockH-22],[topLeft+28,baseY-blockH-22]],'#c6e4c3','#5c9567',1.5);
+ polygon(ctx,[[topRight,baseY-blockH],[topRight+28,baseY-blockH-22],[baseRight+28,baseY-22],[baseRight,baseY]],'#81b88a','#528a5d',1.5);
+ polygon(ctx,[[topLeft,baseY-blockH],[topRight,baseY-blockH],[baseRight,baseY],[baseLeft,baseY]],'#a4d2a5','#558f62',1.5);
+ line(ctx,baseLeft-18,baseY+3,baseRight+40,baseY+3,'#78977c',4);
+ line(ctx,baseLeft,baseY-blockH-8,baseRight,baseY-blockH-8,'#b5cdb4',1,[4,4]);
 
- // Main deformed solid body: base and shifted top
- const baseFront=[
-  [xLeft,baseY-blockH],
-  [xRight,baseY-blockH],
-  [xRight,baseY],
-  [xLeft,baseY]
- ];
- const topShift=shift;
- polygon(ctx,[
-  [xLeft+topShift,baseY-blockH],
-  [xRight+topShift,baseY-blockH],
-  [xRight+topShift+24,baseY-blockH-22],
-  [xLeft+topShift+24,baseY-blockH-22]
- ],'#c6e4c3','#5c9567',1.5);
- polygon(ctx,[
-  [xRight+topShift,baseY-blockH],
-  [xRight+topShift+24,baseY-blockH-22],
-  [xRight+topShift+24,baseY-22],
-  [xRight,baseY]
- ],'#81b88a','#528a5d',1.5);
- polygon(ctx,[
-  [xLeft+topShift,baseY-blockH],
-  [xRight+topShift,baseY-blockH],
-  [xRight,baseY],
-  [xLeft,baseY]
- ],'#a4d2a5','#558f62',1.5);
+ arrow(ctx,topRight+30,baseY-blockH-42,topRight+95,baseY-blockH-42,'#087f87',3,9);
+ text(ctx,'F = '+comma(d.F)+' N',topRight+98,baseY-blockH-46,'#087f87',10);
+ line(ctx,baseLeft,baseY-blockH+14,topLeft,baseY-blockH+14,'#bd741b',2,[4,3]);
+ text(ctx,'Δx = '+fixed(d.displacement*1000,6)+' mm',topLeft+5,baseY-blockH+5,'#bd741b',9);
+ text(ctx,'FIXED BASE',cx,baseY+25,'#56765d',10,'center','800');
 
- line(ctx,xLeft,baseY+1,xRight+25,baseY+1,'#688d6c',4);
- line(ctx,xLeft-20,baseY+8,xRight+45,baseY+8,'#c6dbc3',2);
-
- // Force arrow on the top
- arrow(ctx,xRight+topShift+25,baseY-blockH-35,xRight+topShift+95,baseY-blockH-35,'#087f87',3,9);
- text(ctx,'F = '+comma(d.F)+' N',xRight+topShift+100,baseY-blockH-39,'#087f87',10);
-
- // Displacement indicator
- line(ctx,xLeft,baseY-blockH-12,xLeft+topShift,baseY-blockH-12,'#bd741b',2,[4,3]);
- text(ctx,'Δx = '+fixed(d.displacement*1000,5)+' mm',xLeft+topShift+5,baseY-blockH-20,'#bd741b',10);
-
- text(ctx,d.mat.name.toUpperCase()+' · SHEAR DEFORMATION',w/2,29,'#258653',11,'center','900');
- text(ctx,'Fixed lower face',cx,baseY+27,'#56765d',10,'center');
-
- const infoX=w*.80;
- text(ctx,'SHEAR MODULUS',infoX,77,'#718a76',9,'center','800');
- text(ctx,fixed(d.mat.G/1e9,2)+' GPa',infoX,99,'#355d3d',15,'center','800');
- text(ctx,'SHEAR STRESS',infoX,143,'#718a76',9,'center','800');
- text(ctx,fixed(d.stress/1e6,4)+' MPa',infoX,165,'#087f87',14,'center','800');
- text(ctx,'SHEAR STRAIN',infoX,207,'#718a76',9,'center','800');
- text(ctx,fixed(d.strain,7),infoX,229,'#bd741b',13,'center','800');
+ const ix=w*.79;
+ text(ctx,'SHEAR MODULUS',ix,75,'#718a76',9,'center','800');
+ text(ctx,fixed(d.mat.G/1e9,2)+' GPa',ix,97,'#355d3d',15,'center','800');
+ text(ctx,'SHEAR STRESS',ix,138,'#718a76',9,'center','800');
+ text(ctx,fixed(d.stress/1e6,5)+' MPa',ix,160,'#087f87',13,'center','800');
+ text(ctx,'SHEAR STRAIN',ix,200,'#718a76',9,'center','800');
+ text(ctx,fixed(d.strain,8),ix,222,'#bd741b',12,'center','800');
+ text(ctx,'Shear deformation (display enlarged)',w/2,h*.91,'#56765d',10,'center');
 
  metrics(
   ['Shear stress','Shear strain','Top displacement','Elastic energy'],
-  [fixed(d.stress/1e6,4)+' MPa',fixed(d.strain,7),fixed(d.displacement*1000,5)+' mm',fixed(d.energy,5)+' J'],
-  ['τ = F / A','γ = τ / G','Δx = γL','U = ½FΔx']
+  [fixed(d.stress/1e6,5)+' MPa',fixed(d.strain,8),fixed(d.displacement*1000,6)+' mm',fixed(d.energy,6)+' J'],
+  ['τ = F/A','γ = τ/G','Δx = γL','U = ½FΔx']
  );
 
  $('formula').textContent='G = shear stress / shear strain';
- $('calculation').textContent=
-  `γ = ${fixed(d.stress,2)} / ${sci(d.mat.G)} = ${fixed(d.strain,7)} · Δx = ${fixed(d.displacement,7)} m`;
-
- $('explain').textContent=
-  `The applied tangential force creates shear stress of ${fixed(d.stress/1e6,4)} MPa. The block deforms sideways. Its shear modulus is ${fixed(d.mat.G/1e9,1)} GPa. Stored elastic energy is ${fixed(d.energy,5)} J.`;
-
- $('shearMaterialInfo').textContent=
-  `${d.mat.name}: shear modulus G ≈ ${fixed(d.mat.G/1e9,1)} GPa. This idealised model assumes small elastic shear strain and does not simulate fracture or permanent deformation.`;
-
+ $('calculation').textContent=`γ = ${fixed(d.stress,2)} / ${sci(d.mat.G)} = ${fixed(d.strain,8)} · Δx = ${fixed(d.displacement,9)} m`;
+ $('explain').textContent=`Tangential force creates shear stress of ${fixed(d.stress/1e6,5)} MPa. The top face shifts sideways by ${fixed(d.displacement*1000,6)} mm while the base remains fixed. The drawing magnifies this small displacement for visibility.`;
+ $('shearMaterialInfo').textContent=`${d.mat.name}: shear modulus G ≈ ${fixed(d.mat.G/1e9,1)} GPa. The calculation assumes small elastic shear strain; the drawing is magnified and does not simulate fracture.`;
  drawShearGraph(d);
 }
-
 function drawShearGraph(d){
- const z=resize(plot,px),w=z.w,h=z.h;
- clear(px,w,h);
- const L=52,R=w-15,T=22,B=h-31;
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);
+ const L=54,R=w-15,T=22,B=h-31;
  axes(px,L,R,T,B);
-
- const maxF=100000;
- const maxDisp=(maxF/d.A/d.mat.G)*d.L*1.1;
-
+ const maxF=Math.max(100000,d.targetF*1.1);
+ const maxDisp=(maxF/d.A/d.mat.G)*d.L*1.12;
  px.beginPath();
  for(let i=0;i<=70;i++){
-  const force=maxF*i/70;
-  const disp=(force/d.A/d.mat.G)*d.L;
-  const x=L+force/maxF*(R-L);
-  const y=B-disp/maxDisp*(B-T);
+  const force=maxF*i/70,disp=force/d.A/d.mat.G*d.L;
+  const x=L+force/maxF*(R-L),y=B-disp/maxDisp*(B-T);
   if(i===0)px.moveTo(x,y);else px.lineTo(x,y);
  }
- px.strokeStyle='#087f87';
- px.lineWidth=2.5;
- px.stroke();
-
- const xx=L+d.F/maxF*(R-L);
- const yy=B-d.displacement/maxDisp*(B-T);
+ px.strokeStyle='#087f87';px.lineWidth=2.5;px.stroke();
+ const xx=L+d.F/maxF*(R-L),yy=B-d.displacement/maxDisp*(B-T);
  circle(px,xx,yy,4,'#bd741b');
-
- text(px,'Displacement (m)',7,13,'#718a76',9);
+ text(px,'Top displacement (m)',7,13,'#718a76',9);
  text(px,'Tangential force (N)',R,B+24,'#718a76',9,'right');
- text(px,'Current: '+fixed(d.displacement*1000,5)+' mm',R,14,'#087f87',9,'right');
+ text(px,'Current '+fixed(d.displacement*1000,5)+' mm',R,14,'#087f87',9,'right');
 }
 
-/* ---------- MAIN RENDERING ---------- */
-
+/* TAB, INPUT, AND RESET WIRING */
 function render(){
  updateOutputs();
-
  if(active===0)renderSpring();
  else if(active===1)renderYoung();
  else if(active===2)renderBulk();
  else renderShear();
+ statusText();
 }
-
-function stopAnimation(){
- animation=null;
- $('state').textContent='LIVE MODEL';
-}
-
-function frame(timestamp){
- if(!animation)return;
-
- const dt=Math.min(.05,(timestamp-lastFrame)/1000||0);
- lastFrame=timestamp;
- animTime+=dt;
-
- if(animTime>=3.2){
-  animation=null;
-  cue('complete');
- }
-
- render();
-
- if(animation)requestAnimationFrame(frame);
- else $('state').textContent='MODEL COMPLETE';
-}
-
-function startAnimation(type){
- stopAnimation();
- animation=type;
- animTime=0;
- lastFrame=performance.now();
- cue('start');
- $('state').textContent='SIMULATION RUNNING';
- requestAnimationFrame(frame);
-}
-
 function switchTab(index){
- stopAnimation();
- active=index;
- animTime=0;
-
- document.querySelectorAll('.lab-tab').forEach((button,i)=>{
-  button.classList.toggle('active',i===index);
- });
-
- document.querySelectorAll('.panel').forEach(panel=>{
-  panel.classList.toggle('hidden',Number(panel.dataset.panel)!==index);
- });
-
+ animation=null;active=index;testProgress=0;animTime=0;
+ document.querySelectorAll('.lab-tab').forEach((button,i)=>button.classList.toggle('active',i===index));
+ document.querySelectorAll('.panel').forEach(panel=>panel.classList.toggle('hidden',Number(panel.dataset.panel)!==index));
  $('stageTitle').textContent=descriptions[index].title;
  $('stageDesc').textContent=descriptions[index].subtitle;
  $('graphTitle').textContent=descriptions[index].graph;
  $('graphCaption').textContent=descriptions[index].caption;
  $('sceneNote').textContent=descriptions[index].note;
-
- updateGuide();
- render();
+ $('controlHint').textContent=descriptions[index].hint;
+ updateGuide();render();
 }
-
-document.querySelectorAll('.lab-tab').forEach(button=>{
- button.addEventListener('click',()=>switchTab(Number(button.dataset.tab)));
-});
-
-document.querySelectorAll('.panel input,.panel select').forEach(control=>{
- control.addEventListener('input',()=>{
-  if(animation)stopAnimation();
-  render();
- });
-});
-
-/* RESET BUTTONS */
+document.querySelectorAll('.lab-tab').forEach(button=>button.addEventListener('click',()=>switchTab(Number(button.dataset.tab))));
+document.querySelectorAll('.panel input,.panel select').forEach(control=>control.addEventListener('input',onSettingChange));
 
 function resetValues(ids){
  ids.forEach(id=>$(id).value=defaults[id]);
- stopAnimation();
- animTime=0;
- render();
+ animation=null;testProgress=0;animTime=0;render();
 }
+function resetSettings(ids){resetValues(ids)}
+function runCurrent(){startAnimation(['spring','young','bulk','shear'][active])}
+function pauseCurrent(){pauseAnimation()}
+function resetCurrentTest(){resetTest()}
+['springRun','youngRun','bulkRun','shearRun'].forEach(id=>$(id).addEventListener('click',runCurrent));
+['springPause','youngPause','bulkPause','shearPause'].forEach(id=>$(id).addEventListener('click',pauseCurrent));
+['springResetTest','youngResetTest','bulkResetTest','shearResetTest'].forEach(id=>$(id).addEventListener('click',resetCurrentTest));
+$('springReset').addEventListener('click',()=>resetSettings(['springMode','springK1','springK2','springForce']));
+$('youngReset').addEventListener('click',()=>resetSettings(['youngMaterial','wireForce','wireArea','wireLength']));
+$('bulkReset').addEventListener('click',()=>resetSettings(['bulkMaterial','bulkPressure','bulkVolume']));
+$('shearReset').addEventListener('click',()=>resetSettings(['shearMaterial','shearForce','shearArea','shearThickness']));
 
-$('springReset').addEventListener('click',()=>resetValues([
- 'springMode','springK1','springK2','springForce'
-]));
-$('youngReset').addEventListener('click',()=>resetValues([
- 'youngMaterial','wireForce','wireArea','wireLength'
-]));
-$('bulkReset').addEventListener('click',()=>resetValues([
- 'bulkMaterial','bulkPressure','bulkVolume'
-]));
-$('shearReset').addEventListener('click',()=>resetValues([
- 'shearMaterial','shearForce','shearArea','shearThickness'
-]));
-
-$('springRun').addEventListener('click',()=>startAnimation('spring'));
-$('youngRun').addEventListener('click',()=>startAnimation('young'));
-$('bulkRun').addEventListener('click',()=>startAnimation('bulk'));
-$('shearRun').addEventListener('click',()=>startAnimation('shear'));
-
-/* ---------- GUIDED MISSIONS ---------- */
-
+/* GUIDED MISSIONS */
 const missions=[
  [
   ['Mission 1 · Change spring stiffness','Keep force constant and increase spring stiffness. Does the extension increase or decrease?'],
-  ['Mission 2 · Springs in series','Change the arrangement to series. Compare the extension with one spring.'],
-  ['Mission 3 · Springs in parallel','Choose parallel arrangement. Explain why the equivalent stiffness increases.']
+  ['Mission 2 · Springs in series','Change the arrangement to series. Compare total extension with a single spring.'],
+  ['Mission 3 · Springs in parallel','Choose parallel arrangement. Explain why equivalent stiffness increases.']
  ],
  [
-  ['Mission 1 · Stress and area','Keep force constant and reduce the wire area. What happens to tensile stress?'],
-  ['Mission 2 · Compare materials','Use the same force and dimensions for steel and aluminium. Compare extension.'],
-  ['Mission 3 · Find the elastic limit','Increase the tensile force until the model leaves its elastic region. Observe the stress–strain graph.']
+  ['Mission 1 · Stress and area','Keep force constant and reduce wire area. What happens to tensile stress and extension?'],
+  ['Mission 2 · Compare materials','Use the same force and dimensions for steel and aluminium. Compare their extensions.'],
+  ['Mission 3 · Find the elastic limit','Increase the tensile force until the model passes the yield point. Observe the curve change.']
  ],
  [
-  ['Mission 1 · Stiffer solid','Compare steel and aluminium at the same pressure. Which has the smaller volume change?'],
-  ['Mission 2 · Double pressure','Double the applied pressure while keeping material and initial volume fixed. What happens to compression?'],
-  ['Mission 3 · Change volume','Increase the initial volume. Does the fractional compression change at the same pressure?']
+  ['Mission 1 · Stiffer solid','Compare steel and aluminium under the same pressure. Which has the smaller volume change?'],
+  ['Mission 2 · Double pressure','Double pressure while keeping material and volume fixed. What happens to fractional compression?'],
+  ['Mission 3 · Change initial volume','Increase initial volume. Does the fractional compression change at the same pressure?']
  ],
  [
-  ['Mission 1 · Change material','Compare steel and aluminium using the same force and dimensions. Which block deforms more?'],
+  ['Mission 1 · Change material','Compare steel and aluminium under the same force and dimensions. Which deforms more?'],
   ['Mission 2 · Increase area','Increase the top surface area. How does shear stress change?'],
   ['Mission 3 · Change thickness','Increase block height. How does sideways displacement change?']
  ]
 ];
-
 function updateGuide(){
  const mission=missions[active][Number($('challenge').value)||0];
-
- $('missionTitle').textContent=mission[0];
- $('missionText').textContent=mission[1];
-
+ $('missionTitle').textContent=mission[0];$('missionText').textContent=mission[1];
  $('modeTag').textContent=guided?'GUIDED MODE':'FREE EXPLORATION';
-
- $('guideIntro').textContent=guided
-  ?'Choose a mission, adjust the parameters and predict the result before checking the simulation.'
-  :'Explore freely. Change different parameters, compare models and record your observations.';
-
- $('toggleMode').textContent=guided
-  ?'Switch to free exploration'
-  :'Switch to guided mode';
+ $('guideIntro').textContent=guided?'Choose a mission, adjust parameters and predict the result before checking the simulation.':'Explore freely. Change parameters, compare material responses and record your observations.';
+ $('toggleMode').textContent=guided?'Switch to free exploration':'Switch to guided mode';
 }
-
 $('challenge').addEventListener('change',updateGuide);
-
-$('toggleMode').addEventListener('click',()=>{
- guided=!guided;
- updateGuide();
-});
-
+$('toggleMode').addEventListener('click',()=>{guided=!guided;updateGuide()});
 $('loadChallenge').addEventListener('click',()=>{
  const c=Number($('challenge').value)||0;
-
  if(active===0){
   if(c===0){$('springK1').value=100;$('springForce').value=20}
   if(c===1){$('springMode').value='series';$('springK1').value=50;$('springK2').value=100}
@@ -1422,131 +884,58 @@ $('loadChallenge').addEventListener('click',()=>{
   if(c===2){$('wireForce').value=30000;$('wireArea').value=20}
  }else if(active===2){
   if(c===0){$('bulkMaterial').value='aluminium';$('bulkPressure').value=300}
-  if(c===1){$('bulkPressure').value=Math.min(500,num('bulkPressure')*2)}
-  if(c===2){$('bulkVolume').value=5}
+  if(c===1)$('bulkPressure').value=Math.min(500,num('bulkPressure')*2);
+  if(c===2)$('bulkVolume').value=5;
  }else{
   if(c===0){$('shearMaterial').value='aluminium';$('shearForce').value=50000}
-  if(c===1){$('shearArea').value=.15}
-  if(c===2){$('shearThickness').value=.8}
+  if(c===1)$('shearArea').value=.15;
+  if(c===2)$('shearThickness').value=.8;
  }
-
- stopAnimation();
- render();
+ onSettingChange();
 });
 
-/* ---------- EXPERIMENT NOTEBOOK ---------- */
-
+/* EXPERIMENT NOTEBOOK */
 function snapshot(){
  if(active===0){
   const d=springData();
-  return {
-   name:"Hooke's Law",
-   settings:`mode=${d.mode}, k1=${d.k1} N/m, k2=${d.k2} N/m, F=${d.F} N`,
-   result:`k effective=${fixed(d.k,3)} N/m, extension=${fixed(d.extension,5)} m, U=${fixed(d.energy,5)} J`
-  };
+  return {name:"Hooke's Law",settings:`mode=${d.mode}, k1=${d.k1} N/m, k2=${d.k2} N/m, target F=${d.targetF} N`,result:`applied F=${fixed(d.F,2)} N, k=${fixed(d.k,3)} N/m, extension=${fixed(d.extension,6)} m, U=${fixed(d.energy,6)} J`};
  }
-
  if(active===1){
   const d=youngData();
-  return {
-   name:"Young's Modulus",
-   settings:`material=${d.mat.name}, F=${d.F} N, area=${num('wireArea')} mm², L=${d.L} m`,
-   result:`stress=${fixed(d.stress/1e6,4)} MPa, strain=${fixed(d.strain,7)}, extension=${fixed(d.extension*1000,5)} mm, ${d.state}`
-  };
+  return {name:"Young's Modulus",settings:`material=${d.mat.name}, target F=${d.targetForce} N, area=${num('wireArea')} mm², L=${d.L} m`,result:`applied F=${fixed(d.F,2)} N, stress=${fixed(d.stress/1e6,4)} MPa, strain=${fixed(d.strain,8)}, extension=${fixed(d.extension*1000,6)} mm, ${d.region}`};
  }
-
  if(active===2){
   const d=bulkData();
-  return {
-   name:"Bulk Modulus",
-   settings:`material=${d.mat.name}, pressure=${d.pressureMPa} MPa, initial volume=${fixed(d.V0*1000,3)} L`,
-   result:`B=${fixed(d.mat.B/1e9,2)} GPa, compression=${fixed(d.compressionPercent,6)}%, final volume=${fixed(d.finalV*1000,6)} L`
-  };
+  return {name:'Bulk Modulus',settings:`material=${d.mat.name}, target pressure=${d.targetP/1e6} MPa, initial volume=${fixed(d.V0*1000,3)} L`,result:`applied pressure=${fixed(d.pressureMPa,3)} MPa, B=${fixed(d.mat.B/1e9,2)} GPa, compression=${fixed(d.compressionPercent,7)}%, final volume=${fixed(d.finalV*1000,7)} L`};
  }
-
  const d=shearData();
-
- return {
-  name:"Shear Modulus",
-  settings:`material=${d.mat.name}, F=${d.F} N, area=${d.A} m², height=${d.L} m`,
-  result:`stress=${fixed(d.stress/1e6,6)} MPa, strain=${fixed(d.strain,8)}, displacement=${fixed(d.displacement*1000,6)} mm, energy=${fixed(d.energy,6)} J`
- };
+ return {name:'Shear Modulus',settings:`material=${d.mat.name}, target F=${d.targetF} N, area=${d.A} m², height=${d.L} m`,result:`applied F=${fixed(d.F,2)} N, stress=${fixed(d.stress/1e6,7)} MPa, strain=${fixed(d.strain,9)}, displacement=${fixed(d.displacement*1000,7)} mm, energy=${fixed(d.energy,7)} J`};
 }
-
 function refreshRecords(){
  $('trialCount').textContent=records.length+' TRIALS';
-
- const body=$('records');
- body.innerHTML='';
-
+ const body=$('records');body.innerHTML='';
  records.slice(0,8).forEach(record=>{
   const tr=document.createElement('tr');
-
   [record.name,'#'+record.trial,record.settings,record.result].forEach(value=>{
-   const td=document.createElement('td');
-   td.textContent=value;
-   tr.appendChild(td);
+   const td=document.createElement('td');td.textContent=value;tr.appendChild(td);
   });
-
   body.appendChild(tr);
  });
-
- if(!records.length){
-  body.innerHTML='<tr><td colspan="4" class="empty">No readings recorded yet.</td></tr>';
- }
+ if(!records.length)body.innerHTML='<tr><td colspan="4" class="empty">No readings recorded yet.</td></tr>';
 }
-
-$('record').addEventListener('click',()=>{
- const data=snapshot();
- records.unshift({...data,trial:records.length+1});
- refreshRecords();
-});
-
-$('clearRecords').addEventListener('click',()=>{
- records=[];
- refreshRecords();
-});
-
+$('record').addEventListener('click',()=>{const data=snapshot();records.unshift({...data,trial:records.length+1});refreshRecords()});
+$('clearRecords').addEventListener('click',()=>{records=[];refreshRecords()});
 $('export').addEventListener('click',()=>{
- if(!records.length){
-  alert('Record at least one trial before exporting.');
-  return;
- }
-
- const rows=[
-  ['Experiment','Trial','Settings','Result'],
-  ...records.map(record=>[
-   record.name,record.trial,record.settings,record.result
-  ])
- ];
-
- const csv=rows.map(row=>
-  row.map(value=>'"'+String(value).replace(/"/g,'""')+'"').join(',')
- ).join('\r\n');
-
- const url=URL.createObjectURL(
-  new Blob([csv],{type:'text/csv;charset=utf-8'})
- );
-
- const link=document.createElement('a');
- link.href=url;
- link.download='mechanical-properties-solids-records.csv';
- link.click();
-
- URL.revokeObjectURL(url);
+ if(!records.length){alert('Record at least one trial before exporting.');return}
+ const rows=[['Experiment','Trial','Settings','Result'],...records.map(r=>[r.name,r.trial,r.settings,r.result])];
+ const csv=rows.map(row=>row.map(value=>'"'+String(value).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download='mechanical-properties-solids-records.csv';a.click();URL.revokeObjectURL(url);
 });
-
-/* RESIZE + INITIALISE */
 
 window.addEventListener('resize',render);
-
-document.addEventListener('visibilitychange',()=>{
- if(document.hidden&&animation)stopAnimation();
-});
-
-updateGuide();
-switchTab(0);
-
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&animation)pauseAnimation()});
+updateGuide();switchTab(0);
 })();
 </script>
 </body>
