@@ -1,0 +1,889 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#edf7ec">
+<title>System of Particles and Rotational Motion | Virtual Science Lab</title>
+<style>
+:root{
+ --bg:#edf7ec;--panel:#fff;--line:#d1e4d0;--text:#193b27;
+ --muted:#607b65;--teal:#087f87;--green:#258653;--blue:#4978c5;
+ --orange:#bd741b;--pink:#c85b79;--shadow:0 12px 34px rgba(43,91,48,.10)
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 5% 0%,#d9eed9 0,transparent 40%),linear-gradient(145deg,#eaf6e9,#f5fbf2 55%,#e5f2e3);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.wrap{max-width:1440px;margin:auto;padding:22px clamp(12px,3vw,34px) 45px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:11px;color:#52715a;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(140deg,#bcebc9,#77c99a);display:grid;place-items:center;color:#17472b;font-weight:900;font-size:19px;box-shadow:0 7px 20px #5caa7840}
+.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pill,.tag{border:1px solid #c8ddc8;background:#f9fff8;color:#45664b;border-radius:100px;padding:7px 11px;font-size:11px;white-space:nowrap}
+.sound{border:1px solid #b8d7bf;background:#f8fff7;color:#23613a;border-radius:100px;padding:7px 11px;font-size:11px;font-weight:800}
+.sound.off{background:#f1f5ef;color:#748376;border-color:#d7e0d4}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:21px}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#27845a;font-weight:800}
+.hero h1{font-size:clamp(30px,5vw,54px);line-height:1.05;letter-spacing:-.04em;margin:8px 0 10px;color:#173c27}
+.hero h1 span{color:var(--teal)}
+.hero p{margin:0;max-width:760px;color:#5e7964}
+.hero-side{text-align:right;color:#617b66;font-size:12px}
+.hero-side strong{display:block;font-size:20px;color:#1d482e}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:22px 0 16px}
+.tab{min-height:74px;text-align:left;padding:12px 14px;background:#fbfffa;border:1px solid #cfe1cd;color:#526e57;border-radius:14px;transition:.18s}
+.tab:hover{border-color:#8ebc93;background:#f3fbf1;transform:translateY(-1px)}
+.tab.active{background:linear-gradient(145deg,#d8f1dc,#c9ead0);border-color:#71b887;color:#174c2d;box-shadow:inset 0 0 0 1px #76bd8b44,0 5px 13px #3c875018}
+.tab small,.tab strong,.tab .num{display:block}
+.tab .num{font-size:10px;font-weight:800;color:#247b4e;margin-bottom:3px}
+.tab strong{font-size:13px}
+.tab small{font-size:10px;color:#68816c;margin-top:3px}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.85fr);gap:16px;align-items:start}
+.card{background:#fff;border:1px solid #d2e4d1;border-radius:19px;box-shadow:var(--shadow);overflow:hidden}
+.stage-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #e0ecdf}
+.stage-head h2{margin:0;font-size:17px;color:#1e462d}
+.stage-head p{margin:3px 0 0;color:#68816c;font-size:12px}
+.live{display:flex;align-items:center;gap:7px;color:#258653;font-size:10px;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:#35a565;box-shadow:0 0 10px #35a56555}
+.canvas-wrap{padding:13px 15px 5px}
+.canvas-shell{border:1px solid #c7dfc7;border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#f7fcf5,#edf7ec)}
+canvas{display:block;width:100%}
+#scene{height:355px}
+.canvas-note{padding:0 3px 5px;color:#718a73;font-size:10px}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:9px 15px 16px}
+.metric{min-width:0;background:#f5faf3;border:1px solid #dbe9d9;border-radius:11px;padding:10px}
+.metric label{display:block;color:#718773;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.metric strong{display:block;font-size:clamp(16px,2vw,22px);color:#1e4d31;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.metric em{font-style:normal;font-size:10px;color:#708571}
+.equations{display:grid;grid-template-columns:1.1fr 1fr;gap:10px;margin-top:14px}
+.equation,.notice{padding:14px 16px}
+.equation h3,.notice h3{font-size:12px;margin:0 0 7px;color:#2a6641}
+.eq{font:600 17px/1.65 ui-monospace,Consolas,monospace;color:#087d78;overflow-wrap:anywhere}
+.eq.result{font-size:12px;color:#3e6547}
+.notice p{margin:0;color:#607963;font-size:12px}
+.graph{margin-top:14px;padding:13px 15px}
+.graph-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px}
+.graph-head h3{font-size:13px;margin:0;color:#234a30}
+.graph-head span{font-size:10px;color:#718a74}
+#plot{height:180px;background:#f7fcf5;border:1px solid #dcebd9;border-radius:10px}
+.controls{padding:16px}
+.controls h3{font-size:16px;margin:0 0 3px}
+.sub{font-size:11px;color:#6b826d;margin:0 0 12px}
+.control{padding:10px 0;border-top:1px solid #e4eee2}
+.control:first-of-type{border-top:0}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.control label{font-size:12px;color:#365b3e}
+.value{font-size:12px;font-weight:800;color:#087d78;white-space:nowrap}
+.control input[type=range]{width:100%;accent-color:#3d9c69}
+.ends{display:flex;justify-content:space-between;color:#819783;font-size:9px}
+.control select,.guide select{width:100%;background:#f8fcf6;color:#21452d;border:1px solid #cbdcca;border-radius:9px;padding:9px}
+.btnrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.btn{padding:8px 12px;border:1px solid #bcd8bf;background:#e5f3e5;color:#245535;border-radius:9px;font-size:11px;font-weight:750}
+.btn.primary{background:linear-gradient(120deg,#3ca86d,#238c63);border-color:#278c5a;color:#fff}
+.btn.ghost{background:#f8fcf7}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.below{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}
+.guide,.notebook{padding:16px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.sectionhead h3{font-size:14px;margin:0}
+.tag{font-size:9px;color:#277a4b;border-color:#c7e3cb;background:#eff9ef;padding:5px 8px}
+.guide p{font-size:11px;color:#657f69;margin:5px 0 10px}
+.mission{border:1px solid #d8e9d5;background:#f4faf2;border-radius:11px;padding:11px;margin:9px 0}
+.mission strong{font-size:11px;color:#2c663e}
+.mission p{margin:4px 0 0}
+.guide select{max-width:100%;padding:7px;font-size:10px}
+.notebook .sub{margin-bottom:8px}
+.notebook table{border-collapse:collapse;width:100%;font-size:10px}
+.notebook th{text-align:left;color:#617b65;padding:7px 5px;border-bottom:1px solid #dce9d9}
+.notebook td{padding:7px 5px;color:#35563b;border-bottom:1px solid #e6eee4;vertical-align:top}
+.notebook .empty{text-align:center;color:#829484;padding:17px 5px}
+.notebook .tablewrap{overflow-x:auto}
+.footer{text-align:center;color:#758c77;font-size:10px;margin-top:22px}
+.hidden{display:none!important}
+@media(max-width:980px){.layout{grid-template-columns:1fr}.below{grid-template-columns:1fr}.hero-side{display:none}}
+@media(max-width:620px){
+ .wrap{padding:13px 11px 28px}.topline{align-items:flex-start}
+ .brand{font-size:10px}.pill{font-size:9px}
+ .hero h1{font-size:34px}.tabs{grid-template-columns:repeat(2,1fr);gap:7px}
+ .tab{min-height:67px;padding:9px}.tab strong{font-size:12px}.tab small{font-size:9px}
+ .stage-head{padding:12px}.canvas-wrap{padding:9px 8px 4px}
+ #scene{height:260px}.metrics{grid-template-columns:repeat(2,1fr);padding:8px}
+ .metric{padding:8px}.metric strong{font-size:19px}
+ .equations{grid-template-columns:1fr}.graph{padding:10px}#plot{height:165px}
+ .controls{padding:13px}.below{gap:10px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="topline">
+  <div class="brand"><div class="brand-mark">V</div><span>Virtual Science Lab · Physics</span></div>
+  <div class="top-actions">
+   <span class="pill">CLASS 11 · CHAPTER 6 · CBSE</span>
+   <button class="sound" id="soundBtn" type="button" aria-pressed="true">🔊 Sound ON</button>
+  </div>
+ </div>
+
+ <header class="hero">
+  <div>
+   <div class="eyebrow">Interactive Physics Laboratory</div>
+   <h1>System of Particles <span>& Rotational Motion</span></h1>
+   <p>Explore the centre of mass, rotational equilibrium, moment of inertia and conservation of angular momentum through interactive models and measurable experiments.</p>
+  </div>
+  <div class="hero-side"><strong>4 INTERACTIVE LABS</strong>Explore · Measure · Explain</div>
+ </header>
+
+ <nav class="tabs" aria-label="Rotational motion experiments">
+  <button class="tab active" data-tab="0"><span class="num">LAB 01</span><strong>Centre of Mass</strong><small>Two particles · balance point</small></button>
+  <button class="tab" data-tab="1"><span class="num">LAB 02</span><strong>Torque & Equilibrium</strong><small>Lever arm · turning effect</small></button>
+  <button class="tab" data-tab="2"><span class="num">LAB 03</span><strong>Moment of Inertia</strong><small>Angular acceleration · rotation</small></button>
+  <button class="tab" data-tab="3"><span class="num">LAB 04</span><strong>Angular Momentum</strong><small>Conservation · changing radius</small></button>
+ </nav>
+
+ <main class="layout">
+  <section class="card">
+   <div class="stage-head">
+    <div>
+     <h2 id="stageTitle">Centre of Mass of Two Particles</h2>
+     <p id="stageDesc">Change masses and positions to find the balance point of a two-particle system.</p>
+    </div>
+    <div class="live"><i class="dot"></i><span id="state">LIVE MODEL</span></div>
+   </div>
+
+   <div class="canvas-wrap">
+    <div class="canvas-shell"><canvas id="scene" aria-label="Interactive rotational physics model"></canvas></div>
+    <div class="canvas-note" id="sceneNote">Idealised one-dimensional system · SI units</div>
+   </div>
+
+   <div class="metrics">
+    <div class="metric"><label id="lab0">Total mass</label><strong id="m0">5.0 kg</strong><em id="u0">m₁ + m₂</em></div>
+    <div class="metric"><label id="lab1">Centre of mass</label><strong id="m1">4.0 m</strong><em id="u1">xCM</em></div>
+    <div class="metric"><label id="lab2">Particle 1</label><strong id="m2">2.0 kg</strong><em id="u2">m₁</em></div>
+    <div class="metric"><label id="lab3">Particle 2</label><strong id="m3">3.0 kg</strong><em id="u3">m₂</em></div>
+   </div>
+
+   <div class="equations">
+    <div class="card equation">
+     <h3>LIVE EQUATION</h3>
+     <div class="eq" id="formula">xCM = (m₁x₁ + m₂x₂) / (m₁ + m₂)</div>
+     <div class="eq result" id="calculation">xCM = 4.0 m</div>
+    </div>
+    <div class="card notice">
+     <h3>WHAT TO NOTICE</h3>
+     <p id="explain">The centre of mass lies closer to the heavier particle. It is the mass-weighted average position of the system.</p>
+    </div>
+   </div>
+
+   <div class="card graph">
+    <div class="graph-head"><h3 id="graphTitle">Centre of mass position</h3><span id="graphCaption">Position along the x-axis</span></div>
+    <canvas id="plot" aria-label="Live physics graph"></canvas>
+   </div>
+  </section>
+
+  <aside class="card controls">
+   <h3>Experiment controls</h3>
+   <p class="sub" id="controlHint">Change one parameter at a time and observe how the balance point shifts.</p>
+
+   <div class="panel" data-panel="0">
+    <div class="control">
+     <div class="control-top"><label for="cm1">Mass of particle 1</label><output class="value" id="cm1Out">2.0 kg</output></div>
+     <input id="cm1" type="range" min="0.5" max="20" step="0.5" value="2">
+     <div class="ends"><span>0.5 kg</span><span>20 kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="cx1">Position of particle 1</label><output class="value" id="cx1Out">2.0 m</output></div>
+     <input id="cx1" type="range" min="0" max="10" step="0.1" value="2">
+     <div class="ends"><span>0 m</span><span>10 m</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="cm2">Mass of particle 2</label><output class="value" id="cm2Out">3.0 kg</output></div>
+     <input id="cm2" type="range" min="0.5" max="20" step="0.5" value="3">
+     <div class="ends"><span>0.5 kg</span><span>20 kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="cx2">Position of particle 2</label><output class="value" id="cx2Out">6.0 m</output></div>
+     <input id="cx2" type="range" min="0" max="10" step="0.1" value="6">
+     <div class="ends"><span>0 m</span><span>10 m</span></div>
+    </div>
+    <div class="btnrow"><button class="btn" id="cmSwap">Swap particles</button><button class="btn ghost" id="cmReset">Reset</button></div>
+   </div>
+
+   <div class="panel hidden" data-panel="1">
+    <div class="control">
+     <div class="control-top"><label for="tForce">Applied force, F</label><output class="value" id="tForceOut">40 N</output></div>
+     <input id="tForce" type="range" min="0" max="150" step="1" value="40">
+     <div class="ends"><span>0 N</span><span>150 N</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="tArm">Applied force arm, r₁</label><output class="value" id="tArmOut">1.5 m</output></div>
+     <input id="tArm" type="range" min="0.1" max="3" step="0.1" value="1.5">
+     <div class="ends"><span>0.1 m</span><span>3 m</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="tAngle">Angle between force and arm</label><output class="value" id="tAngleOut">90°</output></div>
+     <input id="tAngle" type="range" min="0" max="180" step="1" value="90">
+     <div class="ends"><span>0°</span><span>180°</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="tMass">Balancing load mass</label><output class="value" id="tMassOut">5.0 kg</output></div>
+     <input id="tMass" type="range" min="0" max="20" step="0.5" value="5">
+     <div class="ends"><span>0 kg</span><span>20 kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="tLoadArm">Load arm, r₂</label><output class="value" id="tLoadArmOut">1.0 m</output></div>
+     <input id="tLoadArm" type="range" min="0.1" max="3" step="0.1" value="1">
+     <div class="ends"><span>0.1 m</span><span>3 m</span></div>
+    </div>
+    <div class="btnrow"><button class="btn primary" id="tBalance">Calculate balance force</button><button class="btn ghost" id="tReset">Reset</button></div>
+   </div>
+
+   <div class="panel hidden" data-panel="2">
+    <div class="control">
+     <div class="control-top"><label for="iType">Rotating object</label></div>
+     <select id="iType">
+      <option value="hoop">Thin hoop / ring (I = MR²)</option>
+      <option value="disc">Solid disc / cylinder (I = ½MR²)</option>
+      <option value="sphere">Solid sphere (I = ⅖MR²)</option>
+      <option value="rod">Thin rod about centre (I = ¹⁄₁₂ML²)</option>
+     </select>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="iMass">Mass, M</label><output class="value" id="iMassOut">4.0 kg</output></div>
+     <input id="iMass" type="range" min="0.5" max="30" step="0.5" value="4">
+     <div class="ends"><span>0.5 kg</span><span>30 kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="iSize">Radius R / length L</label><output class="value" id="iSizeOut">0.5 m</output></div>
+     <input id="iSize" type="range" min="0.1" max="2" step="0.1" value="0.5">
+     <div class="ends"><span>0.1 m</span><span>2 m</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="iTorque">Applied torque, τ</label><output class="value" id="iTorqueOut">2.0 N·m</output></div>
+     <input id="iTorque" type="range" min="0" max="30" step="0.5" value="2">
+     <div class="ends"><span>0 N·m</span><span>30 N·m</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="iTime">Time of rotation</label><output class="value" id="iTimeOut">3.0 s</output></div>
+     <input id="iTime" type="range" min="0.5" max="10" step="0.5" value="3">
+     <div class="ends"><span>0.5 s</span><span>10 s</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="iHeight">Ramp height for rolling comparison</label><output class="value" id="iHeightOut">1.0 m</output></div>
+     <input id="iHeight" type="range" min="0.1" max="5" step="0.1" value="1">
+     <div class="ends"><span>0.1 m</span><span>5 m</span></div>
+    </div>
+    <div class="btnrow"><button class="btn primary" id="iRun">▶ Rotate object</button><button class="btn ghost" id="iPause">Pause</button><button class="btn ghost" id="iReset">Reset</button></div>
+   </div>
+
+   <div class="panel hidden" data-panel="3">
+    <div class="control">
+     <div class="control-top"><label for="aType">Rotating body</label></div>
+     <select id="aType">
+      <option value="disc">Solid disc (I = ½MR²)</option>
+      <option value="hoop">Thin ring (I = MR²)</option>
+      <option value="sphere">Solid sphere (I = ⅖MR²)</option>
+     </select>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="aMass">Mass, M</label><output class="value" id="aMassOut">2.0 kg</output></div>
+     <input id="aMass" type="range" min="0.5" max="20" step="0.5" value="2">
+     <div class="ends"><span>0.5 kg</span><span>20 kg</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="aInitial">Initial radius, R₁</label><output class="value" id="aInitialOut">1.5 m</output></div>
+     <input id="aInitial" type="range" min="0.2" max="3" step="0.1" value="1.5">
+     <div class="ends"><span>0.2 m</span><span>3 m</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="aFinal">Final radius, R₂</label><output class="value" id="aFinalOut">0.8 m</output></div>
+     <input id="aFinal" type="range" min="0.2" max="3" step="0.1" value="0.8">
+     <div class="ends"><span>0.2 m</span><span>3 m</span></div>
+    </div>
+    <div class="control">
+     <div class="control-top"><label for="aOmega">Initial angular speed, ω₁</label><output class="value" id="aOmegaOut">4.0 rad/s</output></div>
+     <input id="aOmega" type="range" min="0.5" max="15" step="0.5" value="4">
+     <div class="ends"><span>0.5 rad/s</span><span>15 rad/s</span></div>
+    </div>
+    <div class="btnrow"><button class="btn primary" id="aRun">▶ Change radius</button><button class="btn ghost" id="aReset">Reset</button></div>
+   </div>
+  </aside>
+ </main>
+
+ <div class="below">
+  <section class="card guide">
+   <div class="sectionhead"><h3>Guided investigation</h3><span class="tag" id="modeTag">GUIDED MODE</span></div>
+   <p id="guideIntro">Choose a mission, adjust the parameters and predict the result before checking the simulation.</p>
+   <div class="mission"><strong id="missionTitle">Mission 1 · Move the centre of mass</strong><p id="missionText">Increase the mass of particle 2. Observe how the centre of mass moves toward it.</p></div>
+   <div class="btnrow">
+    <select id="challenge"><option value="0">Challenge 1</option><option value="1">Challenge 2</option><option value="2">Challenge 3</option></select>
+    <button class="btn" id="loadChallenge">Load challenge</button>
+    <button class="btn ghost" id="toggleMode">Switch to free exploration</button>
+   </div>
+  </section>
+
+  <section class="card notebook">
+   <div class="sectionhead"><h3>Experiment notebook</h3><span class="tag" id="trialCount">0 TRIALS</span></div>
+   <p class="sub">Save readings from any lab and export your observations as a CSV file.</p>
+   <div class="btnrow" style="margin:0 0 8px">
+    <button class="btn primary" id="record">＋ Record trial</button>
+    <button class="btn" id="export">↓ Export CSV</button>
+    <button class="btn ghost" id="clear">Clear</button>
+   </div>
+   <div class="tablewrap">
+    <table><thead><tr><th>Experiment</th><th>Trial</th><th>Settings</th><th>Result</th></tr></thead><tbody id="records"><tr><td colspan="4" class="empty">No readings recorded yet.</td></tr></tbody></table>
+   </div>
+  </section>
+ </div>
+ <div class="footer">Virtual Science Lab · Idealised learning models · SI units · Optional experiment sound effects</div>
+</div>
+
+<script id="experiment-metadata" type="application/json">
+{
+  "id": "class-11-system-of-particles-rotational-motion",
+  "title": "System of Particles and Rotational Motion",
+  "class": 11,
+  "chapterNumber": 6,
+  "chapter": "System of Particles and Rotational Motion",
+  "description": "Interactive models of centre of mass, torque and rotational equilibrium, moment of inertia, rolling motion and conservation of angular momentum.",
+  "simulationType": "2D"
+}
+</script>
+
+<script>
+(()=>{
+'use strict';
+
+const $=id=>document.getElementById(id);
+const scene=$('scene'),plot=$('plot'),ctx=scene.getContext('2d'),px=plot.getContext('2d');
+let active=0,animation=null,lastFrame=0,elapsed=0,rotation=0,records=[],guided=true,soundOn=true,audio=null;
+const defaults={
+ cm1:2,cx1:2,cm2:3,cx2:6,
+ tForce:40,tArm:1.5,tAngle:90,tMass:5,tLoadArm:1,
+ iType:'hoop',iMass:4,iSize:.5,iTorque:2,iTime:3,iHeight:1,
+ aType:'disc',aMass:2,aInitial:1.5,aFinal:.8,aOmega:4
+};
+const titles=[
+ ["Centre of Mass of Two Particles","Change masses and positions to find the balance point of a two-particle system.","Centre of mass position","Mass-weighted average position","Idealised one-dimensional system · SI units"],
+ ["Torque and Rotational Equilibrium","Investigate how force, perpendicular distance and angle determine the turning effect.","Torque vs applied force","τ = rF sin θ","Rigid lever with a fixed pivot · g = 9.8 m/s²"],
+ ["Moment of Inertia and Angular Acceleration","Compare rotating bodies and see how mass distribution affects rotational motion.","Angular acceleration vs torque","α = τ / I","Rigid bodies · torque about the stated axis"],
+ ["Conservation of Angular Momentum","Change the radius of a rotating body. With negligible external torque, angular momentum remains constant.","Angular speed vs radius","L = Iω = constant","Isolated rotating system · no external torque"]
+];
+
+function audioContext(){
+ if(!soundOn)return null;
+ const A=window.AudioContext||window.webkitAudioContext;
+ if(!A)return null;
+ if(!audio)audio=new A();
+ if(audio.state==='suspended')audio.resume().catch(()=>{});
+ return audio;
+}
+function beep(freq=440,duration=.12,wave='sine',volume=.025,delay=0){
+ const ac=audioContext();if(!ac)return;
+ const osc=ac.createOscillator(),gain=ac.createGain(),t=ac.currentTime+delay;
+ osc.type=wave;osc.frequency.setValueAtTime(freq,t);
+ gain.gain.setValueAtTime(.0001,t);
+ gain.gain.linearRampToValueAtTime(volume,t+.012);
+ gain.gain.exponentialRampToValueAtTime(.0001,t+duration);
+ osc.connect(gain);gain.connect(ac.destination);
+ osc.start(t);osc.stop(t+duration+.03);
+}
+function cue(type){
+ if(!soundOn)return;
+ if(type==='start'){beep(280,.1,'triangle');beep(430,.12,'sine',.02,.1)}
+ if(type==='tick'){beep(560,.07,'sine',.02)}
+ if(type==='done'){beep(523,.12);beep(659,.13,'sine',.025,.13);beep(784,.18,'sine',.025,.27)}
+}
+$('soundBtn').addEventListener('click',()=>{
+ soundOn=!soundOn;
+ $('soundBtn').textContent=soundOn?'🔊 Sound ON':'🔇 Sound OFF';
+ $('soundBtn').classList.toggle('off',!soundOn);
+ $('soundBtn').setAttribute('aria-pressed',String(soundOn));
+ if(soundOn)beep(620,.07);
+});
+
+function n(id){return Number($(id).value)}
+function f(v,d=2){return Number.isFinite(v)?v.toFixed(d):'—'}
+function out(id,value){$(id+'Out').textContent=value}
+function resize(canvas,c){
+ const r=canvas.getBoundingClientRect(),d=Math.min(window.devicePixelRatio||1,2);
+ const w=Math.max(1,Math.round(r.width*d)),h=Math.max(1,Math.round(r.height*d));
+ if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h}
+ c.setTransform(d,0,0,d,0,0);
+ return {w:r.width,h:r.height};
+}
+function clear(c,w,h){c.clearRect(0,0,w,h)}
+function line(c,x1,y1,x2,y2,color='#8ca88e',width=2,dash=[]){
+ c.save();c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dash);
+ c.beginPath();c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();c.restore();
+}
+function text(c,s,x,y,color='#355d3d',size=11,align='left',weight='500'){
+ c.save();c.fillStyle=color;c.font=weight+' '+size+'px system-ui,sans-serif';
+ c.textAlign=align;c.fillText(s,x,y);c.restore();
+}
+function arrow(c,x1,y1,x2,y2,color='#087f87',width=3,head=9){
+ line(c,x1,y1,x2,y2,color,width);
+ const a=Math.atan2(y2-y1,x2-x1);
+ c.fillStyle=color;c.beginPath();c.moveTo(x2,y2);
+ c.lineTo(x2-head*Math.cos(a-.48),y2-head*Math.sin(a-.48));
+ c.lineTo(x2-head*Math.cos(a+.48),y2-head*Math.sin(a+.48));
+ c.closePath();c.fill();
+}
+function circle(c,x,y,r,color,stroke='#fff'){
+ c.beginPath();c.arc(x,y,r,0,Math.PI*2);
+ c.fillStyle=color;c.fill();c.strokeStyle=stroke;c.lineWidth=2;c.stroke();
+}
+function updateMetrics(labels,values,units){
+ for(let i=0;i<4;i++){
+  $('lab'+i).textContent=labels[i];
+  $('m'+i).textContent=values[i];
+  $('u'+i).textContent=units[i];
+ }
+}
+function updateOutputs(){
+ const values=[
+ ['cm1',f(n('cm1'),1)+' kg'],['cx1',f(n('cx1'),1)+' m'],
+ ['cm2',f(n('cm2'),1)+' kg'],['cx2',f(n('cx2'),1)+' m'],
+ ['tForce',n('tForce')+' N'],['tArm',f(n('tArm'),1)+' m'],
+ ['tAngle',n('tAngle')+'°'],['tMass',f(n('tMass'),1)+' kg'],
+ ['tLoadArm',f(n('tLoadArm'),1)+' m'],
+ ['iMass',f(n('iMass'),1)+' kg'],['iSize',f(n('iSize'),1)+' m'],
+ ['iTorque',f(n('iTorque'),1)+' N·m'],['iTime',f(n('iTime'),1)+' s'],
+ ['iHeight',f(n('iHeight'),1)+' m'],
+ ['aMass',f(n('aMass'),1)+' kg'],['aInitial',f(n('aInitial'),1)+' m'],
+ ['aFinal',f(n('aFinal'),1)+' m'],['aOmega',f(n('aOmega'),1)+' rad/s']
+ ];
+ values.forEach(([id,value])=>out(id,value));
+}
+function cmData(){
+ const m1=n('cm1'),m2=n('cm2'),x1=n('cx1'),x2=n('cx2');
+ const total=m1+m2,x=(m1*x1+m2*x2)/total;
+ return {m1,m2,x1,x2,total,x};
+}
+function torqueData(){
+ const F=n('tForce'),r=n('tArm'),theta=n('tAngle')*Math.PI/180;
+ const m=n('tMass'),r2=n('tLoadArm');
+ const tau1=F*r*Math.sin(theta),tau2=m*9.8*r2,net=tau1-tau2;
+ const balanceForce=tau2/(r*Math.sin(theta)||Infinity);
+ return {F,r,theta,m,r2,tau1,tau2,net,balanceForce};
+}
+function inertiaFactor(type){
+ return type==='hoop'?1:type==='disc'?.5:type==='sphere'?.4:1/12;
+}
+function inertiaData(){
+ const type=$('iType').value,M=n('iMass'),size=n('iSize'),tau=n('iTorque'),t=n('iTime'),h=n('iHeight');
+ const k=inertiaFactor(type);
+ const I=type==='rod'?M*size*size/12:k*M*size*size;
+ const alpha=tau/I,omega=alpha*t,K=.5*I*omega*omega;
+ const rollingSpeed=Math.sqrt(2*9.8*h/(1+k));
+ const rollingAcceleration=9.8*.5/(1+k);
+ return {type,M,size,tau,t,h,k,I,alpha,omega,K,rollingSpeed,rollingAcceleration};
+}
+function angularData(){
+ const type=$('aType').value,M=n('aMass'),R1=n('aInitial'),R2=n('aFinal'),omega1=n('aOmega'),k=inertiaFactor(type);
+ const I1=k*M*R1*R1,I2=k*M*R2*R2;
+ const L=I1*omega1,omega2=L/I2;
+ const K1=.5*I1*omega1*omega1,K2=.5*I2*omega2*omega2;
+ return {type,M,R1,R2,omega1,k,I1,I2,L,omega2,K1,K2,deltaK:K2-K1};
+}
+
+function renderCentre(){
+ const d=cmData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const left=45,right=w-35,y=h*.54,span=right-left;
+ const X=x=>left+(x/10)*span;
+ line(ctx,left,y,right,y,'#85a68b',4);
+ for(let i=0;i<=10;i++){
+  const x=X(i);line(ctx,x,y-6,x,y+7,'#8da98e',1);
+  text(ctx,String(i),x,y+25,'#718a74',9,'center');
+ }
+ text(ctx,'Position (m)',right,y+43,'#718a74',10,'right');
+ const x1=X(d.x1),x2=X(d.x2),xc=X(d.x);
+ line(ctx,x1,y-4,xc,y-58,'#4978c5',1.5,[4,4]);
+ line(ctx,x2,y-4,xc,y-58,'#bd741b',1.5,[4,4]);
+ const radius1=10+Math.min(15,Math.sqrt(d.m1)*3),radius2=10+Math.min(15,Math.sqrt(d.m2)*3);
+ circle(ctx,x1,y-13,radius1,'#4978c5');
+ circle(ctx,x2,y-13,radius2,'#bd741b');
+ circle(ctx,xc,y-68,8,'#258653');
+ arrow(ctx,xc,y-53,xc,y-35,'#258653',2,6);
+ text(ctx,'COM',xc,y-87,'#258653',11,'center','700');
+ text(ctx,'m₁ = '+f(d.m1,1)+' kg',x1,y+45,'#4978c5',10,'center');
+ text(ctx,'m₂ = '+f(d.m2,1)+' kg',x2,y+45,'#bd741b',10,'center');
+ text(ctx,'xCM = '+f(d.x,2)+' m',xc,y-104,'#258653',12,'center','700');
+ text(ctx,'System mass = '+f(d.total,1)+' kg',w/2,27,'#355d3d',12,'center');
+ updateMetrics(
+  ['Total mass','Centre of mass','Particle 1','Particle 2'],
+  [f(d.total,1)+' kg',f(d.x,2)+' m',f(d.m1,1)+' kg',f(d.m2,1)+' kg'],
+  ['m₁ + m₂','weighted position','m₁','m₂']
+ );
+ $('formula').textContent='xCM = (m₁x₁ + m₂x₂) / (m₁ + m₂)';
+ $('calculation').textContent=`xCM = (${f(d.m1,1)}×${f(d.x1,1)} + ${f(d.m2,1)}×${f(d.x2,1)}) / ${f(d.total,1)} = ${f(d.x,2)} m`;
+ $('explain').textContent=`The centre of mass is at ${f(d.x,2)} m. It is closer to particle ${d.m1>d.m2?'1':d.m2>d.m1?'2':'both equally'} because the mass distribution determines the weighted average position.`;
+ drawCentreGraph(d);
+}
+function drawCentreGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);
+ const L=44,R=w-14,T=21,B=h-29;
+ graphAxes(L,R,T,B);
+ const maxMass=20;
+ px.beginPath();
+ for(let i=0;i<=50;i++){
+  const m2=.5+(maxMass-.5)*i/50;
+  const x=(d.m1*d.x1+m2*d.x2)/(d.m1+m2);
+  const xx=L+(m2-.5)/(maxMass-.5)*(R-L);
+  const yy=B-(x/10)*(B-T);
+  if(i===0)px.moveTo(xx,yy);else px.lineTo(xx,yy);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.4;px.stroke();
+ const xx=L+(d.m2-.5)/(maxMass-.5)*(R-L),yy=B-(d.x/10)*(B-T);
+ circle(px,xx,yy,4,'#bd741b');
+ text(px,'xCM (m)',7,13,'#718a76',9);
+ text(px,'Mass of particle 2 (kg)',R,B+24,'#718a76',9,'right');
+ text(px,'Current: '+f(d.x,2)+' m',R,14,'#087f87',9,'right');
+}
+
+function renderTorque(){
+ const d=torqueData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const cx=w*.5,cy=h*.72,arm=Math.min(w*.33,145);
+ line(ctx,cx,cy+4,cx,cy-7,'#557c59',4);
+ ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-18,cy+32);ctx.lineTo(cx+18,cy+32);ctx.closePath();ctx.fillStyle='#9abb99';ctx.fill();
+ line(ctx,cx-arm,cy,cx+arm,cy,'#8da98e',9);
+ const appliedX=cx+arm*.75,loadX=cx-arm*.65;
+ circle(ctx,appliedX,cy-5,11,'#4978c5');
+ circle(ctx,loadX,cy-5,11,'#bd741b');
+ const forceLen=20+Math.min(75,d.F*.45)*Math.abs(Math.sin(d.theta));
+ const direction=d.theta>=0&&d.theta<=180?-1:1;
+ arrow(ctx,appliedX,cy-16,appliedX,cy-16-direction*forceLen,'#087f87',3,9);
+ arrow(ctx,loadX,cy-16,loadX,cy+40,'#bd741b',3,9);
+ text(ctx,'Applied force F',appliedX+8,cy-29-forceLen,'#087f87',10);
+ text(ctx,'Balancing load',loadX-8,cy+58,'#bd741b',10,'center');
+ text(ctx,'Pivot',cx,cy+50,'#567b5d',10,'center');
+ text(ctx,'r₁ = '+f(d.r,1)+' m',appliedX,cy+22,'#4978c5',10,'center');
+ text(ctx,'r₂ = '+f(d.r2,1)+' m',loadX,cy+22,'#bd741b',10,'center');
+ text(ctx,'τ applied = '+f(d.tau1,2)+' N·m',w/2,30,'#087f87',12,'center');
+ text(ctx,'τ load = '+f(d.tau2,2)+' N·m',w/2,50,'#bd741b',12,'center');
+ text(ctx,'Net torque = '+f(d.net,2)+' N·m',w/2,70,d.net>=0?'#258653':'#c85b79',12,'center');
+ const balanced=Math.abs(d.net)<.5;
+ text(ctx,balanced?'ROTATIONAL EQUILIBRIUM':'NET TURNING EFFECT',w/2,h*.92,balanced?'#258653':'#bd741b',12,'center','700');
+ updateMetrics(
+  ['Applied torque','Load torque','Net torque','Balance force'],
+  [f(d.tau1,2)+' N·m',f(d.tau2,2)+' N·m',f(d.net,2)+' N·m',Number.isFinite(d.balanceForce)?f(d.balanceForce,2)+' N':'—'],
+  ['rF sin θ','mgr₂','τ₁ − τ₂','at same arm and angle']
+ );
+ $('formula').textContent='τ = rF sin θ';
+ $('calculation').textContent=`τnet = ${f(d.tau1,2)} − ${f(d.tau2,2)} = ${f(d.net,2)} N·m`;
+ $('explain').textContent=balanced?'The clockwise and anticlockwise torques balance. Net torque is approximately zero, so the lever has no angular acceleration.':'The torques are unequal. The system has a net turning effect; a larger perpendicular lever arm or force can change the balance.';
+ drawTorqueGraph(d);
+}
+function drawTorqueGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);
+ const L=44,R=w-14,T=21,B=h-29;graphAxes(L,R,T,B);
+ const maxF=150,maxTau=Math.max(10,d.r*maxF,d.tau1*1.2);
+ px.beginPath();
+ for(let i=0;i<=40;i++){
+  const F=maxF*i/40,tau=d.r*F*Math.sin(d.theta),x=L+F/maxF*(R-L),y=B-tau/maxTau*(B-T);
+  if(i===0)px.moveTo(x,y);else px.lineTo(x,y);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.4;px.stroke();
+ const x=L+d.F/maxF*(R-L),y=B-d.tau1/maxTau*(B-T);
+ circle(px,x,y,4,'#bd741b');
+ text(px,'Torque (N·m)',7,13,'#718a76',9);
+ text(px,'Applied force (N)',R,B+24,'#718a76',9,'right');
+ text(px,'Current: '+f(d.tau1,2)+' N·m',R,14,'#087f87',9,'right');
+}
+
+function renderInertia(){
+ const d=inertiaData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const cx=w*.5,cy=h*.48,rad=Math.min(90,Math.max(35,d.size*52));
+ const angle=animation==='inertia'?rotation:0;
+ ctx.save();ctx.translate(cx,cy);ctx.rotate(angle);
+ if(d.type==='hoop'){
+  ctx.beginPath();ctx.arc(0,0,rad,0,Math.PI*2);ctx.strokeStyle='#4978c5';ctx.lineWidth=11;ctx.stroke();
+ }else if(d.type==='disc'){
+  circle(ctx,0,0,rad,'#9bc8a3','#477d55');
+  ctx.beginPath();ctx.moveTo(-rad,0);ctx.lineTo(rad,0);ctx.moveTo(0,-rad);ctx.lineTo(0,rad);ctx.strokeStyle='#5a986d';ctx.lineWidth=2;ctx.stroke();
+ }else if(d.type==='sphere'){
+  circle(ctx,0,0,rad,'#b5d9ae','#477d55');
+  ctx.beginPath();ctx.ellipse(0,0,rad*.35,rad,0,0,Math.PI*2);ctx.strokeStyle='#477d55';ctx.lineWidth=2;ctx.stroke();
+ }else{
+  line(ctx,-rad,0,rad,0,'#bd741b',12);
+  circle(ctx,0,0,7,'#4978c5');
+  for(let xx=-rad;xx<=rad;xx+=rad*.25)line(ctx,xx,-5,xx,5,'#fff',1);
+ }
+ ctx.restore();
+ circle(ctx,cx,cy,5,'#193b27');
+ arrow(ctx,cx,cy,cx+rad*.7,cy-rad*.55,'#087f87',3,9);
+ text(ctx,'Applied torque τ',cx+rad*.75,cy-rad*.7,'#087f87',10);
+ text(ctx,'I = '+f(d.I,3)+' kg·m²',w/2,28,'#355d3d',12,'center');
+ text(ctx,'α = '+f(d.alpha,3)+' rad/s²',w/2,49,'#258653',12,'center');
+ const rollX=w*.12,rollY=h*.83,rollW=w*.76;
+ line(ctx,rollX,rollY,rollX+rollW,rollY,'#8da98e',4);
+ line(ctx,rollX,rollY,rollX+rollW*.75,rollY-rollW*.25,'#9abb99',5);
+ const ballX=rollX+rollW*.27,ballY=rollY-rollW*.09;
+ circle(ctx,ballX,ballY-14,14,'#bd741b');
+ text(ctx,'Rolling without slipping comparison',w/2,h*.9,'#567b5d',10,'center');
+ text(ctx,'v at bottom = '+f(d.rollingSpeed,2)+' m/s',w/2,h*.96,'#258653',10,'center');
+ updateMetrics(
+  ['Moment of inertia','Angular acceleration','Angular speed','Rotational KE'],
+  [f(d.I,3)+' kg·m²',f(d.alpha,3)+' rad/s²',f(d.omega,2)+' rad/s',f(d.K,2)+' J'],
+  ['I = kMR² or ML²/12','α = τ / I','ω = αt (from rest)','½Iω²']
+ );
+ $('formula').textContent='τ = Iα';
+ $('calculation').textContent=`α = ${f(d.tau,2)} / ${f(d.I,3)} = ${f(d.alpha,3)} rad/s²`;
+ $('explain').textContent=`This ${typeName(d.type)} has I = ${f(d.I,3)} kg·m². A larger moment of inertia means a smaller angular acceleration for the same torque. Rolling comparison assumes no slipping and no energy losses.`;
+ drawInertiaGraph(d);
+}
+function typeName(type){return ({hoop:'thin hoop',disc:'solid disc',sphere:'solid sphere',rod:'thin rod'})[type]}
+function drawInertiaGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);
+ const L=44,R=w-14,T=21,B=h-29;graphAxes(L,R,T,B);
+ const maxTau=30,maxAlpha=Math.max(1,30/d.I);
+ px.beginPath();
+ for(let i=0;i<=40;i++){
+  const tau=maxTau*i/40,a=tau/d.I,x=L+tau/maxTau*(R-L),y=B-a/maxAlpha*(B-T);
+  if(i===0)px.moveTo(x,y);else px.lineTo(x,y);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.4;px.stroke();
+ const x=L+d.tau/maxTau*(R-L),y=B-d.alpha/maxAlpha*(B-T);
+ circle(px,x,y,4,'#bd741b');
+ text(px,'Angular acceleration (rad/s²)',7,13,'#718a76',8);
+ text(px,'Applied torque (N·m)',R,B+24,'#718a76',9,'right');
+ text(px,'Current: '+f(d.alpha,2)+' rad/s²',R,14,'#087f87',9,'right');
+}
+
+function renderAngular(){
+ const d=angularData(),z=resize(scene,ctx),w=z.w,h=z.h;clear(ctx,w,h);
+ const cx=w*.5,cy=h*.46,maxR=Math.min(100,w*.24),progress=animation==='angular'?Math.min(1,elapsed/2.5):1;
+ const R=d.R1+(d.R2-d.R1)*progress;
+ const omega=d.omega1+(d.omega2-d.omega1)*progress;
+ const rad= Math.max(24,maxR*(R/Math.max(d.R1,d.R2)));
+ const spin=rotation;
+ ctx.save();ctx.translate(cx,cy);ctx.rotate(spin);
+ if(d.type==='hoop'){
+  ctx.beginPath();ctx.arc(0,0,rad,0,Math.PI*2);ctx.strokeStyle='#4978c5';ctx.lineWidth=10;ctx.stroke();
+ }else if(d.type==='disc'){
+  circle(ctx,0,0,rad,'#a7d4a5','#477d55');
+ }else{
+  circle(ctx,0,0,rad,'#d9ba82','#99733c');
+  ctx.beginPath();ctx.ellipse(0,0,rad*.38,rad,0,0,Math.PI*2);ctx.strokeStyle='#99733c';ctx.lineWidth=2;ctx.stroke();
+ }
+ line(ctx,-rad,0,rad,0,'#fff',2);
+ line(ctx,0,-rad,0,rad,'#fff',2);
+ ctx.restore();
+ circle(ctx,cx,cy,5,'#193b27');
+ text(ctx,'R = '+f(R,2)+' m',cx+rad+15,cy-5,'#4978c5',11);
+ text(ctx,'ω = '+f(omega,2)+' rad/s',cx,cy+rad+26,'#087f87',11,'center');
+ text(ctx,'L initial = '+f(d.L,2)+' kg·m²/s',w/2,27,'#355d3d',12,'center');
+ text(ctx,'L final = '+f(d.L,2)+' kg·m²/s',w/2,47,'#258653',12,'center');
+ updateMetrics(
+  ['Initial angular momentum','Final angular speed','Initial rotational KE','Final rotational KE'],
+  [f(d.L,2)+' kg·m²/s',f(d.omega2,2)+' rad/s',f(d.K1,2)+' J',f(d.K2,2)+' J'],
+  ['I₁ω₁','ω₂ = L / I₂','½I₁ω₁²','½I₂ω₂²']
+ );
+ $('formula').textContent='L₁ = L₂   ⇒   I₁ω₁ = I₂ω₂';
+ $('calculation').textContent=`ω₂ = (${f(d.I1,3)} × ${f(d.omega1,2)}) / ${f(d.I2,3)} = ${f(d.omega2,2)} rad/s`;
+ $('explain').textContent=`The external torque is assumed zero, so angular momentum remains constant. ${d.R2<d.R1?'The radius decreases, so angular speed increases.':'The radius increases, so angular speed decreases.'} The change in rotational kinetic energy is ${f(d.deltaK,2)} J; this energy change requires work by or on the system.`;
+ drawAngularGraph(d);
+}
+function drawAngularGraph(d){
+ const z=resize(plot,px),w=z.w,h=z.h;clear(px,w,h);
+ const L=44,R=w-14,T=21,B=h-29;graphAxes(L,R,T,B);
+ const minR=.2,maxR=3,maxOmega=Math.max(15,d.omega2*1.15);
+ px.beginPath();
+ for(let i=0;i<=50;i++){
+  const radius=minR+(maxR-minR)*i/50;
+  const omega=d.L/(d.k*d.M*radius*radius);
+  const x=L+(radius-minR)/(maxR-minR)*(R-L),y=B-omega/maxOmega*(B-T);
+  if(i===0)px.moveTo(x,y);else px.lineTo(x,y);
+ }
+ px.strokeStyle='#087f87';px.lineWidth=2.4;px.stroke();
+ const x=L+(d.R2-minR)/(maxR-minR)*(R-L),y=B-d.omega2/maxOmega*(B-T);
+ circle(px,x,y,4,'#bd741b');
+ text(px,'Angular speed (rad/s)',7,13,'#718a76',8);
+ text(px,'Radius (m)',R,B+24,'#718a76',9,'right');
+ text(px,'Current: '+f(d.omega2,2)+' rad/s',R,14,'#087f87',9,'right');
+}
+
+function graphAxes(L,R,T,B){
+ for(let i=0;i<=4;i++){
+  const y=T+(B-T)*i/4;line(px,L,y,R,y,'#e2eee0',1);
+ }
+ line(px,L,T,L,B,'#8eaa91',1.2);
+ line(px,L,B,R,B,'#8eaa91',1.2);
+}
+function render(){
+ updateOutputs();
+ if(active===0)renderCentre();
+ else if(active===1)renderTorque();
+ else if(active===2)renderInertia();
+ else renderAngular();
+}
+function stop(){
+ animation=null;
+ $('state').textContent='LIVE MODEL';
+}
+function frame(ts){
+ if(!animation)return;
+ const dt=Math.min(.05,(ts-lastFrame)/1000||0);
+ lastFrame=ts;
+ if(animation==='inertia'){
+  elapsed+=dt;
+  rotation+=dt*(.6+Math.min(3,inertiaData().omega*.2));
+  if(elapsed>=n('iTime')){elapsed=n('iTime');animation=null;cue('done')}
+ }
+ if(animation==='angular'){
+  elapsed+=dt;
+  rotation+=dt*(.7+Math.min(5,angularData().omega2*.15));
+  if(elapsed>=2.5){elapsed=2.5;animation=null;cue('done')}
+ }
+ render();
+ if(animation)requestAnimationFrame(frame);
+ else $('state').textContent='MODEL COMPLETE';
+}
+function start(type){
+ stop();animation=type;elapsed=0;rotation=0;lastFrame=performance.now();
+ cue('start');$('state').textContent='RUNNING';
+ requestAnimationFrame(frame);
+}
+function switchTab(i){
+ stop();active=i;rotation=0;elapsed=0;
+ document.querySelectorAll('.tab').forEach((b,j)=>b.classList.toggle('active',i===j));
+ document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('hidden',Number(p.dataset.panel)!==i));
+ $('stageTitle').textContent=titles[i][0];
+ $('stageDesc').textContent=titles[i][1];
+ $('graphTitle').textContent=titles[i][2];
+ $('graphCaption').textContent=titles[i][3];
+ $('sceneNote').textContent=titles[i][4];
+ updateGuide();render();
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(Number(b.dataset.tab))));
+document.querySelectorAll('.panel input,.panel select').forEach(el=>el.addEventListener('input',()=>{
+ if(animation)stop();
+ render();
+}));
+
+function reset(ids){
+ ids.forEach(id=>$(id).value=defaults[id]);
+ stop();elapsed=0;rotation=0;render();
+}
+$('cmReset').addEventListener('click',()=>reset(['cm1','cx1','cm2','cx2']));
+$('tReset').addEventListener('click',()=>reset(['tForce','tArm','tAngle','tMass','tLoadArm']));
+$('iReset').addEventListener('click',()=>reset(['iType','iMass','iSize','iTorque','iTime','iHeight']));
+$('aReset').addEventListener('click',()=>reset(['aType','aMass','aInitial','aFinal','aOmega']));
+$('iRun').addEventListener('click',()=>start('inertia'));
+$('iPause').addEventListener('click',()=>{stop();render()});
+$('aRun').addEventListener('click',()=>start('angular'));
+
+$('cmSwap').addEventListener('click',()=>{
+ const m1=$('cm1').value,x1=$('cx1').value,m2=$('cm2').value,x2=$('cx2').value;
+ $('cm1').value=m2;$('cx1').value=x2;$('cm2').value=m1;$('cx2').value=x1;render();
+});
+$('tBalance').addEventListener('click',()=>{
+ const d=torqueData();
+ if(d.r*Math.sin(d.theta)===0){
+  alert('At this angle the applied force has zero perpendicular component. Change the angle before calculating the balancing force.');
+  return;
+ }
+ $('tForce').value=Math.min(150,Math.max(0,d.balanceForce));
+ render();
+});
+
+const missions=[
+ [
+  ['Mission 1 · Move the centre of mass','Increase particle 2 mass while keeping positions fixed. Observe how the centre of mass shifts.'],
+  ['Mission 2 · Equal masses','Set both masses equal. Predict the centre of mass position for the two particles.'],
+  ['Mission 3 · Change positions','Move particle 2 toward particle 1. Observe the change in the centre of mass.']
+ ],
+ [
+  ['Mission 1 · Maximum torque','Set the angle to 90°. Why is the torque maximum at this angle?'],
+  ['Mission 2 · Zero torque','Set the force angle to 0°. What happens to the perpendicular component?'],
+  ['Mission 3 · Balance the lever','Use the balancing-force button to find the force needed for rotational equilibrium.']
+ ],
+ [
+  ['Mission 1 · Compare shapes','Choose a hoop and a disc with the same mass and radius. Compare their moment of inertia.'],
+  ['Mission 2 · Increase radius','Increase radius while keeping mass constant. How does moment of inertia change?'],
+  ['Mission 3 · Rolling comparison','Compare the calculated bottom speed for the hoop and solid sphere at the same height.']
+ ],
+ [
+  ['Mission 1 · Pull inward','Reduce the final radius. Observe how angular speed changes when angular momentum is conserved.'],
+  ['Mission 2 · Expand outward','Increase the final radius. Does angular speed increase or decrease?'],
+  ['Mission 3 · Energy change','Compare initial and final rotational kinetic energy. Where can the energy difference come from?']
+ ]
+];
+function updateGuide(){
+ const m=missions[active][Number($('challenge').value)||0];
+ $('missionTitle').textContent=m[0];
+ $('missionText').textContent=m[1];
+ $('modeTag').textContent=guided?'GUIDED MODE':'FREE EXPLORATION';
+ $('guideIntro').textContent=guided?'Choose a mission, adjust the parameters and predict the result before checking the simulation.':'Explore freely. Change several parameters, compare the models and record your observations.';
+ $('toggleMode').textContent=guided?'Switch to free exploration':'Switch to guided mode';
+}
+$('challenge').addEventListener('change',updateGuide);
+$('toggleMode').addEventListener('click',()=>{guided=!guided;updateGuide()});
+$('loadChallenge').addEventListener('click',()=>{
+ const c=Number($('challenge').value)||0;
+ if(active===0){
+  if(c===0)$('cm2').value=10;
+  if(c===1){$('cm1').value=5;$('cm2').value=5;}
+  if(c===2)$('cx2').value=3;
+ }else if(active===1){
+  if(c===0)$('tAngle').value=90;
+  if(c===1)$('tAngle').value=0;
+  if(c===2){$('tAngle').value=90;}
+ }else if(active===2){
+  if(c===0)$('iType').value='hoop';
+  if(c===1)$('iSize').value=1.5;
+  if(c===2){$('iType').value='sphere';$('iHeight').value=2;}
+ }else{
+  if(c===0)$('aFinal').value=.5;
+  if(c===1)$('aFinal').value=2.8;
+  if(c===2)$('aFinal').value=.8;
+ }
+ stop();render();
+});
+
+function snapshot(){
+ if(active===0){
+  const d=cmData();
+  return {name:'Centre of Mass',settings:`m1=${d.m1} kg, x1=${d.x1} m, m2=${d.m2} kg, x2=${d.x2} m`,result:`Total mass=${f(d.total,2)} kg; xCM=${f(d.x,3)} m`};
+ }
+ if(active===1){
+  const d=torqueData();
+  return {name:'Torque',settings:`F=${d.F} N, r=${d.r} m, angle=${f(d.theta*180/Math.PI,0)}°, load=${d.m} kg, load arm=${d.r2} m`,result:`τ applied=${f(d.tau1,2)} N·m; net τ=${f(d.net,2)} N·m`};
+ }
+ if(active===2){
+  const d=inertiaData();
+  return {name:'Moment of Inertia',settings:`type=${d.type}, M=${d.M} kg, size=${d.size} m, τ=${d.tau} N·m`,result:`I=${f(d.I,4)} kg·m²; α=${f(d.alpha,3)} rad/s²; rolling v=${f(d.rollingSpeed,3)} m/s`};
+ }
+ const d=angularData();
+ return {name:'Angular Momentum',settings:`type=${d.type}, M=${d.M} kg, R1=${d.R1} m, R2=${d.R2} m, ω1=${d.omega1} rad/s`,result:`L=${f(d.L,3)} kg·m²/s; ω2=${f(d.omega2,3)} rad/s; ΔK=${f(d.deltaK,3)} J`};
+}
+function refreshRecords(){
+ $('trialCount').textContent=records.length+' TRIALS';
+ const body=$('records');body.innerHTML='';
+ records.slice(0,8).forEach(r=>{
+  const tr=document.createElement('tr');
+  [r.name,'#'+r.trial,r.settings,r.result].forEach(s=>{
+   const td=document.createElement('td');td.textContent=s;tr.appendChild(td);
+  });
+  body.appendChild(tr);
+ });
+ if(!records.length)body.innerHTML='<tr><td colspan="4" class="empty">No readings recorded yet.</td></tr>';
+}
+$('record').addEventListener('click',()=>{
+ const s=snapshot();records.unshift({...s,trial:records.length+1});refreshRecords();
+});
+$('clear').addEventListener('click',()=>{records=[];refreshRecords()});
+$('export').addEventListener('click',()=>{
+ if(!records.length){alert('Record at least one trial before exporting.');return}
+ const rows=[['Experiment','Trial','Settings','Result'],...records.map(r=>[r.name,r.trial,r.settings,r.result])];
+ const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+ const a=document.createElement('a');a.href=url;a.download='rotational-motion-lab-records.csv';a.click();URL.revokeObjectURL(url);
+});
+window.addEventListener('resize',render);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&animation)stop()});
+updateGuide();switchTab(0);
+})();
+</script>
+</body>
+</html>
