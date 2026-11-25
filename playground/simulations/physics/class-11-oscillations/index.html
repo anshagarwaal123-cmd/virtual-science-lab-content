@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#edf7e9">
+<title>Oscillations | Virtual Science Lab</title>
+<script id="experiment-metadata" type="application/json">
+{"id":"class-11-oscillations","title":"Oscillations","class":"11","chapter":"Oscillations","chapterNumber":13,"description":"Explore simple harmonic motion with a spring-mass system, simple pendulum, circular motion projection, displacement velocity acceleration graphs and energy conversion through interactive simulations."}
+</script>
+<style>
+:root{--bg:#edf7e9;--panel:#fff;--soft:#f6fbf3;--line:#d1e4cd;--ink:#203e2b;--muted:#667d6b;--green:#35a96b;--green2:#8ed49b;--blue:#468bd2;--orange:#e99b35;--purple:#8a70c9;--shadow:0 9px 28px rgba(44,91,53,.09);--radius:18px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 7% 0%,#d9efd4 0,transparent 34%),radial-gradient(circle at 93% 8%,#e4f3dd 0,transparent 30%),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1240px;margin:auto;padding:22px 22px 48px}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:10px;color:#48634f;font-size:.86rem;letter-spacing:.08em;font-weight:850;text-transform:uppercase}
+.brand-mark{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(145deg,#a9e4ad,#55bd7d);color:#16472b;font-weight:950;box-shadow:0 5px 16px #48a96830}
+.pill{border:1px solid #c9dfc6;background:#f7fcf4;color:#4e6c52;padding:7px 11px;border-radius:999px;font-size:.74rem;font-weight:800;white-space:nowrap}
+.hero{display:grid;grid-template-columns:1.4fr .6fr;align-items:center;gap:18px;margin:6px 0 20px}
+.eyebrow{font-size:.76rem;color:#258e56;letter-spacing:.16em;text-transform:uppercase;font-weight:900;margin-bottom:9px}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;letter-spacing:-.055em;margin:0 0 13px}
+.gradient{background:linear-gradient(90deg,#244b31,#29995c 55%,#75b55e);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:0;color:#607968;max-width:720px}
+.hero-art{height:155px;border:1px solid #c9dfc6;border-radius:23px;background:linear-gradient(145deg,#fbfff8,#e1f2dc);position:relative;overflow:hidden;display:grid;place-items:center}
+.orbit{width:124px;height:124px;border:2px dashed #8bc39a;border-radius:50%;position:absolute}
+.orbit:before{content:"";position:absolute;left:54px;top:-8px;width:15px;height:15px;border-radius:50%;background:#e9a13b;box-shadow:0 0 0 6px #e9a13b22}
+.orbit:after{content:"";position:absolute;left:-8px;top:54px;width:15px;height:15px;border-radius:50%;background:#4a9add;box-shadow:0 0 0 6px #4a9add22}
+.hero-spring{width:170px;height:13px;border-top:4px dotted #58a977;position:absolute;bottom:38px;left:calc(50% - 85px);transform:rotate(-8deg)}
+.hero-spring:after{content:"";position:absolute;right:-5px;top:-13px;width:23px;height:23px;border-radius:6px;background:#e6a144}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
+.stat{background:#fff;border:1px solid #d5e7d1;border-radius:15px;padding:11px 14px;min-width:0;box-shadow:0 4px 14px #315d3008}
+.stat small{display:block;color:#748878;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:850}
+.stat strong{display:block;font-size:1.12rem;color:#254a32;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding:7px;border:1px solid #d1e3ce;background:#ffffffec;border-radius:17px;margin:20px 0 18px;position:sticky;top:6px;z-index:9;box-shadow:0 7px 20px #315d3010;backdrop-filter:blur(12px)}
+.tab{border:0;background:transparent;color:#657e69;border-radius:11px;padding:10px 8px;font-weight:850;font-size:.82rem;transition:.18s}
+.tab:hover{background:#edf7e9}
+.tab.active{background:linear-gradient(135deg,#a8e2b1,#d4edbd);color:#1f5836;box-shadow:inset 0 0 0 1px #8bc997,0 4px 10px #68b77b20}
+.panel{display:none;animation:fade .22s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:.45;transform:translateY(4px)}to{opacity:1;transform:none}}
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:20px 0 13px}
+.head h2{margin:0 0 4px;font-size:1.45rem;letter-spacing:-.03em}
+.head p{margin:0;color:#6d826f;font-size:.9rem}
+.tag{border:1px solid #cce1c9;border-radius:999px;background:#f3faf0;color:#4b7255;font-size:.68rem;font-weight:900;padding:6px 9px;white-space:nowrap}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.75fr);gap:15px;align-items:start}
+.card{background:#fff;border:1px solid #d4e6d1;border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:1rem;margin:0 0 9px}
+.sub{font-size:.8rem;color:#748879;margin:-5px 0 11px}
+.stage{border:1px solid #c9dfc6;border-radius:15px;overflow:hidden;background:linear-gradient(180deg,#f8fff5,#edf7e9)}
+canvas{display:block;width:100%;height:auto}
+#springCanvas{aspect-ratio:900/450}
+#pendulumCanvas{aspect-ratio:900/450}
+#phaseCanvas{aspect-ratio:900/460}
+#graphCanvas{aspect-ratio:900/390}
+#energyCanvas{aspect-ratio:900/270}
+.stage-foot{display:flex;justify-content:space-between;gap:9px;flex-wrap:wrap;color:#718674;font-size:.75rem;margin-top:9px}
+.controls{display:grid;gap:14px}
+.control{display:grid;gap:6px}
+.control-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.control label{font-size:.82rem;color:#385d43;font-weight:800}
+.control output{font-weight:900;color:#238b55;font-variant-numeric:tabular-nums;font-size:.83rem}
+.range{width:100%;accent-color:#39a96b;cursor:pointer}
+.select{width:100%;padding:10px 11px;border:1px solid #c8dec5;border-radius:10px;background:#fbfff9;color:#244b32;outline:none}
+.buttons{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid #c6ddc3;background:#eff8ec;color:#315b3b;padding:9px 12px;border-radius:10px;font-size:.8rem;font-weight:850;transition:.15s}
+.btn:hover{transform:translateY(-1px);border-color:#7cbd8b}
+.btn.primary{border-color:#83c990;background:linear-gradient(135deg,#91dba0,#c0e9a9);color:#1e512f}
+.btn.dark{background:#fff}
+.readouts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.readout{border:1px solid #d9e9d5;border-radius:12px;padding:9px;background:#f6fbf3}
+.readout small{display:block;color:#748878;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;font-weight:850}
+.readout strong{display:block;font-size:1rem;color:#254d33;margin-top:3px;font-variant-numeric:tabular-nums}
+.formula{border:1px solid #c9e1c7;border-radius:12px;background:#f0f8ec;padding:12px;color:#285f3c;text-align:center;font-family:Georgia,serif;font-size:1.02rem;overflow:auto}
+.formula small{display:block;color:#6b846e;font:.7rem Inter,system-ui;margin-top:4px}
+.note{border-left:3px solid #49ac71;background:#eff8ec;padding:9px 11px;border-radius:0 10px 10px 0;color:#526f56;font-size:.79rem;margin-top:11px}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini{border:1px solid #d8e8d4;background:#f6fbf3;border-radius:12px;padding:10px}
+.mini span{display:block;color:#718675;font-size:.7rem}
+.mini strong{display:block;color:#254d33;font-size:1rem;margin-top:3px;font-variant-numeric:tabular-nums}
+.mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mission{padding:13px;border:1px solid #d4e6d0;background:#f9fdf7;border-radius:14px}
+.mission strong{display:block;font-size:.84rem;color:#315a3d;margin-bottom:5px}
+.mission p{font-size:.75rem;color:#758777;min-height:52px;margin:0 0 9px}
+.mission.done{background:#eef9ee;border-color:#7fc597}
+.mission.done .btn{color:#267047;border-color:#80c495}
+.progress{height:7px;background:#dcebd8;border-radius:20px;overflow:hidden;margin:12px 0 5px}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#58b879,#a7d97c);transition:width .2s}
+.small{font-size:.75rem;color:#718675}
+.footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid #d2e4ce;margin-top:25px;padding-top:14px;color:#728574;font-size:.75rem}
+.legend{display:flex;gap:13px;flex-wrap:wrap;color:#718574;font-size:.72rem;margin-top:9px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.hero-art{height:120px}.mission-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.shell{padding:14px 11px 32px}.topline{margin-bottom:13px}.hero{gap:12px}.hero-art{display:none}.hero p{font-size:.88rem}.stats{grid-template-columns:repeat(2,1fr);gap:8px}.tabs{grid-template-columns:1fr 1fr;top:3px}.tab{font-size:.76rem;padding:10px 5px}.card{padding:12px;border-radius:15px}.head{margin-top:15px}.readouts{grid-template-columns:repeat(3,1fr)}.readout{padding:7px}.readout strong{font-size:.86rem}.mission-grid{grid-template-columns:1fr}.mission p{min-height:0}.footer{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topline"><div class="brand"><span class="brand-mark">V</span> Virtual Science Lab</div><span class="pill">PHYSICS · CLASS 11</span></div>
+  <section class="hero"><div><div class="eyebrow">Chapter 13 · Interactive experiment</div><h1><span class="gradient">Oscillations</span><br>&amp; Simple Harmonic Motion</h1><p>Explore how springs and pendulums oscillate. Change mass, stiffness, length and gravity, then observe the motion, graphs and energy exchange in real time.</p></div><div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="hero-spring"></div></div></section>
+  <div class="stats"><div class="stat"><small>Spring time period</small><strong id="topPeriod">0.89 s</strong></div><div class="stat"><small>Frequency</small><strong id="topFrequency">1.12 Hz</strong></div><div class="stat"><small>Angular frequency</small><strong id="topOmega">7.07 rad/s</strong></div><div class="stat"><small>Spring total energy</small><strong id="topEnergy">0.050 J</strong></div></div>
+  <nav class="tabs" aria-label="Oscillation experiment stations"><button class="tab active" data-tab="spring">01 · Spring–mass</button><button class="tab" data-tab="pendulum">02 · Pendulum</button><button class="tab" data-tab="phase">03 · SHM visualizer</button><button class="tab" data-tab="energy">04 · Energy lab</button></nav>
+  <main>
+    <section class="panel active" id="panel-spring">
+      <div class="head"><div><h2>Spring–mass oscillator</h2><p>Move the mass away from equilibrium and release it. Watch the restoring force bring it back.</p></div><span class="tag">LIVE SIMULATION</span></div>
+      <div class="layout">
+        <div class="card"><div class="stage"><canvas id="springCanvas" width="900" height="450" aria-label="Animated horizontal spring and mass performing simple harmonic motion"></canvas></div><div class="stage-foot"><span>← Compression · Equilibrium · Extension →</span><span id="springStatus">Oscillating</span></div>
+          <div class="readouts"><div class="readout"><small>Displacement x</small><strong id="xRead">+0.100 m</strong></div><div class="readout"><small>Velocity v</small><strong id="vRead">0.000 m/s</strong></div><div class="readout"><small>Acceleration a</small><strong id="aRead">−5.000 m/s²</strong></div></div>
+          <div class="note">The spring force is a restoring force: <b>F = −kx</b>. For an ideal spring, the mass executes SHM when displaced and released.</div>
+        </div>
+        <aside class="card"><h3>Spring controls</h3><p class="sub">Change the physical properties of the oscillator.</p><div class="controls">
+          <div class="control"><div class="control-top"><label for="mass">Mass (m)</label><output id="massOut">0.20 kg</output></div><input class="range" id="mass" type="range" min="0.10" max="2.00" step="0.05" value="0.20"></div>
+          <div class="control"><div class="control-top"><label for="stiffness">Spring constant (k)</label><output id="stiffnessOut">10 N/m</output></div><input class="range" id="stiffness" type="range" min="2" max="50" step="1" value="10"></div>
+          <div class="control"><div class="control-top"><label for="amplitude">Amplitude (A)</label><output id="amplitudeOut">0.10 m</output></div><input class="range" id="amplitude" type="range" min="0.02" max="0.20" step="0.01" value="0.10"></div>
+          <div class="buttons"><button class="btn primary" id="springPlay">Ⅱ Pause</button><button class="btn" id="springReset">↺ Reset</button><button class="btn dark" id="springStep">Step +0.05 s</button></div>
+          <div class="formula">T = 2π √(m / k)<small>Time period of an ideal spring–mass oscillator</small></div>
+          <div class="mini-grid"><div class="mini"><span>Angular frequency ω</span><strong id="omegaRead">7.07 rad/s</strong></div><div class="mini"><span>Maximum speed</span><strong id="vmaxRead">0.707 m/s</strong></div><div class="mini"><span>Maximum acceleration</span><strong id="amaxRead">5.00 m/s²</strong></div><div class="mini"><span>Spring force at A</span><strong id="forceRead">1.00 N</strong></div></div>
+        </div></aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-pendulum">
+      <div class="head"><div><h2>Simple pendulum laboratory</h2><p>Investigate how pendulum length and gravitational acceleration affect its time period.</p></div><span class="tag">SMALL-ANGLE MODEL</span></div>
+      <div class="layout">
+        <div class="card"><div class="stage"><canvas id="pendulumCanvas" width="900" height="450" aria-label="Animated simple pendulum showing angular displacement and equilibrium"></canvas></div><div class="stage-foot"><span>Maximum angle is kept below 25° for the small-angle approximation.</span><span id="pendulumStatus">Swinging</span></div>
+          <div class="readouts"><div class="readout"><small>Angular displacement</small><strong id="thetaRead">+15.0°</strong></div><div class="readout"><small>Angular velocity</small><strong id="thetaVRead">0.000 rad/s</strong></div><div class="readout"><small>Time period</small><strong id="pendulumPeriodRead">2.01 s</strong></div></div>
+          <div class="note">For small oscillations, <b>T = 2π √(L/g)</b>. The period does not depend on the bob's mass in this ideal model.</div>
+        </div>
+        <aside class="card"><h3>Pendulum controls</h3><p class="sub">Change the pendulum and the planet.</p><div class="controls">
+          <div class="control"><div class="control-top"><label for="length">Length (L)</label><output id="lengthOut">1.00 m</output></div><input class="range" id="length" type="range" min="0.20" max="2.00" step="0.05" value="1"></div>
+          <div class="control"><div class="control-top"><label for="angle">Initial angle (θ₀)</label><output id="angleOut">15°</output></div><input class="range" id="angle" type="range" min="3" max="25" step="1" value="15"></div>
+          <div class="control"><div class="control-top"><label for="bobMass">Bob mass</label><output id="bobMassOut">0.50 kg</output></div><input class="range" id="bobMass" type="range" min="0.10" max="2.00" step="0.05" value="0.50"></div>
+          <div class="control"><label for="planet">Gravitational field</label><select class="select" id="planet"><option value="9.81">Earth · 9.81 m/s²</option><option value="1.62">Moon · 1.62 m/s²</option><option value="3.71">Mars · 3.71 m/s²</option><option value="24.79">Jupiter · 24.79 m/s²</option></select></div>
+          <div class="buttons"><button class="btn primary" id="pendulumPlay">Ⅱ Pause</button><button class="btn" id="pendulumReset">↺ Reset</button></div>
+          <div class="formula">T = 2π √(L / g)<small>Valid for small angular displacements</small></div>
+          <div class="mini-grid"><div class="mini"><span>Frequency</span><strong id="pendulumFrequency">0.498 Hz</strong></div><div class="mini"><span>Angular frequency</span><strong id="pendulumOmega">3.13 rad/s</strong></div></div>
+        </div></aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-phase">
+      <div class="head"><div><h2>SHM and circular motion</h2><p>Simple harmonic motion is the projection of uniform circular motion on a diameter.</p></div><span class="tag">PHASE EXPLORER</span></div>
+      <div class="layout">
+        <div class="card"><div class="stage"><canvas id="phaseCanvas" width="900" height="460" aria-label="Uniform circular motion with its horizontal projection demonstrating simple harmonic motion"></canvas></div><div class="stage-foot"><span>Blue point: circular motion · Green point: SHM projection</span><span id="phaseText">Phase: 0°</span></div>
+          <div class="stage" style="margin-top:12px"><canvas id="graphCanvas" width="900" height="390" aria-label="Displacement velocity and acceleration graphs for simple harmonic motion"></canvas></div><div class="legend"><span><i class="dot" style="background:#239c62"></i>Displacement x/A</span><span><i class="dot" style="background:#468bd2"></i>Velocity v/(ωA)</span><span><i class="dot" style="background:#e99b35"></i>Acceleration a/(ω²A)</span></div>
+        </div>
+        <aside class="card"><h3>Explore the phase</h3><p class="sub">Move the phase slider and observe the projection and graphs.</p><div class="controls">
+          <div class="control"><div class="control-top"><label for="phaseRange">Phase angle (φ)</label><output id="phaseOut">0°</output></div><input class="range" id="phaseRange" type="range" min="0" max="360" step="1" value="0"></div>
+          <div class="buttons"><button class="btn primary" id="phasePlay">▶ Animate phase</button><button class="btn" id="phaseHome">↺ Zero phase</button></div>
+          <div class="formula">x = A cos(ωt + φ₀)<small>Displacement as a function of time</small></div>
+          <div class="mini-grid"><div class="mini"><span>Displacement / A</span><strong id="phaseX">+1.000</strong></div><div class="mini"><span>Velocity / ωA</span><strong id="phaseV">0.000</strong></div><div class="mini"><span>Acceleration / ω²A</span><strong id="phaseA">−1.000</strong></div><div class="mini"><span>Motion position</span><strong id="phasePosition">Extreme</strong></div></div>
+          <div class="note">At the mean position, speed is maximum and acceleration is zero. At either extreme, speed is zero and acceleration is maximum in magnitude.</div>
+        </div></aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-energy">
+      <div class="head"><div><h2>Energy in simple harmonic motion</h2><p>Watch kinetic and potential energy continuously exchange while total mechanical energy remains constant.</p></div><span class="tag">ENERGY CONSERVATION</span></div>
+      <div class="layout">
+        <div class="card"><h3>Live energy balance · Spring oscillator</h3><p class="sub">Energy values use the spring–mass settings from Station 01.</p><div class="stage"><canvas id="energyCanvas" width="900" height="270" aria-label="Kinetic potential and total energy bars for an oscillating spring mass"></canvas></div>
+          <div class="readouts"><div class="readout"><small>Kinetic energy</small><strong id="kineticRead">0.000 J</strong></div><div class="readout"><small>Potential energy</small><strong id="potentialRead">0.050 J</strong></div><div class="readout"><small>Total energy</small><strong id="totalRead">0.050 J</strong></div></div>
+          <div class="note">At the two extreme positions, all energy is potential. At the equilibrium position, all energy is kinetic (for an ideal undamped oscillator).</div>
+        </div>
+        <aside class="card"><h3>Energy explorer</h3><p class="sub">Pause the spring animation or drag the phase to inspect a position.</p><div class="controls">
+          <div class="control"><div class="control-top"><label for="energyPhase">Oscillator phase</label><output id="energyPhaseOut">0°</output></div><input class="range" id="energyPhase" type="range" min="0" max="360" step="1" value="0"></div>
+          <div class="buttons"><button class="btn" id="energyCurrent">Use live spring position</button><button class="btn" id="energyExtremes">Show extreme</button><button class="btn" id="energyMean">Show mean</button></div>
+          <div class="formula">K = ½mv² &nbsp; · &nbsp; U = ½kx²<small>K + U = ½kA² = constant</small></div>
+          <div class="mini-grid"><div class="mini"><span>Displacement</span><strong id="energyX">+0.100 m</strong></div><div class="mini"><span>Velocity</span><strong id="energyV">0.000 m/s</strong></div></div>
+          <div class="note">The total mechanical energy depends on the spring constant and amplitude: increasing amplitude increases total energy as A².</div>
+        </div></aside>
+      </div>
+    </section>
+
+    <section style="margin-top:24px"><div class="head"><div><h2>Lab missions</h2><p>Run the experiments and record what you discover.</p></div><span class="tag" id="missionCount">0 / 3 COMPLETE</span></div>
+      <div class="mission-grid">
+        <article class="mission" id="mission1"><strong>Mission 01 · Double the mass</strong><p>In Station 01, double the mass while keeping the spring constant fixed. Observe how the time period changes.</p><button class="btn" data-mission="1">Mark complete</button></article>
+        <article class="mission" id="mission2"><strong>Mission 02 · Visit the Moon</strong><p>In Station 02, switch from Earth to Moon gravity. Compare the pendulum's time period.</p><button class="btn" data-mission="2">Mark complete</button></article>
+        <article class="mission" id="mission3"><strong>Mission 03 · Find the energy extremes</strong><p>In Station 04, inspect the extreme and mean positions. Identify where kinetic energy is maximum.</p><button class="btn" data-mission="3">Mark complete</button></article>
+      </div><div class="progress"><span id="missionProgress"></span></div><div class="small" id="missionHint">Your completed missions will appear here.</div>
+    </section>
+  </main>
+  <div class="footer"><span>Virtual Science Lab · Physics · Class 11</span><div class="buttons"><button class="btn" id="exportBtn">↓ Export lab data (CSV)</button><button class="btn" id="resetAll">Reset all stations</button></div></div>
+</div>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const TAU = 2 * Math.PI;
+const fmt = (n,d=2) => Number(n).toFixed(d);
+const signed = (n,d=3) => (n>=0?'+':'')+fmt(n,d);
+const state = {springT:0,springPlaying:true,pendulumT:0,pendulumPlaying:true,phase:0,phasePlaying:false,energyPhase:null,missions:new Set(),last:0};
+const spring = () => ({m:+$('mass').value,k:+$('stiffness').value,A:+$('amplitude').value});
+const springParams = () => {const s=spring(),w=Math.sqrt(s.k/s.m),T=TAU/w;return {...s,w,T,f:1/T,E:.5*s.k*s.A*s.A,vmax:s.A*w,amax:s.A*w*w};};
+const pendulum = () => {const L=+$('length').value,g=+$('planet').value,a=+$('angle').value*Math.PI/180,m=+$('bobMass').value,w=Math.sqrt(g/L),T=TAU/w;return {L,g,a,m,w,T,f:1/T};};
+const springAt = t => {const s=springParams(),q=s.w*t,x=s.A*Math.cos(q),v=-s.A*s.w*Math.sin(q),a=-s.A*s.w*s.w*Math.cos(q);return {...s,t,q,x,v,a,K:.5*s.m*v*v,U:.5*s.k*x*x};};
+
+// Station navigation.
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+b.dataset.tab));drawAll();}));
+
+// Canvas setup: intrinsic coordinates stay stable on desktop and mobile.
+function context(id){const c=$(id),x=c.getContext('2d');return {c,x,w:c.width,h:c.height};}
+function rounded(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.stroke();}}
+function drawSpring(){
+ const {x:ctx,w,h}=context('springCanvas'),s=springAt(state.springT),eq=485,px=eq+s.x*390,massW=82,massH=66,wall=105,coilStart=wall+14,coilEnd=px-massW/2,mid=h/2;
+ ctx.clearRect(0,0,w,h);
+ ctx.strokeStyle='#e1eddd';ctx.lineWidth=1;for(let gx=30;gx<w;gx+=45){ctx.beginPath();ctx.moveTo(gx,22);ctx.lineTo(gx,h-25);ctx.stroke();}
+ ctx.fillStyle='#6b866f';ctx.font='700 16px Inter,system-ui';ctx.fillText('SPRING–MASS SYSTEM',28,32);
+ rounded(ctx,wall-13,mid-115,16,230,4,'#98b99c','#719b79');ctx.strokeStyle='#648c70';ctx.lineWidth=3;for(let yy=mid-105;yy<mid+110;yy+=14){ctx.beginPath();ctx.moveTo(wall-12,yy);ctx.lineTo(wall-27,yy+10);ctx.stroke();}
+ const turns=17,coilW=Math.max(24,coilEnd-coilStart);ctx.beginPath();ctx.moveTo(coilStart,mid);for(let i=0;i<=turns*2;i++){const xx=coilStart+coilW*i/(turns*2),yy=mid+(i===0||i===turns*2?0:(i%2?-23:23));ctx.lineTo(xx,yy);}ctx.strokeStyle='#468f65';ctx.lineWidth=5;ctx.lineJoin='round';ctx.stroke();
+ ctx.strokeStyle='#9ab69e';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(wall,mid+65);ctx.lineTo(845,mid+65);ctx.stroke();ctx.setLineDash([7,6]);ctx.strokeStyle='#85b58d';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(eq,mid-112);ctx.lineTo(eq,mid+115);ctx.stroke();ctx.setLineDash([]);
+ const grad=ctx.createLinearGradient(px-massW/2,mid-massH/2,px+massW/2,mid+massH/2);grad.addColorStop(0,'#f6bd65');grad.addColorStop(1,'#db8730');rounded(ctx,px-massW/2,mid-massH/2,massW,massH,12,grad,'#bc772b');ctx.fillStyle='#593d1c';ctx.font='900 20px Inter,system-ui';ctx.textAlign='center';ctx.fillText(fmt(s.m,2)+' kg',px,mid+7);ctx.textAlign='left';
+ ctx.strokeStyle='#239a61';ctx.fillStyle='#258953';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(eq-s.A*390,mid+104);ctx.lineTo(eq+s.A*390,mid+104);ctx.stroke();[eq-s.A*390,eq+s.A*390].forEach(ax=>{ctx.beginPath();ctx.moveTo(ax,mid+97);ctx.lineTo(ax,mid+111);ctx.stroke();});ctx.font='700 14px Inter,system-ui';ctx.fillText('−A',eq-s.A*390-13,mid+130);ctx.fillText('+A',eq+s.A*390-13,mid+130);ctx.fillText('Equilibrium',eq-42,mid-125);
+ const arrowLen=Math.min(105,Math.abs(s.k*s.x)*65);if(Math.abs(s.x)>.002){const dir=s.x>0?-1:1,ax=px+dir*(massW/2+10);ctx.strokeStyle='#438bd0';ctx.fillStyle='#438bd0';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(ax,mid-55);ctx.lineTo(ax+dir*arrowLen,mid-55);ctx.stroke();ctx.beginPath();ctx.moveTo(ax+dir*arrowLen,mid-55);ctx.lineTo(ax+dir*(arrowLen-12),mid-63);ctx.lineTo(ax+dir*(arrowLen-12),mid-47);ctx.closePath();ctx.fill();ctx.font='700 13px Inter,system-ui';ctx.fillText('F = −kx',Math.min(ax,ax+dir*arrowLen),mid-72);}
+ ctx.textAlign='right';ctx.fillStyle='#607965';ctx.font='700 14px Inter,system-ui';ctx.fillText('t = '+fmt(state.springT,2)+' s',w-25,35);ctx.textAlign='left';
+ $('xRead').textContent=signed(s.x,3)+' m';$('vRead').textContent=signed(s.v,3)+' m/s';$('aRead').textContent=signed(s.a,3)+' m/s²';$('springStatus').textContent=state.springPlaying?'Oscillating':'Paused';
+}
+function drawPendulum(){
+ const {x:ctx,w,h}=context('pendulumCanvas'),p=pendulum(),q=p.w*state.pendulumT,theta=p.a*Math.cos(q),pivotX=450,pivotY=65,len=100+p.L*105,bobX=pivotX+len*Math.sin(theta),bobY=pivotY+len*Math.cos(theta),r=20;
+ ctx.clearRect(0,0,w,h);ctx.fillStyle='#6c846f';ctx.font='700 16px Inter,system-ui';ctx.fillText('SIMPLE PENDULUM',28,30);
+ ctx.strokeStyle='#e0ecdd';ctx.lineWidth=1;for(let xx=30;xx<w;xx+=45){ctx.beginPath();ctx.moveTo(xx,45);ctx.lineTo(xx,h-15);ctx.stroke();}
+ rounded(ctx,pivotX-83,38,166,18,7,'#91b19a','#779e81');for(let xx=pivotX-70;xx<pivotX+75;xx+=18){ctx.strokeStyle='#6f9879';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(xx,55);ctx.lineTo(xx-9,65);ctx.stroke();}
+ ctx.setLineDash([7,6]);ctx.strokeStyle='#91b999';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(pivotX,pivotY);ctx.lineTo(pivotX,pivotY+len+18);ctx.stroke();ctx.setLineDash([]);
+ ctx.beginPath();ctx.arc(pivotX,pivotY,65,Math.PI/2,Math.PI/2-theta,true);ctx.strokeStyle='#df9b39';ctx.lineWidth=3;ctx.stroke();
+ ctx.beginPath();ctx.moveTo(pivotX,pivotY);ctx.lineTo(bobX,bobY);ctx.strokeStyle='#647e69';ctx.lineWidth=4;ctx.stroke();ctx.beginPath();ctx.arc(pivotX,pivotY,6,0,TAU);ctx.fillStyle='#4f7258';ctx.fill();
+ const grad=ctx.createRadialGradient(bobX-7,bobY-8,2,bobX,bobY,r);grad.addColorStop(0,'#ffd88e');grad.addColorStop(1,'#d88a2d');ctx.beginPath();ctx.arc(bobX,bobY,r,0,TAU);ctx.fillStyle=grad;ctx.fill();ctx.strokeStyle='#b97729';ctx.lineWidth=2;ctx.stroke();
+ ctx.fillStyle='#466b50';ctx.font='700 13px Inter,system-ui';ctx.fillText('L = '+fmt(p.L,2)+' m',pivotX+12,pivotY+len*.55);ctx.fillText('θ',pivotX+53,pivotY+60);ctx.fillText('Equilibrium',pivotX+12,pivotY+len+5);
+ ctx.fillStyle='#6c846f';ctx.textAlign='right';ctx.font='700 14px Inter,system-ui';ctx.fillText('t = '+fmt(state.pendulumT,2)+' s',w-25,30);ctx.textAlign='left';
+ const thetaV=-p.a*p.w*Math.sin(q);$('thetaRead').textContent=signed(theta*180/Math.PI,1)+'°';$('thetaVRead').textContent=signed(thetaV,3)+' rad/s';$('pendulumPeriodRead').textContent=fmt(p.T,3)+' s';$('pendulumFrequency').textContent=fmt(p.f,3)+' Hz';$('pendulumOmega').textContent=fmt(p.w,3)+' rad/s';$('pendulumStatus').textContent=state.pendulumPlaying?'Swinging':'Paused';
+}
+function drawPhase(){
+ const {x:ctx,w,h}=context('phaseCanvas'),deg=state.phase,phi=deg*Math.PI/180,cx=300,cy=235,r=145,px=cx+r*Math.cos(phi),py=cy-r*Math.sin(phi),projX=cx+r*Math.cos(phi);
+ ctx.clearRect(0,0,w,h);ctx.fillStyle='#6b846e';ctx.font='700 16px Inter,system-ui';ctx.fillText('UNIFORM CIRCULAR MOTION → SHM PROJECTION',25,28);
+ ctx.beginPath();ctx.arc(cx,cy,r,0,TAU);ctx.strokeStyle='#8eb998';ctx.lineWidth=3;ctx.stroke();ctx.strokeStyle='#c4d9c0';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx-r-25,cy);ctx.lineTo(cx+r+50,cy);ctx.moveTo(cx,cy-r-25);ctx.lineTo(cx,cy+r+25);ctx.stroke();
+ ctx.setLineDash([6,5]);ctx.strokeStyle='#9bbb9e';ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(projX,cy);ctx.stroke();ctx.setLineDash([]);
+ ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(px,py);ctx.strokeStyle='#468bd2';ctx.lineWidth=4;ctx.stroke();ctx.beginPath();ctx.arc(px,py,11,0,TAU);ctx.fillStyle='#468bd2';ctx.fill();
+ ctx.beginPath();ctx.arc(projX,cy,10,0,TAU);ctx.fillStyle='#2d9c61';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();
+ ctx.beginPath();ctx.arc(cx,cy,5,0,TAU);ctx.fillStyle='#47634c';ctx.fill();
+ ctx.strokeStyle='#df9b39';ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cy,48,0,-phi,phi<0);ctx.stroke();
+ ctx.fillStyle='#385e43';ctx.font='700 13px Inter,system-ui';ctx.fillText('Circular motion',cx-57,cy-r-25);ctx.fillText('Projection x = A cos φ',cx+r+18,cy+5);ctx.fillText('Mean position',cx-48,cy+r+34);ctx.fillText('x = '+signed(Math.cos(phi),2)+' A',cx-75,cy+r+57);
+ const bx=90,by=390,bw=720;ctx.strokeStyle='#bed6bb';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(bx,by);ctx.lineTo(bx+bw,by);ctx.stroke();ctx.strokeStyle='#d99a3e';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(bx+bw/2,by-18);ctx.lineTo(bx+bw/2,by+18);ctx.stroke();ctx.fillStyle='#6b846e';ctx.font='12px Inter,system-ui';ctx.fillText('−A',bx-7,by+37);ctx.fillText('0',bx+bw/2-4,by+37);ctx.fillText('+A',bx+bw-10,by+37);
+ const marker=bx+(Math.cos(phi)+1)/2*bw;ctx.beginPath();ctx.arc(marker,by,11,0,TAU);ctx.fillStyle='#2d9c61';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();
+ $('phaseText').textContent='Phase: '+deg+'°';$('phaseX').textContent=signed(Math.cos(phi),3);$('phaseV').textContent=signed(-Math.sin(phi),3);$('phaseA').textContent=signed(-Math.cos(phi),3);$('phasePosition').textContent=Math.abs(Math.cos(phi))>.94?'Extreme':Math.abs(Math.cos(phi))<.12?'Mean position':'Between';$('phaseOut').textContent=deg+'°';
+}
+function drawGraph(){
+ const {x:ctx,w,h}=context('graphCanvas');ctx.clearRect(0,0,w,h);const left=75,right=25,top=35,bottom=48,pw=w-left-right,ph=(h-top-bottom)/3;
+ const colors=['#239c62','#468bd2','#e99b35'],labels=['Displacement  x/A','Velocity  v/(ωA)','Acceleration  a/(ω²A)'],fn=[q=>Math.cos(q),q=>-Math.sin(q),q=>-Math.cos(q)],phi=state.phase*Math.PI/180;
+ for(let row=0;row<3;row++){
+  const y0=top+row*ph,mid=y0+ph/2,amp=ph*.34;ctx.fillStyle='#6b846e';ctx.font='700 13px Inter,system-ui';ctx.fillText(labels[row],left,y0+15);
+  ctx.strokeStyle='#d9e8d5';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(left,mid);ctx.lineTo(w-right,mid);ctx.stroke();
+  for(let j=0;j<=8;j++){const gx=left+pw*j/8;ctx.strokeStyle='rgba(126,157,128,.17)';ctx.beginPath();ctx.moveTo(gx,y0+20);ctx.lineTo(gx,y0+ph-7);ctx.stroke();}
+  ctx.beginPath();for(let i=0;i<=300;i++){const q=TAU*i/300,val=fn[row](q),gx=left+pw*i/300,gy=mid-amp*val;if(i===0)ctx.moveTo(gx,gy);else ctx.lineTo(gx,gy);}ctx.strokeStyle=colors[row];ctx.lineWidth=3;ctx.stroke();
+  const xx=left+pw*(phi%TAU)/TAU,yy=mid-amp*fn[row](phi);ctx.beginPath();ctx.arc(xx,yy,6,0,TAU);ctx.fillStyle=colors[row];ctx.fill();
+ }
+ ctx.fillStyle='#718675';ctx.font='11px Inter,system-ui';ctx.fillText('0',left-5,h-14);ctx.textAlign='right';ctx.fillText('One complete cycle → time',w-right,h-14);ctx.textAlign='left';
+}
+function drawEnergy(){
+ const {x:ctx,w,h}=context('energyCanvas'),s=springAt(state.springT),phase=state.energyPhase===null?s.q:state.energyPhase*Math.PI/180,sp=springParams(),x=sp.A*Math.cos(phase),v=-sp.A*sp.w*Math.sin(phase),K=.5*sp.m*v*v,U=.5*sp.k*x*x,E=.5*sp.k*sp.A*sp.A;
+ ctx.clearRect(0,0,w,h);ctx.fillStyle='#6d846f';ctx.font='700 15px Inter,system-ui';ctx.fillText('ENERGY DISTRIBUTION',25,27);
+ const bars=[{label:'Kinetic energy',val:K,color:'#468bd2'},{label:'Potential energy',val:U,color:'#e99b35'},{label:'Total energy',val:E,color:'#239c62'}],max=Math.max(E,1e-9),base=220,bw=155,gap=105,start=125;
+ bars.forEach((b,i)=>{const xx=start+i*(bw+gap),bh=Math.max(3,b.val/max*125);rounded(ctx,xx,base-125,bw,125,12,'#e8f2e5','#d1e3cd');rounded(ctx,xx,base-bh,bw,bh,10,b.color,null);ctx.fillStyle='#355c40';ctx.textAlign='center';ctx.font='800 14px Inter,system-ui';ctx.fillText(b.label,xx+bw/2,base+25);ctx.font='700 13px Inter,system-ui';ctx.fillText(fmt(b.val,4)+' J',xx+bw/2,base-bh-10);});ctx.textAlign='left';
+ const phaseDeg=((phase/TAU*360)%360+360)%360;$('kineticRead').textContent=fmt(K,4)+' J';$('potentialRead').textContent=fmt(U,4)+' J';$('totalRead').textContent=fmt(K+U,4)+' J';$('energyX').textContent=signed(x,3)+' m';$('energyV').textContent=signed(v,3)+' m/s';$('energyPhaseOut').textContent=Math.round(phaseDeg)+'°';if(state.energyPhase===null)$('energyPhase').value=Math.round(phaseDeg);
+}
+function updateSpringReadouts(){
+ const s=springParams();$('massOut').textContent=fmt(s.m,2)+' kg';$('stiffnessOut').textContent=fmt(s.k,0)+' N/m';$('amplitudeOut').textContent=fmt(s.A,2)+' m';$('topPeriod').textContent=fmt(s.T,3)+' s';$('topFrequency').textContent=fmt(s.f,3)+' Hz';$('topOmega').textContent=fmt(s.w,2)+' rad/s';$('topEnergy').textContent=fmt(s.E,3)+' J';$('omegaRead').textContent=fmt(s.w,3)+' rad/s';$('vmaxRead').textContent=fmt(s.vmax,3)+' m/s';$('amaxRead').textContent=fmt(s.amax,3)+' m/s²';$('forceRead').textContent=fmt(s.k*s.A,2)+' N';
+}
+function updatePendulumReadouts(){const p=pendulum();$('lengthOut').textContent=fmt(p.L,2)+' m';$('angleOut').textContent=Math.round(p.a*180/Math.PI)+'°';$('bobMassOut').textContent=fmt(p.m,2)+' kg';}
+function drawAll(){drawSpring();drawPendulum();drawPhase();drawGraph();drawEnergy();updateSpringReadouts();updatePendulumReadouts();}
+
+// Spring controls.
+['mass','stiffness','amplitude'].forEach(id=>$(id).addEventListener('input',()=>{state.springT=0;state.energyPhase=null;updateSpringReadouts();drawAll();}));
+$('springPlay').addEventListener('click',()=>{state.springPlaying=!state.springPlaying;$('springPlay').textContent=state.springPlaying?'Ⅱ Pause':'▶ Resume';});
+$('springReset').addEventListener('click',()=>{state.springT=0;state.energyPhase=null;state.springPlaying=true;$('springPlay').textContent='Ⅱ Pause';$('energyPhase').value=0;drawAll();});
+$('springStep').addEventListener('click',()=>{state.springT+=.05;state.energyPhase=null;drawAll();});
+
+// Pendulum controls.
+['length','angle','bobMass','planet'].forEach(id=>$(id).addEventListener('input',()=>{state.pendulumT=0;updatePendulumReadouts();drawPendulum();}));
+$('pendulumPlay').addEventListener('click',()=>{state.pendulumPlaying=!state.pendulumPlaying;$('pendulumPlay').textContent=state.pendulumPlaying?'Ⅱ Pause':'▶ Resume';});
+$('pendulumReset').addEventListener('click',()=>{state.pendulumT=0;state.pendulumPlaying=true;$('pendulumPlay').textContent='Ⅱ Pause';drawPendulum();});
+
+// Phase visualizer and energy controls.
+$('phaseRange').addEventListener('input',()=>{state.phase=+$('phaseRange').value;drawPhase();drawGraph();});
+$('phasePlay').addEventListener('click',()=>{state.phasePlaying=!state.phasePlaying;$('phasePlay').textContent=state.phasePlaying?'Ⅱ Pause phase':'▶ Animate phase';});
+$('phaseHome').addEventListener('click',()=>{state.phase=0;$('phaseRange').value=0;state.phasePlaying=false;$('phasePlay').textContent='▶ Animate phase';drawPhase();drawGraph();});
+$('energyPhase').addEventListener('input',()=>{state.energyPhase=+$('energyPhase').value;drawEnergy();});
+$('energyCurrent').addEventListener('click',()=>{state.energyPhase=null;drawEnergy();});
+$('energyExtremes').addEventListener('click',()=>{state.energyPhase=0;$('energyPhase').value=0;drawEnergy();});
+$('energyMean').addEventListener('click',()=>{state.energyPhase=90;$('energyPhase').value=90;drawEnergy();});
+
+// Lab missions.
+document.querySelectorAll('[data-mission]').forEach(btn=>btn.addEventListener('click',()=>{
+ const id=btn.dataset.mission;if(state.missions.has(id))state.missions.delete(id);else state.missions.add(id);
+ const done=state.missions.has(id);$('mission'+id).classList.toggle('done',done);btn.textContent=done?'✓ Completed':'Mark complete';
+ const n=state.missions.size;$('missionCount').textContent=n+' / 3 COMPLETE';$('missionProgress').style.width=(n/3*100)+'%';$('missionHint').textContent=n===3?'All three investigations completed. Excellent work!':n+' of 3 missions completed.';
+}));
+
+// Animation clock.
+function frame(ts){
+ if(!state.last)state.last=ts;const dt=Math.min(.04,(ts-state.last)/1000);state.last=ts;
+ if(state.springPlaying)state.springT+=dt;
+ if(state.pendulumPlaying)state.pendulumT+=dt;
+ if(state.phasePlaying){state.phase=(state.phase+dt*55)%360;$('phaseRange').value=Math.round(state.phase);}
+ drawSpring();drawPendulum();drawPhase();drawGraph();drawEnergy();requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+// Export observations as CSV.
+$('exportBtn').addEventListener('click',()=>{
+ const s=springParams(),p=pendulum(),at=springAt(state.springT);
+ const rows=[['Oscillations Lab Data','Value','Unit'],['Spring mass',s.m,'kg'],['Spring constant',s.k,'N/m'],['Spring amplitude',s.A,'m'],['Spring time period',s.T,'s'],['Spring frequency',s.f,'Hz'],['Spring angular frequency',s.w,'rad/s'],['Spring displacement',at.x,'m'],['Spring velocity',at.v,'m/s'],['Spring acceleration',at.a,'m/s2'],['Spring total energy',s.E,'J'],['Pendulum length',p.L,'m'],['Pendulum gravity',p.g,'m/s2'],['Pendulum initial angle',p.a*180/Math.PI,'degree'],['Pendulum time period',p.T,'s'],['Missions completed',state.missions.size,'of 3']];
+ const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='oscillations-lab-data.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+});
+
+// Reset all experiment stations.
+$('resetAll').addEventListener('click',()=>{
+ Object.assign(state,{springT:0,springPlaying:true,pendulumT:0,pendulumPlaying:true,phase:0,phasePlaying:false,energyPhase:null});
+ $('mass').value=.2;$('stiffness').value=10;$('amplitude').value=.1;$('length').value=1;$('angle').value=15;$('bobMass').value=.5;$('planet').value='9.81';$('phaseRange').value=0;$('energyPhase').value=0;
+ $('springPlay').textContent='Ⅱ Pause';$('pendulumPlay').textContent='Ⅱ Pause';$('phasePlay').textContent='▶ Animate phase';
+ state.missions.clear();document.querySelectorAll('[data-mission]').forEach(b=>{b.textContent='Mark complete';$('mission'+b.dataset.mission).classList.remove('done');});
+ $('missionCount').textContent='0 / 3 COMPLETE';$('missionProgress').style.width='0%';$('missionHint').textContent='Your completed missions will appear here.';drawAll();
+});
+
+// Initial render.
+drawAll();
+})();
+</script>
+</body>
+</html>
