@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#081426">
+<meta name="theme-color" content="#edf7e9">
 <title>Kinetic Theory | Virtual Science Lab</title>
 <script id="experiment-metadata" type="application/json">
 {"id":"class-11-kinetic-theory","title":"Kinetic Theory","class":"11","chapter":"Kinetic Theory","chapterNumber":12,"description":"Explore molecular motion, gas pressure and the ideal gas equation, Maxwell speed distribution, equipartition of energy and mean free path through interactive simulations."}
@@ -71,6 +71,33 @@ select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;
 .hidden{display:none!important}.accent{color:var(--cyan)}.muted{color:var(--muted)}.small{font-size:.76rem;color:#8fa8c3}
 @media(max-width:860px){.hero{grid-template-columns:1fr}.hero-art{min-height:125px}.layout{grid-template-columns:1fr}.quick-stats{grid-template-columns:repeat(2,1fr)}.mission-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.shell{padding:16px 12px 38px}.topline{align-items:flex-start}.top-tag{font-size:.68rem}.hero{margin-top:2px}.hero p{font-size:.9rem}.tabs{top:4px;display:grid;grid-template-columns:1fr 1fr}.tab{padding:10px 7px;font-size:.78rem}.card{padding:13px;border-radius:16px}.panel-head{margin-top:16px}.readout-grid{grid-template-columns:repeat(3,1fr)}.readout{padding:8px}.readout strong{font-size:.9rem}.two-col{grid-template-columns:1fr 1fr}.mission-grid{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column}#chamberCanvas{min-height:215px}}
+/* PhET-inspired light green laboratory theme */
+:root{--bg:#edf7e9;--panel:#ffffff;--panel2:#f6fbf3;--line:#cfe2ca;--text:#1f3a2b;--muted:#627968;--cyan:#249b62;--blue:#4288d3;--orange:#e99a32;--green:#39a66e;--red:#d85b63;--shadow:0 12px 32px rgba(44,91,53,.10);--radius:18px}
+body{background:radial-gradient(circle at 8% 0%,#d9f0d5 0,transparent 34%),radial-gradient(circle at 92% 12%,#e3f3dc 0,transparent 29%),var(--bg);color:var(--text)}
+.brand{color:#466451}.brand-mark{background:linear-gradient(145deg,#8bd59b,#48b878);color:#12351f;box-shadow:0 5px 18px #55b97835}
+.top-tag,.chip{border:1px solid #c5dfc6;background:#f5fbf2;color:#45664e}
+.eyebrow{color:#29965b}.gradient{background:linear-gradient(90deg,#244d32 8%,#26985c 58%,#68ad62);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#607968}.hero-art{border:1px solid #c8dfc7;background:linear-gradient(145deg,#f8fff5,#e2f2df);box-shadow:var(--shadow)}
+.hero-art:before,.hero-art:after{border-color:#64b77b66}.hero-art:after{border-color:#80b8d344}.atom{background:#39b879;box-shadow:0 0 18px #39b87988}.atom.a2{background:#f0a23b;box-shadow:0 0 18px #f0a23b88}.atom.a3{background:#5799dc;box-shadow:0 0 18px #5799dc88}
+.stat{background:#fff;border:1px solid #d5e7d1;box-shadow:0 4px 13px rgba(45,91,54,.05)}.stat small{color:#708778}.stat strong{color:#244b32}
+.tabs{border:1px solid #d3e5d0;background:#ffffffed;box-shadow:0 7px 22px rgba(46,88,54,.08);backdrop-filter:blur(12px)}
+.tab{color:#617968}.tab:hover{background:#edf7e9;color:#234a31}.tab.active{background:linear-gradient(135deg,#a8e3b2,#d0edb8);color:#1c542f;box-shadow:inset 0 0 0 1px #8bc999,0 4px 10px #68b77b22}
+.panel-head p{color:#687e6e}.card{background:#fff;border:1px solid #d5e6d1;box-shadow:0 8px 24px rgba(49,91,52,.075)}.card-sub{color:#718776}
+.sim-wrap{border:1px solid #c9dfc6;background:radial-gradient(ellipse at 50% 38%,#f8fff4,#e8f4e4 78%)}
+.sim-overlay span{background:#f7fff0e8;border:1px solid #c6ddc3;color:#355b3e;box-shadow:0 2px 7px #315d3010}
+.sim-footer{color:#6c826f}.control label{color:#345841}.control output{color:#218d57}input[type=range]{accent-color:#39a96b}
+select{border:1px solid #c7ddc5;background:#fbfff9;color:#244a32}.btn{border:1px solid #c4dcc2;background:#f0f8ed;color:#315b3b}.btn:hover{border-color:#6eb783}.btn.primary{background:linear-gradient(135deg,#8bd79a,#b9e6a2);color:#19482a;border:1px solid #83c990}.btn.ghost{background:transparent}
+.switch-row{color:#526d59}.switch{background:#c8d9c7}.switch:before{background:#fff}.switch:checked{background:#41ad70}
+.readout{background:#f5faf2;border:1px solid #d8e8d4}.readout small{color:#6d826f}.readout strong{color:#244b32}
+.formula{border:1px solid #c6dfc4;background:#eff8eb;color:#235b38}.formula small{color:#68836d}
+.note{border-left:3px solid #42a96c;background:#edf8eb;color:#4a6b51}.legend{color:#687f6e}
+.graph-box{border:1px solid #c9dfc6;background:#f7fcf4}.segment{background:#f1f8ee;border:1px solid #d1e4cb}.segment button{color:#66806a}.segment button.active{background:#d9efd5;color:#275638;box-shadow:inset 0 0 0 1px #a7d4a4}
+.mini-stat{background:#f5faf2;border:1px solid #d7e7d3}.mini-stat span{color:#718573}.mini-stat strong{color:#244b32}
+.callout{border:1px solid #ead9a8;background:linear-gradient(130deg,#fff8df,#f9f3dc);color:#705b2b}
+.mission{border:1px solid #d2e5ce;background:#f8fcf6}.mission p{color:#718675}.mission.done{border-color:#7fc79a;background:#edfaef}.mission.done .btn{border-color:#70bd8d;color:#277046}.progress{background:#dcebd8}.progress span{background:linear-gradient(90deg,#57bb7d,#a4d97a)}
+.footer{color:#748b77;border-top:1px solid #d4e5d0}.small{color:#718675}.accent{color:#218d57}.muted{color:#627968}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
@@ -273,16 +300,16 @@ select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;
     const size=setCanvasSize(chamber,cctx),w=size.w,h=size.h,b=currentBounds();chamberBounds=b;
     cctx.clearRect(0,0,w,h);
     // Soft grid and chamber glow.
-    cctx.save();cctx.strokeStyle='rgba(88,150,190,.10)';cctx.lineWidth=1;
+    cctx.save();cctx.strokeStyle='rgba(83,130,86,.12)';cctx.lineWidth=1;
     for(let x=20;x<w;x+=35){cctx.beginPath();cctx.moveTo(x,0);cctx.lineTo(x,h);cctx.stroke();}
     for(let y=15;y<h;y+=35){cctx.beginPath();cctx.moveTo(0,y);cctx.lineTo(w,y);cctx.stroke();}
     cctx.restore();
     // Chamber floor, ceiling and fixed wall.
-    cctx.lineWidth=7;cctx.lineCap='round';cctx.strokeStyle='#7195b4';cctx.shadowColor='#48d4e9';cctx.shadowBlur=11;
+    cctx.lineWidth=7;cctx.lineCap='round';cctx.strokeStyle='#7da58c';cctx.shadowColor='#65bd83';cctx.shadowBlur=11;
     cctx.beginPath();cctx.moveTo(b.x,b.y);cctx.lineTo(b.x+b.w,b.y);cctx.moveTo(b.x,b.y+b.h);cctx.lineTo(b.x+b.w,b.y+b.h);cctx.moveTo(b.x,b.y);cctx.lineTo(b.x,b.y+b.h);cctx.stroke();cctx.shadowBlur=0;
     // Sliding piston with piston head and rod.
-    const px=b.x+b.w;cctx.fillStyle='#45647f';cctx.fillRect(px-7,b.y-9,15,b.h+18);cctx.fillStyle='#9ab8d0';cctx.fillRect(px-4,b.y-5,8,b.h+10);cctx.fillStyle='#385571';cctx.fillRect(px+8,h/2-9,Math.max(0,w-px-8),18);cctx.fillStyle='#6b91b2';cctx.fillRect(px+8,h/2-5,Math.max(0,w-px-8),10);
-    cctx.fillStyle='#a8c6df';cctx.font='700 12px Inter,system-ui';cctx.fillText('PISTON',Math.min(w-70,px+14),h/2-16);
+    const px=b.x+b.w;cctx.fillStyle='#8baa91';cctx.fillRect(px-7,b.y-9,15,b.h+18);cctx.fillStyle='#d4e6d2';cctx.fillRect(px-4,b.y-5,8,b.h+10);cctx.fillStyle='#71917a';cctx.fillRect(px+8,h/2-9,Math.max(0,w-px-8),18);cctx.fillStyle='#a4c9ab';cctx.fillRect(px+8,h/2-5,Math.max(0,w-px-8),10);
+    cctx.fillStyle='#365e48';cctx.font='700 12px Inter,system-ui';cctx.fillText('PISTON',Math.min(w-70,px+14),h/2-16);
     // Pressure impacts are illustrated as small wall flashes.
     const scale=tempInCanvas(state.T);
     particles.forEach((p,i)=>{
@@ -292,7 +319,7 @@ select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;
       const color=i%7===0?'#ffbd72':i%5===0?'#91aaff':'#5be1eb';
       cctx.beginPath();cctx.fillStyle=color;cctx.shadowColor=color;cctx.shadowBlur=7+5*t;cctx.arc(p.x,p.y,p.r,0,Math.PI*2);cctx.fill();cctx.shadowBlur=0;
     });
-    cctx.fillStyle='#84a4c2';cctx.font='11px Inter,system-ui';cctx.fillText('FIXED WALL',b.x-3,b.y-20);cctx.fillText('V = '+fmt(state.V,1)+' L',b.x+b.w-70,b.y+b.h+27);
+    cctx.fillStyle='#55765f';cctx.font='11px Inter,system-ui';cctx.fillText('FIXED WALL',b.x-3,b.y-20);cctx.fillText('V = '+fmt(state.V,1)+' L',b.x+b.w-70,b.y+b.h+27);
   }
   function physicsStep(dt){
     const b=currentBounds(),left=b.x+5,right=b.x+b.w-5,top=b.y+5,bottom=b.y+b.h-5;
@@ -339,7 +366,7 @@ select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;
     else if(state.law==='charles'){yMin=100;yMax=1000;xLabel='Temperature (K)';yLabel='Volume (L)';xMin=100;xMax=900;curve=Array.from({length:80},(_,i)=>{const x=xMin+(xMax-xMin)*i/79;return [x,5*x/300];});}
     else{yMin=0;yMax=12;xLabel='Temperature (K)';yLabel='Pressure (kPa)';xMin=100;xMax=900;curve=Array.from({length:80},(_,i)=>{const x=xMin+(xMax-xMin)*i/79;return [x,p0*x/300];});}
     const X=x=>pad.l+(x-xMin)/(xMax-xMin)*plotW,Y=y=>pad.t+plotH-(y-yMin)/(yMax-yMin)*plotH;
-    ctx.strokeStyle='rgba(137,174,207,.16)';ctx.lineWidth=1;ctx.fillStyle='#8da8c5';ctx.font='11px Inter,system-ui';ctx.textAlign='center';
+    ctx.strokeStyle='rgba(100,135,104,.20)';ctx.lineWidth=1;ctx.fillStyle='#5e7464';ctx.font='11px Inter,system-ui';ctx.textAlign='center';
     for(let i=0;i<=5;i++){const gx=pad.l+plotW*i/5;ctx.beginPath();ctx.moveTo(gx,pad.t);ctx.lineTo(gx,pad.t+plotH);ctx.stroke();}
     for(let i=0;i<=4;i++){const gy=pad.t+plotH*i/4;ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+plotW,gy);ctx.stroke();ctx.textAlign='right';ctx.fillText(fmt(yMin+(yMax-yMin)*(4-i)/4,1),pad.l-9,gy+4);}
     ctx.textAlign='center';ctx.fillText(xLabel,pad.l+plotW/2,h-10);ctx.save();ctx.translate(15,pad.t+plotH/2);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();
@@ -373,7 +400,7 @@ select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;
   function drawDistribution(){
     const canvas=$('distCanvas');if(!canvas)return;const ctx=canvas.getContext('2d'),{w,h}=setCanvasSize(canvas,ctx),pad={l:56,r:18,t:22,b:45};ctx.clearRect(0,0,w,h);const pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
     const X=x=>pad.l+x/4.2*pw,Y=y=>pad.t+ph-y/0.9*ph;
-    ctx.strokeStyle='rgba(137,174,207,.16)';ctx.lineWidth=1;ctx.fillStyle='#8fa8c3';ctx.font='11px Inter,system-ui';
+    ctx.strokeStyle='rgba(100,135,104,.20)';ctx.lineWidth=1;ctx.fillStyle='#5e7464';ctx.font='11px Inter,system-ui';
     for(let i=0;i<=6;i++){const gx=pad.l+pw*i/6;ctx.beginPath();ctx.moveTo(gx,pad.t);ctx.lineTo(gx,pad.t+ph);ctx.stroke();ctx.textAlign='center';ctx.fillText(fmt(i*.7,1),gx,h-19);}
     for(let i=0;i<=4;i++){const val=.9*i/4,gy=Y(val);ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+pw,gy);ctx.stroke();ctx.textAlign='right';ctx.fillText(fmt(val,2),pad.l-8,gy+4);}
     ctx.textAlign='center';ctx.fillText('Speed / most probable speed  (v / vₘₚ)',pad.l+pw/2,h-3);ctx.save();ctx.translate(13,pad.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Relative probability density',0,0);ctx.restore();
@@ -382,7 +409,7 @@ select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;
     // Gaussian velocity components create a Maxwell speed sample.
     for(let i=0;i<sampleCount;i++){let z1,z2,z3;const rand=()=>Math.sqrt(-2*Math.log(Math.max(1e-9,Math.random())))*Math.cos(2*Math.PI*Math.random());z1=rand();z2=rand();z3=rand();const speed=Math.sqrt(z1*z1+z2*z2+z3*z3)*Math.sqrt(R*T/M);const x=speed/mostProbable(T,M);const b=Math.floor(x/.2);if(b>=0&&b<bins)counts[b]++;}
     const maxC=Math.max(...counts,1);counts.forEach((n,i)=>{const x=i*.2+.1,barH=n/maxC*.22;ctx.fillStyle='rgba(255,180,91,.55)';ctx.fillRect(X(x-.075),Y(barH),Math.max(2,pw*.2/4.2*.68),Y(0)-Y(barH));});
-    ctx.setLineDash([5,5]);ctx.strokeStyle='#ffb45b';ctx.beginPath();ctx.moveTo(X(1),pad.t);ctx.lineTo(X(1),pad.t+ph);ctx.stroke();ctx.setLineDash([]);
+    const peakX=mostProbable(T,M);ctx.setLineDash([5,5]);ctx.strokeStyle='#ffb45b';ctx.beginPath();ctx.moveTo(X(1),pad.t);ctx.lineTo(X(1),pad.t+ph);ctx.stroke();ctx.setLineDash([]);
     $('distTempOut').textContent=T+' K';$('vmp').textContent=Math.round(mostProbable(T,M))+' m/s';$('vrms').textContent=Math.round(rms(T,M))+' m/s';$('vmean').textContent=Math.round(meanSpeed(T,M))+' m/s';$('molarMass').textContent=(M*1000)+' g/mol';
   }
   $('gasSelect').addEventListener('change',e=>{state.gas=e.target.value;drawDistribution();});$('distTemp').addEventListener('input',drawDistribution);$('syncTemp').addEventListener('click',()=>{$('distTemp').value=state.T;drawDistribution();});
@@ -393,7 +420,7 @@ select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;
     const type=$('moleculeType').value,f=type==='mono'?3:type==='dia'?5:7,T=+$('energyTemp').value,perMode=.5*R*T,total=f*perMode;
     $('energyTempOut').textContent=T+' K';$('dof').textContent=f;$('uMole').textContent=fmt(total/1000,2)+' kJ/mol';$('cv').textContent=fmt(f/2*R,2)+' J/mol·K';$('gamma').textContent=fmt((f+2)/f,2);
     $('equipFormula').innerHTML='U = (f / 2) n R T<small>For one mole: Cᵥ,m = (f / 2) R · Cₚ,m = Cᵥ,m + R</small>';
-    const pad=26,gap=8,bw=(w-2*pad-(f-1)*gap)/f,maxBar=h-80;ctx.fillStyle='#8fa8c3';ctx.font='11px Inter,system-ui';ctx.textAlign='center';ctx.fillText('Average energy per active degree of freedom = ½ RT per mole',w/2,17);
+    const pad=26,gap=8,bw=(w-2*pad-(f-1)*gap)/f,base=h-37,maxBar=h-80;ctx.fillStyle='#5e7464';ctx.font='11px Inter,system-ui';ctx.textAlign='center';ctx.fillText('Average energy per active degree of freedom = ½ RT per mole',w/2,17);
     for(let i=0;i<f;i++){const x=pad+i*(bw+gap),bh=maxBar*.78;const grad=ctx.createLinearGradient(0,h-30-bh,0,h-30);grad.addColorStop(0,'#58dce8');grad.addColorStop(1,'#3975a9');ctx.fillStyle=grad;ctx.beginPath();ctx.rect(x,h-30-bh,bw,bh);ctx.fill();ctx.fillStyle='#d8eafa';ctx.fillText('½ RT',x+bw/2,h-12);}
   }
   function calcMfp(){const T=+$('mfpTemp').value,p=+$('pressureRange').value*1000,d=+$('diameterRange').value*1e-10,lambda=kB*T/(Math.sqrt(2)*Math.PI*d*d*p);$('pressureOut').textContent=$('pressureRange').value+' kPa';$('diameterOut').textContent=fmt(+$('diameterRange').value,1)+' Å';$('mfpTempOut').textContent=T+' K';$('mfpValue').textContent=fmt(lambda*1e9,1)+' nm';}
