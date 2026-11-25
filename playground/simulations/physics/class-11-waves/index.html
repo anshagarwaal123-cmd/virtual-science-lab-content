@@ -10,7 +10,7 @@
 {"id":"class-11-waves","title":"Waves","class":"11","chapter":"Waves","chapterNumber":14,"description":"Explore transverse and longitudinal travelling waves, wave speed, progressive wave equations, superposition, reflection, standing waves on strings and organ pipes, harmonics, sound tones and beats using interactive simulations."}
 </script>
 <style>
-:root{--bg:#edf7e9;--panel:#fff;--soft:#f6fbf3;--line:#d2e5ce;--ink:#203e2b;--muted:#687f6d;--green:#299b60;--green2:#a9e2ae;--blue:#428bd2;--orange:#e99b35;--purple:#8b70c9;--red:#dc6c6c;--shadow:0 9px 28px rgba(44,91,53,.09);--radius:18px}
+:root{--bg:#edf7e9;--panel:#fff;--soft:#f6fbf3;--line:#d2e5ce;--ink:#203e2b;--muted:#687f6d;--green:#299b60;--blue:#428bd2;--orange:#e99b35;--purple:#8b70c9;--shadow:0 9px 28px rgba(44,91,53,.09);--radius:18px}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:radial-gradient(circle at 8% 0%,#d9efd4 0,transparent 34%),radial-gradient(circle at 92% 8%,#e5f3df 0,transparent 30%),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
@@ -77,9 +77,9 @@ canvas{display:block;width:100%;height:auto}
 .formula small{display:block;color:#6b846e;font:.7rem Inter,system-ui;margin-top:4px}
 .note{border-left:3px solid #49ac71;background:#eff8ec;padding:9px 11px;border-radius:0 10px 10px 0;color:#526f56;font-size:.79rem;margin-top:11px}
 .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mini{border:1px solid #d8e8d4;background:#f6fbf3;border-radius:12px;padding:10px}
+.mini{border:1px solid #d8e8d4;background:#f6fbf3;border-radius:12px;padding:10px;min-width:0}
 .mini span{display:block;color:#718675;font-size:.7rem}
-.mini strong{display:block;color:#254d33;font-size:1rem;margin-top:3px;font-variant-numeric:tabular-nums}
+.mini strong{display:block;color:#254d33;font-size:1rem;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .legend{display:flex;gap:13px;flex-wrap:wrap;color:#718574;font-size:.72rem;margin-top:9px}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
 .audio-status{border:1px solid #c8dfed;border-radius:11px;background:#f0f8ff;padding:9px 11px;color:#42647c;font-size:.77rem}
@@ -113,10 +113,7 @@ canvas{display:block;width:100%;height:auto}
     </div>
     <div class="hero-art" aria-hidden="true">
       <div class="wave-art">
-        <svg viewBox="0 0 300 100" fill="none">
-          <path d="M0 50 C25 0 50 0 75 50 S125 100 150 50 S200 0 225 50 S275 100 300 50" stroke="#299b60" stroke-width="5" stroke-linecap="round"/>
-          <path d="M0 50 H300" stroke="#a4cba4" stroke-width="1.5" stroke-dasharray="5 6"/>
-        </svg>
+        <svg viewBox="0 0 300 100" fill="none"><path d="M0 50 C25 0 50 0 75 50 S125 100 150 50 S200 0 225 50 S275 100 300 50" stroke="#299b60" stroke-width="5" stroke-linecap="round"/><path d="M0 50 H300" stroke="#a4cba4" stroke-width="1.5" stroke-dasharray="5 6"/></svg>
         <span class="wave-orb"></span>
       </div>
     </div>
@@ -137,12 +134,8 @@ canvas{display:block;width:100%;height:auto}
   </nav>
 
   <main>
-    <!-- STATION 1: TRAVELLING WAVES -->
     <section class="panel active" id="panel-travelling">
-      <div class="head">
-        <div><h2>Travelling wave explorer</h2><p>Compare transverse and longitudinal waves and change their amplitude, wavelength and frequency.</p></div>
-        <span class="tag">WAVE MOTION</span>
-      </div>
+      <div class="head"><div><h2>Travelling wave explorer</h2><p>Compare transverse and longitudinal waves and change their amplitude, wavelength and frequency.</p></div><span class="tag">WAVE MOTION</span></div>
       <div class="layout">
         <div class="card">
           <div class="stage"><canvas id="waveCanvas" width="900" height="430" aria-label="Animated transverse or longitudinal travelling wave"></canvas></div>
@@ -154,208 +147,93 @@ canvas{display:block;width:100%;height:auto}
           </div>
           <div class="note">A wave transfers energy from one place to another. The particles of the medium oscillate around their equilibrium positions; they do not travel along with the wave.</div>
         </div>
-
         <aside class="card">
-          <h3>Wave controls</h3>
-          <p class="sub">Change the medium motion and wave properties.</p>
+          <h3>Wave controls</h3><p class="sub">Change the medium motion and wave properties.</p>
           <div class="controls">
-            <div class="control">
-              <label for="waveType">Wave type</label>
-              <select class="select" id="waveType">
-                <option value="transverse">Transverse wave</option>
-                <option value="longitudinal">Longitudinal wave</option>
-              </select>
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="waveAmplitude">Amplitude (A)</label><output id="waveAmplitudeOut">0.50 m</output></div>
-              <input class="range" id="waveAmplitude" type="range" min="0.1" max="1.5" step="0.1" value="0.5">
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="waveLambda">Wavelength (λ)</label><output id="waveLambdaOut">4.0 m</output></div>
-              <input class="range" id="waveLambda" type="range" min="1" max="8" step="0.1" value="4">
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="waveFrequency">Frequency (f)</label><output id="waveFrequencyOut">2.0 Hz</output></div>
-              <input class="range" id="waveFrequency" type="range" min="0.5" max="5" step="0.1" value="2">
-            </div>
-            <div class="buttons">
-              <button class="btn primary" id="wavePlay">Ⅱ Pause</button>
-              <button class="btn" id="waveReset">↺ Reset</button>
-              <button class="btn" id="waveStep">Step +0.1 s</button>
-            </div>
+            <div class="control"><label for="waveType">Wave type</label><select class="select" id="waveType"><option value="transverse">Transverse wave</option><option value="longitudinal">Longitudinal wave</option></select></div>
+            <div class="control"><div class="control-top"><label for="waveAmplitude">Amplitude (A)</label><output id="waveAmplitudeOut">0.50 m</output></div><input class="range" id="waveAmplitude" type="range" min="0.1" max="1.5" step="0.1" value="0.5"></div>
+            <div class="control"><div class="control-top"><label for="waveLambda">Wavelength (λ)</label><output id="waveLambdaOut">4.0 m</output></div><input class="range" id="waveLambda" type="range" min="1" max="8" step="0.1" value="4"></div>
+            <div class="control"><div class="control-top"><label for="waveFrequency">Frequency (f)</label><output id="waveFrequencyOut">2.0 Hz</output></div><input class="range" id="waveFrequency" type="range" min="0.5" max="5" step="0.1" value="2"></div>
+            <div class="buttons"><button class="btn primary" id="wavePlay">Ⅱ Pause</button><button class="btn" id="waveReset">↺ Reset time</button><button class="btn" id="waveStep">Step +0.1 s</button></div>
             <div class="formula">v = f λ <small>Wave speed = frequency × wavelength</small></div>
             <div class="formula">y(x,t) = A sin(kx − ωt) <small>Progressive wave travelling in the +x direction</small></div>
-            <div class="mini-grid">
-              <div class="mini"><span>Time period T</span><strong id="wavePeriodRead">0.50 s</strong></div>
-              <div class="mini"><span>Wave direction</span><strong>+x direction →</strong></div>
-            </div>
+            <div class="mini-grid"><div class="mini"><span>Time period T</span><strong id="wavePeriodRead">0.50 s</strong></div><div class="mini"><span>Wave direction</span><strong>+x direction →</strong></div></div>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- STATION 2: SUPERPOSITION AND REFLECTION -->
     <section class="panel" id="panel-superposition">
-      <div class="head">
-        <div><h2>Superposition &amp; reflection</h2><p>Combine an incident and reflected wave. See how boundary conditions change the result.</p></div>
-        <span class="tag">WAVE INTERFERENCE</span>
-      </div>
+      <div class="head"><div><h2>Superposition &amp; reflection</h2><p>Combine an incident and reflected wave. See how boundary conditions change the result.</p></div><span class="tag">WAVE INTERFERENCE</span></div>
       <div class="layout">
         <div class="card">
           <div class="stage"><canvas id="superCanvas" width="900" height="440" aria-label="Incident reflected and superposed waves"></canvas></div>
           <div class="stage-foot"><span>Green: incident · Blue: reflected · Orange: resultant</span><span id="superClock">t = 0.00 s</span></div>
-          <div class="legend">
-            <span><i class="dot" style="background:#299b60"></i>Incident wave</span>
-            <span><i class="dot" style="background:#468bd2"></i>Reflected wave</span>
-            <span><i class="dot" style="background:#e99b35"></i>Resultant wave</span>
-          </div>
+          <div class="legend"><span><i class="dot" style="background:#299b60"></i>Incident wave</span><span><i class="dot" style="background:#468bd2"></i>Reflected wave</span><span><i class="dot" style="background:#e99b35"></i>Resultant wave</span></div>
           <div class="note">The principle of superposition states that the resultant displacement at a point is the algebraic sum of the displacements produced by individual waves.</div>
         </div>
         <aside class="card">
-          <h3>Boundary controls</h3>
-          <p class="sub">Select the type of reflecting boundary.</p>
+          <h3>Boundary controls</h3><p class="sub">Select the type of reflecting boundary.</p>
           <div class="controls">
-            <div class="control">
-              <label for="boundaryType">End condition</label>
-              <select class="select" id="boundaryType">
-                <option value="fixed">Fixed end · phase reversal</option>
-                <option value="free">Free end · no phase reversal</option>
-              </select>
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="superAmplitude">Amplitude (A)</label><output id="superAmplitudeOut">0.50 m</output></div>
-              <input class="range" id="superAmplitude" type="range" min="0.1" max="1.2" step="0.1" value="0.5">
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="superLambda">Wavelength (λ)</label><output id="superLambdaOut">4.0 m</output></div>
-              <input class="range" id="superLambda" type="range" min="1" max="8" step="0.1" value="4">
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="superFrequency">Frequency (f)</label><output id="superFrequencyOut">1.0 Hz</output></div>
-              <input class="range" id="superFrequency" type="range" min="0.5" max="4" step="0.1" value="1">
-            </div>
-            <div class="buttons">
-              <button class="btn primary" id="superPlay">Ⅱ Pause</button>
-              <button class="btn" id="superReset">↺ Reset</button>
-            </div>
+            <div class="control"><label for="boundaryType">End condition</label><select class="select" id="boundaryType"><option value="fixed">Fixed end · phase reversal</option><option value="free">Free end · no phase reversal</option></select></div>
+            <div class="control"><div class="control-top"><label for="superAmplitude">Amplitude (A)</label><output id="superAmplitudeOut">0.50 m</output></div><input class="range" id="superAmplitude" type="range" min="0.1" max="1.2" step="0.1" value="0.5"></div>
+            <div class="control"><div class="control-top"><label for="superLambda">Wavelength (λ)</label><output id="superLambdaOut">4.0 m</output></div><input class="range" id="superLambda" type="range" min="1" max="8" step="0.1" value="4"></div>
+            <div class="control"><div class="control-top"><label for="superFrequency">Frequency (f)</label><output id="superFrequencyOut">1.0 Hz</output></div><input class="range" id="superFrequency" type="range" min="0.5" max="4" step="0.1" value="1"></div>
+            <div class="buttons"><button class="btn primary" id="superPlay">Ⅱ Pause</button><button class="btn" id="superReset">↺ Reset time</button></div>
             <div class="formula">y = y₁ + y₂ <small>Resultant displacement at any instant</small></div>
-            <div class="mini-grid">
-              <div class="mini"><span>Wave speed</span><strong id="superSpeedRead">4.00 m/s</strong></div>
-              <div class="mini"><span>Angular frequency</span><strong id="superOmegaRead">6.28 rad/s</strong></div>
-            </div>
+            <div class="mini-grid"><div class="mini"><span>Wave speed</span><strong id="superSpeedRead">4.00 m/s</strong></div><div class="mini"><span>Angular frequency</span><strong id="superOmegaRead">6.28 rad/s</strong></div></div>
             <div class="audio-status" id="boundaryExplanation">Fixed end: the reflected displacement is inverted at the boundary.</div>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- STATION 3: STANDING WAVES -->
     <section class="panel" id="panel-standing">
-      <div class="head">
-        <div><h2>Standing waves &amp; harmonics</h2><p>Explore normal modes in a stretched string and in open or closed organ pipes.</p></div>
-        <span class="tag">NODES &amp; ANTINODES</span>
-      </div>
+      <div class="head"><div><h2>Standing waves &amp; harmonics</h2><p>Explore normal modes in a stretched string and in open or closed organ pipes.</p></div><span class="tag">NODES &amp; ANTINODES</span></div>
       <div class="layout">
         <div class="card">
-          <div class="stage"><canvas id="standingCanvas" width="900" height="430" aria-label="Standing wave pattern showing nodes antinodes and harmonics"></canvas></div>
+          <div class="stage"><canvas id="standingCanvas" width="900" height="430" aria-label="Standing wave pattern showing nodes and antinodes"></canvas></div>
           <div class="stage-foot"><span id="standingCaption">String fixed at both ends</span><span id="standingClock">t = 0.00 s</span></div>
-          <div class="readouts">
-            <div class="readout"><small>Mode frequency</small><strong id="modeFrequencyRead">60.0 Hz</strong></div>
-            <div class="readout"><small>Wavelength</small><strong id="modeLambdaRead">2.00 m</strong></div>
-            <div class="readout"><small>Wave speed</small><strong id="modeSpeedRead">120 m/s</strong></div>
-          </div>
+          <div class="readouts"><div class="readout"><small>Mode frequency</small><strong id="modeFrequencyRead">60.0 Hz</strong></div><div class="readout"><small>Wavelength</small><strong id="modeLambdaRead">2.00 m</strong></div><div class="readout"><small>Wave speed</small><strong id="modeSpeedRead">120 m/s</strong></div></div>
           <div class="note">Nodes are points of zero displacement. Antinodes are points of maximum displacement. A standing wave forms from two waves of equal frequency and amplitude travelling in opposite directions.</div>
         </div>
         <aside class="card">
-          <h3>Choose the resonator</h3>
-          <p class="sub">Select a string or an organ pipe.</p>
+          <h3>Choose the resonator</h3><p class="sub">Select a string or an organ pipe.</p>
           <div class="controls">
-            <div class="control">
-              <label for="resonatorType">Resonator type</label>
-              <select class="select" id="resonatorType">
-                <option value="string">String · fixed at both ends</option>
-                <option value="open">Open organ pipe · both ends open</option>
-                <option value="closed">Closed organ pipe · one end closed</option>
-              </select>
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="resonatorLength">Length (L)</label><output id="resonatorLengthOut">1.00 m</output></div>
-              <input class="range" id="resonatorLength" type="range" min="0.5" max="2" step="0.05" value="1">
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="modeNumber">Mode number</label><output id="modeNumberOut">1</output></div>
-              <input class="range" id="modeNumber" type="range" min="1" max="5" step="1" value="1">
-            </div>
-            <div class="control" id="stringSpeedControl">
-              <div class="control-top"><label for="stringSpeed">Wave speed on string</label><output id="stringSpeedOut">120 m/s</output></div>
-              <input class="range" id="stringSpeed" type="range" min="50" max="300" step="5" value="120">
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="airTemperature">Air temperature</label><output id="airTemperatureOut">20 °C</output></div>
-              <input class="range" id="airTemperature" type="range" min="0" max="40" step="1" value="20">
-            </div>
-            <div class="buttons">
-              <button class="btn primary" id="standingPlay">Ⅱ Pause</button>
-              <button class="btn" id="standingReset">↺ Reset</button>
-              <button class="btn sound" id="playModeSound">♪ Hear this mode</button>
-            </div>
+            <div class="control"><label for="resonatorType">Resonator type</label><select class="select" id="resonatorType"><option value="string">String · fixed at both ends</option><option value="open">Open organ pipe · both ends open</option><option value="closed">Closed organ pipe · one end closed</option></select></div>
+            <div class="control"><div class="control-top"><label for="resonatorLength">Length (L)</label><output id="resonatorLengthOut">1.00 m</output></div><input class="range" id="resonatorLength" type="range" min="0.5" max="2" step="0.05" value="1"></div>
+            <div class="control"><div class="control-top"><label for="modeNumber">Mode number</label><output id="modeNumberOut">1</output></div><input class="range" id="modeNumber" type="range" min="1" max="5" step="1" value="1"></div>
+            <div class="control" id="stringSpeedControl"><div class="control-top"><label for="stringSpeed">Wave speed on string</label><output id="stringSpeedOut">120 m/s</output></div><input class="range" id="stringSpeed" type="range" min="50" max="300" step="5" value="120"></div>
+            <div class="control"><div class="control-top"><label for="airTemperature">Air temperature</label><output id="airTemperatureOut">20 °C</output></div><input class="range" id="airTemperature" type="range" min="0" max="40" step="1" value="20"></div>
+            <div class="buttons"><button class="btn primary" id="standingPlay">Ⅱ Pause</button><button class="btn" id="standingReset">↺ Reset time</button><button class="btn sound" id="playModeSound">♪ Hear this mode</button></div>
             <div class="formula" id="standingFormula">fₙ = nv / 2L <small>String fixed at both ends · n = 1, 2, 3 ...</small></div>
-            <div class="mini-grid">
-              <div class="mini"><span>Harmonic number</span><strong id="harmonicRead">1st</strong></div>
-              <div class="mini"><span>Air sound speed</span><strong id="airSpeedRead">343 m/s</strong></div>
-            </div>
+            <div class="mini-grid"><div class="mini"><span>Harmonic number</span><strong id="harmonicRead">1st</strong></div><div class="mini"><span>Air sound speed</span><strong id="airSpeedRead">343 m/s</strong></div><div class="mini"><span>Node count</span><strong id="nodeCountRead">2</strong></div><div class="mini"><span>Antinode count</span><strong id="antinodeCountRead">1</strong></div></div>
             <div class="audio-status" id="standingAudioStatus">Sound is optional. Press “Hear this mode” to listen.</div>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- STATION 4: SOUND AND BEATS -->
     <section class="panel" id="panel-sound">
-      <div class="head">
-        <div><h2>Sound laboratory &amp; beats</h2><p>Listen to pure tones, combine two close frequencies and observe the changing loudness envelope.</p></div>
-        <span class="tag">AUDIO EXPERIMENT</span>
-      </div>
+      <div class="head"><div><h2>Sound laboratory &amp; beats</h2><p>Listen to pure tones, combine two close frequencies and observe the changing loudness envelope.</p></div><span class="tag">AUDIO EXPERIMENT</span></div>
       <div class="layout">
         <div class="card">
           <div class="stage"><canvas id="soundCanvas" width="900" height="390" aria-label="Sound wave and beat envelope visualisation"></canvas></div>
           <div class="stage-foot"><span>Orange curve: combined sound signal</span><span id="soundGraphCaption">Two nearby frequencies</span></div>
-          <div class="readouts">
-            <div class="readout"><small>Frequency 1</small><strong id="soundF1Read">440 Hz</strong></div>
-            <div class="readout"><small>Frequency 2</small><strong id="soundF2Read">444 Hz</strong></div>
-            <div class="readout"><small>Beat frequency</small><strong id="beatFrequencyRead">4 Hz</strong></div>
-          </div>
+          <div class="readouts"><div class="readout"><small>Frequency 1</small><strong id="soundF1Read">440 Hz</strong></div><div class="readout"><small>Frequency 2</small><strong id="soundF2Read">444 Hz</strong></div><div class="readout"><small>Beat frequency</small><strong id="beatFrequencyRead">4 Hz</strong></div></div>
           <div class="note">Beats occur when two sound waves of slightly different frequencies superpose. The loudness rises and falls periodically. Beat frequency is |f₁ − f₂|.</div>
           <div class="audio-status" id="audioStatus" role="status">Audio is off. Press a sound button to begin. Keep your device volume low.</div>
         </div>
-
         <aside class="card">
-          <h3>Sound controls</h3>
-          <p class="sub">Generate an audible tone or listen to beats.</p>
+          <h3>Sound controls</h3><p class="sub">Generate an audible tone or listen to beats.</p>
           <div class="controls">
-            <div class="control">
-              <div class="control-top"><label for="soundFrequency1">Tone 1 frequency</label><output id="soundFrequency1Out">440 Hz</output></div>
-              <input class="range" id="soundFrequency1" type="range" min="200" max="800" step="1" value="440">
-            </div>
-            <div class="control">
-              <div class="control-top"><label for="beatDifference">Frequency difference</label><output id="beatDifferenceOut">4 Hz</output></div>
-              <input class="range" id="beatDifference" type="range" min="0" max="20" step="1" value="4">
-            </div>
-            <div class="buttons">
-              <button class="btn sound" id="playTone">♪ Play pure tone</button>
-              <button class="btn sound" id="playBeats">♫ Play beats</button>
-              <button class="btn stop" id="stopSound">■ Stop sound</button>
-            </div>
+            <div class="control"><div class="control-top"><label for="soundFrequency1">Tone 1 frequency</label><output id="soundFrequency1Out">440 Hz</output></div><input class="range" id="soundFrequency1" type="range" min="200" max="800" step="1" value="440"></div>
+            <div class="control"><div class="control-top"><label for="beatDifference">Frequency difference</label><output id="beatDifferenceOut">4 Hz</output></div><input class="range" id="beatDifference" type="range" min="0" max="20" step="1" value="4"></div>
+            <div class="buttons"><button class="btn sound" id="playTone">♪ Play pure tone</button><button class="btn sound" id="playBeats">♫ Play beats</button><button class="btn stop" id="stopSound">■ Stop sound</button></div>
             <div class="formula">fᵦ = |f₁ − f₂| <small>Number of beats per second</small></div>
-            <div class="mini-grid">
-              <div class="mini"><span>Second frequency</span><strong id="soundF2Mini">444 Hz</strong></div>
-              <div class="mini"><span>Beat time period</span><strong id="beatPeriodRead">0.25 s</strong></div>
-            </div>
+            <div class="mini-grid"><div class="mini"><span>Second frequency</span><strong id="soundF2Mini">444 Hz</strong></div><div class="mini"><span>Beat time period</span><strong id="beatPeriodRead">0.25 s</strong></div></div>
             <div class="note">Try setting the frequency difference to 0 Hz, then slowly increase it. Notice how the beats become faster.</div>
-            <div class="control">
-              <div class="control-top"><label for="soundAirTemp">Air temperature</label><output id="soundAirTempOut">20 °C</output></div>
-              <input class="range" id="soundAirTemp" type="range" min="0" max="40" step="1" value="20">
-            </div>
+            <div class="control"><div class="control-top"><label for="soundAirTemp">Air temperature</label><output id="soundAirTempOut">20 °C</output></div><input class="range" id="soundAirTemp" type="range" min="0" max="40" step="1" value="20"></div>
             <div class="formula">v ≈ 331 + 0.6 θ <small>Approximate speed of sound in air (m/s), θ in °C</small></div>
             <div class="mini"><span>Speed of sound in air</span><strong id="soundAirSpeed">343 m/s</strong></div>
           </div>
@@ -364,27 +242,17 @@ canvas{display:block;width:100%;height:auto}
     </section>
 
     <section style="margin-top:24px">
-      <div class="head">
-        <div><h2>Lab missions</h2><p>Complete these investigations after trying the simulations.</p></div>
-        <span class="tag" id="missionCount">0 / 3 COMPLETE</span>
-      </div>
+      <div class="head"><div><h2>Lab missions</h2><p>Complete these investigations after trying the simulations.</p></div><span class="tag" id="missionCount">0 / 3 COMPLETE</span></div>
       <div class="mission-grid">
         <article class="mission" id="mission1"><strong>Mission 01 · Change wave speed</strong><p>In Station 01, double the frequency while keeping wavelength constant. Observe what happens to wave speed.</p><button class="btn" data-mission="1">Mark complete</button></article>
         <article class="mission" id="mission2"><strong>Mission 02 · Find the nodes</strong><p>In Station 03, try the third mode of a string fixed at both ends. Count the nodes and antinodes.</p><button class="btn" data-mission="2">Mark complete</button></article>
         <article class="mission" id="mission3"><strong>Mission 03 · Hear the beats</strong><p>In Station 04, play two tones with a difference of 5 Hz. Listen to five loudness pulses per second.</p><button class="btn" data-mission="3">Mark complete</button></article>
       </div>
-      <div class="progress"><span id="missionProgress"></span></div>
-      <div class="small" id="missionHint">Your completed missions will appear here.</div>
+      <div class="progress"><span id="missionProgress"></span></div><div class="small" id="missionHint">Your completed missions will appear here.</div>
     </section>
   </main>
 
-  <div class="footer">
-    <span>Virtual Science Lab · Physics · Class 11</span>
-    <div class="buttons">
-      <button class="btn" id="exportBtn">↓ Export lab data (CSV)</button>
-      <button class="btn" id="resetAll">Reset all stations</button>
-    </div>
-  </div>
+  <div class="footer"><span>Virtual Science Lab · Physics · Class 11</span><div class="buttons"><button class="btn" id="exportBtn">↓ Export lab data (CSV)</button><button class="btn" id="resetAll">Reset all stations</button></div></div>
 </div>
 
 <script>
@@ -393,521 +261,209 @@ canvas{display:block;width:100%;height:auto}
 const $ = id => document.getElementById(id);
 const TAU = Math.PI * 2;
 const fmt = (n,d=2) => Number(n).toFixed(d);
-const state = {
-  waveTime:0,waveRunning:true,
-  superTime:0,superRunning:true,
-  standingTime:0,standingRunning:true,
-  missions:new Set(),lastFrame:0
-};
+const state = {waveTime:0,waveRunning:true,superTime:0,superRunning:true,standingTime:0,standingRunning:true,missions:new Set(),lastFrame:0};
 
-/* -------------------------------------------------------
-   Shared drawing helpers
-------------------------------------------------------- */
-function setupCanvas(id){
-  const c=$(id),ctx=c.getContext('2d');
-  return {c,ctx,w:c.width,h:c.height};
-}
-function grid(ctx,w,h,step=45){
-  ctx.save();ctx.strokeStyle='rgba(112,153,116,.15)';ctx.lineWidth=1;
-  for(let x=20;x<w;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
-  for(let y=20;y<h;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
-  ctx.restore();
-}
-function label(ctx,text,x,y,color='#55755c',size=13,align='left'){
-  ctx.fillStyle=color;ctx.font='700 '+size+'px Inter,system-ui';ctx.textAlign=align;ctx.fillText(text,x,y);ctx.textAlign='left';
-}
-function line(ctx,x1,y1,x2,y2,color='#9cba9c',width=2,dash=[]){
-  ctx.beginPath();ctx.setLineDash(dash);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
-}
-function circle(ctx,x,y,r,color,stroke='#fff'){
-  ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fillStyle=color;ctx.fill();if(stroke){ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.stroke();}
-}
-function setReadout(id,value){$(id).textContent=value;}
+/* Canvas helpers */
+function canvas(id){const c=$(id);return {ctx:c.getContext('2d'),w:c.width,h:c.height};}
+function grid(ctx,w,h,step=45){ctx.save();ctx.strokeStyle='rgba(112,153,116,.15)';ctx.lineWidth=1;for(let x=20;x<w;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=20;y<h;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}ctx.restore();}
+function label(ctx,text,x,y,color='#55755c',size=13,align='left'){ctx.fillStyle=color;ctx.font='700 '+size+'px Inter,system-ui';ctx.textAlign=align;ctx.fillText(text,x,y);ctx.textAlign='left';}
+function line(ctx,x1,y1,x2,y2,color='#9cba9c',width=2,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);}
+function circle(ctx,x,y,r,color,stroke='#fff'){ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fillStyle=color;ctx.fill();if(stroke){ctx.lineWidth=2;ctx.strokeStyle=stroke;ctx.stroke();}}
 
-/* -------------------------------------------------------
-   Station 1: travelling waves
-------------------------------------------------------- */
-function waveParams(){
-  const A=+$('waveAmplitude').value;
-  const lambda=+$('waveLambda').value;
-  const f=+$('waveFrequency').value;
-  return {A,lambda,f,v:f*lambda,k:TAU/lambda,omega:TAU*f,T:1/f};
-}
+/* Station navigation */
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+ const target=btn.dataset.tab;
+ document.querySelectorAll('.tab').forEach(tab=>tab.classList.toggle('active',tab===btn));
+ document.querySelectorAll('.panel').forEach(panel=>panel.classList.toggle('active',panel.id==='panel-'+target));
+ stopAudio(true);
+ drawAll();
+}));
+
+/* 1. Travelling waves */
+function waveParams(){const A=+$('waveAmplitude').value,lambda=+$('waveLambda').value,f=+$('waveFrequency').value;return {A,lambda,f,v:f*lambda,k:TAU/lambda,omega:TAU*f,T:1/f};}
 function drawWave(){
-  const {ctx,w,h}=setupCanvas('waveCanvas');
-  const p=waveParams(),time=state.waveTime,type=$('waveType').value;
-  ctx.clearRect(0,0,w,h);grid(ctx,w,h);
-  label(ctx,type==='transverse'?'TRANSVERSE WAVE':'LONGITUDINAL WAVE',25,29);
-  const left=55,right=850,mid=220,scale=p.A*76;
-  line(ctx,left,mid,right,mid,'#92b693',2,[7,6]);
-  if(type==='transverse'){
-    ctx.beginPath();
-    for(let i=0;i<=800;i++){
-      const x=i/800*10;
-      const y=p.A*Math.sin(p.k*x-p.omega*time);
-      const px=left+(right-left)*i/800,py=mid-y*76;
-      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
-    }
-    ctx.strokeStyle='#299b60';ctx.lineWidth=4;ctx.stroke();
-    for(let i=0;i<=30;i++){
-      const x=i/30*10;
-      const y=p.A*Math.sin(p.k*x-p.omega*time);
-      circle(ctx,left+(right-left)*x/10,mid-y*76,4.5,'#468bd2');
-    }
-    label(ctx,'Particle motion ↑↓',left+15,mid+125,'#468bd2',13);
-    label(ctx,'Wave travels to the right →',right-10,mid+155,'#299b60',13,'right');
-    line(ctx,left,mid-125,right,mid-125,'#c2d8bf',1);
-    label(ctx,'Displacement',left,mid-140,'#55755c',12);
-  }else{
-    const n=50,spacing=(right-left)/(n-1);
-    for(let i=0;i<n;i++){
-      const x=i/(n-1)*10;
-      const displacement=p.A*19*Math.sin(p.k*x-p.omega*time);
-      const px=left+i*spacing+displacement;
-      const compression=Math.cos(p.k*x-p.omega*time);
-      const col=compression>0?'#299b60':'#468bd2';
-      circle(ctx,px,mid,Math.max(3.5,5+compression*1.2),col);
-      line(ctx,px,mid+12,px,mid+29,'#b0cdb0',1);
-    }
-    label(ctx,'Compressed region',left+10,mid-85,'#299b60',13);
-    label(ctx,'Rarefied region',right-10,mid+90,'#468bd2',13,'right');
-    label(ctx,'Particle motion ↔',left+15,mid+125,'#468bd2',13);
-    label(ctx,'Wave travels to the right →',right-10,mid+155,'#299b60',13,'right');
-    // Pressure-density pattern shown as a wave below the particles.
-    const graphMid=355;
-    line(ctx,left,graphMid,right,graphMid,'#c3d8bf',1,[5,5]);
-    ctx.beginPath();
-    for(let i=0;i<=500;i++){
-      const x=i/500*10;
-      const d=Math.cos(p.k*x-p.omega*time);
-      const px=left+(right-left)*i/500,py=graphMid-d*28;
-      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
-    }
-    ctx.strokeStyle='#e99b35';ctx.lineWidth=2.5;ctx.stroke();
-    label(ctx,'Compression / rarefaction pattern',left,graphMid+54,'#9b742e',12);
-  }
-  // Wavelength indicator.
-  const pxPerM=(right-left)/10,lambdaPx=p.lambda*pxPerM;
-  const x1=left+10,x2=Math.min(right,x1+lambdaPx),y=70;
-  line(ctx,x1,y,x2,y,'#e99b35',2);
-  line(ctx,x1,y-7,x1,y+7,'#e99b35',2);
-  line(ctx,x2,y-7,x2,y+7,'#e99b35',2);
-  label(ctx,'λ = '+fmt(p.lambda,1)+' m',(x1+x2)/2,y-10,'#a87526',13,'center');
-  label(ctx,'t = '+fmt(time,2)+' s',w-25,29,'#55755c',13,'right');
-
-  $('waveTypeCaption').textContent=type==='transverse'?'Transverse · particles oscillate perpendicular to wave direction':'Longitudinal · particles oscillate parallel to wave direction';
-  $('waveClock').textContent='t = '+fmt(time,2)+' s';
-  $('waveAmplitudeOut').textContent=fmt(p.A,1)+' m';
-  $('waveLambdaOut').textContent=fmt(p.lambda,1)+' m';
-  $('waveFrequencyOut').textContent=fmt(p.f,1)+' Hz';
-  $('waveSpeedRead').textContent=fmt(p.v,2)+' m/s';
-  $('waveKRead').textContent=fmt(p.k,3)+' rad/m';
-  $('waveWRead').textContent=fmt(p.omega,2)+' rad/s';
-  $('wavePeriodRead').textContent=fmt(p.T,3)+' s';
-  $('topSpeed').textContent=fmt(p.v,2)+' m/s';
-  $('topLambda').textContent=fmt(p.lambda,1)+' m';
-  $('topFreq').textContent=fmt(p.f,1)+' Hz';
-  $('topOmega').textContent=fmt(p.omega,2)+' rad/s';
+ const {ctx,w,h}=canvas('waveCanvas'),p=waveParams(),time=state.waveTime,type=$('waveType').value;
+ ctx.clearRect(0,0,w,h);grid(ctx,w,h);label(ctx,type==='transverse'?'TRANSVERSE WAVE':'LONGITUDINAL WAVE',25,29);
+ const left=55,right=850,mid=220;
+ line(ctx,left,mid,right,mid,'#92b693',2,[7,6]);
+ if(type==='transverse'){
+  ctx.beginPath();for(let i=0;i<=800;i++){const x=i/800*10,y=p.A*Math.sin(p.k*x-p.omega*time),px=left+(right-left)*i/800,py=mid-y*76;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.strokeStyle='#299b60';ctx.lineWidth=4;ctx.stroke();
+  for(let i=0;i<=30;i++){const x=i/30*10,y=p.A*Math.sin(p.k*x-p.omega*time);circle(ctx,left+(right-left)*x/10,mid-y*76,4.5,'#468bd2');}
+  label(ctx,'Particle motion ↑↓',left+15,mid+125,'#468bd2',13);label(ctx,'Wave travels to the right →',right-10,mid+155,'#299b60',13,'right');
+ }else{
+  const n=50,spacing=(right-left)/(n-1);
+  for(let i=0;i<n;i++){const x=i/(n-1)*10,displacement=p.A*10*Math.sin(p.k*x-p.omega*time),compression=Math.cos(p.k*x-p.omega*time),px=left+i*spacing+displacement;circle(ctx,px,mid,Math.max(3.5,5+compression*1.2),compression>0?'#299b60':'#468bd2');}
+  label(ctx,'Particle motion ↔',left+15,mid+125,'#468bd2',13);label(ctx,'Wave travels to the right →',right-10,mid+155,'#299b60',13,'right');
+  const graphMid=355;line(ctx,left,graphMid,right,graphMid,'#c3d8bf',1,[5,5]);ctx.beginPath();for(let i=0;i<=500;i++){const x=i/500*10,d=Math.cos(p.k*x-p.omega*time),px=left+(right-left)*i/500,py=graphMid-d*28;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.strokeStyle='#e99b35';ctx.lineWidth=2.5;ctx.stroke();label(ctx,'Compression / rarefaction pattern',left,graphMid+54,'#9b742e',12);
+ }
+ const pxPerM=(right-left)/10,lambdaPx=p.lambda*pxPerM,x1=left+10,x2=Math.min(right,x1+lambdaPx),y=70;line(ctx,x1,y,x2,y,'#e99b35',2);line(ctx,x1,y-7,x1,y+7,'#e99b35',2);line(ctx,x2,y-7,x2,y+7,'#e99b35',2);label(ctx,'λ = '+fmt(p.lambda,1)+' m',(x1+x2)/2,y-10,'#a87526',13,'center');label(ctx,'t = '+fmt(time,2)+' s',w-25,29,'#55755c',13,'right');
+ $('waveTypeCaption').textContent=type==='transverse'?'Transverse · particles oscillate perpendicular to wave direction':'Longitudinal · particles oscillate parallel to wave direction';$('waveClock').textContent='t = '+fmt(time,2)+' s';$('waveAmplitudeOut').textContent=fmt(p.A,2)+' m';$('waveLambdaOut').textContent=fmt(p.lambda,1)+' m';$('waveFrequencyOut').textContent=fmt(p.f,1)+' Hz';$('waveSpeedRead').textContent=fmt(p.v,2)+' m/s';$('waveKRead').textContent=fmt(p.k,3)+' rad/m';$('waveWRead').textContent=fmt(p.omega,2)+' rad/s';$('wavePeriodRead').textContent=fmt(p.T,3)+' s';$('topSpeed').textContent=fmt(p.v,2)+' m/s';$('topLambda').textContent=fmt(p.lambda,1)+' m';$('topFreq').textContent=fmt(p.f,1)+' Hz';$('topOmega').textContent=fmt(p.omega,2)+' rad/s';
 }
-['waveType','waveAmplitude','waveLambda','waveFrequency'].forEach(id=>{
-  $(id).addEventListener('input',drawWave);
-  $(id).addEventListener('change',drawWave);
-});
-$('wavePlay').addEventListener('click',()=>{
-  state.waveRunning=!state.waveRunning;
-  $('wavePlay').textContent=state.waveRunning?'Ⅱ Pause':'▶ Resume';
-});
+['waveType','waveAmplitude','waveLambda','waveFrequency'].forEach(id=>$(id).addEventListener('input',drawWave));
+$('wavePlay').addEventListener('click',()=>{state.waveRunning=!state.waveRunning;$('wavePlay').textContent=state.waveRunning?'Ⅱ Pause':'▶ Resume';});
 $('waveReset').addEventListener('click',()=>{state.waveTime=0;drawWave();});
 $('waveStep').addEventListener('click',()=>{state.waveTime+=.1;drawWave();});
 
-/* -------------------------------------------------------
-   Station 2: superposition and reflection
-------------------------------------------------------- */
-function superParams(){
-  const A=+$('superAmplitude').value,lambda=+$('superLambda').value,f=+$('superFrequency').value;
-  return {A,lambda,f,v:lambda*f,k:TAU/lambda,w:TAU*f};
-}
+/* 2. Superposition and reflection */
+function superParams(){const A=+$('superAmplitude').value,lambda=+$('superLambda').value,f=+$('superFrequency').value;return {A,lambda,f,v:lambda*f,k:TAU/lambda,w:TAU*f};}
 function drawSuperposition(){
-  const {ctx,w,h}=setupCanvas('superCanvas');
-  const p=superParams(),fixed=$('boundaryType').value==='fixed',time=state.superTime;
-  ctx.clearRect(0,0,w,h);grid(ctx,w,h);
-  label(ctx,fixed?'REFLECTION AT A FIXED END':'REFLECTION AT A FREE END',24,28);
-  const left=60,right=850,mid=220,plotWidth=right-left,L=10,scale=75;
-  line(ctx,left,mid,right,mid,'#a2bba1',1.5,[6,6]);
-  const points=500;
-  const y1=x=>p.A*Math.sin(p.k*x-p.w*time);
-  const y2=x=>(fixed?-1:1)*p.A*Math.sin(p.k*(2*L-x)-p.w*time);
-  const drawCurve=(fn,color,width)=>{
-    ctx.beginPath();
-    for(let i=0;i<=points;i++){
-      const x=L*i/points,px=left+plotWidth*i/points,py=mid-fn(x)*scale;
-      if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
-    }
-    ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();
-  };
-  drawCurve(y1,'#299b60',2.5);
-  drawCurve(y2,'#468bd2',2.5);
-  drawCurve(x=>y1(x)+y2(x),'#e99b35',4);
-  line(ctx,right,mid-145,right,mid+145,'#577b60',5);
-  label(ctx,fixed?'FIXED BOUNDARY':'FREE BOUNDARY',right-8,mid-160,'#55755c',12,'right');
-  label(ctx,'Incident wave',left+8,mid-135,'#299b60',12);
-  label(ctx,'Reflected wave',left+8,mid+145,'#468bd2',12);
-  label(ctx,'Resultant wave',right-10,mid-135,'#b57a27',12,'right');
-  label(ctx,'x →',right-4,mid+175,'#55755c',12,'right');
-  $('superClock').textContent='t = '+fmt(time,2)+' s';
-  $('superAmplitudeOut').textContent=fmt(p.A,1)+' m';
-  $('superLambdaOut').textContent=fmt(p.lambda,1)+' m';
-  $('superFrequencyOut').textContent=fmt(p.f,1)+' Hz';
-  $('superSpeedRead').textContent=fmt(p.v,2)+' m/s';
-  $('superOmegaRead').textContent=fmt(p.w,2)+' rad/s';
-  $('boundaryExplanation').textContent=fixed?'Fixed end: reflected displacement is inverted. The resultant displacement is zero at the boundary.':'Free end: reflected displacement is not inverted. The resultant displacement is maximum at the boundary.';
+ const {ctx,w,h}=canvas('superCanvas'),p=superParams(),fixed=$('boundaryType').value==='fixed',time=state.superTime;ctx.clearRect(0,0,w,h);grid(ctx,w,h);label(ctx,fixed?'REFLECTION AT A FIXED END':'REFLECTION AT A FREE END',24,28);
+ const left=60,right=850,mid=220,plotWidth=right-left,L=10,scale=75;line(ctx,left,mid,right,mid,'#a2bba1',1.5,[6,6]);
+ const y1=x=>p.A*Math.sin(p.k*x-p.w*time),y2=x=>(fixed?-1:1)*p.A*Math.sin(p.k*(2*L-x)-p.w*time);
+ const drawCurve=(fn,color,width)=>{ctx.beginPath();for(let i=0;i<=500;i++){const x=L*i/500,px=left+plotWidth*i/500,py=mid-fn(x)*scale;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();};
+ drawCurve(y1,'#299b60',2.5);drawCurve(y2,'#468bd2',2.5);drawCurve(x=>y1(x)+y2(x),'#e99b35',4);
+ line(ctx,right,mid-145,right,mid+145,'#577b60',5);label(ctx,fixed?'FIXED BOUNDARY':'FREE BOUNDARY',right-8,mid-160,'#55755c',12,'right');label(ctx,'Incident wave',left+8,mid-135,'#299b60',12);label(ctx,'Reflected wave',left+8,mid+145,'#468bd2',12);label(ctx,'Resultant wave',right-10,mid-135,'#b57a27',12,'right');label(ctx,'x →',right-4,mid+175,'#55755c',12,'right');
+ $('superClock').textContent='t = '+fmt(time,2)+' s';$('superAmplitudeOut').textContent=fmt(p.A,1)+' m';$('superLambdaOut').textContent=fmt(p.lambda,1)+' m';$('superFrequencyOut').textContent=fmt(p.f,1)+' Hz';$('superSpeedRead').textContent=fmt(p.v,2)+' m/s';$('superOmegaRead').textContent=fmt(p.w,2)+' rad/s';$('boundaryExplanation').textContent=fixed?'Fixed end: reflected displacement is inverted. Resultant displacement is always zero at the boundary.':'Free end: reflected displacement is not inverted. The boundary is an antinode in the ideal standing-wave pattern.';
 }
 ['boundaryType','superAmplitude','superLambda','superFrequency'].forEach(id=>$(id).addEventListener('input',drawSuperposition));
-$('superPlay').addEventListener('click',()=>{
-  state.superRunning=!state.superRunning;
-  $('superPlay').textContent=state.superRunning?'Ⅱ Pause':'▶ Resume';
-});
+$('superPlay').addEventListener('click',()=>{state.superRunning=!state.superRunning;$('superPlay').textContent=state.superRunning?'Ⅱ Pause':'▶ Resume';});
 $('superReset').addEventListener('click',()=>{state.superTime=0;drawSuperposition();});
 
-/* -------------------------------------------------------
-   Station 3: standing waves, strings and organ pipes
-------------------------------------------------------- */
+/* 3. Standing waves: string and organ pipes */
 function standingParams(){
-  const type=$('resonatorType').value;
-  const L=+$('resonatorLength').value;
-  const mode=+$('modeNumber').value;
-  const airT=+$('airTemperature').value;
-  const airSpeed=331+.6*airT;
-  const stringSpeed=+$('stringSpeed').value;
-  let harmonic=mode,v=type==='string'?stringSpeed:airSpeed,f,lambda,formula,caption;
-  if(type==='closed')harmonic=2*mode-1;
-  if(type==='string'){
-    lambda=2*L/harmonic;f=harmonic*v/(2*L);
-    formula='fₙ = nv / 2L';
-    caption='String fixed at both ends · nodes at both ends';
-  }else if(type==='open'){
-    lambda=2*L/harmonic;f=harmonic*v/(2*L);
-    formula='fₙ = nv / 2L';
-    caption='Open pipe · displacement antinodes at both ends';
-  }else{
-    lambda=4*L/harmonic;f=harmonic*v/(4*L);
-    formula='fₙ = (2n − 1)v / 4L';
-    caption='Closed pipe · node at closed end, antinode at open end';
-  }
-  return {type,L,mode,harmonic,v,f,lambda,airT,airSpeed,formula,caption};
+ const type=$('resonatorType').value,L=+$('resonatorLength').value,mode=+$('modeNumber').value,airT=+$('airTemperature').value,airSpeed=331+.6*airT,stringSpeed=+$('stringSpeed').value;
+ const harmonic=type==='closed'?2*mode-1:mode,v=type==='string'?stringSpeed:airSpeed;
+ let f,lambda,formula,caption,shape,nodePositions=[],antinodePositions=[];
+ if(type==='string'){
+  lambda=2*L/harmonic;f=harmonic*v/(2*L);formula='fₙ = nv / 2L';caption='String fixed at both ends · displacement nodes at both ends';shape=x=>Math.sin(harmonic*Math.PI*x/L);
+  for(let j=0;j<=harmonic;j++)nodePositions.push(j*L/harmonic);
+  for(let j=0;j<harmonic;j++)antinodePositions.push((j+.5)*L/harmonic);
+ }else if(type==='open'){
+  lambda=2*L/harmonic;f=harmonic*v/(2*L);formula='fₙ = nv / 2L';caption='Open pipe · displacement antinodes at both ends';shape=x=>Math.cos(harmonic*Math.PI*x/L);
+  for(let j=0;j<=harmonic;j++)antinodePositions.push(j*L/harmonic);
+  for(let j=0;j<harmonic;j++)nodePositions.push((j+.5)*L/harmonic);
+ }else{
+  lambda=4*L/harmonic;f=harmonic*v/(4*L);formula='fₙ = (2n − 1)v / 4L';caption='Closed pipe · node at closed end, antinode at open end';shape=x=>Math.sin(harmonic*Math.PI*x/(2*L));
+  // For odd harmonic h: nodes at x = 2jL/h, antinodes at x = (2j+1)L/h.
+  for(let j=0;j<=(harmonic-1)/2;j++){nodePositions.push(2*j*L/harmonic);antinodePositions.push((2*j+1)*L/harmonic);}
+ }
+ return {type,L,mode,harmonic,v,f,lambda,airT,airSpeed,formula,caption,shape,nodePositions,antinodePositions};
 }
+function ordinal(n){return n+(['st','nd','rd'][n-1]||'th');}
 function drawStanding(){
-  const {ctx,w,h}=setupCanvas('standingCanvas'),p=standingParams(),time=state.standingTime;
-  ctx.clearRect(0,0,w,h);grid(ctx,w,h);
-  label(ctx,p.type==='string'?'STANDING WAVE ON A STRING':p.type==='open'?'OPEN ORGAN PIPE':'CLOSED ORGAN PIPE',24,28);
-  const left=90,right=820,width=right-left,mid=220,scale=95;
-  const phase=TAU*p.f*time;
-  const n=p.harmonic;
-  let displacement;
-  if(p.type==='closed')displacement=x=>Math.sin(n*Math.PI*x/p.L)*Math.cos(phase);
-  else if(p.type==='open')displacement=x=>Math.cos(n*Math.PI*x/p.L)*Math.cos(phase);
-  else displacement=x=>Math.sin(n*Math.PI*x/p.L)*Math.cos(phase);
-  line(ctx,left,mid,right,mid,'#9bb99a',2,[5,6]);
-  // Resonator boundary drawings.
-  if(p.type==='string'){
-    line(ctx,left,mid-125,left,mid+125,'#567d60',6);
-    line(ctx,right,mid-125,right,mid+125,'#567d60',6);
-    label(ctx,'FIXED',left,mid-140,'#55755c',11,'center');
-    label(ctx,'FIXED',right,mid-140,'#55755c',11,'center');
-  }else{
-    line(ctx,left,mid-95,left,mid+95,'#7ca582',5);
-    line(ctx,right,mid-95,right,mid+95,'#7ca582',5);
-    if(p.type==='closed'){
-      ctx.fillStyle='#718e76';ctx.fillRect(left-5,mid-95,12,190);
-      label(ctx,'CLOSED',left,mid-115,'#55755c',11,'center');
-      label(ctx,'OPEN',right,mid-115,'#55755c',11,'center');
-    }else{
-      label(ctx,'OPEN',left,mid-115,'#55755c',11,'center');
-      label(ctx,'OPEN',right,mid-115,'#55755c',11,'center');
-    }
-  }
-  // Draw the standing wave curve.
-  ctx.beginPath();
-  for(let i=0;i<=600;i++){
-    const x=p.L*i/600,px=left+width*i/600,py=mid-displacement(x)*scale;
-    if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);
-  }
-  ctx.strokeStyle='#299b60';ctx.lineWidth=4;ctx.stroke();
-  // Draw equilibrium nodes/antinodes, independent of instantaneous amplitude.
-  let nodeXs=[],antiXs=[];
-  if(p.type==='string'){
-    for(let j=0;j<=n;j++)nodeXs.push(left+width*j/n);
-    for(let j=0;j<n;j++)antiXs.push(left+width*(j+.5)/n);
-  }else if(p.type==='open'){
-    for(let j=0;j<=n;j++)antiXs.push(left+width*j/n);
-    for(let j=0;j<n;j++)nodeXs.push(left+width*(j+.5)/n);
-  }else{
-    for(let j=0;j<=n;j++)(j%2===0?nodeXs:antiXs).push(left+width*j/n);
-  }
-  nodeXs.forEach(x=>circle(ctx,x,mid,6,'#468bd2'));
-  antiXs.forEach(x=>circle(ctx,x,mid,6,'#e99b35'));
-  label(ctx,'N = NODE',left,mid+150,'#468bd2',12);
-  label(ctx,'A = ANTINODE',left+110,mid+150,'#a87526',12);
-  label(ctx,'Mode '+p.mode+' · Harmonic '+p.harmonic,right,mid+180,'#55755c',12,'right');
-
-  $('standingCaption').textContent=p.caption;
-  $('standingClock').textContent='t = '+fmt(time,2)+' s';
-  $('resonatorLengthOut').textContent=fmt(p.L,2)+' m';
-  $('modeNumberOut').textContent=p.mode;
-  $('stringSpeedOut').textContent=fmt(p.v,0)+' m/s';
-  $('airTemperatureOut').textContent=p.airT+' °C';
-  $('modeFrequencyRead').textContent=fmt(p.f,2)+' Hz';
-  $('modeLambdaRead').textContent=fmt(p.lambda,2)+' m';
-  $('modeSpeedRead').textContent=fmt(p.v,1)+' m/s';
-  $('harmonicRead').textContent=p.harmonic+(['st','nd','rd'][p.harmonic-1]||'th');
-  $('airSpeedRead').textContent=fmt(p.airSpeed,1)+' m/s';
-  $('standingFormula').innerHTML=p.formula+'<small>'+p.caption+'</small>';
-  $('stringSpeedControl').style.display=p.type==='string'?'grid':'none';
+ const {ctx,w,h}=canvas('standingCanvas'),p=standingParams(),time=state.standingTime,phase=TAU*p.f*time;ctx.clearRect(0,0,w,h);grid(ctx,w,h);label(ctx,p.type==='string'?'STANDING WAVE ON A STRING':p.type==='open'?'OPEN ORGAN PIPE':'CLOSED ORGAN PIPE',24,28);
+ const left=90,right=820,width=right-left,mid=220,scale=95;line(ctx,left,mid,right,mid,'#9bb99a',2,[5,6]);
+ if(p.type==='string'){
+  line(ctx,left,mid-125,left,mid+125,'#567d60',6);line(ctx,right,mid-125,right,mid+125,'#567d60',6);label(ctx,'FIXED',left,mid-140,'#55755c',11,'center');label(ctx,'FIXED',right,mid-140,'#55755c',11,'center');
+ }else{
+  line(ctx,left,mid-95,left,mid+95,'#7ca582',5);line(ctx,right,mid-95,right,mid+95,'#7ca582',5);
+  if(p.type==='closed'){ctx.fillStyle='#718e76';ctx.fillRect(left-7,mid-95,14,190);label(ctx,'CLOSED',left,mid-115,'#55755c',11,'center');label(ctx,'OPEN',right,mid-115,'#55755c',11,'center');}
+  else{label(ctx,'OPEN',left,mid-115,'#55755c',11,'center');label(ctx,'OPEN',right,mid-115,'#55755c',11,'center');}
+ }
+ ctx.beginPath();for(let i=0;i<=600;i++){const x=p.L*i/600,px=left+width*i/600,py=mid-p.shape(x)*Math.cos(phase)*scale;if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py);}ctx.strokeStyle='#299b60';ctx.lineWidth=4;ctx.stroke();
+ p.nodePositions.forEach(x=>circle(ctx,left+width*x/p.L,mid,6,'#468bd2'));
+ p.antinodePositions.forEach(x=>circle(ctx,left+width*x/p.L,mid,6,'#e99b35'));
+ label(ctx,'N = NODE',left,mid+150,'#468bd2',12);label(ctx,'A = ANTINODE',left+110,mid+150,'#a87526',12);label(ctx,'Mode '+p.mode+' · Harmonic '+p.harmonic,right,mid+180,'#55755c',12,'right');
+ $('standingCaption').textContent=p.caption;$('standingClock').textContent='t = '+fmt(time,2)+' s';$('resonatorLengthOut').textContent=fmt(p.L,2)+' m';$('modeNumberOut').textContent=p.mode;$('stringSpeedOut').textContent=fmt(p.v,0)+' m/s';$('airTemperatureOut').textContent=p.airT+' °C';$('modeFrequencyRead').textContent=fmt(p.f,2)+' Hz';$('modeLambdaRead').textContent=fmt(p.lambda,2)+' m';$('modeSpeedRead').textContent=fmt(p.v,1)+' m/s';$('harmonicRead').textContent=ordinal(p.harmonic);$('airSpeedRead').textContent=fmt(p.airSpeed,1)+' m/s';$('nodeCountRead').textContent=p.nodePositions.length;$('antinodeCountRead').textContent=p.antinodePositions.length;$('standingFormula').innerHTML=p.formula+'<small>'+p.caption+'</small>';$('stringSpeedControl').style.display=p.type==='string'?'grid':'none';
 }
-['resonatorType','resonatorLength','modeNumber','stringSpeed','airTemperature'].forEach(id=>$(id).addEventListener('input',()=>{
-  stopAudio();
-  if(id==='resonatorType'){
-    $('modeNumber').value=1;
-    $('standingAudioStatus').textContent='Resonator changed. Choose a mode and play its sound.';
-  }
-  drawStanding();
-}));
-$('standingPlay').addEventListener('click',()=>{
-  state.standingRunning=!state.standingRunning;
-  $('standingPlay').textContent=state.standingRunning?'Ⅱ Pause':'▶ Resume';
-});
+['resonatorType','resonatorLength','modeNumber','stringSpeed','airTemperature'].forEach(id=>$(id).addEventListener('input',()=>{stopAudio();if(id==='resonatorType')$('standingAudioStatus').textContent='Resonator changed. Choose a mode and play its sound.';drawStanding();}));
+$('standingPlay').addEventListener('click',()=>{state.standingRunning=!state.standingRunning;$('standingPlay').textContent=state.standingRunning?'Ⅱ Pause':'▶ Resume';});
 $('standingReset').addEventListener('click',()=>{state.standingTime=0;drawStanding();});
-$('playModeSound').addEventListener('click',()=>{
-  const p=standingParams();
-  if(p.f>1800){$('standingAudioStatus').textContent='This mode is above the 1800 Hz audio limit for this demonstration. Choose a lower mode or a longer resonator.';return;}
-  startAudio([p.f],'Standing-wave mode · '+fmt(p.f,1)+' Hz');
-  $('standingAudioStatus').textContent='Playing '+fmt(p.f,1)+' Hz. Press Stop sound in Station 04 or change station to stop.';
-});
 
-/* -------------------------------------------------------
-   Station 4: sound, tone generation and beats
-------------------------------------------------------- */
+/* Web Audio: tones are started only after a direct user click. */
 let audioContext=null,activeOscillators=[],activeMaster=null;
-function audioAvailable(){
-  return !!(window.AudioContext||window.webkitAudioContext);
-}
-function stopAudio(){
-  if(!audioContext||!activeOscillators.length)return;
-  const now=audioContext.currentTime;
-  try{
-    if(activeMaster){
-      activeMaster.gain.cancelScheduledValues(now);
-      activeMaster.gain.setTargetAtTime(0.0001,now,.025);
-    }
-    activeOscillators.forEach(o=>{try{o.stop(now+.12);}catch(e){}});
-  }catch(e){}
-  const old=activeOscillators.slice();
-  const oldMaster=activeMaster;
-  activeOscillators=[];activeMaster=null;
-  setTimeout(()=>{
-    old.forEach(o=>{try{o.disconnect();}catch(e){}});
-    if(oldMaster){try{oldMaster.disconnect();}catch(e){}}
-  },180);
-  $('audioStatus').textContent='Sound stopped.';
-  $('standingAudioStatus').textContent='Sound stopped.';
+function stopAudio(updateStatus=true){
+ const ctx=audioContext,oscillators=activeOscillators.slice(),master=activeMaster;activeOscillators=[];activeMaster=null;
+ if(ctx&&master){const now=ctx.currentTime;try{master.gain.cancelScheduledValues(now);master.gain.setTargetAtTime(0.0001,now,.025);}catch(e){}oscillators.forEach(o=>{try{o.stop(now+.12);}catch(e){}});setTimeout(()=>{oscillators.forEach(o=>{try{o.disconnect();}catch(e){}});try{master.disconnect();}catch(e){}},180);}
+ if(updateStatus){$('audioStatus').textContent='Sound stopped.';$('standingAudioStatus').textContent='Sound stopped.';}
 }
 function startAudio(frequencies,status){
-  if(!audioAvailable()){
-    $('audioStatus').textContent='Web Audio is not supported in this browser. Try a modern Chrome browser.';
-    return;
-  }
-  stopAudio();
-  const AudioCtx=window.AudioContext||window.webkitAudioContext;
+ const AudioCtx=window.AudioContext||window.webkitAudioContext;
+ if(!AudioCtx){$('audioStatus').textContent='Web Audio is not supported in this browser. Try an updated Chrome browser.';return;}
+ stopAudio(false);
+ try{
   if(!audioContext||audioContext.state==='closed')audioContext=new AudioCtx();
   const ctx=audioContext;
   const begin=()=>{
-    const master=ctx.createGain();
-    master.gain.setValueAtTime(.065,ctx.currentTime);
-    master.connect(ctx.destination);
-    activeMaster=master;
-    const count=frequencies.length;
-    frequencies.forEach(freq=>{
-      const osc=ctx.createOscillator();
-      const gain=ctx.createGain();
-      osc.type='sine';
-      osc.frequency.setValueAtTime(freq,ctx.currentTime);
-      gain.gain.setValueAtTime(count>1?.48:.8,ctx.currentTime);
-      osc.connect(gain);gain.connect(master);
-      osc.start();
-      activeOscillators.push(osc);
-    });
-    $('audioStatus').textContent='♪ '+status+' · Press Stop sound to finish.';
-    $('standingAudioStatus').textContent='♪ Playing '+status;
+   const master=ctx.createGain();master.gain.setValueAtTime(.055,ctx.currentTime);master.connect(ctx.destination);activeMaster=master;
+   frequencies.forEach(freq=>{const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(freq,ctx.currentTime);gain.gain.setValueAtTime(frequencies.length>1?.45:.75,ctx.currentTime);osc.connect(gain);gain.connect(master);osc.start();activeOscillators.push(osc);});
+   $('audioStatus').textContent='♪ '+status+' · Press Stop sound to finish.';$('standingAudioStatus').textContent='♪ Playing '+status;
   };
-  if(ctx.state==='suspended'){
-    ctx.resume().then(begin).catch(()=>{
-      $('audioStatus').textContent='Audio could not start. Tap the Play button again.';
-    });
-  }else begin();
+  if(ctx.state==='suspended')ctx.resume().then(begin).catch(()=>$('audioStatus').textContent='Audio could not start. Tap the Play button again.');else begin();
+ }catch(e){$('audioStatus').textContent='Audio could not start in this browser.';}
 }
-function soundParams(){
-  const f1=+$('soundFrequency1').value,diff=+$('beatDifference').value,f2=f1+diff;
-  return {f1,f2,diff,beat:Math.abs(f2-f1)};
-}
+
+/* Sound modes in strings and organ pipes */
+$('playModeSound').addEventListener('click',()=>{
+ const p=standingParams();
+ if(p.f<20||p.f>18000){$('standingAudioStatus').textContent='This mode is outside the usual audible frequency range. Choose a different mode or resonator length.';return;}
+ startAudio([p.f],'standing-wave mode · '+fmt(p.f,1)+' Hz');
+});
+
+/* 4. Sound waves and beats */
+function soundParams(){const f1=+$('soundFrequency1').value,diff=+$('beatDifference').value;return {f1,f2:f1+diff,diff,beat:diff};}
 function drawSound(){
-  const {ctx,w,h}=setupCanvas('soundCanvas'),p=soundParams();
-  ctx.clearRect(0,0,w,h);grid(ctx,w,h);
-  label(ctx,'TWO CLOSE SOUND FREQUENCIES · SUPERPOSITION',24,27);
-  const left=55,right=850,top=65,bottom=320,width=right-left,height=bottom-top;
-  const mid=(top+bottom)/2;
-  line(ctx,left,mid,right,mid,'#9eb99d',1.5,[5,5]);
-  const duration=.05,points=900;
-  const signal=t=>Math.sin(TAU*p.f1*t)+Math.sin(TAU*p.f2*t);
-  const maxAmp=2;
-  ctx.beginPath();
-  for(let i=0;i<=points;i++){
-    const t=duration*i/points,y=signal(t)/maxAmp;
-    const x=left+width*i/points,py=mid-y*height*.43;
-    if(i===0)ctx.moveTo(x,py);else ctx.lineTo(x,py);
-  }
-  ctx.strokeStyle='#e99b35';ctx.lineWidth=2.2;ctx.stroke();
-  // Beat envelope, when the frequencies are not identical.
-  if(p.diff>0){
-    [1,-1].forEach(sign=>{
-      ctx.beginPath();
-      for(let i=0;i<=points;i++){
-        const t=duration*i/points;
-        const env=Math.abs(2*Math.cos(Math.PI*p.diff*t))/2;
-        const x=left+width*i/points,py=mid-sign*env*height*.43;
-        if(i===0)ctx.moveTo(x,py);else ctx.lineTo(x,py);
-      }
-      ctx.strokeStyle='#468bd2';ctx.lineWidth=2;ctx.setLineDash([7,5]);ctx.stroke();ctx.setLineDash([]);
-    });
-  }
-  label(ctx,'Time window = '+fmt(duration*1000,0)+' ms',left,bottom+25,'#55755c',12);
-  label(ctx,'Amplitude',left,top-10,'#55755c',12);
-  label(ctx,'Beat envelope',right,top-10,'#468bd2',12,'right');
-  $('soundF1Read').textContent=p.f1+' Hz';
-  $('soundF2Read').textContent=p.f2+' Hz';
-  $('beatFrequencyRead').textContent=p.beat+' Hz';
-  $('soundFrequency1Out').textContent=p.f1+' Hz';
-  $('beatDifferenceOut').textContent=p.diff+' Hz';
-  $('soundF2Mini').textContent=p.f2+' Hz';
-  $('beatPeriodRead').textContent=p.beat===0?'No beats':fmt(1/p.beat,3)+' s';
-  $('soundGraphCaption').textContent=p.diff===0?'Equal frequencies · steady amplitude':'Beat frequency = '+p.beat+' beats/s';
+ const {ctx,w,h}=canvas('soundCanvas'),p=soundParams();ctx.clearRect(0,0,w,h);grid(ctx,w,h);label(ctx,'TWO CLOSE SOUND FREQUENCIES · SUPERPOSITION',24,27);
+ const left=55,right=850,top=65,bottom=320,width=right-left,mid=(top+bottom)/2;line(ctx,left,mid,right,mid,'#9eb99d',1.5,[5,5]);
+ const duration=p.diff>0?Math.min(2.5,1.5/p.diff):8/p.f1,samples=9000;
+ const signal=t=>Math.sin(TAU*p.f1*t)+Math.sin(TAU*p.f2*t);
+ ctx.beginPath();for(let i=0;i<=samples;i++){const t=duration*i/samples,y=signal(t)/2,x=left+width*i/samples,py=mid-y*(bottom-top)*.43;if(i===0)ctx.moveTo(x,py);else ctx.lineTo(x,py);}ctx.strokeStyle='#e99b35';ctx.lineWidth=1.7;ctx.stroke();
+ if(p.diff>0){[1,-1].forEach(sign=>{ctx.beginPath();for(let i=0;i<=500;i++){const t=duration*i/500,env=Math.abs(Math.cos(Math.PI*p.diff*t)),x=left+width*i/500,py=mid-sign*env*(bottom-top)*.43;if(i===0)ctx.moveTo(x,py);else ctx.lineTo(x,py);}ctx.strokeStyle='#468bd2';ctx.lineWidth=2.5;ctx.setLineDash([7,5]);ctx.stroke();ctx.setLineDash([]);});}
+ label(ctx,'Time window = '+fmt(duration,3)+' s',left,bottom+25,'#55755c',12);label(ctx,'Amplitude',left,top-10,'#55755c',12);label(ctx,'Beat envelope',right,top-10,'#468bd2',12,'right');
+ $('soundF1Read').textContent=p.f1+' Hz';$('soundF2Read').textContent=p.f2+' Hz';$('beatFrequencyRead').textContent=p.beat+' Hz';$('soundFrequency1Out').textContent=p.f1+' Hz';$('beatDifferenceOut').textContent=p.diff+' Hz';$('soundF2Mini').textContent=p.f2+' Hz';$('beatPeriodRead').textContent=p.beat===0?'No beats':fmt(1/p.beat,3)+' s';$('soundGraphCaption').textContent=p.diff===0?'Equal frequencies · constant loudness envelope':p.beat+' loudness pulses per second';
 }
 $('soundFrequency1').addEventListener('input',drawSound);
 $('beatDifference').addEventListener('input',drawSound);
-$('playTone').addEventListener('click',()=>{
-  const p=soundParams();startAudio([p.f1],'Pure tone '+p.f1+' Hz');
-});
-$('playBeats').addEventListener('click',()=>{
-  const p=soundParams();startAudio([p.f1,p.f2],'Beat demonstration '+p.f1+' Hz and '+p.f2+' Hz');
-});
-$('stopSound').addEventListener('click',stopAudio);
+$('playTone').addEventListener('click',()=>{const p=soundParams();startAudio([p.f1],'pure tone '+p.f1+' Hz');});
+$('playBeats').addEventListener('click',()=>{const p=soundParams();startAudio([p.f1,p.f2],'beat demonstration '+p.f1+' Hz and '+p.f2+' Hz');});
+$('stopSound').addEventListener('click',()=>stopAudio(true));
 $('soundAirTemp').addEventListener('input',updateSoundSpeed);
-function updateSoundSpeed(){
-  const t=+$('soundAirTemp').value,v=331+.6*t;
-  $('soundAirTempOut').textContent=t+' °C';
-  $('soundAirSpeed').textContent=fmt(v,1)+' m/s';
-}
+function updateSoundSpeed(){const t=+$('soundAirTemp').value,v=331+.6*t;$('soundAirTempOut').textContent=t+' °C';$('soundAirSpeed').textContent=fmt(v,1)+' m/s';}
 
-/* -------------------------------------------------------
-   Lab missions
-------------------------------------------------------- */
+/* Missions */
 document.querySelectorAll('[data-mission]').forEach(btn=>btn.addEventListener('click',()=>{
-  const id=btn.dataset.mission;
-  if(state.missions.has(id))state.missions.delete(id);else state.missions.add(id);
-  const done=state.missions.has(id);
-  $('mission'+id).classList.toggle('done',done);
-  btn.textContent=done?'✓ Completed':'Mark complete';
-  const n=state.missions.size;
-  $('missionCount').textContent=n+' / 3 COMPLETE';
-  $('missionProgress').style.width=(n/3*100)+'%';
-  $('missionHint').textContent=n===3?'All three investigations completed. Excellent work!':n+' of 3 missions completed.';
+ const id=btn.dataset.mission;if(state.missions.has(id))state.missions.delete(id);else state.missions.add(id);const done=state.missions.has(id);$('mission'+id).classList.toggle('done',done);btn.textContent=done?'✓ Completed':'Mark complete';const n=state.missions.size;$('missionCount').textContent=n+' / 3 COMPLETE';$('missionProgress').style.width=(n/3*100)+'%';$('missionHint').textContent=n===3?'All three investigations completed. Excellent work!':n+' of 3 missions completed.';
 }));
 
-/* -------------------------------------------------------
-   Data export
-------------------------------------------------------- */
+/* CSV export */
 $('exportBtn').addEventListener('click',()=>{
-  const wv=waveParams(),sp=superParams(),st=standingParams(),snd=soundParams();
-  const rows=[
-    ['Waves Lab Data','Value','Unit'],
-    ['Wave type',$('waveType').value,''],
-    ['Wave amplitude',wv.A,'m'],
-    ['Wave wavelength',wv.lambda,'m'],
-    ['Wave frequency',wv.f,'Hz'],
-    ['Wave speed',wv.v,'m/s'],
-    ['Wave number',wv.k,'rad/m'],
-    ['Angular frequency',wv.omega,'rad/s'],
-    ['Reflection boundary',$('boundaryType').value,''],
-    ['Superposition wave speed',sp.v,'m/s'],
-    ['Resonator type',st.type,''],
-    ['Resonator length',st.L,'m'],
-    ['Harmonic number',st.harmonic,''],
-    ['Standing wave frequency',st.f,'Hz'],
-    ['Standing wave wavelength',st.lambda,'m'],
-    ['Sound tone 1',snd.f1,'Hz'],
-    ['Sound tone 2',snd.f2,'Hz'],
-    ['Beat frequency',snd.beat,'Hz'],
-    ['Air temperature',+$('soundAirTemp').value,'°C'],
-    ['Missions completed',state.missions.size,'of 3']
-  ];
-  const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
-  const url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download='waves-lab-data.csv';
-  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+ const wv=waveParams(),sp=superParams(),st=standingParams(),snd=soundParams(),rows=[
+  ['Waves Lab Data','Value','Unit'],
+  ['Wave type',$('waveType').value,''],
+  ['Wave amplitude',wv.A,'m'],
+  ['Wave wavelength',wv.lambda,'m'],
+  ['Wave frequency',wv.f,'Hz'],
+  ['Wave speed',wv.v,'m/s'],
+  ['Wave number',wv.k,'rad/m'],
+  ['Angular frequency',wv.omega,'rad/s'],
+  ['Reflection boundary',$('boundaryType').value,''],
+  ['Superposition wave speed',sp.v,'m/s'],
+  ['Resonator type',st.type,''],
+  ['Resonator length',st.L,'m'],
+  ['Harmonic number',st.harmonic,''],
+  ['Standing-wave frequency',st.f,'Hz'],
+  ['Standing-wave wavelength',st.lambda,'m'],
+  ['Node count',st.nodePositions.length,''],
+  ['Antinode count',st.antinodePositions.length,''],
+  ['Sound tone 1',snd.f1,'Hz'],
+  ['Sound tone 2',snd.f2,'Hz'],
+  ['Beat frequency',snd.beat,'Hz'],
+  ['Air temperature',+$('soundAirTemp').value,'°C'],
+  ['Missions completed',state.missions.size,'of 3']
+ ];
+ const csv=rows.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='waves-lab-data.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 });
 
-/* -------------------------------------------------------
-   Reset all stations
-------------------------------------------------------- */
+/* Full reset */
 $('resetAll').addEventListener('click',()=>{
-  stopAudio();
-  Object.assign(state,{
-    waveTime:0,waveRunning:true,
-    superTime:0,superRunning:true,
-    standingTime:0,standingRunning:true
-  });
-  $('waveType').value='transverse';$('waveAmplitude').value=.5;$('waveLambda').value=4;$('waveFrequency').value=2;
-  $('boundaryType').value='fixed';$('superAmplitude').value=.5;$('superLambda').value=4;$('superFrequency').value=1;
-  $('resonatorType').value='string';$('resonatorLength').value=1;$('modeNumber').value=1;$('stringSpeed').value=120;$('airTemperature').value=20;
-  $('soundFrequency1').value=440;$('beatDifference').value=4;$('soundAirTemp').value=20;
-  $('wavePlay').textContent='Ⅱ Pause';$('superPlay').textContent='Ⅱ Pause';$('standingPlay').textContent='Ⅱ Pause';
-  state.missions.clear();
-  document.querySelectorAll('[data-mission]').forEach(b=>{
-    b.textContent='Mark complete';
-    $('mission'+b.dataset.mission).classList.remove('done');
-  });
-  $('missionCount').textContent='0 / 3 COMPLETE';
-  $('missionProgress').style.width='0%';
-  $('missionHint').textContent='Your completed missions will appear here.';
-  $('audioStatus').textContent='Audio is off. Press a sound button to begin.';
-  $('standingAudioStatus').textContent='Sound is optional. Press “Hear this mode” to listen.';
-  drawAll();
+ stopAudio(true);Object.assign(state,{waveTime:0,waveRunning:true,superTime:0,superRunning:true,standingTime:0,standingRunning:true});
+ $('waveType').value='transverse';$('waveAmplitude').value=.5;$('waveLambda').value=4;$('waveFrequency').value=2;
+ $('boundaryType').value='fixed';$('superAmplitude').value=.5;$('superLambda').value=4;$('superFrequency').value=1;
+ $('resonatorType').value='string';$('resonatorLength').value=1;$('modeNumber').value=1;$('stringSpeed').value=120;$('airTemperature').value=20;
+ $('soundFrequency1').value=440;$('beatDifference').value=4;$('soundAirTemp').value=20;
+ $('wavePlay').textContent='Ⅱ Pause';$('superPlay').textContent='Ⅱ Pause';$('standingPlay').textContent='Ⅱ Pause';
+ state.missions.clear();document.querySelectorAll('[data-mission]').forEach(b=>{b.textContent='Mark complete';$('mission'+b.dataset.mission).classList.remove('done');});$('missionCount').textContent='0 / 3 COMPLETE';$('missionProgress').style.width='0%';$('missionHint').textContent='Your completed missions will appear here.';
+ $('audioStatus').textContent='Audio is off. Press a sound button to begin.';$('standingAudioStatus').textContent='Sound is optional. Press “Hear this mode” to listen.';drawAll();
 });
 
-/* -------------------------------------------------------
-   Animation loop
-------------------------------------------------------- */
-function drawAll(){
-  drawWave();drawSuperposition();drawStanding();drawSound();updateSoundSpeed();
-}
-function animate(timestamp){
-  if(!state.lastFrame)state.lastFrame=timestamp;
-  const dt=Math.min(.04,(timestamp-state.lastFrame)/1000);
-  state.lastFrame=timestamp;
-  if(state.waveRunning)state.waveTime+=dt;
-  if(state.superRunning)state.superTime+=dt;
-  if(state.standingRunning)state.standingTime+=dt;
-  drawWave();drawSuperposition();drawStanding();
-  requestAnimationFrame(animate);
-}
-document.addEventListener('visibilitychange',()=>{
-  if(document.hidden)stopAudio();
-});
-window.addEventListener('pagehide',stopAudio);
+/* Pause audio when the page is hidden or closed. */
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio(true);});
+window.addEventListener('pagehide',()=>stopAudio(false));
 
-// First render.
-drawAll();
-requestAnimationFrame(animate);
+/* Animation loop */
+function drawAll(){drawWave();drawSuperposition();drawStanding();drawSound();updateSoundSpeed();}
+function animate(timestamp){if(!state.lastFrame)state.lastFrame=timestamp;const dt=Math.min(.04,(timestamp-state.lastFrame)/1000);state.lastFrame=timestamp;if(state.waveRunning)state.waveTime+=dt;if(state.superRunning)state.superTime+=dt;if(state.standingRunning)state.standingTime+=dt;drawWave();drawSuperposition();drawStanding();requestAnimationFrame(animate);}
+drawAll();requestAnimationFrame(animate);
 })();
 </script>
 </body>
