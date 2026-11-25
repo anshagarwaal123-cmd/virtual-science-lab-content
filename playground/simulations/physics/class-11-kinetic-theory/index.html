@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#081426">
+<title>Kinetic Theory | Virtual Science Lab</title>
+<script id="experiment-metadata" type="application/json">
+{"id":"class-11-kinetic-theory","title":"Kinetic Theory","class":"11","chapter":"Kinetic Theory","chapterNumber":12,"description":"Explore molecular motion, gas pressure and the ideal gas equation, Maxwell speed distribution, equipartition of energy and mean free path through interactive simulations."}
+</script>
+<style>
+:root{--bg:#071321;--panel:#0d1d31;--panel2:#10243b;--line:#213b58;--text:#eef6ff;--muted:#9bb0c8;--cyan:#54d8eb;--blue:#74a9ff;--orange:#ffb45b;--green:#6ee7b7;--red:#ff7f86;--shadow:0 18px 48px rgba(0,0,0,.25);--radius:20px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 12% 0%,#132b48 0,transparent 32%),radial-gradient(circle at 90% 14%,#102b39 0,transparent 26%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1220px;margin:auto;padding:24px 22px 56px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px;color:#bcd0e7;font-size:.88rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(145deg,#60e4ed,#5b8fff);display:grid;place-items:center;color:#061323;font-weight:950;box-shadow:0 6px 20px #42c8e744}
+.top-tag,.chip{border:1px solid #2c4968;background:#10243a;color:#c6d8ee;border-radius:999px;padding:7px 11px;font-size:.76rem;font-weight:750;white-space:nowrap}
+.hero{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(220px,.55fr);gap:22px;align-items:center;margin:10px 0 24px}
+.eyebrow{color:var(--cyan);font-size:.78rem;font-weight:850;letter-spacing:.16em;text-transform:uppercase;margin-bottom:9px}
+h1{font-size:clamp(2.15rem,5vw,4.1rem);line-height:1.02;letter-spacing:-.055em;margin:0 0 14px}
+.gradient{background:linear-gradient(90deg,#f4fbff 10%,#75e7ee 52%,#8bacff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:700px;color:#a9bdd3;font-size:1rem;margin:0}
+.hero-art{min-height:165px;position:relative;border:1px solid #264461;border-radius:24px;background:linear-gradient(145deg,#0e2740,#0b1a2b);overflow:hidden;box-shadow:var(--shadow);display:grid;place-items:center}
+.hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #4bcfe766;border-radius:50%;width:150px;height:150px;transform:rotateX(65deg)}
+.hero-art:after{width:215px;height:215px;border-color:#7aa7ff44}
+.atom{position:absolute;width:12px;height:12px;border-radius:50%;background:#5ce4ed;box-shadow:0 0 20px #5ce4ed;animation:float 4s ease-in-out infinite}
+.atom.a1{top:30%;left:30%}.atom.a2{top:65%;left:64%;background:#ffb45b;box-shadow:0 0 20px #ffb45b;animation-delay:-1s}.atom.a3{top:24%;right:24%;background:#86aaff;box-shadow:0 0 20px #86aaff;animation-delay:-2s}.atom.a4{bottom:18%;left:22%;animation-delay:-.6s}
+@keyframes float{50%{transform:translate(14px,-13px)}}
+.quick-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0}
+.stat{background:#0e2034;border:1px solid #203a56;border-radius:15px;padding:12px 14px;min-width:0}
+.stat small{display:block;color:#8ea6c0;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.stat strong{display:block;font-size:1.16rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;padding:7px;border:1px solid #203a56;background:#09192a;border-radius:17px;margin:22px 0 18px;position:sticky;top:8px;z-index:10;backdrop-filter:blur(12px)}
+.tab{border:0;background:transparent;color:#9fb4cc;border-radius:12px;padding:10px 14px;font-weight:800;font-size:.88rem;transition:.2s}
+.tab:hover{background:#142b44;color:#fff}.tab.active{background:linear-gradient(135deg,#46d8e6,#76a6ff);color:#051525;box-shadow:0 6px 18px #52cce633}
+.panel{display:none;animation:fade .25s ease}.panel.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin:22px 0 14px}
+.panel-head h2{font-size:1.5rem;margin:0 0 4px;letter-spacing:-.03em}.panel-head p{margin:0;color:var(--muted);font-size:.9rem}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,.75fr);gap:16px;align-items:start}
+.card{background:linear-gradient(155deg,#10233a,#0b1b2e);border:1px solid #203b58;border-radius:var(--radius);padding:17px;box-shadow:var(--shadow);min-width:0}
+.card h3{font-size:1rem;margin:0 0 12px;letter-spacing:-.01em}.card-sub{color:#8fa8c3;font-size:.82rem;margin:-7px 0 12px}
+.sim-wrap{position:relative;border:1px solid #24445f;border-radius:16px;overflow:hidden;background:radial-gradient(ellipse at 50% 38%,#102b45,#081525 76%)}
+canvas{display:block;width:100%;height:auto}
+#chamberCanvas{aspect-ratio:900/450;min-height:240px}
+.sim-overlay{position:absolute;left:12px;top:10px;display:flex;gap:7px;flex-wrap:wrap;pointer-events:none}
+.sim-overlay span{background:#071626cc;border:1px solid #31516d;border-radius:8px;padding:5px 8px;color:#bcd1e8;font-size:.7rem;font-weight:750}
+.sim-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;color:#8da5bf;font-size:.78rem;flex-wrap:wrap}
+.control-grid{display:grid;gap:15px}
+.control{display:grid;gap:7px}.control-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.control label{color:#c7d7e9;font-size:.84rem;font-weight:750}.control output{color:var(--cyan);font-weight:900;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:#5bdce9;cursor:pointer}
+select{width:100%;padding:10px 12px;border:1px solid #31506c;border-radius:11px;background:#0a1a2c;color:#e8f2ff;outline:none}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #31506b;background:#132b43;color:#d9e9f8;padding:9px 12px;border-radius:11px;font-size:.82rem;font-weight:800;transition:.18s}.btn:hover{transform:translateY(-1px);border-color:#5bdce9}.btn.primary{background:linear-gradient(135deg,#4bd7e6,#78a9ff);color:#061626;border:0}.btn.ghost{background:transparent}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:10px;color:#b8cbe0;font-size:.82rem}.switch{appearance:none;width:38px;height:21px;border-radius:30px;background:#29425b;position:relative;cursor:pointer;transition:.2s;flex:none}.switch:before{content:"";position:absolute;width:15px;height:15px;left:3px;top:3px;border-radius:50%;background:#c3d3e4;transition:.2s}.switch:checked{background:#25aebf}.switch:checked:before{transform:translateX(17px);background:white}
+.readout-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}.readout{background:#0a1a2b;border:1px solid #203c58;border-radius:12px;padding:10px}.readout small{display:block;color:#8ca5bf;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;font-weight:800}.readout strong{display:block;font-size:1.05rem;margin-top:3px;color:#f0f7ff;font-variant-numeric:tabular-nums}
+.formula{border:1px solid #24506a;background:#0a2133;border-radius:13px;padding:13px;color:#d4f8ff;font-size:1.02rem;text-align:center;font-family:Georgia,serif;overflow:auto}.formula small{display:block;color:#8fb4c8;font: .72rem Inter,system-ui;margin-top:5px}
+.note{border-left:3px solid var(--cyan);padding:9px 12px;background:#10283c;border-radius:0 10px 10px 0;color:#b7cde0;font-size:.82rem;margin-top:12px}
+.legend{display:flex;gap:14px;align-items:center;flex-wrap:wrap;color:#9eb4cc;font-size:.75rem}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.graph-box{border:1px solid #24445f;border-radius:15px;background:#091a2b;padding:8px;overflow:hidden}#lawCanvas,#distCanvas{aspect-ratio:720/360}
+.segment{display:flex;background:#091828;padding:4px;border:1px solid #27435d;border-radius:12px;gap:4px}.segment button{border:0;background:transparent;color:#91a9c2;padding:8px 10px;border-radius:9px;font-size:.78rem;font-weight:800;flex:1}.segment button.active{background:#1c4561;color:#e4fbff;box-shadow:inset 0 0 0 1px #3f90ac}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini-stat{background:#0a1a2b;border:1px solid #213d58;border-radius:13px;padding:12px}.mini-stat span{display:block;color:#91a9c2;font-size:.73rem}.mini-stat strong{font-size:1.18rem;display:block;margin-top:4px;font-variant-numeric:tabular-nums}
+.callout{border:1px solid #55472f;background:linear-gradient(130deg,#302819,#1b2430);border-radius:14px;padding:12px;color:#e7d4ae;font-size:.82rem}
+.mission-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.mission{border:1px solid #28445f;background:#0b1d30;border-radius:14px;padding:13px}.mission strong{display:block;font-size:.86rem;margin-bottom:5px}.mission p{color:#91a9c2;font-size:.76rem;margin:0 0 10px}.mission.done{border-color:#2a886c;background:#0d2a2a}.mission.done .btn{border-color:#2b876d;color:#a8f5d5}
+.progress{height:7px;background:#1c344c;border-radius:20px;overflow:hidden;margin:10px 0 5px}.progress span{height:100%;display:block;width:0;background:linear-gradient(90deg,#4bd7e6,#6ee7b7);transition:width .25s}
+.footer{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#718ba7;font-size:.75rem;margin-top:28px;border-top:1px solid #1b344d;padding-top:16px}
+.hidden{display:none!important}.accent{color:var(--cyan)}.muted{color:var(--muted)}.small{font-size:.76rem;color:#8fa8c3}
+@media(max-width:860px){.hero{grid-template-columns:1fr}.hero-art{min-height:125px}.layout{grid-template-columns:1fr}.quick-stats{grid-template-columns:repeat(2,1fr)}.mission-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.shell{padding:16px 12px 38px}.topline{align-items:flex-start}.top-tag{font-size:.68rem}.hero{margin-top:2px}.hero p{font-size:.9rem}.tabs{top:4px;display:grid;grid-template-columns:1fr 1fr}.tab{padding:10px 7px;font-size:.78rem}.card{padding:13px;border-radius:16px}.panel-head{margin-top:16px}.readout-grid{grid-template-columns:repeat(3,1fr)}.readout{padding:8px}.readout strong{font-size:.9rem}.two-col{grid-template-columns:1fr 1fr}.mission-grid{grid-template-columns:1fr}.footer{align-items:flex-start;flex-direction:column}#chamberCanvas{min-height:215px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topline">
+    <div class="brand"><span class="brand-mark">V</span> Virtual Science Lab</div>
+    <span class="top-tag">PHYSICS · CLASS 11</span>
+  </div>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Chapter 12 · Interactive experiment</div>
+      <h1><span class="gradient">Kinetic Theory</span><br>of Gases</h1>
+      <p>Zoom into the invisible world of molecules. Change temperature, squeeze the gas, watch pressure respond, and discover why temperature is a measure of molecular motion.</p>
+    </div>
+    <div class="hero-art" aria-hidden="true"><span class="atom a1"></span><span class="atom a2"></span><span class="atom a3"></span><span class="atom a4"></span></div>
+  </section>
+
+  <div class="quick-stats">
+    <div class="stat"><small>Gas temperature</small><strong id="topTemp">300 K</strong></div>
+    <div class="stat"><small>Pressure</small><strong id="topPressure">4.99 kPa</strong></div>
+    <div class="stat"><small>Volume</small><strong id="topVolume">5.0 L</strong></div>
+    <div class="stat"><small>Molecules shown</small><strong id="topMolecules">52</strong></div>
+  </div>
+
+  <nav class="tabs" aria-label="Experiment stations">
+    <button class="tab active" data-tab="chamber">01 · Molecular chamber</button>
+    <button class="tab" data-tab="laws">02 · Gas laws</button>
+    <button class="tab" data-tab="speeds">03 · Speed distribution</button>
+    <button class="tab" data-tab="energy">04 · Energy &amp; collisions</button>
+  </nav>
+
+  <main>
+    <section class="panel active" id="panel-chamber">
+      <div class="panel-head"><div><h2>Inside the molecular chamber</h2><p>Each glowing dot represents a gas molecule. The piston changes the available volume.</p></div><span class="chip">LIVE SIMULATION</span></div>
+      <div class="layout">
+        <div class="card">
+          <div class="sim-wrap">
+            <canvas id="chamberCanvas" width="900" height="450" aria-label="Animated gas molecules moving and colliding inside a piston chamber"></canvas>
+            <div class="sim-overlay"><span id="simTemp">300 K</span><span id="simPressure">4.99 kPa</span><span id="simState">MOLECULAR MOTION</span></div>
+          </div>
+          <div class="sim-footer"><span>⚡ Faster motion = higher temperature</span><span id="particleCountLabel">52 molecules displayed</span></div>
+          <div class="readout-grid">
+            <div class="readout"><small>Mean kinetic energy</small><strong id="meanEnergy">6.21 × 10⁻²¹ J</strong></div>
+            <div class="readout"><small>RMS speed · N₂</small><strong id="rmsSpeed">517 m/s</strong></div>
+            <div class="readout"><small>Gas amount</small><strong id="amountRead">0.010 mol</strong></div>
+          </div>
+          <div class="note">Watch the molecules hit the walls. Their momentum changes at each collision; the combined force of countless impacts produces gas pressure.</div>
+        </div>
+        <aside class="card">
+          <h3>Experiment controls</h3>
+          <p class="card-sub">Change one variable and observe the result.</p>
+          <div class="control-grid">
+            <div class="control"><div class="control-top"><label for="tempRange">Temperature (T)</label><output id="tempOut">300 K</output></div><input id="tempRange" type="range" min="100" max="600" step="10" value="300"></div>
+            <div class="control"><div class="control-top"><label for="volRange">Volume (V)</label><output id="volOut">5.0 L</output></div><input id="volRange" type="range" min="2" max="10" step="0.1" value="5"></div>
+            <div class="control"><div class="control-top"><label for="molRange">Amount of gas (n)</label><output id="molOut">0.010 mol</output></div><input id="molRange" type="range" min="0.005" max="0.04" step="0.001" value="0.01"></div>
+            <div class="btn-row"><button class="btn primary" id="pauseBtn">Ⅱ Pause</button><button class="btn" id="resetBtn">↺ Reset</button></div>
+            <div class="switch-row"><label for="vectorsToggle">Show velocity arrows</label><input class="switch" id="vectorsToggle" type="checkbox" checked></div>
+            <div class="switch-row"><label for="trailsToggle">Show motion trails</label><input class="switch" id="trailsToggle" type="checkbox"></div>
+            <div class="formula">P V = n R T<small>Ideal gas equation · R = 8.314 J mol⁻¹ K⁻¹</small></div>
+            <div class="small">Try this: keep volume fixed, then raise temperature. What happens to pressure?</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-laws">
+      <div class="panel-head"><div><h2>Investigate the gas laws</h2><p>Explore how pressure changes when temperature, volume or amount of gas changes.</p></div><span class="chip">IDEAL GAS MODEL</span></div>
+      <div class="layout">
+        <div class="card">
+          <h3 id="lawTitle">Boyle's law · P vs V</h3>
+          <p class="card-sub" id="lawDescription">At constant temperature and amount of gas, pressure is inversely proportional to volume.</p>
+          <div class="segment" role="group" aria-label="Select gas law"><button class="active" data-law="boyle">Boyle</button><button data-law="charles">Charles</button><button data-law="gay">Pressure law</button></div>
+          <div class="graph-box" style="margin-top:12px"><canvas id="lawCanvas" width="720" height="360" aria-label="Graph for the selected gas law"></canvas></div>
+          <div class="legend" style="margin-top:10px"><span><i class="dot" style="background:#58dbe8"></i>Ideal gas relationship</span><span><i class="dot" style="background:#ffb45b"></i>Current state</span></div>
+        </div>
+        <aside class="card">
+          <h3>Change the conditions</h3>
+          <p class="card-sub">The orange marker is the current state.</p>
+          <div class="control-grid">
+            <div class="control"><div class="control-top"><label for="lawRange">Control variable</label><output id="lawOut">5.0 L</output></div><input id="lawRange" type="range" min="2" max="10" step="0.1" value="5"></div>
+            <div class="two-col"><div class="mini-stat"><span>Pressure</span><strong id="lawP">4.99 kPa</strong></div><div class="mini-stat"><span>Temperature</span><strong id="lawT">300 K</strong></div></div>
+            <div class="formula" id="lawFormula">P ∝ 1 / V<small>Boyle's law · T and n are constant</small></div>
+            <div class="callout" id="lawInsight">When volume is reduced to half at constant temperature, pressure doubles.</div>
+            <button class="btn" id="lawReset">Reset this graph</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-speeds">
+      <div class="panel-head"><div><h2>How fast do molecules move?</h2><p>Compare the Maxwell–Boltzmann speed distribution for different gases and temperatures.</p></div><span class="chip">STATISTICAL MODEL</span></div>
+      <div class="layout">
+        <div class="card">
+          <h3>Maxwell speed distribution</h3>
+          <p class="card-sub">The curve shows the probability distribution of molecular speeds.</p>
+          <div class="graph-box"><canvas id="distCanvas" width="720" height="360" aria-label="Maxwell Boltzmann molecular speed distribution graph"></canvas></div>
+          <div class="legend" style="margin-top:10px"><span><i class="dot" style="background:#62dce9"></i>Maxwell–Boltzmann curve</span><span><i class="dot" style="background:#ffb45b"></i>Most probable speed</span></div>
+          <div class="note">The curve becomes broader and shifts right as temperature increases. Lighter gas molecules generally move faster than heavier ones at the same temperature.</div>
+        </div>
+        <aside class="card">
+          <h3>Choose a gas</h3>
+          <div class="control-grid">
+            <div class="control"><label for="gasSelect">Gas sample</label><select id="gasSelect"><option value="H2">Hydrogen (H₂) · 2 g/mol</option><option value="He">Helium (He) · 4 g/mol</option><option value="N2" selected>Nitrogen (N₂) · 28 g/mol</option><option value="O2">Oxygen (O₂) · 32 g/mol</option><option value="CO2">Carbon dioxide (CO₂) · 44 g/mol</option></select></div>
+            <div class="control"><div class="control-top"><label for="distTemp">Temperature</label><output id="distTempOut">300 K</output></div><input id="distTemp" type="range" min="100" max="1000" step="10" value="300"></div>
+            <div class="two-col"><div class="mini-stat"><span>Most probable speed</span><strong id="vmp">422 m/s</strong></div><div class="mini-stat"><span>RMS speed</span><strong id="vrms">517 m/s</strong></div><div class="mini-stat"><span>Mean speed</span><strong id="vmean">476 m/s</strong></div><div class="mini-stat"><span>Molar mass</span><strong id="molarMass">28 g/mol</strong></div></div>
+            <div class="formula">v<sub>rms</sub> = √(3 R T / M)<small>M is molar mass in kg mol⁻¹</small></div>
+            <button class="btn" id="syncTemp">Use chamber temperature</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-energy">
+      <div class="panel-head"><div><h2>Energy sharing &amp; molecular collisions</h2><p>Explore equipartition of energy and estimate the mean free path between collisions.</p></div><span class="chip">MICROSCOPIC VIEW</span></div>
+      <div class="layout">
+        <div class="card">
+          <h3>Law of equipartition of energy</h3>
+          <p class="card-sub">Each active quadratic degree of freedom contributes ½ kT per molecule.</p>
+          <div class="control-grid">
+            <div class="control"><label for="moleculeType">Molecular model</label><select id="moleculeType"><option value="mono">Monatomic gas (3 degrees)</option><option value="dia" selected>Diatomic gas (5 degrees)</option><option value="dia6">Diatomic · vibration active (7 degrees)</option></select></div>
+            <div class="control"><div class="control-top"><label for="energyTemp">Temperature</label><output id="energyTempOut">300 K</output></div><input id="energyTemp" type="range" min="100" max="1200" step="10" value="300"></div>
+            <div class="two-col"><div class="mini-stat"><span>Degrees of freedom (f)</span><strong id="dof">5</strong></div><div class="mini-stat"><span>U per mole</span><strong id="uMole">6.24 kJ/mol</strong></div><div class="mini-stat"><span>Cᵥ,m</span><strong id="cv">20.79 J/mol·K</strong></div><div class="mini-stat"><span>Cₚ/Cᵥ (γ)</span><strong id="gamma">1.40</strong></div></div>
+            <div class="formula" id="equipFormula">U = (f / 2) n R T<small>For one mole: Cᵥ,m = (f / 2) R</small></div>
+            <div class="graph-box"><canvas id="energyCanvas" width="720" height="230" aria-label="Energy distribution among active molecular degrees of freedom"></canvas></div>
+          </div>
+        </div>
+        <aside class="card">
+          <h3>Mean free path</h3>
+          <p class="card-sub">Average distance travelled between successive molecular collisions.</p>
+          <div class="control-grid">
+            <div class="control"><div class="control-top"><label for="pressureRange">Pressure</label><output id="pressureOut">100 kPa</output></div><input id="pressureRange" type="range" min="10" max="500" step="5" value="100"></div>
+            <div class="control"><div class="control-top"><label for="diameterRange">Molecular diameter</label><output id="diameterOut">3.7 Å</output></div><input id="diameterRange" type="range" min="2" max="5" step="0.1" value="3.7"></div>
+            <div class="control"><div class="control-top"><label for="mfpTemp">Temperature</label><output id="mfpTempOut">300 K</output></div><input id="mfpTemp" type="range" min="100" max="600" step="10" value="300"></div>
+            <div class="mini-stat"><span>Mean free path (λ)</span><strong id="mfpValue">68.0 nm</strong></div>
+            <div class="formula">λ = k T / (√2 π d² p)<small>k = 1.381 × 10⁻²³ J/K</small></div>
+            <div class="callout">At lower pressure, molecules are farther apart on average, so the mean free path increases.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-missions" style="display:block;margin-top:22px">
+      <div class="panel-head"><div><h2>Lab missions</h2><p>Complete these quick investigations to check what you discovered.</p></div><span class="chip" id="missionCount">0 / 3 COMPLETE</span></div>
+      <div class="mission-grid">
+        <article class="mission" id="mission1"><strong>Mission 01 · Double the pressure</strong><p>At constant temperature and amount, reduce volume from 5 L to 2.5 L. Observe the pressure.</p><button class="btn" data-mission="1">Mark complete</button></article>
+        <article class="mission" id="mission2"><strong>Mission 02 · Heat the molecules</strong><p>Raise chamber temperature from 300 K to 600 K. Compare the molecular motion and RMS speed.</p><button class="btn" data-mission="2">Mark complete</button></article>
+        <article class="mission" id="mission3"><strong>Mission 03 · Compare two gases</strong><p>At the same temperature, compare the RMS speeds of hydrogen and oxygen.</p><button class="btn" data-mission="3">Mark complete</button></article>
+      </div>
+      <div class="progress"><span id="missionProgress"></span></div><div class="small" id="missionHint">Your lab progress will appear here.</div>
+    </section>
+  </main>
+
+  <div class="footer"><span>Virtual Science Lab · Physics · Class 11</span><div class="btn-row"><button class="btn ghost" id="exportBtn">↓ Export lab data (CSV)</button><button class="btn ghost" id="resetAllBtn">Reset experiment</button></div></div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const R = 8.314462618, kB = 1.380649e-23, NA = 6.02214076e23;
+  const gases = {H2:{name:'Hydrogen',M:0.002,d:2.9},He:{name:'Helium',M:0.004,d:2.6},N2:{name:'Nitrogen',M:0.028,d:3.7},O2:{name:'Oxygen',M:0.032,d:3.5},CO2:{name:'Carbon dioxide',M:0.044,d:3.3}};
+  const state = {T:300,V:5,n:0.01,gas:'N2',paused:false,vectors:true,trails:false,law:'boyle',lawX:5,missions:new Set(),lastTime:0};
+  const fmt = (v,d=2) => Number(v).toFixed(d);
+  const pressureKPa = (T=state.T,V=state.V,n=state.n) => n*R*T/(V/1000)/1000;
+  const rms = (T,M) => Math.sqrt(3*R*T/M);
+  const meanSpeed = (T,M) => Math.sqrt(8*R*T/(Math.PI*M));
+  const mostProbable = (T,M) => Math.sqrt(2*R*T/M);
+  const expFmt = (v,d=2) => v.toExponential(d).replace('e',' × 10^');
+  const tempInCanvas = T => Math.sqrt(T/300);
+
+  // Navigation: keep each station independent while preserving the shared chamber state.
+  document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b===btn));
+    document.querySelectorAll('.panel[id^="panel-"]').forEach(p => p.classList.toggle('active', p.id === 'panel-'+btn.dataset.tab));
+    if(btn.dataset.tab==='laws') drawLaw();
+    if(btn.dataset.tab==='speeds') drawDistribution();
+    if(btn.dataset.tab==='energy') drawEnergy();
+  }));
+
+  // Molecular chamber simulation.
+  const chamber = $('chamberCanvas'), cctx = chamber.getContext('2d');
+  let particles = [], chamberBounds = {x:54,y:65,w:780,h:320};
+  const countParticles = () => Math.round(18 + (state.n-0.005)/(0.04-0.005)*64);
+  function resizeParticles(){
+    const target=countParticles(), bounds=currentBounds();
+    while(particles.length<target) particles.push(makeParticle(bounds));
+    if(particles.length>target) particles.length=target;
+    particles.forEach(p=>{p.x=Math.min(bounds.x+bounds.w-5,Math.max(bounds.x+5,p.x));p.y=Math.min(bounds.y+bounds.h-5,Math.max(bounds.y+5,p.y));});
+  }
+  function currentBounds(){
+    const w=chamber.clientWidth||900,h=chamber.clientHeight||450, x=56,y=62, maxW=w-112, ratio=state.V/10;
+    return {x,y,w:maxW*(0.34+0.66*ratio),h:h-120};
+  }
+  function randomDirection(){const a=Math.random()*Math.PI*2,s=(95+Math.random()*115)*tempInCanvas(state.T);return {vx:Math.cos(a)*s,vy:Math.sin(a)*s};}
+  function makeParticle(b){const d=randomDirection();return {x:b.x+12+Math.random()*Math.max(10,b.w-24),y:b.y+12+Math.random()*Math.max(10,b.h-24),vx:d.vx,vy:d.vy,r:3.2+Math.random()*1.5,hue:Math.random()};}
+  function scaleParticleSpeeds(){const f=tempInCanvas(state.T);particles.forEach(p=>{const a=Math.atan2(p.vy,p.vx),s=(95+Math.random()*115)*f;p.vx=Math.cos(a)*s;p.vy=Math.sin(a)*s;});}
+  function setCanvasSize(canvas,ctx){const w=canvas.clientWidth||canvas.parentElement.clientWidth||700;const h=canvas.clientHeight||Math.max(180,Math.round(w*(canvas.id==='chamberCanvas'?450/900:canvas.id==='energyCanvas'?230/720:360/720)));const dpr=Math.min(2,window.devicePixelRatio||1);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);return {w,h,dpr};}
+  function drawChamberFrame(){
+    const size=setCanvasSize(chamber,cctx),w=size.w,h=size.h,b=currentBounds();chamberBounds=b;
+    cctx.clearRect(0,0,w,h);
+    // Soft grid and chamber glow.
+    cctx.save();cctx.strokeStyle='rgba(88,150,190,.10)';cctx.lineWidth=1;
+    for(let x=20;x<w;x+=35){cctx.beginPath();cctx.moveTo(x,0);cctx.lineTo(x,h);cctx.stroke();}
+    for(let y=15;y<h;y+=35){cctx.beginPath();cctx.moveTo(0,y);cctx.lineTo(w,y);cctx.stroke();}
+    cctx.restore();
+    // Chamber floor, ceiling and fixed wall.
+    cctx.lineWidth=7;cctx.lineCap='round';cctx.strokeStyle='#7195b4';cctx.shadowColor='#48d4e9';cctx.shadowBlur=11;
+    cctx.beginPath();cctx.moveTo(b.x,b.y);cctx.lineTo(b.x+b.w,b.y);cctx.moveTo(b.x,b.y+b.h);cctx.lineTo(b.x+b.w,b.y+b.h);cctx.moveTo(b.x,b.y);cctx.lineTo(b.x,b.y+b.h);cctx.stroke();cctx.shadowBlur=0;
+    // Sliding piston with piston head and rod.
+    const px=b.x+b.w;cctx.fillStyle='#45647f';cctx.fillRect(px-7,b.y-9,15,b.h+18);cctx.fillStyle='#9ab8d0';cctx.fillRect(px-4,b.y-5,8,b.h+10);cctx.fillStyle='#385571';cctx.fillRect(px+8,h/2-9,Math.max(0,w-px-8),18);cctx.fillStyle='#6b91b2';cctx.fillRect(px+8,h/2-5,Math.max(0,w-px-8),10);
+    cctx.fillStyle='#a8c6df';cctx.font='700 12px Inter,system-ui';cctx.fillText('PISTON',Math.min(w-70,px+14),h/2-16);
+    // Pressure impacts are illustrated as small wall flashes.
+    const scale=tempInCanvas(state.T);
+    particles.forEach((p,i)=>{
+      const speed=Math.hypot(p.vx,p.vy),t=Math.min(1,speed/(300*scale+1));
+      if(state.trails){cctx.globalAlpha=.17;cctx.strokeStyle='#55d8e8';cctx.lineWidth=1;cctx.beginPath();cctx.moveTo(p.x,p.y);cctx.lineTo(p.x-p.vx*.035,p.y-p.vy*.035);cctx.stroke();cctx.globalAlpha=1;}
+      if(state.vectors){cctx.strokeStyle='rgba(150,205,255,.58)';cctx.lineWidth=1.2;cctx.beginPath();cctx.moveTo(p.x,p.y);cctx.lineTo(p.x+p.vx*.085,p.y+p.vy*.085);cctx.stroke();}
+      const color=i%7===0?'#ffbd72':i%5===0?'#91aaff':'#5be1eb';
+      cctx.beginPath();cctx.fillStyle=color;cctx.shadowColor=color;cctx.shadowBlur=7+5*t;cctx.arc(p.x,p.y,p.r,0,Math.PI*2);cctx.fill();cctx.shadowBlur=0;
+    });
+    cctx.fillStyle='#84a4c2';cctx.font='11px Inter,system-ui';cctx.fillText('FIXED WALL',b.x-3,b.y-20);cctx.fillText('V = '+fmt(state.V,1)+' L',b.x+b.w-70,b.y+b.h+27);
+  }
+  function physicsStep(dt){
+    const b=currentBounds(),left=b.x+5,right=b.x+b.w-5,top=b.y+5,bottom=b.y+b.h-5;
+    particles.forEach(p=>{
+      p.x+=p.vx*dt;p.y+=p.vy*dt;
+      if(p.x<left+p.r){p.x=left+p.r;p.vx=Math.abs(p.vx);}
+      if(p.x>right-p.r){p.x=right-p.r;p.vx=-Math.abs(p.vx);}
+      if(p.y<top+p.r){p.y=top+p.r;p.vy=Math.abs(p.vy);}
+      if(p.y>bottom-p.r){p.y=bottom-p.r;p.vy=-Math.abs(p.vy);}
+    });
+    // Approximate elastic collisions between equal-mass, two-dimensional molecules.
+    for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++){
+      const a=particles[i],q=particles[j],dx=q.x-a.x,dy=q.y-a.y,dist2=dx*dx+dy*dy,min=a.r+q.r;
+      if(dist2>0&&dist2<min*min){const d=Math.sqrt(dist2),nx=dx/d,ny=dy/d,rel=(a.vx-q.vx)*nx+(a.vy-q.vy)*ny;if(rel>0){a.vx-=rel*nx;a.vy-=rel*ny;q.vx+=rel*nx;q.vy+=rel*ny;}const overlap=(min-d)*.51;a.x-=nx*overlap;a.y-=ny*overlap;q.x+=nx*overlap;q.y+=ny*overlap;}
+    }
+  }
+  function animate(ts){if(!state.lastTime)state.lastTime=ts;const dt=Math.min(.035,(ts-state.lastTime)/1000);state.lastTime=ts;if(!state.paused)physicsStep(dt);drawChamberFrame();requestAnimationFrame(animate);}
+  resizeParticles();requestAnimationFrame(animate);
+  if('ResizeObserver' in window){new ResizeObserver(()=>{resizeParticles();drawChamberFrame();drawLaw();drawDistribution();drawEnergy();}).observe(chamber.parentElement);}
+  $('pauseBtn').addEventListener('click',()=>{state.paused=!state.paused;$('pauseBtn').textContent=state.paused?'▶ Resume':'Ⅱ Pause';$('simState').textContent=state.paused?'SIMULATION PAUSED':'MOLECULAR MOTION';});
+  $('resetBtn').addEventListener('click',()=>{state.T=300;state.V=5;state.n=.01;$('tempRange').value=300;$('volRange').value=5;$('molRange').value=.01;state.paused=false;$('pauseBtn').textContent='Ⅱ Pause';resizeParticles();scaleParticleSpeeds();updateAll();});
+  $('vectorsToggle').addEventListener('change',e=>state.vectors=e.target.checked);$('trailsToggle').addEventListener('change',e=>state.trails=e.target.checked);
+
+  function updateAll(){
+    $('tempOut').textContent=state.T+' K';$('volOut').textContent=fmt(state.V,1)+' L';$('molOut').textContent=fmt(state.n,3)+' mol';
+    const p=pressureKPa(),nShow=countParticles(),e=1.5*kB*state.T,v=rms(state.T,gases.N2.M);
+    $('topTemp').textContent=state.T+' K';$('topPressure').textContent=fmt(p,2)+' kPa';$('topVolume').textContent=fmt(state.V,1)+' L';$('topMolecules').textContent=nShow;
+    $('simTemp').textContent=state.T+' K';$('simPressure').textContent=fmt(p,2)+' kPa';$('particleCountLabel').textContent=nShow+' molecules displayed';
+    $('meanEnergy').textContent=expFmt(e)+' J';$('rmsSpeed').textContent=Math.round(v)+' m/s';$('amountRead').textContent=fmt(state.n,3)+' mol';
+    if($('distTemp'))$('syncTemp').textContent='Use chamber temperature ('+state.T+' K)';
+    drawLaw();drawDistribution();drawEnergy();
+  }
+  ['tempRange','volRange','molRange'].forEach(id=>$(id).addEventListener('input',()=>{
+    state.T=+$('tempRange').value;state.V=+$('volRange').value;state.n=+$('molRange').value;scaleParticleSpeeds();resizeParticles();updateAll();
+  }));
+
+  // Gas-law chart: draw the relevant proportionality with the current state marker.
+  function drawLaw(){
+    const canvas=$('lawCanvas');if(!canvas)return;const ctx=canvas.getContext('2d'),{w,h}=setCanvasSize(canvas,ctx),pad={l:62,r:22,t:24,b:48};ctx.clearRect(0,0,w,h);
+    const plotW=w-pad.l-pad.r,plotH=h-pad.t-pad.b;
+    let xMin=2,xMax=10,yMin=0,yMax=0,xLabel='',yLabel='',curve=[];
+    const p0=pressureKPa(300,5,.01);
+    if(state.law==='boyle'){yMax=p0*5/2*1.15;xLabel='Volume (L)';yLabel='Pressure (kPa)';curve=Array.from({length:80},(_,i)=>{const x=xMin+(xMax-xMin)*i/79;return [x,p0*5/x];});}
+    else if(state.law==='charles'){yMin=100;yMax=1000;xLabel='Temperature (K)';yLabel='Volume (L)';xMin=100;xMax=900;curve=Array.from({length:80},(_,i)=>{const x=xMin+(xMax-xMin)*i/79;return [x,5*x/300];});}
+    else{yMin=0;yMax=12;xLabel='Temperature (K)';yLabel='Pressure (kPa)';xMin=100;xMax=900;curve=Array.from({length:80},(_,i)=>{const x=xMin+(xMax-xMin)*i/79;return [x,p0*x/300];});}
+    const X=x=>pad.l+(x-xMin)/(xMax-xMin)*plotW,Y=y=>pad.t+plotH-(y-yMin)/(yMax-yMin)*plotH;
+    ctx.strokeStyle='rgba(137,174,207,.16)';ctx.lineWidth=1;ctx.fillStyle='#8da8c5';ctx.font='11px Inter,system-ui';ctx.textAlign='center';
+    for(let i=0;i<=5;i++){const gx=pad.l+plotW*i/5;ctx.beginPath();ctx.moveTo(gx,pad.t);ctx.lineTo(gx,pad.t+plotH);ctx.stroke();}
+    for(let i=0;i<=4;i++){const gy=pad.t+plotH*i/4;ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+plotW,gy);ctx.stroke();ctx.textAlign='right';ctx.fillText(fmt(yMin+(yMax-yMin)*(4-i)/4,1),pad.l-9,gy+4);}
+    ctx.textAlign='center';ctx.fillText(xLabel,pad.l+plotW/2,h-10);ctx.save();ctx.translate(15,pad.t+plotH/2);ctx.rotate(-Math.PI/2);ctx.fillText(yLabel,0,0);ctx.restore();
+    ctx.beginPath();curve.forEach((pt,i)=>{if(i===0)ctx.moveTo(X(pt[0]),Y(pt[1]));else ctx.lineTo(X(pt[0]),Y(pt[1]));});ctx.strokeStyle='#5bdce9';ctx.lineWidth=3;ctx.stroke();
+    let mx,my;if(state.law==='boyle'){mx=state.lawX;my=p0*5/mx;}else{mx=state.lawX;my=state.law==='charles'?5*mx/300:p0*mx/300;}
+    ctx.beginPath();ctx.arc(X(mx),Y(my),7,0,Math.PI*2);ctx.fillStyle='#ffb45b';ctx.shadowColor='#ffb45b';ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0;
+  }
+  function lawCopy(){
+    const title={boyle:"Boyle's law · P vs V",charles:"Charles's law · V vs T",gay:"Pressure law · P vs T"};
+    const desc={boyle:'At constant temperature and amount of gas, pressure is inversely proportional to volume.',charles:'At constant pressure and amount of gas, volume is directly proportional to absolute temperature.',gay:'At constant volume and amount of gas, pressure is directly proportional to absolute temperature.'};
+    const formula={boyle:'P ∝ 1 / V',charles:'V ∝ T',gay:'P ∝ T'};
+    const sub={boyle:"Boyle's law · T and n are constant",charles:"Charles's law · P and n are constant",gay:'Pressure law · V and n are constant'};
+    $('lawTitle').textContent=title[state.law];$('lawDescription').textContent=desc[state.law];$('lawFormula').innerHTML=formula[state.law]+'<small>'+sub[state.law]+'</small>';
+    $('lawRange').min=state.law==='boyle'?2:100;$('lawRange').max=state.law==='boyle'?10:900;$('lawRange').step=state.law==='boyle'?.1:10;
+    $('lawRange').value=state.lawX;
+  }
+  document.querySelectorAll('[data-law]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('[data-law]').forEach(x=>x.classList.toggle('active',x===b));state.law=b.dataset.law;state.lawX=state.law==='boyle'?5:300;lawCopy();drawLaw();updateLawReadouts();
+  }));
+  function updateLawReadouts(){
+    let p,t,v;if(state.law==='boyle'){v=state.lawX;t=300;p=pressureKPa(t,v,.01);$('lawOut').textContent=fmt(v,1)+' L';$('lawInsight').textContent='At constant temperature, halving the volume doubles the pressure. The curve is an inverse relationship.';}
+    else if(state.law==='charles'){t=state.lawX;v=5*t/300;p=pressureKPa(300,5,.01);$('lawOut').textContent=t+' K';$('lawInsight').textContent='At constant pressure, doubling the absolute temperature doubles the volume. Always use kelvin, not °C.';}
+    else{t=state.lawX;v=5;p=pressureKPa(t,5,.01);$('lawOut').textContent=t+' K';$('lawInsight').textContent='At constant volume, doubling the absolute temperature doubles the pressure.';}
+    $('lawP').textContent=fmt(p,2)+' kPa';$('lawT').textContent=t+' K';
+  }
+  $('lawRange').addEventListener('input',()=>{state.lawX=+$('lawRange').value;updateLawReadouts();drawLaw();});
+  $('lawReset').addEventListener('click',()=>{state.lawX=state.law==='boyle'?5:300;$('lawRange').value=state.lawX;updateLawReadouts();drawLaw();});
+  lawCopy();updateLawReadouts();
+
+  // Maxwell-Boltzmann speed distribution, shown in dimensionless speed v/v_mp.
+  function drawDistribution(){
+    const canvas=$('distCanvas');if(!canvas)return;const ctx=canvas.getContext('2d'),{w,h}=setCanvasSize(canvas,ctx),pad={l:56,r:18,t:22,b:45};ctx.clearRect(0,0,w,h);const pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+    const X=x=>pad.l+x/4.2*pw,Y=y=>pad.t+ph-y/0.9*ph;
+    ctx.strokeStyle='rgba(137,174,207,.16)';ctx.lineWidth=1;ctx.fillStyle='#8fa8c3';ctx.font='11px Inter,system-ui';
+    for(let i=0;i<=6;i++){const gx=pad.l+pw*i/6;ctx.beginPath();ctx.moveTo(gx,pad.t);ctx.lineTo(gx,pad.t+ph);ctx.stroke();ctx.textAlign='center';ctx.fillText(fmt(i*.7,1),gx,h-19);}
+    for(let i=0;i<=4;i++){const val=.9*i/4,gy=Y(val);ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+pw,gy);ctx.stroke();ctx.textAlign='right';ctx.fillText(fmt(val,2),pad.l-8,gy+4);}
+    ctx.textAlign='center';ctx.fillText('Speed / most probable speed  (v / vₘₚ)',pad.l+pw/2,h-3);ctx.save();ctx.translate(13,pad.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText('Relative probability density',0,0);ctx.restore();
+    const f=x=>4/Math.sqrt(Math.PI)*x*x*Math.exp(-x*x);ctx.beginPath();for(let i=0;i<=220;i++){const x=4.2*i/220;if(i===0)ctx.moveTo(X(x),Y(f(x)));else ctx.lineTo(X(x),Y(f(x)));}ctx.strokeStyle='#5bdce9';ctx.lineWidth=3;ctx.stroke();
+    const gas=gases[state.gas],T=+$('distTemp').value,M=gas.M;const sampleCount=1200,bins=21,counts=new Array(bins).fill(0);
+    // Gaussian velocity components create a Maxwell speed sample.
+    for(let i=0;i<sampleCount;i++){let z1,z2,z3;const rand=()=>Math.sqrt(-2*Math.log(Math.max(1e-9,Math.random())))*Math.cos(2*Math.PI*Math.random());z1=rand();z2=rand();z3=rand();const speed=Math.sqrt(z1*z1+z2*z2+z3*z3)*Math.sqrt(R*T/M);const x=speed/mostProbable(T,M);const b=Math.floor(x/.2);if(b>=0&&b<bins)counts[b]++;}
+    const maxC=Math.max(...counts,1);counts.forEach((n,i)=>{const x=i*.2+.1,barH=n/maxC*.22;ctx.fillStyle='rgba(255,180,91,.55)';ctx.fillRect(X(x-.075),Y(barH),Math.max(2,pw*.2/4.2*.68),Y(0)-Y(barH));});
+    ctx.setLineDash([5,5]);ctx.strokeStyle='#ffb45b';ctx.beginPath();ctx.moveTo(X(1),pad.t);ctx.lineTo(X(1),pad.t+ph);ctx.stroke();ctx.setLineDash([]);
+    $('distTempOut').textContent=T+' K';$('vmp').textContent=Math.round(mostProbable(T,M))+' m/s';$('vrms').textContent=Math.round(rms(T,M))+' m/s';$('vmean').textContent=Math.round(meanSpeed(T,M))+' m/s';$('molarMass').textContent=(M*1000)+' g/mol';
+  }
+  $('gasSelect').addEventListener('change',e=>{state.gas=e.target.value;drawDistribution();});$('distTemp').addEventListener('input',drawDistribution);$('syncTemp').addEventListener('click',()=>{$('distTemp').value=state.T;drawDistribution();});
+
+  // Equipartition and mean-free-path calculations.
+  function drawEnergy(){
+    const canvas=$('energyCanvas');if(!canvas)return;const ctx=canvas.getContext('2d'),{w,h}=setCanvasSize(canvas,ctx);ctx.clearRect(0,0,w,h);
+    const type=$('moleculeType').value,f=type==='mono'?3:type==='dia'?5:7,T=+$('energyTemp').value,perMode=.5*R*T,total=f*perMode;
+    $('energyTempOut').textContent=T+' K';$('dof').textContent=f;$('uMole').textContent=fmt(total/1000,2)+' kJ/mol';$('cv').textContent=fmt(f/2*R,2)+' J/mol·K';$('gamma').textContent=fmt((f+2)/f,2);
+    $('equipFormula').innerHTML='U = (f / 2) n R T<small>For one mole: Cᵥ,m = (f / 2) R · Cₚ,m = Cᵥ,m + R</small>';
+    const pad=26,gap=8,bw=(w-2*pad-(f-1)*gap)/f,maxBar=h-80;ctx.fillStyle='#8fa8c3';ctx.font='11px Inter,system-ui';ctx.textAlign='center';ctx.fillText('Average energy per active degree of freedom = ½ RT per mole',w/2,17);
+    for(let i=0;i<f;i++){const x=pad+i*(bw+gap),bh=maxBar*.78;const grad=ctx.createLinearGradient(0,h-30-bh,0,h-30);grad.addColorStop(0,'#58dce8');grad.addColorStop(1,'#3975a9');ctx.fillStyle=grad;ctx.beginPath();ctx.rect(x,h-30-bh,bw,bh);ctx.fill();ctx.fillStyle='#d8eafa';ctx.fillText('½ RT',x+bw/2,h-12);}
+  }
+  function calcMfp(){const T=+$('mfpTemp').value,p=+$('pressureRange').value*1000,d=+$('diameterRange').value*1e-10,lambda=kB*T/(Math.sqrt(2)*Math.PI*d*d*p);$('pressureOut').textContent=$('pressureRange').value+' kPa';$('diameterOut').textContent=fmt(+$('diameterRange').value,1)+' Å';$('mfpTempOut').textContent=T+' K';$('mfpValue').textContent=fmt(lambda*1e9,1)+' nm';}
+  ['moleculeType','energyTemp'].forEach(id=>$(id).addEventListener('input',drawEnergy));['pressureRange','diameterRange','mfpTemp'].forEach(id=>$(id).addEventListener('input',calcMfp));
+
+  // Mission progress is learner-controlled: the student marks each investigation after trying it.
+  document.querySelectorAll('[data-mission]').forEach(btn=>btn.addEventListener('click',()=>{
+    const id=btn.dataset.mission;state.missions.has(id)?state.missions.delete(id):state.missions.add(id);
+    const card=$('mission'+id),done=state.missions.has(id);card.classList.toggle('done',done);btn.textContent=done?'✓ Completed':'Mark complete';
+    const count=state.missions.size;$('missionCount').textContent=count+' / 3 COMPLETE';$('missionProgress').style.width=(count/3*100)+'%';$('missionHint').textContent=count===3?'All missions completed. Great scientific investigation!':count+' of 3 missions completed.';
+  }));
+
+  function exportCSV(){
+    const rows=[['Kinetic Theory Lab Data','Value','Unit'],['Temperature',state.T,'K'],['Volume',state.V,'L'],['Amount of gas',state.n,'mol'],['Pressure',pressureKPa(),'kPa'],['Mean translational kinetic energy per molecule',1.5*kB*state.T,'J'],['Nitrogen RMS speed',rms(state.T,gases.N2.M),'m/s'],['Gas selected for speed distribution',gases[state.gas].name,''],['Distribution temperature',$('distTemp').value,'K'],['Most probable speed',mostProbable(+$('distTemp').value,gases[state.gas].M),'m/s'],['Mean speed',meanSpeed(+$('distTemp').value,gases[state.gas].M),'m/s'],['RMS speed',rms(+$('distTemp').value,gases[state.gas].M),'m/s'],['Missions completed',state.missions.size,'of 3']];
+    const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='kinetic-theory-lab-data.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  }
+  $('exportBtn').addEventListener('click',exportCSV);
+  $('resetAllBtn').addEventListener('click',()=>{
+    state.T=300;state.V=5;state.n=.01;state.gas='N2';state.law='boyle';state.lawX=5;state.missions.clear();state.paused=false;state.vectors=true;state.trails=false;
+    $('tempRange').value=300;$('volRange').value=5;$('molRange').value=.01;$('gasSelect').value='N2';$('distTemp').value=300;$('energyTemp').value=300;$('moleculeType').value='dia';$('pressureRange').value=100;$('diameterRange').value=3.7;$('mfpTemp').value=300;$('lawRange').value=5;$('vectorsToggle').checked=true;$('trailsToggle').checked=false;$('pauseBtn').textContent='Ⅱ Pause';
+    document.querySelectorAll('[data-mission]').forEach(btn=>{btn.textContent='Mark complete';$('mission'+btn.dataset.mission).classList.remove('done');});$('missionCount').textContent='0 / 3 COMPLETE';$('missionProgress').style.width='0%';$('missionHint').textContent='Your lab progress will appear here.';
+    resizeParticles();scaleParticleSpeeds();document.querySelectorAll('[data-law]').forEach(b=>b.classList.toggle('active',b.dataset.law==='boyle'));lawCopy();updateAll();calcMfp();
+  });
+  // Initial render.
+  state.gas='N2';$('lawRange').value=5;updateAll();drawDistribution();drawEnergy();calcMfp();
+})();
+</script>
+</body>
+</html>
